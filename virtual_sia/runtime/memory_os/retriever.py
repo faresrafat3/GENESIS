@@ -51,9 +51,14 @@ def retrieve_memory(
                 seen.add(c.id)
                 family_selected.append(c)
 
-    # Use the primary family's max_active setting instead of the single global cap
-    primary_family_cfg = DEFAULT_FAMILY_SELECTIVITY.get(task_family, {})
-    family_max_active = primary_family_cfg.get('max_active', DEFAULT_GLOBAL_MAX_ACTIVE_CONCEPTS)
+    # Use the max of all candidate families' max_active values as the cap.
+    # This prevents secondary-family concepts from being silently dropped when
+    # the primary family has a lower (or zero) max_active.
+    family_max_active = max(
+        (DEFAULT_FAMILY_SELECTIVITY.get(fam, {}).get('max_active', DEFAULT_GLOBAL_MAX_ACTIVE_CONCEPTS)
+         for fam in candidate_families),
+        default=DEFAULT_GLOBAL_MAX_ACTIVE_CONCEPTS,
+    )
     applicable_concepts = family_selected[:family_max_active]
     applicable_theories = []
     for family in candidate_families:

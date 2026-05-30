@@ -4,6 +4,8 @@ from __future__ import annotations
 from virtual_sia.eval.runners.run_condition import CONDITIONS
 from virtual_sia.eval.runners.compare_conditions import compare_conditions
 from virtual_sia.eval.reports.summary import summarize_comparison
+from virtual_sia.eval.runners.run_selectivity_ablation import _set_selectivity
+from virtual_sia.runtime.concept_engine import config as concept_config
 
 
 def test_conditions_dict_has_expected_keys():
@@ -57,3 +59,17 @@ def test_summarize_comparison_thesis_signals():
     assert "thesis_1_concept_vs_retrieval" in summary["thesis_signals"]
     assert "thesis_2_economy_vs_premium_always" in summary["thesis_signals"]
     assert "combined_condition" in summary["thesis_signals"]
+
+
+def test_set_selectivity_updates_config():
+    """_set_selectivity should update the global config variables for ablation runs."""
+    original_max = concept_config.DEFAULT_GLOBAL_MAX_ACTIVE_CONCEPTS
+    original_min = concept_config.DEFAULT_MIN_ACTIVATION_SCORE
+    try:
+        _set_selectivity(2, 6)
+        assert concept_config.DEFAULT_GLOBAL_MAX_ACTIVE_CONCEPTS == 2
+        assert concept_config.DEFAULT_MIN_ACTIVATION_SCORE == 6
+    finally:
+        # Restore original values to avoid polluting other tests
+        concept_config.DEFAULT_GLOBAL_MAX_ACTIVE_CONCEPTS = original_max
+        concept_config.DEFAULT_MIN_ACTIVATION_SCORE = original_min

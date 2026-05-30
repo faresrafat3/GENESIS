@@ -116,3 +116,41 @@ def test_build_contrastive_groups():
     for g in family_contrast_groups:
         assert len(g["successes"]) > 0
         assert len(g["failures"]) > 0
+
+
+def test_contract_heavy_doubles_contract_fit():
+    """contract_heavy strategy should produce higher scores when task_contract matches concept tokens."""
+    c1 = _make_concept(
+        "precision_rule",
+        "ensures precision in property extraction for comparison",
+        ["comparison"],
+        operational_meaning="precision property extraction comparison required coverage",
+    )
+
+    task_text = "Compare these two proposals for precision and coverage"
+    task_contract = {
+        "required_properties": ["precision", "coverage", "extraction"],
+        "forbidden_shortcuts": [],
+        "diagnostic_purpose": [],
+    }
+
+    # With contract (contract_heavy doubles contract_fit)
+    selected_with, decisions_with = select_applicable_concepts(
+        task_family="comparison",
+        task_text=task_text,
+        concepts=[c1],
+        task_contract=task_contract,
+    )
+
+    # Without contract (no contract_fit contribution)
+    selected_without, decisions_without = select_applicable_concepts(
+        task_family="comparison",
+        task_text=task_text,
+        concepts=[c1],
+        task_contract=None,
+    )
+
+    # The contract_fit should be > 0 when a contract is provided
+    assert decisions_with[0].contract_fit > 0
+    # With contract_heavy, the activation_score should be higher due to 2x contract_fit
+    assert decisions_with[0].activation_score > decisions_without[0].activation_score

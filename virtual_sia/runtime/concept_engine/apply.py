@@ -80,13 +80,12 @@ def select_applicable_concepts(
         contract_fit = len(contract_tokens & concept_tokens)
         family_fit = 2
 
-        # Strategy-differentiated scoring
+        # Strategy-differentiated scoring.
+        # Note: structural_only differentiation is in the high-threshold fallback
+        # below, not in the scoring formula itself.
         if strategy == 'contract_heavy':
             base_score = family_fit + (contract_fit * 2) + semantic_fit
-        elif strategy == 'structural_only':
-            base_score = family_fit + contract_fit + semantic_fit
         else:
-            # semantic_balanced (default)
             base_score = family_fit + contract_fit + semantic_fit
 
         if semantic_fit >= min_overlap or contract_fit > 0:

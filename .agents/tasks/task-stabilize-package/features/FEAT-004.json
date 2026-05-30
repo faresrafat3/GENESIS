@@ -1,0 +1,29 @@
+{
+  "id": "FEAT-004",
+  "type": "fix",
+  "description": "Address 6 issues from the semantic review: fix dead secondary admission, remove redundant structural_only scoring branch, add contract_heavy test, fix retriever per-family cap for secondary families, add ablation runner _set_selectivity test, and fix pyproject.toml build backend.",
+  "status": "in_progress",
+  "steps": [
+    "Step 1: Set synthesis max_active=2 in DEFAULT_FAMILY_SELECTIVITY so semantic_balanced secondary admission is reachable",
+    "Step 2: Remove redundant structural_only scoring branch and add comment explaining differentiation is only in fallback",
+    "Step 3: Add test_contract_heavy_doubles_contract_fit to tests/test_concept_engine.py",
+    "Step 4: Fix retriever per-family cap to use max of all candidate families' max_active values",
+    "Step 5: Add test_set_selectivity_updates_config to tests/test_eval_runners.py",
+    "Step 6: Change pyproject.toml build-backend to setuptools.build_meta"
+  ],
+  "acceptance_criteria": [
+    "synthesis max_active=2 in config",
+    "structural_only scoring branch removed, comment explains fallback is the differentiator",
+    "test_contract_heavy_doubles_contract_fit passes",
+    "retriever uses max of all candidate families' max_active, not just primary",
+    "test_set_selectivity_updates_config passes",
+    "pyproject.toml uses setuptools.build_meta"
+  ],
+  "verification": [
+    "~/.pyenv/versions/3.12.13/bin/python -m pytest tests/ -v",
+    "~/.pyenv/versions/3.12.13/bin/python -m virtual_sia.eval.runners.run_selectivity_ablation",
+    "~/.pyenv/versions/3.12.13/bin/python -m virtual_sia.eval.runners.run_family_selectivity_ablation"
+  ],
+  "blocked_reason": null,
+  "findings": null
+}
