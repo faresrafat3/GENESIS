@@ -11,3 +11,13 @@ DEFAULT_FAMILY_SELECTIVITY = {
     'synthesis': {'max_active': 1, 'min_score': 7},
     'procedure': {'max_active': 0, 'min_score': 99},
 }
+
+# Strategy descriptors per family.
+# - contract_heavy: weight contract_fit more in scoring (comparison tasks)
+# - semantic_balanced: balanced scoring, allow secondary concept if it exceeds threshold
+# - structural_only: zero-concept default, high threshold fallback
+FAMILY_SELECTIVITY_STRATEGY = {
+    'comparison': 'contract_heavy',
+    'synthesis': 'semantic_balanced',
+    'procedure': 'structural_only',
+}

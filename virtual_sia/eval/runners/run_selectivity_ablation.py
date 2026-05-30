@@ -20,7 +20,7 @@ DEFAULT_CONDITIONS = [
 
 
 def _set_selectivity(max_active: int, min_score: int):
-    concept_config.DEFAULT_MAX_ACTIVE_CONCEPTS = max_active
+    concept_config.DEFAULT_GLOBAL_MAX_ACTIVE_CONCEPTS = max_active
     concept_config.DEFAULT_MIN_ACTIVATION_SCORE = min_score
 
 
