@@ -8,7 +8,7 @@ from ...core.objects.concept import ConceptCard
 from ...core.objects.memory import MemoryUnit
 from ...core.objects.theory import LocalTheoryObject
 from ..concept_engine.apply import build_concept_hints, select_applicable_concepts
-from ..concept_engine.config import DEFAULT_GLOBAL_MAX_ACTIVE_CONCEPTS
+from ..concept_engine.config import DEFAULT_FAMILY_SELECTIVITY, DEFAULT_GLOBAL_MAX_ACTIVE_CONCEPTS
 from ..theory_runtime.apply import build_theory_hints, select_applicable_theories
 
 
@@ -51,7 +51,10 @@ def retrieve_memory(
                 seen.add(c.id)
                 family_selected.append(c)
 
-    applicable_concepts = family_selected[:DEFAULT_GLOBAL_MAX_ACTIVE_CONCEPTS]
+    # Use the primary family's max_active setting instead of the single global cap
+    primary_family_cfg = DEFAULT_FAMILY_SELECTIVITY.get(task_family, {})
+    family_max_active = primary_family_cfg.get('max_active', DEFAULT_GLOBAL_MAX_ACTIVE_CONCEPTS)
+    applicable_concepts = family_selected[:family_max_active]
     applicable_theories = []
     for family in candidate_families:
         applicable_theories.extend(select_applicable_theories(family, theory_items or [], limit=1))
