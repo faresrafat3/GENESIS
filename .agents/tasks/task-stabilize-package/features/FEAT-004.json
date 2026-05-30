@@ -2,7 +2,7 @@
   "id": "FEAT-004",
   "type": "fix",
   "description": "Address 6 issues from the semantic review: fix dead secondary admission, remove redundant structural_only scoring branch, add contract_heavy test, fix retriever per-family cap for secondary families, add ablation runner _set_selectivity test, and fix pyproject.toml build backend.",
-  "status": "in_progress",
+  "status": "completed",
   "steps": [
     "Step 1: Set synthesis max_active=2 in DEFAULT_FAMILY_SELECTIVITY so semantic_balanced secondary admission is reachable",
     "Step 2: Remove redundant structural_only scoring branch and add comment explaining differentiation is only in fallback",
@@ -25,5 +25,5 @@
     "~/.pyenv/versions/3.12.13/bin/python -m virtual_sia.eval.runners.run_family_selectivity_ablation"
   ],
   "blocked_reason": null,
-  "findings": null
+  "findings": "All 6 review issues addressed. Tests pass (13 total). Eval runners produce correct results. synthesis_top2 now uses the default max_active=2 which matches current_default config (no behavioral difference in eval results since no second concept is competitive). Retriever cap fix ensures secondary-family concepts are preserved."
 }

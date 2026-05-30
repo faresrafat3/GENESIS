@@ -1,0 +1,14 @@
+{
+  "task_id": "task-stabilize-package",
+  "task_description": "Implement all 5 tasks for the SIA project's Stabilize & Package phase: (1) family-specific concept selectivity with differentiated policies, (2) pyproject.toml and Python version documentation with tests, (3) deep analysis documentation of concept_engine and eval system, (4) run remaining eval runners and capture results, (5) general stabilization improvements. Tasks 4 and 5 are integrated into features 1-3.",
+  "status": "completed",
+  "feature_order": ["FEAT-001", "FEAT-002", "FEAT-003", "FEAT-004"],
+  "blocked_reason": null,
+  "verification": {
+    "build": "pass",
+    "tests": "pass",
+    "test_quality": "pass",
+    "docker_build": "skipped",
+    "summary": "All 13 tests pass (pytest 0.07s). Package imports cleanly. All eval runners execute successfully. Review issues resolved: dead code removed, missing tests added, retriever cap fixed, build backend corrected."
+  }
+}
