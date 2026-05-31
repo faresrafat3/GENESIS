@@ -2,7 +2,7 @@
   "id": "FEAT-001",
   "type": "feat",
   "description": "Full Integration Testing: Run the pipeline with ALL governance flags enabled simultaneously (use_anomaly_leverage, use_theory_leverage, use_productive_forgetting, use_identity_governance, use_paradigm_fork) across v3b_curriculum, v6, and v7 task sets. Compare all-flags vs concept-only vs combined conditions. Measure cumulative benefit, interaction effects, and cost.",
-  "status": "in_progress",
+  "status": "completed",
   "steps": [
     "Create virtual_sia/eval/runners/run_full_integration.py following the pattern of run_broader_domain_eval.py but with an extended run_condition function that passes all governance flags to run_minimal_pipeline. Define new conditions: 'all_flags_enabled' (all 5 flags True with identity object), 'concept_only' (use_concepts=True, no governance flags), 'combined_baseline' (use_concepts=True, use_economy=True, no governance flags). Run against v3b_curriculum (primary), v6 cases, and v7 broader domain cases. Use AgentIdentityObject for identity governance. Compute interaction effects (benefit of all flags minus sum of individual benefits).",
     "Create virtual_sia/eval/reports/integration_summary.py with generate_integration_summary_report(all_flags_results, concept_only_results, combined_results) that computes: governance_overhead (extra cost from multiple mechanisms), cumulative_benefit (success_rate delta from baseline), interaction_effects (synergy/conflict between mechanisms), per-mechanism contribution estimates.",
@@ -21,5 +21,5 @@
     "~/.pyenv/versions/3.12.13/bin/python -m pytest /projects/sandbox/sia/tests/ -q --tb=short"
   ],
   "blocked_reason": null,
-  "findings": ""
+  "findings": "All 289 tests pass (285 existing + 4 new). Pipeline with all 5 governance flags runs cleanly. No import or compatibility issues."
 }
