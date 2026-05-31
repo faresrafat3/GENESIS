@@ -375,6 +375,7 @@ The new mechanisms are **additive** - they layer on top when explicitly enabled,
 | Config | synthesis strategy | semantic_balanced | Frozen |
 | Config | procedure activation | disabled | Frozen |
 | Config | use_anomaly_leverage | False | Frozen (default OFF) |
+| Config | **use_theory_leverage** | **False** | **Frozen (default OFF)** |
 | Eval | primary slice | v3b_curriculum (72 tasks) | Active |
 | Eval | diagnostic slice | v4 (12 tasks) | Active |
 | Eval | stress slice | v3c_curriculum (72 tasks) | Active |
@@ -390,12 +391,94 @@ The new mechanisms are **additive** - they layer on top when explicitly enabled,
 | Runtime | **anomaly-aware verification** | **stricter when severity > 0.5** | **New (gated)** |
 | Runtime | **anomaly-aware routing** | **bias to higher tier** | **New (gated)** |
 | Runtime | **anomaly-aware escalation** | **auto-escalate at severity > 0.5** | **New (gated)** |
+| Runtime | **theory-guided verification** | **stricter when theory predicts failure** | **New (gated)** |
+| Runtime | **theory-guided routing** | **bias to higher tier on theory prediction** | **New (gated)** |
+| Runtime | **theory-guided concept activation** | **boost + admission for theory-aligned concepts** | **New (gated)** |
+| Runtime | **theory predictive value** | **Laplace-smoothed accuracy (0.0-1.0)** | **New (gated)** |
+| Runtime | **theory-contradiction interaction** | **explanatory_power accumulation** | **New (gated)** |
 | Thesis | Thesis 1 confidence | Moderate-to-high | Documented |
 | Thesis | Thesis 2 confidence | High | Documented |
 | Open | synthesis top-2 | Enabled (max_active=2), no second candidate yet | Monitor |
 | Open | procedure concepts | No benefit observed | Monitor |
-| Open | governance bridge | **Partially implemented via anomaly leverage** | **Updated** |
+| Open | governance bridge | **Further implemented via theory leverage** | **Updated** |
 | Open | cross-family transfer | Not explored | Deferred |
+
+---
+
+## 11. Theory Leverage Mechanism (Cycle 3 - Local Theory Leverage)
+
+> Added: 2026-06-01
+> Source: Local Theory Leverage (Option B)
+> Status: Gated behind `use_theory_leverage=False` (default OFF)
+
+### 11.1 Theory Predictive Value (B4)
+
+- **Function**: `get_theory_prediction_for_task()` in `theory_runtime/apply.py`
+- **Source**: 5.33 - Popper (Falsifiability) + 5.37 - Scientific Realism (Boyd)
+- **Behavior**: Generates prediction dict with `predicts_failure`, `predicts_difficulty`, `confidence`, `relevant_claims`
+- **Mechanism**: Token overlap between theory.predictive_claims and task_text; confidence = theory.predictive_value
+- **Update**: `update_theory_predictive_value()` applies Laplace smoothing: `(correct+1)/(total+2)`
+- **Source (Update)**: 5.34 - Bayesian Epistemology (Howson & Urbach)
+
+### 11.2 Theory-Contradiction Interaction (B5)
+
+- **Function**: `check_theory_explains_contradiction()` in `theory_runtime/apply.py`
+- **Source**: 6.2 - Lakatos (Research Programmes) + 6.3 - Kuhn (Scientific Revolutions)
+- **Behavior**: If theory.predictive_claims tokens overlap contradiction content (threshold 2+ tokens), returns True
+- **Side Effect**: theory.explanatory_power += 0.1 (capped at 1.0) on successful explanation
+- **Scope Check**: Only applies when contradiction.task_family is in theory.scope.task_families
+
+### 11.3 Theory-Guided Verification (B1)
+
+- **Function**: `verify_output_theory_guided()` in `verification_runtime/service.py`
+- **Source**: 6.8 - Predictive Processing (Friston) + 5.33 - Popper
+- **Behavior**:
+  - When theory predicts failure: requires 2 primary markers AND all properties pass
+  - When theory predicts difficulty: requires base evidence AND secondary marker hit
+  - When no prediction: returns base verification result unchanged
+- **Layering**: When both theory and anomaly leverage active, takes the stricter result
+
+### 11.4 Theory-Guided Concept Activation (B2)
+
+- **Function**: `select_applicable_concepts_theory_guided()` in `concept_engine/apply.py`
+- **Source**: 5.35 - Theory-Theory (Gopnik & Wellman) + 5.36 - Explanation-Based Learning (DeJong & Mooney)
+- **Behavior**:
+  - Concepts in theory.concept_refs get +3 activation score boost [theory_boost]
+  - Non-selected concepts within 2 points of fam_min_score get admitted if in theory.concept_refs [theory_admission]
+  - Non-aligned concepts remain unchanged
+
+### 11.5 Theory-Guided Routing (B3)
+
+- **Function**: `choose_tier_theory_guided()` in `economy_control/router.py`
+- **Source**: 5.34 - Bayesian Epistemology + 5.38 - DevOps Runbook Automation (Google SRE)
+- **Behavior**:
+  - predicts_difficulty AND confidence >= 0.5: prevents tier_0 (minimum tier_1)
+  - predicts_failure AND confidence >= 0.6: forces tier_2
+  - No prediction or low confidence: no change from base routing
+- **Layering**: When both active, anomaly_severity layers on top of theory-guided decision
+
+### 11.6 Pipeline Integration
+
+- **File**: `virtual_sia/runtime/pipeline/minimal_run.py`
+- **Parameter**: `use_theory_leverage: bool = False`
+- **When enabled**:
+  1. Selects applicable theories for task_family
+  2. Generates prediction from first applicable theory
+  3. Routes via choose_tier_theory_guided (with anomaly layering if both active)
+  4. Selects concepts via select_applicable_concepts_theory_guided (if use_concepts=True)
+  5. Verifies via verify_output_theory_guided (with anomaly layering if both active)
+  6. Post-processes: updates predictive_value, checks contradiction explanations
+- **Return dict additions**: `use_theory_leverage`, `theory_prediction`, `theory_predictive_value`
+
+### 11.7 Gating Decision
+
+The mechanism is OFF by default to:
+- Preserve existing frozen behavior (all 88 baseline tests pass unchanged)
+- Allow controlled comparison (with/without theory leverage)
+- Prevent unintended behavioral changes to verified results
+- Require explicit opt-in for evaluation
+- Maintain consistency with the anomaly_leverage gating pattern from Cycle 2
+- Enable incremental activation: theory_leverage can be enabled independently or combined with anomaly_leverage
 
 ---
 
