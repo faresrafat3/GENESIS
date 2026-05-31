@@ -1,0 +1,21 @@
+{
+  "id": "FEAT-001",
+  "type": "chore",
+  "description": "Create new branch and verify baseline. Create branch feat/eval-pressure-anomaly-leverage from current HEAD. Install project in dev mode and run existing tests to confirm green baseline.",
+  "status": "completed",
+  "steps": [
+    "Create git branch feat/eval-pressure-anomaly-leverage from current HEAD of feat/stabilize-and-package-v2",
+    "Install project in dev mode: ~/.pyenv/versions/3.12.13/bin/python -m pip install -e '.[dev]'",
+    "Run existing tests: ~/.pyenv/versions/3.12.13/bin/python -m pytest tests/ -v",
+    "Confirm all tests pass (should be 4+ tests in tests/test_eval_runners.py, tests/test_concept_engine.py, tests/test_task_ingress.py)"
+  ],
+  "acceptance_criteria": [
+    "New branch feat/eval-pressure-anomaly-leverage exists and is checked out",
+    "All existing tests pass with exit code 0"
+  ],
+  "verification": [
+    "~/.pyenv/versions/3.12.13/bin/python -m pytest tests/ -v"
+  ],
+  "blocked_reason": null,
+  "findings": "All 15 tests pass (test_concept_engine: 8, test_eval_runners: 4, test_task_ingress: 3). Branch created from feat/stabilize-and-package-v2 at commit e6762f9. Project installs cleanly with pip install -e .[dev]. Python 3.12.13 confirmed working. pytest 9.0.3 in use. Note: contribution_requirements mandate Arabic documentation and 'Legitimate Theft' source attribution for all new mechanisms."
+}

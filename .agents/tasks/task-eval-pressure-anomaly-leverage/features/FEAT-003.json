@@ -1,0 +1,29 @@
+{
+  "id": "FEAT-003",
+  "type": "feat",
+  "description": "Cycle 2 - Minimal Anomaly Leverage (A1+A2+A3). Enhance the anomaly runtime with severity scoring, make the verification runtime anomaly-aware (stricter checks when anomaly patterns detected), and make the economy router anomaly-aware (prefer escalation when anomaly signals present). Wire anomaly signals into the pipeline. Each mechanism documents its Legitimate Theft source.",
+  "status": "completed",
+  "steps": [
+    "Step 1 - Enhance virtual_sia/runtime/anomaly_runtime/service.py: Add a compute_anomaly_severity_score() function that takes a list of AnomalyCandidate objects and returns a composite severity float (0.0-1.0). Scoring considers: number of candidates, max severity among candidates, source_type diversity (more diverse = higher score). Also add a matches_known_anomaly_pattern() function that checks if a task_result matches patterns from previously seen anomalies (property_gap + shortcut_pattern co-occurrence, repeated family failures, contradiction clustering).",
+    "Step 2 - Enhance virtual_sia/runtime/verification_runtime/service.py: Add a new function verify_output_anomaly_aware() that wraps verify_output() but applies stricter checking when anomaly_severity > 0.5. Stricter means: require ALL required_properties to pass (no partial credit), add extra evidence markers that must be present, lower tolerance by requiring at least 2 primary_markers to hit instead of 1. The function takes an additional parameter anomaly_severity: float = 0.0.",
+    "Step 3 - Enhance virtual_sia/runtime/economy_control/router.py: Add a new function choose_tier_anomaly_aware() that wraps choose_tier() but when anomaly_severity > 0.4, it biases toward tier_1 or tier_2 (never tier_0). When anomaly_severity > 0.7, it forces tier_2. Add anomaly_severity as part of the decision reason.",
+    "Step 4 - Enhance virtual_sia/runtime/economy_control/escalation.py: Modify or add should_escalate_anomaly_aware() that lowers the threshold for escalation when anomaly signals are present. If anomaly_severity > 0.5 and current_tier is not tier_2, always escalate.",
+    "Step 5 - Wire into pipeline: Update virtual_sia/runtime/pipeline/minimal_run.py to: (a) compute anomaly_severity from previous anomaly_candidates in the memory store (check if similar patterns were seen before), (b) pass anomaly_severity to verification (use verify_output_anomaly_aware when anomaly_severity > 0), (c) pass anomaly_severity to choose_tier (use choose_tier_anomaly_aware), (d) pass anomaly_severity to escalation. Add a new pipeline parameter use_anomaly_leverage: bool = False to gate this behavior.",
+    "Step 6 - Add tests in tests/test_anomaly_leverage.py: Test compute_anomaly_severity_score with various inputs. Test verify_output_anomaly_aware produces stricter results with high severity. Test choose_tier_anomaly_aware biases toward higher tiers. Test should_escalate_anomaly_aware forces escalation at high severity. Test pipeline integration with use_anomaly_leverage=True."
+  ],
+  "acceptance_criteria": [
+    "compute_anomaly_severity_score returns float 0.0-1.0 based on candidate list",
+    "verify_output_anomaly_aware is stricter when severity > 0.5",
+    "choose_tier_anomaly_aware never picks tier_0 when severity > 0.4, forces tier_2 when severity > 0.7",
+    "should_escalate_anomaly_aware always escalates when severity > 0.5 and not at tier_2",
+    "Pipeline runs successfully with use_anomaly_leverage=True",
+    "All new tests pass"
+  ],
+  "verification": [
+    "~/.pyenv/versions/3.12.13/bin/python -m pytest tests/test_anomaly_leverage.py -v",
+    "~/.pyenv/versions/3.12.13/bin/python -m pytest tests/ -v",
+    "~/.pyenv/versions/3.12.13/bin/python -c \"from virtual_sia.runtime.pipeline.minimal_run import run_minimal_pipeline; r = run_minimal_pipeline('Compare these two rollback options and justify', use_anomaly_leverage=True); print('anomaly_candidates:', len(r['anomaly_candidates']))\""
+  ],
+  "blocked_reason": null,
+  "findings": "All 6 steps implemented and verified. 27 new tests pass, 88 total tests pass. Each new function has Arabic Legitimate Theft docstrings citing: Predictive Processing/Active Inference (6.8) for severity scoring, Kuhn (6.3) for pattern matching behavioral influence, Ashby Requisite Variety (6.12) for anomaly-matched response variety, Chandola et al. Anomaly Detection Survey for severity scoring mechanism, DevOps Incident Management (PagerDuty/Datadog) for escalation caution. The pipeline is gated behind use_anomaly_leverage=False so existing behavior is unchanged by default. When enabled with historical failures in memory, anomaly_severity is computed and influences verification strictness, tier selection, and escalation decisions."
+}

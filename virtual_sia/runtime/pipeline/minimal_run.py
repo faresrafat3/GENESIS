@@ -2,19 +2,19 @@ from __future__ import annotations
 
 from ...core.objects.ledger import LedgerEntry
 from ...core.objects.memory import MemoryUnit
-from ..anomaly_runtime.service import extract_anomaly_candidates
+from ..anomaly_runtime.service import extract_anomaly_candidates, compute_anomaly_severity_score, matches_known_anomaly_pattern
 from ..blackboard_core.service import attach_context, close_blackboard, create_blackboard, snapshot_blackboard
 from ..concept_engine.registry import InMemoryConceptRegistry
 from ..contradiction_runtime.service import detect_contradictions
-from ..economy_control.escalation import should_escalate
+from ..economy_control.escalation import should_escalate, should_escalate_anomaly_aware
 from ..economy_control.ledger import InMemoryLedgerStore
-from ..economy_control.router import choose_tier
+from ..economy_control.router import choose_tier, choose_tier_anomaly_aware
 from ..memory_os.retriever import retrieve_memory
 from ..memory_os.store import InMemoryMemoryStore
 from ..reasoning_runtime.service import run_reasoning
 from ..task_ingress.service import ingest_task
 from ..theory_runtime.registry import InMemoryTheoryRegistry
-from ..verification_runtime.service import is_good_enough, verify_output
+from ..verification_runtime.service import is_good_enough, verify_output, verify_output_anomaly_aware
 
 
 def run_minimal_pipeline(
@@ -28,6 +28,7 @@ def run_minimal_pipeline(
     concept_registry: InMemoryConceptRegistry | None = None,
     theory_registry: InMemoryTheoryRegistry | None = None,
     use_concepts: bool = False,
+    use_anomaly_leverage: bool = False,
 ) -> dict:
     store = store or InMemoryMemoryStore()
     ledger_store = ledger_store or InMemoryLedgerStore()
@@ -59,12 +60,47 @@ def run_minimal_pipeline(
     ) if use_memory else retrieve_memory(task.task_family, task.normalized_text, [], budget=0, concept_items=concept_items, theory_items=theory_items, family_candidates=family_candidates, task_contract=task_contract)
     blackboard.retrieved_memory_pack = memory_pack
 
+    # Compute anomaly severity from previous anomaly candidates if anomaly leverage is enabled
+    anomaly_severity = 0.0
+    if use_anomaly_leverage:
+        from ...core.objects.anomaly import AnomalyCandidate
+        previous_anomaly_candidates: list[AnomalyCandidate] = []
+        for mem in store.all():
+            mem_meta = mem.meta or {}
+            if not mem_meta.get("good_enough", True):
+                # Reconstruct lightweight candidates from failed episodic memories
+                prop_checks = mem_meta.get("property_checks", {})
+                shortcut_checks = mem_meta.get("shortcut_checks", {})
+                mem_family = mem_meta.get("task_family", "unknown")
+                if prop_checks and not all(prop_checks.values()):
+                    previous_anomaly_candidates.append(
+                        AnomalyCandidate.create(
+                            task_family=mem_family,
+                            source_type="property_gap",
+                            summary="historical property failure",
+                            severity=0.6,
+                        )
+                    )
+                if any(shortcut_checks.values()):
+                    previous_anomaly_candidates.append(
+                        AnomalyCandidate.create(
+                            task_family=mem_family,
+                            source_type="shortcut_pattern",
+                            summary="historical shortcut trigger",
+                            severity=0.7,
+                        )
+                    )
+        anomaly_severity = compute_anomaly_severity_score(previous_anomaly_candidates)
+
     if forced_tier is not None:
         tier_decision = choose_tier(task, blackboard, memory_pack)
         tier_decision.chosen_tier = forced_tier
         tier_decision.decision_reason = f"forced tier: {forced_tier}"
     elif use_economy:
-        tier_decision = choose_tier(task, blackboard, memory_pack)
+        if use_anomaly_leverage and anomaly_severity > 0:
+            tier_decision = choose_tier_anomaly_aware(task, blackboard, memory_pack, anomaly_severity=anomaly_severity)
+        else:
+            tier_decision = choose_tier(task, blackboard, memory_pack)
     else:
         tier_decision = choose_tier(task, blackboard, memory_pack)
         tier_decision.chosen_tier = "tier_1"
@@ -79,9 +115,10 @@ def run_minimal_pipeline(
     )
     blackboard.candidate_claims = reasoning["candidate_claims"]
 
-    verification = verify_output(
+    verification = verify_output_anomaly_aware(
         task.task_family,
         blackboard.candidate_claims[0]["claim_text"],
+        anomaly_severity=anomaly_severity if use_anomaly_leverage else 0.0,
         framing_candidates=family_candidates,
         task_contract=task_contract,
     )
@@ -92,7 +129,10 @@ def run_minimal_pipeline(
 
     final_tier = tier_decision.chosen_tier
     if use_economy:
-        escalation = should_escalate(task, verification, current_tier=final_tier)
+        if use_anomaly_leverage and anomaly_severity > 0:
+            escalation = should_escalate_anomaly_aware(task, verification, current_tier=final_tier, anomaly_severity=anomaly_severity)
+        else:
+            escalation = should_escalate(task, verification, current_tier=final_tier)
     else:
         escalation = {
             "escalate": False,
@@ -112,9 +152,10 @@ def run_minimal_pipeline(
             framing_candidates=family_candidates,
         )
         blackboard.candidate_claims = escalated_reasoning["candidate_claims"]
-        verification = verify_output(
+        verification = verify_output_anomaly_aware(
             task.task_family,
             blackboard.candidate_claims[0]["claim_text"],
+            anomaly_severity=anomaly_severity if use_anomaly_leverage else 0.0,
             framing_candidates=family_candidates,
             task_contract=task_contract,
         )
@@ -183,4 +224,6 @@ def run_minimal_pipeline(
         "used_concepts_count": len(memory_pack.concept_refs),
         "anomaly_candidates": anomaly_candidates,
         "used_theories_count": len(memory_pack.theory_refs),
+        "anomaly_severity": anomaly_severity,
+        "use_anomaly_leverage": use_anomaly_leverage,
     }

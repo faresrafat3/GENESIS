@@ -1,0 +1,7 @@
+{
+  "task_id": "task-eval-pressure-anomaly-leverage",
+  "task_description": "Execute two development cycles for Virtual-SIA: Cycle 1 (Evaluation Pressure / Perturbation Cycle - Option C) adds 5 new perturbation operators, v6 task set, performance analysis, and anti-shortcut benchmark. Cycle 2 (Minimal Anomaly Leverage - Option A) adds anomaly severity scoring, anomaly-aware verification, and anomaly-aware economy routing. All new mechanisms document their Legitimate Theft sources.",
+  "status": "completed",
+  "feature_order": ["FEAT-001", "FEAT-002", "FEAT-003", "FEAT-004"],
+  "blocked_reason": null
+}

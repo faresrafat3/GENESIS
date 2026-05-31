@@ -227,4 +227,176 @@ From the Decision Memo (Option B stabilization), the following cycles are availa
 
 ---
 
+## 7. Expanded Evaluation Regime (Cycle 2 - Evaluation Pressure)
+
+> Added: 2026-06-01
+> Source: Evaluation Pressure Cycle (Option C)
+
+### 7.1 New Perturbation Operators
+
+Five new operators added to `virtual_sia/eval/perturbations/taskcase_variants.py`:
+
+| Operator | Function | Theft Source |
+|----------|----------|-------------|
+| `support_removal` | Removes supporting evidence phrases | 5.24 - Zeiler & Fergus |
+| `evidence_reordering` | Shuffles sentence order | 5.25 - Hogarth & Einhorn |
+| `contrast_weakening` | Replaces strong contrast words with weaker ones | 5.26 - Nie et al. / Gardner et al. |
+| `structure_weakening` | Removes structural cues (numbering, lists) | 5.27 - Mann & Thompson |
+| `stronger_shortcut_lures` | Adds misleading shortcut paths | 5.28 - Goodfellow / Geirhos |
+
+### 7.2 Extended Curriculum (6 Levels)
+
+Source: 5.29 - Bengio et al. (Curriculum Learning)
+
+| Level | Perturbation | Composition |
+|-------|-------------|-------------|
+| 0 | None | Original task |
+| 1 | keyword_noise | Light noise |
+| 2 | sentence_injection | Distracting sentence |
+| 3 | full_reformulation | Complete rewrite |
+| 4 | support_removal + contrast_weakening | Evidence weakening |
+| 5 | evidence_reordering + stronger_shortcut_lures + structure_weakening | Maximum compound pressure |
+
+### 7.3 V6 Task Set
+
+- **File**: `virtual_sia/eval/task_sets/prototype_v6_cases.py`
+- **Size**: 18 base cases (6 comparison + 6 synthesis + 6 procedure)
+- **Curriculum output**: 108 cases (18 x 6 levels)
+- **Runner**: `virtual_sia/eval/runners/run_local_eval_v6.py`
+- **Difficulty**: Higher than v5, designed to stress-test the system
+
+### 7.4 Perturbation Resistance Report
+
+- **File**: `virtual_sia/eval/reports/perturbation_resistance.py`
+- **Source**: 5.30 - Ribeiro et al. (CheckList)
+- **Outputs**: success_rate per perturbation_type, per curriculum_level, breaking_point, per-family resistance scores
+
+### 7.5 Anti-Shortcut Benchmark
+
+- **File**: `virtual_sia/eval/task_sets/anti_shortcut_benchmark.py`
+- **Source**: 5.28 - Goodfellow / Geirhos
+- **Size**: 9 cases (3 per family)
+- **Purpose**: Tasks that can only pass if shortcuts are genuinely avoided
+
+---
+
+## 8. Anomaly Leverage Mechanism (Cycle 2 - Minimal Anomaly Leverage)
+
+> Added: 2026-06-01
+> Source: Minimal Anomaly Leverage (Option A)
+> Status: Gated behind `use_anomaly_leverage=False` (default OFF)
+
+### 8.1 Anomaly Severity Scoring
+
+- **Function**: `compute_anomaly_severity_score()` in `anomaly_runtime/service.py`
+- **Source**: 5.31 - Chandola et al. + 6.8 - Predictive Processing
+- **Range**: 0.0 to 1.0
+- **Factors**: candidate count, max severity, source_type diversity
+
+### 8.2 Anomaly Pattern Matching
+
+- **Function**: `matches_known_anomaly_pattern()` in `anomaly_runtime/service.py`
+- **Source**: 6.3 - Kuhn (anomaly accumulation -> behavioral change)
+- **Patterns detected**: property_gap + shortcut co-occurrence, repeated family failures, contradiction clustering
+
+### 8.3 Anomaly-Aware Verification
+
+- **Function**: `verify_output_anomaly_aware()` in `verification_runtime/service.py`
+- **Behavior**: When severity > 0.5, requires ALL properties to pass, adds extra markers, raises threshold
+- **Source**: 6.3 - Kuhn + 5.30 - Ribeiro CheckList
+
+### 8.4 Anomaly-Aware Economy Routing
+
+- **Function**: `choose_tier_anomaly_aware()` in `economy_control/router.py`
+- **Source**: 6.12 - Ashby (Requisite Variety)
+- **Behavior**:
+  - severity > 0.4: never tier_0 (minimum tier_1)
+  - severity > 0.7: forces tier_2
+
+### 8.5 Anomaly-Aware Escalation
+
+- **Function**: `should_escalate_anomaly_aware()` in `economy_control/escalation.py`
+- **Source**: 5.32 - PagerDuty/Datadog
+- **Behavior**: severity > 0.5 and not tier_2 -> always escalate
+
+### 8.6 Pipeline Integration
+
+- **File**: `virtual_sia/runtime/pipeline/minimal_run.py`
+- **Parameter**: `use_anomaly_leverage: bool = False`
+- **When enabled**: severity computed from anomaly_candidates, passed to verification/routing/escalation
+
+### 8.7 Gating Decision
+
+The mechanism is OFF by default to:
+- Preserve existing frozen behavior
+- Allow controlled comparison (with/without)
+- Prevent unintended behavioral changes
+- Require explicit opt-in for evaluation
+
+---
+
+## 9. New Conditions Available
+
+### 9.1 Evaluation Conditions
+
+| Condition | Description | Status |
+|-----------|-------------|--------|
+| v6_baseline | V6 tasks, no perturbation | Available |
+| v6_curriculum | V6 tasks, all 6 levels | Available |
+| v6_anti_shortcut | Anti-shortcut benchmark | Available |
+| v6_perturbation_resistance | Full resistance analysis | Available |
+
+### 9.2 Runtime Conditions
+
+| Condition | Description | Status |
+|-----------|-------------|--------|
+| anomaly_leverage_off | Pipeline with use_anomaly_leverage=False | Default |
+| anomaly_leverage_on | Pipeline with use_anomaly_leverage=True | Available (opt-in) |
+
+### 9.3 Relationship to Frozen Defaults
+
+All frozen defaults from Section 1 remain **unchanged**:
+- Concept selectivity: unchanged
+- Family policies: unchanged
+- Tier routing base behavior: unchanged
+
+The new mechanisms are **additive** - they layer on top when explicitly enabled, they do not modify any frozen configuration.
+
+---
+
+## 10. Updated Regime Summary Table
+
+| Category | Item | Value | Status |
+|----------|------|-------|--------|
+| Config | max_active_concepts | 1 | Frozen |
+| Config | min_activation_score | 7 | Frozen |
+| Config | min_overlap | 2 | Frozen |
+| Config | comparison strategy | contract_heavy | Frozen |
+| Config | synthesis strategy | semantic_balanced | Frozen |
+| Config | procedure activation | disabled | Frozen |
+| Config | use_anomaly_leverage | False | Frozen (default OFF) |
+| Eval | primary slice | v3b_curriculum (72 tasks) | Active |
+| Eval | diagnostic slice | v4 (12 tasks) | Active |
+| Eval | stress slice | v3c_curriculum (72 tasks) | Active |
+| Eval | **pressure slice** | **v6_curriculum (108 tasks)** | **New** |
+| Eval | **anti-shortcut slice** | **v6_anti_shortcut (9 tasks)** | **New** |
+| Eval | **perturbation operators** | **8 total (3 original + 5 new)** | **Expanded** |
+| Eval | **curriculum levels** | **6 (was 4)** | **Expanded** |
+| Result | best success | 0.986 (combined, v3b) | Verified |
+| Result | best cost | 0.00068/task (combined) | Verified |
+| Result | concept count post-warmup | 8 | Stable |
+| Result | theory count post-warmup | 4 | Stable |
+| Runtime | **anomaly severity scoring** | **0.0-1.0 composite** | **New (gated)** |
+| Runtime | **anomaly-aware verification** | **stricter when severity > 0.5** | **New (gated)** |
+| Runtime | **anomaly-aware routing** | **bias to higher tier** | **New (gated)** |
+| Runtime | **anomaly-aware escalation** | **auto-escalate at severity > 0.5** | **New (gated)** |
+| Thesis | Thesis 1 confidence | Moderate-to-high | Documented |
+| Thesis | Thesis 2 confidence | High | Documented |
+| Open | synthesis top-2 | Enabled (max_active=2), no second candidate yet | Monitor |
+| Open | procedure concepts | No benefit observed | Monitor |
+| Open | governance bridge | **Partially implemented via anomaly leverage** | **Updated** |
+| Open | cross-family transfer | Not explored | Deferred |
+
+---
+
 *End of Current Regime Status*

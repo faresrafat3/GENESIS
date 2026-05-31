@@ -1,0 +1,26 @@
+{
+  "id": "FEAT-004",
+  "type": "docs",
+  "description": "Documentation deliverables: Create all Arabic documentation memos documenting the Legitimate Thefts for both cycles, the evaluation pressure results, and the anomaly leverage implementation. Update the current regime status document.",
+  "status": "completed",
+  "steps": [
+    "Step 1 - Create Virtual_SIA_Legitimate_Thefts_Cycle2_AR.md: Document ALL new thefts using the standard template (## X.XX من [SOURCE] / ### ما الذي أخذناه؟ / ### ما الذي لم نأخذه الآن؟ / ### ماذا أصبح عندنا؟). Required thefts to document: (1) Gardner et al. - Adversarial NLI / Contrast Sets for contrast_weakening operator, (2) Bengio et al. - Curriculum Learning for difficulty progression in extended curriculum, (3) Software Engineering Perturbation Testing (metamorphic testing) for systematic fault injection approach, (4) Robustness Evaluation Literature (Ribeiro et al. CheckList) for evidence manipulation operators, (5) Predictive Processing / Active Inference (already in 6.8) - now operationalized as anomaly_severity = prediction error signal, (6) Kuhn (already in 6.3) - now operationalized further as anomaly -> behavioral influence, (7) Ashby (already in 6.12) - requisite variety: anomaly pressure requires matched response variety -> higher tier, (8) Anomaly Detection in ML (Chandola et al. survey) for severity scoring mechanism, (9) DevOps Incident Management (PagerDuty/Datadog patterns) for escalation caution under anomaly signals. Number them continuing from 5.23 (so 5.24, 5.25, etc. for new research thefts, and note references to existing 6.3, 6.8, 6.12 for classical thefts now further operationalized).",
+    "Step 2 - Create Virtual_SIA_Evaluation_Pressure_Cycle_Memo_AR.md: Arabic memo documenting: (a) what perturbation operators were added and why, (b) the v6 task set design, (c) curriculum expansion to 6 levels, (d) performance curve analysis results (reference the JSON output), (e) where the system starts failing (breaking point analysis), (f) anti-shortcut benchmark design. Include theft references for each decision.",
+    "Step 3 - Create Virtual_SIA_Anomaly_Leverage_Implementation_Memo_AR.md: Arabic memo documenting: (a) the decision to implement Minimal Anomaly Leverage (reference the Decision Memo), (b) anomaly severity scoring mechanism, (c) anomaly-aware verification emphasis, (d) anomaly-aware escalation caution, (e) pipeline integration approach, (f) evidence from tests showing behavioral change. Include theft references.",
+    "Step 4 - Update Virtual_SIA_Current_Regime_Status_AR.md: Add a new section documenting the expanded evaluation regime (v6 cases, 6 curriculum levels, new perturbation operators), the anomaly leverage mechanism (with its gating flag use_anomaly_leverage), and new conditions available. Keep existing frozen defaults but note new capabilities."
+  ],
+  "acceptance_criteria": [
+    "Virtual_SIA_Legitimate_Thefts_Cycle2_AR.md exists with 9+ theft entries using the standard template",
+    "Virtual_SIA_Evaluation_Pressure_Cycle_Memo_AR.md exists and covers all C1-C4 steps",
+    "Virtual_SIA_Anomaly_Leverage_Implementation_Memo_AR.md exists and covers all A1-A3 steps",
+    "Virtual_SIA_Current_Regime_Status_AR.md is updated with new regime info",
+    "All documentation is in Arabic following existing style",
+    "Every new mechanism references its theft source"
+  ],
+  "verification": [
+    "Confirm all 4 documentation files exist and are non-empty",
+    "Grep for the theft template pattern in Virtual_SIA_Legitimate_Thefts_Cycle2_AR.md to confirm proper format"
+  ],
+  "blocked_reason": null,
+  "findings": "All 4 steps completed. Created Virtual_SIA_Legitimate_Thefts_Cycle2_AR.md with 9 new theft entries (5.24-5.32) plus 3 existing theft operationalization notes (6.3, 6.8, 6.12). Created Virtual_SIA_Evaluation_Pressure_Cycle_Memo_AR.md covering all C1-C4 steps with theft references. Created Virtual_SIA_Anomaly_Leverage_Implementation_Memo_AR.md covering all A1-A3 steps with theft references. Updated Virtual_SIA_Current_Regime_Status_AR.md with sections 7-10 documenting expanded evaluation regime, anomaly leverage mechanism, new conditions, and updated summary table. All 88 tests pass. Documentation follows existing Arabic style and Legitimate Theft template exactly."
+}

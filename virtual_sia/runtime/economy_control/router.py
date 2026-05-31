@@ -40,3 +40,50 @@ def choose_tier(task: TaskObject, blackboard: BlackboardObject, memory_pack: Bla
     decision.confidence_in_decision = 0.5 if ambiguity else 0.6
     decision.fallback_option = "tier_1" if chosen_tier == "tier_0" else "tier_2"
     return decision
+
+
+def choose_tier_anomaly_aware(
+    task: TaskObject,
+    blackboard: BlackboardObject,
+    memory_pack: BlackboardMemoryPack,
+    anomaly_severity: float = 0.0,
+) -> TierDecisionObject:
+    """Anomaly-aware tier routing that biases toward higher tiers under anomaly pressure.
+
+    ## سرقة شرعية (Legitimate Theft)
+
+    المصدر 6.12: Ashby - Law of Requisite Variety (1956)
+    ما الذي اخذناه؟
+        requisite variety: anomaly pressure requires matched response variety.
+        عندما يرتفع ضغط الشذوذ، يجب ان يزداد تنوع استجابة النظام.
+        الطبقة الاعلى (tier_2) توفر تنوعا اكبر في المعالجة.
+    ما الذي لم ناخذه الان؟
+        الحساب الكامل لدرجات الحرية المطلوبة في كل طبقة.
+    ماذا اصبح عندنا؟
+        عندما تتجاوز شدة الشذوذ 0.4، لا يسمح بالطبقة الرخيصة (tier_0).
+        عندما تتجاوز 0.7، تفرض الطبقة المتقدمة (tier_2).
+
+    المصدر: DevOps Incident Management (PagerDuty/Datadog patterns)
+    ما الذي اخذناه؟
+        escalation caution under anomaly signals: في ادارة الحوادث،
+        كلما ارتفعت شدة التنبيه يتصاعد مستوى الاستجابة تلقائيا.
+    ما الذي لم ناخذه الان؟
+        runbooks كاملة وتصعيد متعدد المستويات مع on-call rotations.
+    ماذا اصبح عندنا؟
+        قاعدتان بسيطتان: severity > 0.4 يمنع tier_0، severity > 0.7 يفرض tier_2.
+    """
+    decision = choose_tier(task, blackboard, memory_pack)
+
+    if anomaly_severity > 0.7:
+        decision.chosen_tier = "tier_2"
+        decision.decision_reason += f"; anomaly_severity={anomaly_severity:.2f} forces tier_2"
+        decision.expected_cost = 0.01
+        decision.expected_immediate_gain = 0.9
+    elif anomaly_severity > 0.4:
+        if decision.chosen_tier == "tier_0":
+            decision.chosen_tier = "tier_1"
+            decision.decision_reason += f"; anomaly_severity={anomaly_severity:.2f} prevents tier_0"
+            decision.expected_cost = 0.001
+            decision.expected_immediate_gain = 0.7
+
+    return decision
