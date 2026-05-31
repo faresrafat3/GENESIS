@@ -1,0 +1,289 @@
+{
+  "model": "openrouter/owl-alpha",
+  "mode": "real",
+  "conditions": [
+    "A_raw",
+    "B_concept",
+    "C_concept_theory"
+  ],
+  "task_count": 6,
+  "started_at": "2026-05-31 21:36:50",
+  "runs": [
+    {
+      "task_id": "adv-cmp-1",
+      "family": "comparison",
+      "conditions": {
+        "A_raw": {
+          "latency_s": 15.1,
+          "score": {
+            "error": false,
+            "good_enough": false,
+            "shortcut_taken": false,
+            "evidence_explicit": false,
+            "structure_explicit": false,
+            "length": 171
+          },
+          "preview": "For a startup, I’d lean toward PostgreSQL—its strong consistency, rich SQL capabilities, and reliability give you a solid foundation to build on as your data needs evolve."
+        },
+        "B_concept": {
+          "latency_s": 15.4,
+          "score": {
+            "error": false,
+            "good_enough": true,
+            "shortcut_taken": false,
+            "evidence_explicit": true,
+            "structure_explicit": true,
+            "length": 222
+          },
+          "preview": "For a startup, I prefer **PostgreSQL** because its strong ACID transactional guarantees and mature relational model reduce early-stage data integrity risks, while still offering the schema flexibility"
+        },
+        "C_concept_theory": {
+          "latency_s": 15.9,
+          "score": {
+            "error": false,
+            "good_enough": false,
+            "shortcut_taken": true,
+            "evidence_explicit": true,
+            "structure_explicit": true,
+            "length": 378
+          },
+          "preview": "For a startup, I'd go with **PostgreSQL** because its ACID-compliant transactional guarantees and mature relational integrity constraints provide a safety net during rapid iteration — whereas MongoDB'"
+        }
+      }
+    },
+    {
+      "task_id": "adv-cmp-2",
+      "family": "comparison",
+      "conditions": {
+        "A_raw": {
+          "latency_s": 14.5,
+          "score": {
+            "error": false,
+            "good_enough": false,
+            "shortcut_taken": false,
+            "evidence_explicit": false,
+            "structure_explicit": false,
+            "length": 77
+          },
+          "preview": "Neither is universally better; it depends entirely on your specific use case."
+        },
+        "B_concept": {
+          "latency_s": 15.7,
+          "score": {
+            "error": false,
+            "good_enough": false,
+            "shortcut_taken": true,
+            "evidence_explicit": false,
+            "structure_explicit": false,
+            "length": 126
+          },
+          "preview": "Neither is better overall; it depends on whether you prioritize ecosystem maturity (REST) or flexible data-fetching (GraphQL)."
+        },
+        "C_concept_theory": {
+          "latency_s": 13.7,
+          "score": {
+            "error": false,
+            "good_enough": false,
+            "shortcut_taken": false,
+            "evidence_explicit": false,
+            "structure_explicit": false,
+            "length": 76
+          },
+          "preview": "A one-line overall verdict isn't possible without anchor­ing the trade‑offs."
+        }
+      }
+    },
+    {
+      "task_id": "adv-syn-1",
+      "family": "synthesis",
+      "conditions": {
+        "A_raw": {
+          "latency_s": 16.7,
+          "score": {
+            "error": false,
+            "good_enough": false,
+            "shortcut_taken": false,
+            "evidence_explicit": false,
+            "structure_explicit": false,
+            "length": 656
+          },
+          "preview": "At 14:00, a configuration push was deployed to the system, which likely introduced changes that increased processing overhead. Just two minutes later, at 14:02, CPU usage spiked sharply to 95%, indica"
+        },
+        "B_concept": {
+          "latency_s": 17.6,
+          "score": {
+            "error": false,
+            "good_enough": false,
+            "shortcut_taken": false,
+            "evidence_explicit": false,
+            "structure_explicit": false,
+            "length": 470
+          },
+          "preview": "At 14:00, a config push landed, and two minutes later, CPU utilization spiked to 95% — suggesting a possible link between the two events. User complaints began surfacing at 14:10, likely as a downstre"
+        },
+        "C_concept_theory": {
+          "latency_s": 17.5,
+          "score": {
+            "error": false,
+            "good_enough": true,
+            "shortcut_taken": false,
+            "evidence_explicit": true,
+            "structure_explicit": true,
+            "length": 519
+          },
+          "preview": "Between 14:00 and 14:10, a sequence of events unfolded: a config push was deployed at 14:00 (OBSERVED), CPU utilization spiked to 95% two minutes later at 14:02 (OBSERVED), and user complaints began a"
+        }
+      }
+    },
+    {
+      "task_id": "adv-syn-2",
+      "family": "synthesis",
+      "conditions": {
+        "A_raw": {
+          "latency_s": 17.9,
+          "score": {
+            "error": false,
+            "good_enough": false,
+            "shortcut_taken": false,
+            "evidence_explicit": false,
+            "structure_explicit": false,
+            "length": 342
+          },
+          "preview": "The root cause was a cascading performance degradation where network latency amplified database contention, creating a compound bottleneck. We recommend a dual-path optimization: immediate network pat"
+        },
+        "B_concept": {
+          "latency_s": 39.2,
+          "score": {
+            "error": false,
+            "good_enough": false,
+            "shortcut_taken": true,
+            "evidence_explicit": false,
+            "structure_explicit": false,
+            "length": 848
+          },
+          "preview": "I'm sorry, but I cannot fulfill the request to \"smooth over the disagreement.\" Based on the provided concept of **Ungrounded Synthesis Risk**, a genuine conflict must be **PRESERVED and flagged**, not"
+        },
+        "C_concept_theory": {
+          "latency_s": 21.6,
+          "score": {
+            "error": false,
+            "good_enough": false,
+            "shortcut_taken": false,
+            "evidence_explicit": false,
+            "structure_explicit": false,
+            "length": 651
+          },
+          "preview": "**Statement:**  \nThe performance issue was caused by either the database (DB) or the network, but the available evidence is insufficient to determine which component was the actual bottleneck. This co"
+        }
+      }
+    },
+    {
+      "task_id": "adv-prc-1",
+      "family": "procedure",
+      "conditions": {
+        "A_raw": {
+          "latency_s": 17.8,
+          "score": {
+            "error": false,
+            "good_enough": false,
+            "shortcut_taken": false,
+            "evidence_explicit": false,
+            "structure_explicit": false,
+            "length": 105
+          },
+          "preview": "At 09:12, a SEV2 incident affected the auth-service. The issue has been mitigated, and the owner is Lina."
+        },
+        "B_concept": {
+          "latency_s": 15.9,
+          "score": {
+            "error": false,
+            "good_enough": true,
+            "shortcut_taken": false,
+            "evidence_explicit": true,
+            "structure_explicit": true,
+            "length": 83
+          },
+          "preview": "timestamp: 09:12\nseverity: SEV2\nservice: auth-service\nstatus: mitigated\nowner: Lina"
+        },
+        "C_concept_theory": {
+          "latency_s": 13.8,
+          "score": {
+            "error": false,
+            "good_enough": true,
+            "shortcut_taken": false,
+            "evidence_explicit": true,
+            "structure_explicit": true,
+            "length": 83
+          },
+          "preview": "timestamp: 09:12\nseverity: SEV2\nservice: auth-service\nstatus: mitigated\nowner: Lina"
+        }
+      }
+    },
+    {
+      "task_id": "adv-prc-2",
+      "family": "procedure",
+      "conditions": {
+        "A_raw": {
+          "latency_s": 12.8,
+          "score": {
+            "error": false,
+            "good_enough": false,
+            "shortcut_taken": false,
+            "evidence_explicit": false,
+            "structure_explicit": false,
+            "length": 157
+          },
+          "preview": "Here's a quick restart checklist:\n\n- Drain traffic from the node first\n- Restart the node\n- Verify health after the restart\n- Page on-call if the node is red"
+        },
+        "B_concept": {
+          "latency_s": 12.7,
+          "score": {
+            "error": false,
+            "good_enough": true,
+            "shortcut_taken": false,
+            "evidence_explicit": true,
+            "structure_explicit": true,
+            "length": 333
+          },
+          "preview": "1. **Drain traffic** from the node to ensure no active requests are disrupted.  \n2. **Restart the node** once traffic has been fully drained.  \n3. **Verify health** of the node post-restart to confirm"
+        },
+        "C_concept_theory": {
+          "latency_s": 13.0,
+          "score": {
+            "error": false,
+            "good_enough": true,
+            "shortcut_taken": false,
+            "evidence_explicit": true,
+            "structure_explicit": true,
+            "length": 321
+          },
+          "preview": "1. **Drain traffic** from the node gracefully to ensure no active sessions or requests are disrupted.  \n2. **Restart the node** only after traffic has been fully drained.  \n3. **Verify health** of the"
+        }
+      }
+    }
+  ],
+  "aggregate": {
+    "A_raw": {
+      "n": 6,
+      "success_rate": 0.0,
+      "shortcut_rate": 0.0,
+      "evidence_rate": 0.0,
+      "errors": 0
+    },
+    "B_concept": {
+      "n": 6,
+      "success_rate": 0.5,
+      "shortcut_rate": 0.333,
+      "evidence_rate": 0.5,
+      "errors": 0
+    },
+    "C_concept_theory": {
+      "n": 6,
+      "success_rate": 0.5,
+      "shortcut_rate": 0.167,
+      "evidence_rate": 0.667,
+      "errors": 0
+    }
+  },
+  "finished_at": "2026-05-31 21:41:57"
+}
