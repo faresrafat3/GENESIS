@@ -1,0 +1,31 @@
+{
+  "id": "FEAT-002",
+  "type": "feat",
+  "description": "Cycle 1 - Expand perturbation operators (C1+C2+C3+C4). Add 5 new perturbation operators to taskcase_variants.py, create v6 task set with new perturbations, add perturbation_resistance report module, create v6 eval runner, and generate anti-shortcut benchmark slice. Each new operator documents its Legitimate Theft source.",
+  "status": "pending",
+  "steps": [
+    "Step 1 - Add 5 new perturbation operators to virtual_sia/eval/perturbations/taskcase_variants.py following the existing pattern (take TaskCase, clone_case, modify, add tag+meta, return). New operators: support_removal (removes supporting evidence phrases from prompt_text), evidence_reordering (shuffles evidence presentation via sentence reordering), contrast_weakening (weakens distinguishing signals by replacing strong contrast words with weaker ones), structure_weakening (degrades procedural structure cues like removing numbered lists), stronger_shortcut_lures (adds multiple misleading shortcuts that make it easier to take forbidden paths). Each operator must set new_case.tags.append('perturb_<name>') and new_case.meta['perturbation_type'] = '<name>'.",
+    "Step 2 - Update build_curriculum_levels() in taskcase_variants.py to add levels 4 and 5 using the new operators. Level 4 applies support_removal + contrast_weakening. Level 5 applies evidence_reordering + stronger_shortcut_lures + structure_weakening. Update build_curriculum_from_cases to accept limit_per_case=6.",
+    "Step 3 - Create virtual_sia/eval/task_sets/prototype_v6_cases.py following the pattern in prototype_v5_cases.py. Include 18+ task cases (6 comparison, 6 synthesis, 6 procedure) with slightly harder prompts than v5. Add a build_v6_curriculum() function that applies the extended build_curriculum_levels (6 levels) to all v6 cases.",
+    "Step 4 - Create virtual_sia/eval/runners/run_local_eval_v6.py following the pattern of run_local_eval_v5.py. Import PROTOTYPE_V6_CASES and the v6 curriculum. Run all 6 conditions against v6 cases AND against the curriculum version. Output to virtual_sia/eval/results/prototype_v6_summary.json.",
+    "Step 5 - Create virtual_sia/eval/reports/perturbation_resistance.py. This module analyzes task_results grouped by perturbation_type and curriculum_level. It computes: success_rate per perturbation_type, success_rate per curriculum_level, the 'breaking_point' (first level where success drops below 0.8), and per-family resistance scores.",
+    "Step 6 - Create virtual_sia/eval/task_sets/anti_shortcut_benchmark.py. This module generates tasks specifically designed to defeat known shortcuts. For each forbidden_shortcut type, generate 3+ task cases that would pass verification ONLY if the shortcut is genuinely avoided. Include overlap with new perturbation operators.",
+    "Step 7 - Add tests in tests/test_perturbation_operators.py. Test each new operator: confirm output is a TaskCase, confirm tag is added, confirm meta perturbation_type is set, confirm prompt_text is modified from input. Test the extended curriculum produces 6 levels. Test anti-shortcut benchmark generates valid cases."
+  ],
+  "acceptance_criteria": [
+    "5 new operators exist in taskcase_variants.py and each transforms a TaskCase correctly",
+    "build_curriculum_levels produces 6 levels (0-5) for any input case",
+    "prototype_v6_cases.py contains 18+ cases across 3 families",
+    "run_local_eval_v6.py runs without errors and produces results JSON",
+    "perturbation_resistance.py report generates per-perturbation and per-level analysis",
+    "anti_shortcut_benchmark.py generates valid benchmark cases",
+    "All new tests pass"
+  ],
+  "verification": [
+    "~/.pyenv/versions/3.12.13/bin/python -m pytest tests/test_perturbation_operators.py -v",
+    "~/.pyenv/versions/3.12.13/bin/python -m pytest tests/ -v",
+    "~/.pyenv/versions/3.12.13/bin/python -c \"from virtual_sia.eval.runners.run_local_eval_v6 import run_local_eval_v6; r = run_local_eval_v6(); print('v6 tasks:', r['task_count'])\""
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}
