@@ -2,7 +2,7 @@
   "id": "FEAT-002",
   "type": "docs",
   "description": "Create all Arabic documentation for the Broader Domain cycle: Legitimate Thefts document (Cycle 4, thefts 5.39+), Broader Domain Cycle Memo, and update Current Regime Status. Each new mechanism must be documented with the theft template (source, what we took, what we left, what we have now).",
-  "status": "pending",
+  "status": "in_progress",
   "steps": [
     "Step 1: Create Virtual_SIA_Legitimate_Thefts_Cycle4_AR.md with thefts 5.39-5.44 covering: 5.39 from Bloom's Taxonomy (analysis as higher-order thinking -> analysis family), 5.40 from Information Extraction literature/Sarawagi 2008 (structured extraction from text -> extraction family), 5.41 from Classical AI Planning/STRIPS/PDDL (multi-step planning with constraints -> planning family), 5.42 from Transfer Learning/Domain Adaptation (Pan & Yang 2010) (measuring concept transfer across domains -> domain_transfer report and transfer_coefficient), 5.43 from Curriculum Learning (Bengio et al 2009) (progressive difficulty across new domains -> broader domain curriculum), 5.44 from Cross-Domain Generalization/Meta-Learning (Thrun 1998) (testing if learned abstractions port to new task families -> portability verdict). Each theft follows the full Arabic template.",
     "Step 2: Create Virtual_SIA_Broader_Domain_Cycle_Memo_AR.md documenting: what Option D means, what was implemented (new families, task sets, eval runner, domain transfer analysis), key findings (does the system generalize?), what concepts transfer and what doesn't, architectural implications. Written in Arabic with section headers.",

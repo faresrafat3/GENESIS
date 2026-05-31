@@ -482,4 +482,31 @@ The mechanism is OFF by default to:
 
 ---
 
+---
+
+## الدورة الرابعة: التوسع المجالي (Option D) - مكتملة
+
+### ما تم إضافته
+- 3 عائلات مهام جديدة: analysis, extraction, planning
+- 18 مهمة جديدة عبر العائلات الثلاث في prototype_v7_broader_domain.py
+- تقرير النقل المفاهيمي (domain_transfer.py) يقيس انتقال المفاهيم عبر المجالات
+- محرك تقييم التوسع المجالي (run_broader_domain_eval.py)
+- تهيئة محرك المفاهيم للعائلات الجديدة (selectivity + strategy)
+- 37 اختبار جديد (المجموع الحالي: 163 اختبار)
+
+### السرقات الشرعية الجديدة
+- 5.39: Bloom's Taxonomy -> عائلة التحليل
+- 5.40: Information Extraction (Sarawagi 2008) -> عائلة الاستخراج
+- 5.41: Classical AI Planning (STRIPS/PDDL) -> عائلة التخطيط
+- 5.42: Transfer Learning (Pan & Yang 2010) -> تقرير النقل المفاهيمي
+- 5.43: Curriculum Learning (Bengio et al 2009) -> منهج التوسع المجالي
+- 5.44: Meta-Learning (Thrun 1998) -> حكم القابلية للنقل
+
+### الحالة الحالية
+- إجمالي السرقات: 5.01 - 5.44
+- إجمالي الاختبارات: 163
+- الدورات المكتملة: Stabilize, Eval Pressure, Anomaly Leverage, Theory Leverage, Broader Domain
+
+---
+
 *End of Current Regime Status*
