@@ -87,3 +87,55 @@ def choose_tier_anomaly_aware(
             decision.expected_immediate_gain = 0.7
 
     return decision
+
+
+def choose_tier_theory_guided(
+    task: TaskObject,
+    blackboard: BlackboardObject,
+    memory_pack: BlackboardMemoryPack,
+    theory_prediction: dict,
+) -> TierDecisionObject:
+    """Theory-guided tier routing that biases toward higher tiers based on theory predictions.
+
+    ## سرقة شرعية (Legitimate Theft)
+
+    المصدر 5.34: Bayesian Epistemology - Howson & Urbach (1989)
+    ما الذي اخذناه؟
+        القرار البايزي: عندما تتنبا النظرية بالصعوبة او الفشل بثقة كافية،
+        يجب تعديل قرار الطبقة ليعكس هذا التنبؤ المسبق (prior).
+        الثقة العالية في التنبؤ تعني تعديلا اقوى للقرار.
+    ما الذي لم ناخذه الان؟
+        الحساب البايزي الكامل مع posterior distribution.
+        لم ناخذ التوازن الدقيق بين التكلفة والعائد المتوقع.
+    ماذا اصبح عندنا؟
+        عند تنبؤ بالصعوبة (confidence >= 0.5): لا يسمح بـ tier_0.
+        عند تنبؤ بالفشل (confidence >= 0.6): يفرض tier_2.
+
+    المصدر 5.38: DevOps Runbook Automation - SRE Practices (Google, 2016)
+    ما الذي اخذناه؟
+        في ادارة الحوادث، التنبؤ بالمشكلة يستدعي تصعيدا استباقيا.
+        Runbook يقول: اذا الانذار المبكر يشير الى فشل محتمل، صعد فورا.
+    ما الذي لم ناخذه الان؟
+        Runbooks كاملة مع خطوات متعددة وتصعيد هرمي.
+    ماذا اصبح عندنا؟
+        قاعدتان بسيطتان للتصعيد الاستباقي المبني على تنبؤ النظرية.
+    """
+    decision = choose_tier(task, blackboard, memory_pack)
+
+    predicts_failure = theory_prediction.get("predicts_failure", False)
+    predicts_difficulty = theory_prediction.get("predicts_difficulty", False)
+    confidence = theory_prediction.get("confidence", 0.0)
+
+    if predicts_failure and confidence >= 0.6:
+        decision.chosen_tier = "tier_2"
+        decision.decision_reason += f"; theory predicts failure (confidence={confidence:.2f}), forcing tier_2"
+        decision.expected_cost = 0.01
+        decision.expected_immediate_gain = 0.9
+    elif predicts_difficulty and confidence >= 0.5:
+        if decision.chosen_tier == "tier_0":
+            decision.chosen_tier = "tier_1"
+            decision.decision_reason += f"; theory predicts difficulty (confidence={confidence:.2f}), preventing tier_0"
+            decision.expected_cost = 0.001
+            decision.expected_immediate_gain = 0.7
+
+    return decision

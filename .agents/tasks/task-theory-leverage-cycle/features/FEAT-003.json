@@ -1,0 +1,27 @@
+{
+  "id": "FEAT-003",
+  "type": "docs",
+  "description": "Create all Arabic documentation: Legitimate Thefts Cycle 3 (5.33-5.38 + extensions), Theory Leverage Memo, and update Regime Status",
+  "status": "pending",
+  "steps": [
+    "Step 1 - Create Virtual_SIA_Legitimate_Thefts_Cycle3_AR.md following the exact format of Virtual_SIA_Legitimate_Thefts_Cycle2_AR.md. Include header, date, scope (Theory Leverage Cycle - Option B). Document thefts 5.33-5.38: 5.33 Popper (falsifiability -> predictive_value metric), 5.34 Bayesian Epistemology (belief updating with evidence -> Laplace smoothing in update_theory_predictive_value), 5.35 Theory-Theory of concepts Gopnik & Wellman 2012 (theory-guided concept activation -> select_applicable_concepts_theory_guided), 5.36 Explanation-Based Learning DeJong & Mooney 1986 (theory-driven generalization -> theory-guided concept admission boost), 5.37 Scientific Realism (novel predictions = truth indicator -> predictive_value as quality signal), 5.38 DevOps Runbook Automation (theory-as-runbook for task routing -> choose_tier_theory_guided). Also document extensions of existing thefts: 6.2 Lakatos extension (theories explain contradictions -> check_theory_explains_contradiction), 6.3 Kuhn extension (theory confidence from prediction track record), 6.8 Predictive Processing extension (theory predictions guide stricter verification -> verify_output_theory_guided). Each entry uses the standard Arabic template with ما الذي أخذناه؟ / ما الذي لم نأخذه الآن؟ / ماذا أصبح عندنا؟",
+    "Step 2 - Create Virtual_SIA_Theory_Leverage_Cycle_Memo_AR.md: implementation decisions document. Sections: 1) Overview (what this cycle adds), 2) Design decisions (why gated, why Laplace smoothing, why token overlap for prediction matching), 3) Architecture (which files modified, new functions), 4) Integration pattern (how it layers with anomaly leverage), 5) Evidence and verification (test results, baseline preservation), 6) What we DID NOT do (full Bayesian networks, dynamic thresholds, theory competition/selection pressure)",
+    "Step 3 - Update Virtual_SIA_Current_Regime_Status_AR.md: Add new Section 11 'Theory Leverage Mechanism (Cycle 3 - Local Theory Leverage)' following the format of Section 8 (Anomaly Leverage). Include subsections for: 11.1 Theory Predictive Value (B4), 11.2 Theory-Contradiction Interaction (B5), 11.3 Theory-Guided Verification (B1), 11.4 Theory-Guided Concept Activation (B2), 11.5 Theory-Guided Routing (B3), 11.6 Pipeline Integration, 11.7 Gating Decision. Update the regime summary table (Section 10) to add use_theory_leverage=False as frozen default, and add Runtime rows for theory-guided verification/routing/concept activation."
+  ],
+  "acceptance_criteria": [
+    "Virtual_SIA_Legitimate_Thefts_Cycle3_AR.md exists with 6 new thefts (5.33-5.38) + 3 extensions",
+    "Each theft entry has all 3 Arabic sections properly filled",
+    "Virtual_SIA_Theory_Leverage_Cycle_Memo_AR.md exists with implementation decisions",
+    "Virtual_SIA_Current_Regime_Status_AR.md has new Section 11 with theory leverage details",
+    "Regime summary table updated with new theory leverage entries",
+    "All documentation is in Arabic (with English technical terms where appropriate)"
+  ],
+  "verification": [
+    "Run: grep -c '###' Virtual_SIA_Legitimate_Thefts_Cycle3_AR.md - should show multiple section headers",
+    "Run: grep 'ما الذي أخذناه' Virtual_SIA_Legitimate_Thefts_Cycle3_AR.md | wc -l - should be 9+ (6 thefts + 3 extensions)",
+    "Run: grep 'use_theory_leverage' Virtual_SIA_Current_Regime_Status_AR.md - should find matches",
+    "Run: grep '11\\.' Virtual_SIA_Current_Regime_Status_AR.md | head -10 - should show Section 11 subsections"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}

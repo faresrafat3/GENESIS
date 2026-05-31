@@ -19,6 +19,10 @@ class LocalTheoryObject(BaseObject):
     predictive_claims: List[str] = field(default_factory=list)
     prescriptive_implications: List[str] = field(default_factory=list)
     confidence_score: Optional[float] = None
+    predictive_value: float = 0.5
+    prediction_count: int = 0
+    correct_predictions: int = 0
+    explanatory_power: float = 0.0
 
     @classmethod
     def create(cls, name: str, core_question: str) -> "LocalTheoryObject":

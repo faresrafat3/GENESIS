@@ -141,3 +141,108 @@ def build_concept_hints(concepts: Iterable[ConceptCard]) -> list[str]:
     for concept in concepts:
         hints.append(f"{concept.name}: {concept.operational_meaning}")
     return hints
+
+
+def select_applicable_concepts_theory_guided(
+    task_family: str,
+    task_text: str,
+    concepts: Iterable[ConceptCard],
+    theory: "LocalTheoryObject",
+    limit: int | None = None,
+    min_overlap: int | None = None,
+    min_activation_score: int | None = None,
+    task_contract: Mapping[str, Any] | None = None,
+) -> tuple[List[ConceptCard], List[ConceptActivationDecision]]:
+    """Theory-guided concept activation that boosts theory-aligned concepts.
+
+    ## سرقة شرعية (Legitimate Theft)
+
+    المصدر 5.35: Theory-Theory of Concepts - Gopnik & Wellman (1994)
+    ما الذي اخذناه؟
+        المفاهيم ليست مجرد تصنيفات بل هي جزء من نظريات ضمنية.
+        النظرية توجه اختيار المفاهيم ذات الصلة: المفاهيم المرتبطة بالنظرية
+        تحصل على تفعيل اقوى لانها جزء من اطار تفسيري متماسك.
+    ما الذي لم ناخذه الان؟
+        البنية الكاملة للنظريات الضمنية عند الاطفال والبالغين.
+        لم ناخذ التحولات المفاهيمية الكاملة (conceptual change).
+    ماذا اصبح عندنا؟
+        المفاهيم المذكورة في concept_refs للنظرية تحصل على دفعة +3
+        في درجة التفعيل.
+
+    المصدر 5.36: Explanation-Based Learning - DeJong & Mooney (1986)
+    ما الذي اخذناه؟
+        التعلم المبني على التفسير: النظرية تسمح بادخال مفاهيم
+        لم تكن لتفعل بدونها، لان النظرية توفر تفسيرا لملاءمتها.
+        المفاهيم القريبة من العتبة تدخل اذا كانت مرتبطة بالنظرية.
+    ما الذي لم ناخذه الان؟
+        التعميم الكامل من مثال واحد والتفسير السببي الكامل.
+    ماذا اصبح عندنا؟
+        المفاهيم غير المختارة التي درجتها قريبة من الحد الادنى (ضمن 2)
+        تدخل اذا كانت في concept_refs للنظرية (theory-guided admission).
+    """
+    from ...core.objects.theory import LocalTheoryObject as _TheoryType  # noqa: F811
+
+    selected, decisions = select_applicable_concepts(
+        task_family, task_text, concepts,
+        limit=limit, min_overlap=min_overlap,
+        min_activation_score=min_activation_score,
+        task_contract=task_contract,
+    )
+
+    theory_concept_refs = set(theory.concept_refs) if theory.concept_refs else set()
+    if not theory_concept_refs:
+        return selected, decisions
+
+    # Determine family min score for theory-guided admission
+    _, fam_min_score, _ = _family_policy(task_family, limit, min_activation_score)
+
+    # Boost selected concepts that are in theory refs + admit near-threshold concepts
+    admitted: List[ConceptCard] = []
+    updated_decisions: List[ConceptActivationDecision] = []
+
+    for decision in decisions:
+        if decision.concept_ref in theory_concept_refs:
+            if decision.selected:
+                # Boost score
+                new_decision = ConceptActivationDecision(
+                    concept_ref=decision.concept_ref,
+                    activation_score=decision.activation_score + 3,
+                    family_fit=decision.family_fit,
+                    contract_fit=decision.contract_fit,
+                    semantic_fit=decision.semantic_fit,
+                    redundancy_penalty=decision.redundancy_penalty,
+                    selected=True,
+                    rank=decision.rank,
+                    family=decision.family,
+                    notes=decision.notes + " [theory_boost]",
+                )
+                updated_decisions.append(new_decision)
+            elif decision.activation_score >= (fam_min_score - 2):
+                # Theory-guided admission
+                new_decision = ConceptActivationDecision(
+                    concept_ref=decision.concept_ref,
+                    activation_score=decision.activation_score + 3,
+                    family_fit=decision.family_fit,
+                    contract_fit=decision.contract_fit,
+                    semantic_fit=decision.semantic_fit,
+                    redundancy_penalty=decision.redundancy_penalty,
+                    selected=True,
+                    rank=decision.rank,
+                    family=decision.family,
+                    notes=decision.notes + " [theory_admission]",
+                )
+                updated_decisions.append(new_decision)
+                admitted.append(decision.concept_ref)
+            else:
+                updated_decisions.append(decision)
+        else:
+            updated_decisions.append(decision)
+
+    # Resolve admitted concepts back to ConceptCard objects
+    if admitted:
+        all_concepts_list = list(concepts) if not isinstance(concepts, list) else concepts
+        for concept in all_concepts_list:
+            if concept.id in admitted and concept not in selected:
+                selected.append(concept)
+
+    return selected, updated_decisions

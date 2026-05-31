@@ -211,3 +211,97 @@ def verify_output_anomaly_aware(
     }
     strict_result["anomaly_severity_applied"] = anomaly_severity
     return strict_result
+
+
+def verify_output_theory_guided(
+    task_family: str,
+    output_text: str,
+    theory_prediction: dict,
+    framing_candidates: Iterable[str] | None = None,
+    task_contract: Dict[str, Any] | None = None,
+) -> Dict[str, Any]:
+    """Theory-guided verification that applies stricter checks when theory predicts failure or difficulty.
+
+    ## سرقة شرعية (Legitimate Theft)
+
+    المصدر 6.8: Predictive Processing / Active Inference (Friston, 2010)
+    ما الذي اخذناه؟
+        عندما تتنبا النظرية بالفشل، يرتفع خطا التنبؤ المتوقع.
+        النظام يشدد معايير القبول استباقيا بناء على تنبؤ النظرية
+        تماما كما يشدد الدماغ التحقق عند توقع مفاجاة.
+    ما الذي لم ناخذه الان؟
+        التكامل الكامل بين تنبؤ النظرية وتنبؤ الشذوذ في نموذج واحد.
+    ماذا اصبح عندنا؟
+        دالة تحقق تشدد معاييرها عندما تتنبا النظرية بالفشل:
+        تتطلب ضرب علامتين اوليتين ونجاح كل الخصائص.
+        عند توقع الصعوبة فقط: تتطلب ضرب علامة ثانوية اضافية.
+
+    المصدر 5.33: Popper - Falsifiability (1934)
+    ما الذي اخذناه؟
+        التنبؤ الصادر من النظرية يجب ان يؤثر على عملية التحقق.
+        اذا تنبات النظرية بالفشل ونجحت المهمة، هذا دليل ضد النظرية.
+        اذا تنبات بالفشل وفشلت المهمة فعلا، هذا يعزز النظرية.
+    ما الذي لم ناخذه الان؟
+        آلية تكذيب النظرية الكامل عند فشل تنبؤاتها المتكرر.
+    ماذا اصبح عندنا؟
+        تشديد التحقق المبني على تنبؤ النظرية يجعل الفشل اكثر قابلية للاكتشاف.
+    """
+    base_result = verify_output(
+        task_family, output_text,
+        framing_candidates=framing_candidates,
+        task_contract=task_contract,
+    )
+
+    predicts_failure = theory_prediction.get("predicts_failure", False)
+    predicts_difficulty = theory_prediction.get("predicts_difficulty", False)
+
+    if not predicts_failure and not predicts_difficulty:
+        base_result["theory_guided"] = False
+        return base_result
+
+    # Apply stricter checks based on theory prediction
+    normalized = output_text.lower()
+    property_checks = base_result.get("property_checks", {})
+    primary_markers = _markers_for_family(task_family)
+    candidate_families = list(framing_candidates or [])
+    secondary_markers = _markers_for_secondary([f for f in candidate_families if f != task_family])
+
+    schema_ok = base_result["schema_checks"]["passed"]
+    shortcut_checks = base_result.get("shortcut_checks", {})
+    shortcuts_ok = not any(shortcut_checks.values())
+
+    if predicts_failure:
+        # Strict mode: require 2 primary markers AND all properties
+        required_ok = all(property_checks.values()) if property_checks else True
+        primary_hits_count = sum(1 for marker in primary_markers if marker in normalized) if primary_markers else 0
+        strict_primary_hit = primary_hits_count >= 2 if primary_markers else len(output_text) > 50
+        strict_evidence_ok = required_ok and strict_primary_hit
+    else:
+        # Difficulty mode: base evidence + require secondary marker hit
+        primary_hit = base_result["evidence_checks"]["passed"]
+        secondary_hit = any(marker in normalized for marker in secondary_markers) if secondary_markers else True
+        strict_evidence_ok = primary_hit and secondary_hit
+        primary_hits_count = sum(1 for marker in primary_markers if marker in normalized) if primary_markers else 0
+        strict_primary_hit = primary_hits_count >= 1 if primary_markers else True
+
+    secondary_hit = any(marker in normalized for marker in secondary_markers) if secondary_markers else False
+    strict_good_enough = schema_ok and strict_evidence_ok and shortcuts_ok
+
+    strict_result = dict(base_result)
+    strict_result["evidence_checks"] = {
+        "passed": strict_evidence_ok,
+        "primary_hit": strict_primary_hit,
+        "primary_hits_count": primary_hits_count,
+        "secondary_hit": secondary_hit,
+        "framing_candidates_used": candidate_families,
+        "theory_strict_mode": True,
+        "theory_predicts_failure": predicts_failure,
+        "theory_predicts_difficulty": predicts_difficulty,
+    }
+    strict_result["verification_summary"] = {
+        "good_enough": strict_good_enough,
+        "task_family": task_family,
+        "theory_guided": True,
+    }
+    strict_result["theory_guided"] = True
+    return strict_result

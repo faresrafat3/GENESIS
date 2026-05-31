@@ -8,13 +8,14 @@ from ..concept_engine.registry import InMemoryConceptRegistry
 from ..contradiction_runtime.service import detect_contradictions
 from ..economy_control.escalation import should_escalate, should_escalate_anomaly_aware
 from ..economy_control.ledger import InMemoryLedgerStore
-from ..economy_control.router import choose_tier, choose_tier_anomaly_aware
+from ..economy_control.router import choose_tier, choose_tier_anomaly_aware, choose_tier_theory_guided
 from ..memory_os.retriever import retrieve_memory
 from ..memory_os.store import InMemoryMemoryStore
 from ..reasoning_runtime.service import run_reasoning
 from ..task_ingress.service import ingest_task
 from ..theory_runtime.registry import InMemoryTheoryRegistry
-from ..verification_runtime.service import is_good_enough, verify_output, verify_output_anomaly_aware
+from ..theory_runtime.apply import select_applicable_theories, get_theory_prediction_for_task, update_theory_predictive_value, check_theory_explains_contradiction
+from ..verification_runtime.service import is_good_enough, verify_output, verify_output_anomaly_aware, verify_output_theory_guided
 
 
 def run_minimal_pipeline(
@@ -29,6 +30,7 @@ def run_minimal_pipeline(
     theory_registry: InMemoryTheoryRegistry | None = None,
     use_concepts: bool = False,
     use_anomaly_leverage: bool = False,
+    use_theory_leverage: bool = False,
 ) -> dict:
     store = store or InMemoryMemoryStore()
     ledger_store = ledger_store or InMemoryLedgerStore()
@@ -92,12 +94,34 @@ def run_minimal_pipeline(
                     )
         anomaly_severity = compute_anomaly_severity_score(previous_anomaly_candidates)
 
+    # Compute theory prediction if theory leverage is enabled
+    theory_prediction = None
+    active_theory = None
+    if use_theory_leverage:
+        applicable_theories = select_applicable_theories(task.task_family, theory_items)
+        if applicable_theories:
+            active_theory = applicable_theories[0]
+            theory_prediction = get_theory_prediction_for_task(
+                active_theory, task.task_family, task.normalized_text
+            )
+
     if forced_tier is not None:
         tier_decision = choose_tier(task, blackboard, memory_pack)
         tier_decision.chosen_tier = forced_tier
         tier_decision.decision_reason = f"forced tier: {forced_tier}"
     elif use_economy:
-        if use_anomaly_leverage and anomaly_severity > 0:
+        # Theory leverage applies first, then anomaly leverage layers on top
+        if use_theory_leverage and theory_prediction and (theory_prediction["predicts_difficulty"] or theory_prediction["predicts_failure"]):
+            tier_decision = choose_tier_theory_guided(task, blackboard, memory_pack, theory_prediction=theory_prediction)
+            # Layer anomaly on top of theory-guided decision if both are active
+            if use_anomaly_leverage and anomaly_severity > 0:
+                if anomaly_severity > 0.7:
+                    tier_decision.chosen_tier = "tier_2"
+                    tier_decision.decision_reason += f"; anomaly_severity={anomaly_severity:.2f} forces tier_2"
+                elif anomaly_severity > 0.4 and tier_decision.chosen_tier == "tier_0":
+                    tier_decision.chosen_tier = "tier_1"
+                    tier_decision.decision_reason += f"; anomaly_severity={anomaly_severity:.2f} prevents tier_0"
+        elif use_anomaly_leverage and anomaly_severity > 0:
             tier_decision = choose_tier_anomaly_aware(task, blackboard, memory_pack, anomaly_severity=anomaly_severity)
         else:
             tier_decision = choose_tier(task, blackboard, memory_pack)
@@ -115,13 +139,35 @@ def run_minimal_pipeline(
     )
     blackboard.candidate_claims = reasoning["candidate_claims"]
 
-    verification = verify_output_anomaly_aware(
-        task.task_family,
-        blackboard.candidate_claims[0]["claim_text"],
-        anomaly_severity=anomaly_severity if use_anomaly_leverage else 0.0,
-        framing_candidates=family_candidates,
-        task_contract=task_contract,
-    )
+    # Verification: theory-guided first, then anomaly-aware layers on top
+    if use_theory_leverage and theory_prediction and (theory_prediction["predicts_difficulty"] or theory_prediction["predicts_failure"]):
+        verification = verify_output_theory_guided(
+            task.task_family,
+            blackboard.candidate_claims[0]["claim_text"],
+            theory_prediction=theory_prediction,
+            framing_candidates=family_candidates,
+            task_contract=task_contract,
+        )
+        # Layer anomaly-aware on top if both active
+        if use_anomaly_leverage and anomaly_severity > 0.5:
+            anomaly_verification = verify_output_anomaly_aware(
+                task.task_family,
+                blackboard.candidate_claims[0]["claim_text"],
+                anomaly_severity=anomaly_severity,
+                framing_candidates=family_candidates,
+                task_contract=task_contract,
+            )
+            # Take the stricter result
+            if not anomaly_verification["verification_summary"]["good_enough"]:
+                verification = anomaly_verification
+    else:
+        verification = verify_output_anomaly_aware(
+            task.task_family,
+            blackboard.candidate_claims[0]["claim_text"],
+            anomaly_severity=anomaly_severity if use_anomaly_leverage else 0.0,
+            framing_candidates=family_candidates,
+            task_contract=task_contract,
+        )
     blackboard.verification_state = verification
     blackboard.contradictions = [c.to_dict() for c in detect_contradictions(task, verification, tier_decision)]
 
@@ -152,13 +198,32 @@ def run_minimal_pipeline(
             framing_candidates=family_candidates,
         )
         blackboard.candidate_claims = escalated_reasoning["candidate_claims"]
-        verification = verify_output_anomaly_aware(
-            task.task_family,
-            blackboard.candidate_claims[0]["claim_text"],
-            anomaly_severity=anomaly_severity if use_anomaly_leverage else 0.0,
-            framing_candidates=family_candidates,
-            task_contract=task_contract,
-        )
+        if use_theory_leverage and theory_prediction and (theory_prediction["predicts_difficulty"] or theory_prediction["predicts_failure"]):
+            verification = verify_output_theory_guided(
+                task.task_family,
+                blackboard.candidate_claims[0]["claim_text"],
+                theory_prediction=theory_prediction,
+                framing_candidates=family_candidates,
+                task_contract=task_contract,
+            )
+            if use_anomaly_leverage and anomaly_severity > 0.5:
+                anomaly_verification = verify_output_anomaly_aware(
+                    task.task_family,
+                    blackboard.candidate_claims[0]["claim_text"],
+                    anomaly_severity=anomaly_severity,
+                    framing_candidates=family_candidates,
+                    task_contract=task_contract,
+                )
+                if not anomaly_verification["verification_summary"]["good_enough"]:
+                    verification = anomaly_verification
+        else:
+            verification = verify_output_anomaly_aware(
+                task.task_family,
+                blackboard.candidate_claims[0]["claim_text"],
+                anomaly_severity=anomaly_severity if use_anomaly_leverage else 0.0,
+                framing_candidates=family_candidates,
+                task_contract=task_contract,
+            )
         blackboard.verification_state = verification
         blackboard.contradictions = [c.to_dict() for c in detect_contradictions(task, verification, tier_decision)]
         reasoning = escalated_reasoning
@@ -179,6 +244,22 @@ def run_minimal_pipeline(
         "blackboard": blackboard.to_dict(),
         "ledger": ledger.to_dict(),
     })]
+
+    # Theory leverage post-processing: update predictive value and check contradiction explanations
+    if use_theory_leverage and active_theory and theory_prediction:
+        # Determine if prediction was correct
+        actual_good_enough = verification["verification_summary"]["good_enough"]
+        if theory_prediction["predicts_failure"]:
+            prediction_correct = not actual_good_enough
+        elif theory_prediction["predicts_difficulty"]:
+            prediction_correct = not actual_good_enough
+        else:
+            prediction_correct = actual_good_enough
+        update_theory_predictive_value(active_theory, prediction_correct)
+
+        # Check if theory explains any contradictions
+        for contradiction_dict in blackboard.contradictions:
+            check_theory_explains_contradiction(active_theory, contradiction_dict)
 
     episode_memory = MemoryUnit.create(
         summary=f"Task {task.task_family} finished with good_enough={verification['verification_summary']['good_enough']} on {final_tier}",
@@ -226,4 +307,7 @@ def run_minimal_pipeline(
         "used_theories_count": len(memory_pack.theory_refs),
         "anomaly_severity": anomaly_severity,
         "use_anomaly_leverage": use_anomaly_leverage,
+        "use_theory_leverage": use_theory_leverage,
+        "theory_prediction": theory_prediction,
+        "theory_predictive_value": active_theory.predictive_value if active_theory else None,
     }
