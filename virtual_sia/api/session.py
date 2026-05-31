@@ -4,6 +4,7 @@ from __future__ import annotations
 import threading
 import uuid
 from datetime import datetime, timezone
+from typing import Optional
 
 from ..core.objects.identity import AgentIdentityObject
 from ..runtime.concept_engine.registry import InMemoryConceptRegistry
@@ -16,13 +17,27 @@ from ..runtime.theory_runtime.registry import InMemoryTheoryRegistry
 class Session:
     """Represents a single user session with isolated state."""
 
-    def __init__(self) -> None:
+    def __init__(self, config: Optional["APIConfig"] = None) -> None:
+        from .config import APIConfig
+
         self.id: str = str(uuid.uuid4())
         self.created_at: str = datetime.now(timezone.utc).isoformat()
         self.state: str = "active"
-        self.memory_store: InMemoryMemoryStore = InMemoryMemoryStore()
-        self.concept_registry: InMemoryConceptRegistry = InMemoryConceptRegistry()
-        self.theory_registry: InMemoryTheoryRegistry = InMemoryTheoryRegistry()
+
+        if config and config.use_persistence:
+            from ..persistence import (
+                SQLiteMemoryStore,
+                SQLiteConceptRegistry,
+                SQLiteTheoryRegistry,
+            )
+            self.memory_store = SQLiteMemoryStore(config.db_path)
+            self.concept_registry = SQLiteConceptRegistry(config.db_path)
+            self.theory_registry = SQLiteTheoryRegistry(config.db_path)
+        else:
+            self.memory_store = InMemoryMemoryStore()
+            self.concept_registry = InMemoryConceptRegistry()
+            self.theory_registry = InMemoryTheoryRegistry()
+
         self.ledger_store: InMemoryLedgerStore = InMemoryLedgerStore()
         self.identity: AgentIdentityObject = AgentIdentityObject.create(
             commitments=["accuracy", "coherence", "ethical_alignment"],

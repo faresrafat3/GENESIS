@@ -233,6 +233,13 @@ def stronger_shortcut_lures(case: TaskCase) -> TaskCase:
 
 
 def build_curriculum_levels(case: TaskCase) -> list[TaskCase]:
+    from .contract_perturbations import (
+        contract_flip,
+        contract_tightening_strict,
+        counterfactual_contract,
+        property_addition,
+    )
+
     base = clone_case(case)
     base.tags.append("curriculum_level_0")
     base.meta["curriculum_level"] = 0
@@ -273,10 +280,24 @@ def build_curriculum_levels(case: TaskCase) -> list[TaskCase]:
     l5.meta["curriculum_level"] = 5
     levels.append(l5)
 
+    # Level 6: contract_flip + property_addition (contract pressure on top of text pressure)
+    l6 = contract_flip(l5)
+    l6 = property_addition(l6)
+    l6.tags.append("curriculum_level_6")
+    l6.meta["curriculum_level"] = 6
+    levels.append(l6)
+
+    # Level 7: counterfactual_contract + contract_tightening_strict (maximum contract pressure)
+    l7 = counterfactual_contract(l6)
+    l7 = contract_tightening_strict(l7)
+    l7.tags.append("curriculum_level_7")
+    l7.meta["curriculum_level"] = 7
+    levels.append(l7)
+
     return levels
 
 
-def build_curriculum_from_cases(cases: Iterable[TaskCase], limit_per_case: int = 6) -> List[TaskCase]:
+def build_curriculum_from_cases(cases: Iterable[TaskCase], limit_per_case: int = 8) -> List[TaskCase]:
     all_cases: List[TaskCase] = []
     for case in cases:
         levels = build_curriculum_levels(case)

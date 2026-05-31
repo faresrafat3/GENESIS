@@ -203,7 +203,7 @@ class TestExtendedCurriculum:
     def test_produces_6_levels(self):
         case = _make_sample_case()
         levels = build_curriculum_levels(case)
-        assert len(levels) == 6
+        assert len(levels) == 8
 
     def test_each_level_is_task_case(self):
         case = _make_sample_case()
@@ -221,8 +221,8 @@ class TestExtendedCurriculum:
     def test_build_curriculum_from_cases_default_limit(self):
         cases = [_make_sample_case(), _make_synthesis_case(), _make_procedure_case()]
         result = build_curriculum_from_cases(cases)
-        # Default limit_per_case=6, 3 cases -> 18 variants
-        assert len(result) == 18
+        # Default limit_per_case=8, 3 cases -> 24 variants
+        assert len(result) == 24
 
     def test_build_curriculum_from_cases_custom_limit(self):
         cases = [_make_sample_case()]

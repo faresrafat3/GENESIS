@@ -582,4 +582,65 @@ The mechanism is OFF by default to:
 
 ---
 
+## 14. Real-World Upgrades (Cycle 5)
+
+> Added: 2026-05-31
+> Source: Real-World Upgrades Task
+> Status: Implemented
+
+### 14.1 Contract-Level Perturbations
+
+- **File**: `virtual_sia/eval/perturbations/contract_perturbations.py`
+- **Operators**: property_addition, property_removal, shortcut_injection, contract_flip, contract_tightening_strict, counterfactual_contract
+- **Source**: 5.65-5.68 (CheckList, Contrast Sets, Counterfactual Data, Dynabench)
+- **Curriculum**: Levels 6-7 added (contract perturbations on top of prompt perturbations)
+
+### 14.2 SQLite Persistent Storage
+
+- **Package**: `virtual_sia/persistence/`
+- **Stores**: SQLiteMemoryStore, SQLiteConceptRegistry, SQLiteTheoryRegistry, SQLiteIdentityStore
+- **Checkpointing**: save_checkpoint/load_checkpoint for full session state
+- **Source**: 5.69-5.72 (Mem0, MemGPT, LangGraph, SQLite WAL)
+- **Gating**: `use_persistence=False` (default OFF)
+
+### 14.3 Real LLM Evaluation
+
+- **File**: `virtual_sia/eval/runners/run_real_llm_eval.py`
+- **Reasoning**: `virtual_sia/api/llm_reasoning.py`
+- **Model**: openrouter/owl-alpha via OpenRouter API
+- **Source**: 5.73-5.75 (SWE-bench, LATS, DSPy)
+- **Conditions**:
+  - A_raw: prompt فقط بدون اضافات
+  - B_concept: prompt + concept_hints
+  - C_full: prompt + concept_hints + theory_hints
+- **Metrics**: concept_lift, theory_lift, total_lift
+- **Cost tracking**: مدمج في LLMAdapter
+- **Status**: جاهز للتشغيل عبر `if __name__ == '__main__'`
+
+### 14.4 Updated Config Constants
+
+| Constant | Value | Purpose |
+|----------|-------|---------|
+| OPENROUTER_BASE_URL | https://openrouter.ai/api/v1/chat/completions | API endpoint |
+| DEFAULT_MODEL | openrouter/owl-alpha | Default LLM model |
+| model_mapping (all tiers) | openrouter/owl-alpha | Unified model for evaluation |
+
+### 14.5 Legitimate Thefts (5.65-5.75)
+
+| Theft | Source | What We Took |
+|-------|--------|-------------|
+| 5.65 | CheckList (Ribeiro 2020) | Minimum functionality tests |
+| 5.66 | Contrast Sets (Gardner 2020) | Minimal edits for closest failure |
+| 5.67 | Counterfactual Data (Kaushik 2020) | Same text, reversed label |
+| 5.68 | Dynabench (Kiela 2021) | Dynamic adversarial benchmark |
+| 5.69 | Mem0 (2024) | Memory CRUD lifecycle |
+| 5.70 | MemGPT/Letta (Packer 2023) | Memory as OS hierarchy |
+| 5.71 | LangGraph Persistence (2024) | State checkpointing |
+| 5.72 | SQLite WAL | Zero-dependency ACID storage |
+| 5.73 | SWE-bench (Jimenez 2024) | Real-task A/B evaluation |
+| 5.74 | LATS (Zhou 2024) | Comparing reasoning strategies |
+| 5.75 | DSPy (Khattab 2024) | Metric-driven prompt optimization |
+
+---
+
 *End of Current Regime Status*

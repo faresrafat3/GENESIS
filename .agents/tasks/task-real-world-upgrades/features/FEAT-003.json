@@ -1,0 +1,32 @@
+{
+  "id": "FEAT-003",
+  "type": "feat",
+  "description": "Real LLM Evaluation with OpenRouter: Enhance LLM adapter with cost tracking, create reasoning module that builds prompts with concept/theory hints, create real eval runner that compares 3 conditions (raw, concept-aware, full governance) using actual LLM calls. Document thefts 5.73-5.75 from SWE-bench, LATS, DSPy. Update regime status doc.",
+  "status": "completed",
+  "steps": [
+    "Update virtual_sia/api/llm_adapter.py: set default model to 'openrouter/owl-alpha' for all tiers in config, add cost_tracking dict to LLMAdapter (total_calls, total_cost_estimate, per_model_calls), add generate_with_tracking() method that wraps generate() and records cost, add get_cost_report() method.",
+    "Update virtual_sia/api/config.py: change model_mapping to use 'openrouter/owl-alpha' for all tiers, add OPENROUTER_API_KEY and OPENROUTER_BASE_URL constants.",
+    "Create virtual_sia/api/llm_reasoning.py with: generate_with_concepts(task_text, concept_hints, theory_hints, model, api_key) function that builds a structured prompt including task + concept hints + theory hints, calls OpenRouter via urllib.request, returns the generated response. Include prompt templates for each condition (raw, concept-aware, full governance).",
+    "Create virtual_sia/eval/runners/run_real_llm_eval.py with: select 6 tasks (2 per family from existing task sets), run each through 3 conditions (A: raw prompt to LLM, B: prompt + concept_hints, C: prompt + concept_hints + theory_hints), call OpenRouter API for real responses, verify real responses against task contracts using verify_output(), compute real success rates, output results to virtual_sia/eval/results/real_llm_eval_summary.json. Include if __name__ == '__main__' block. Add graceful error handling and small delays between calls.",
+    "Create tests/test_real_llm.py with 10+ tests (ALL mocked - no actual API calls): test LLM adapter HTTP request structure (mock urlopen), test prompt building with/without concepts in llm_reasoning, test response parsing for various formats, test cost tracking accumulation, test error handling for network failures, test generate_with_concepts builds correct prompt, test eval runner task selection logic, test eval runner result structure.",
+    "Add thefts 5.73-5.75 to Virtual_SIA_Legitimate_Thefts_RealWorld_AR.md (SWE-bench, LATS, DSPy).",
+    "Create Virtual_SIA_Real_LLM_Eval_Memo_AR.md in Arabic explaining the evaluation methodology.",
+    "Update Virtual_SIA_Current_Regime_Status_AR.md with new capabilities section."
+  ],
+  "acceptance_criteria": [
+    "LLM adapter has cost tracking and uses openrouter/owl-alpha model",
+    "llm_reasoning.py generates prompts with concept/theory hints",
+    "run_real_llm_eval.py is runnable with if __name__ == '__main__' but NOT auto-run in tests",
+    "tests/test_real_llm.py has 10+ tests all passing with mocked HTTP",
+    "All original 297 tests still pass",
+    "API key read from OPENROUTER_API_KEY env var with fallback",
+    "Thefts 5.73-5.75 documented in Arabic",
+    "Real LLM eval memo and regime status updated"
+  ],
+  "verification": [
+    "~/.pyenv/versions/3.12.13/bin/python -m pytest tests/test_real_llm.py -v",
+    "~/.pyenv/versions/3.12.13/bin/python -m pytest tests/ -q (all tests pass)"
+  ],
+  "blocked_reason": null,
+  "findings": "All 408 tests pass (381 original + 27 new). Added use_config_fallback parameter to LLMAdapter to maintain backward compatibility with existing tests that expect mock behavior when no key is provided. The config constants OPENROUTER_API_KEY, OPENROUTER_BASE_URL, DEFAULT_MODEL are used directly by llm_reasoning.py and run_real_llm_eval.py. Existing test_api.py tests continue passing unchanged."
+}

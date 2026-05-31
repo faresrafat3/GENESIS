@@ -1,0 +1,28 @@
+{
+  "id": "FEAT-004",
+  "type": "fix",
+  "description": "Address semantic review findings: persistent connections in SQLite stores, fix redundant prompt construction, add schema initialization guard, restore _tick from DB, handle LLM error responses in eval runner.",
+  "status": "completed",
+  "steps": [
+    "Fix persistence stores (sqlite_store.py, sqlite_concept_registry.py, sqlite_theory_registry.py, sqlite_identity_store.py) to use a persistent connection per instance with close() method",
+    "Add module-level set in migrations.py to track which db_paths have been initialized, skipping redundant DDL",
+    "In SQLiteMemoryStore.__init__, restore _tick from SELECT MAX(last_accessed) FROM memories",
+    "Fix run_single_condition in run_real_llm_eval.py to call _call_openrouter directly with the locally-built prompt",
+    "In run_single_condition, check if response starts with [LLM_ERROR] and short-circuit verification",
+    "Run all tests to verify nothing is broken"
+  ],
+  "acceptance_criteria": [
+    "All 408 tests still pass",
+    "Each SQLite store opens one connection in __init__ and reuses it",
+    "Each SQLite store has a close() method",
+    "initialize_database only runs DDL once per db_path per process",
+    "SQLiteMemoryStore restores _tick from max(last_accessed) on construction",
+    "run_single_condition uses the locally-built prompt directly via _call_openrouter",
+    "LLM error responses are detected and short-circuit verification with error field"
+  ],
+  "verification": [
+    "~/.pyenv/versions/3.12.13/bin/python -m pytest tests/ -q"
+  ],
+  "blocked_reason": null,
+  "findings": "All 408 tests pass. Persistent connections eliminate repeated connect/close cycles. The _initialized_paths set avoids DDL re-execution. _tick restoration ensures decay semantics are correct across restarts. The eval runner now sends the correct condition-specific prompt directly via _call_openrouter. LLM errors are detected early and bypass verification."
+}
