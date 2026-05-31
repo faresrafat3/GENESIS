@@ -87,6 +87,12 @@ def retrieve_memory(
         elif item.memory_type == "episodic" and len(episodic) < budget:
             episodic.append(item.id)
 
+    # Record retrieval access on selected memories
+    selected_ids = set(episodic + semantic + procedural + negative)
+    for item in store_items:
+        if item.id in selected_ids:
+            item.access_count += 1
+
     for concept in applicable_concepts:
         concept_refs.append(concept.id)
     for theory in applicable_theories:

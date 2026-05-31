@@ -57,10 +57,11 @@ def run_minimal_pipeline(
     if use_productive_forgetting:
         store.apply_decay(0.05)
 
+    store_items = store.get_active_memories() if use_productive_forgetting else store.all()
     memory_pack = retrieve_memory(
         task.task_family,
         task.normalized_text,
-        store.all(),
+        store_items,
         budget=3,
         concept_items=concept_items,
         theory_items=theory_items,

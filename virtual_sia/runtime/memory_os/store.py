@@ -9,6 +9,7 @@ class InMemoryMemoryStore:
     def __init__(self) -> None:
         self._items: Dict[str, MemoryUnit] = {}
         self._tick: int = 0
+        self._last_decay_tick: int = -1
 
     def store_memory(self, unit: MemoryUnit) -> MemoryUnit:
         self._tick += 1
@@ -23,12 +24,18 @@ class InMemoryMemoryStore:
         return list(self._items.values())
 
     def apply_decay(self, decay_rate: float = 0.05) -> None:
-        """Reduce decay_score for all active memories based on staleness."""
+        """Reduce decay_score for all active memories based on staleness.
+        
+        Skips if already applied at the current tick to prevent compounding.
+        """
+        if self._tick == self._last_decay_tick:
+            return
         for mem in self._items.values():
             if mem.memory_status != "active":
                 continue
             staleness = (self._tick - mem.last_accessed) * decay_rate
             mem.decay_score = max(0.0, min(1.0, mem.decay_score - staleness))
+        self._last_decay_tick = self._tick
 
     def archive_memory(self, memory_id: str) -> None:
         """Set memory_status to 'archived'."""
