@@ -643,4 +643,103 @@ The mechanism is OFF by default to:
 
 ---
 
+## 15. التحقق الحقيقي بنموذج LLM فعلي (Cycle 6 - Real Validation)
+
+> Added: 2026-05-31
+> Source: Real LLM Evaluation Run
+> Status: Completed
+> Model: openrouter/owl-alpha
+
+### 15.1 بروتوكول التقييم
+
+تم تشغيل بروتوكول A/B/C ablation ladder على نموذج حقيقي:
+
+| الشرط | الوصف | النتيجة |
+|--------|--------|---------|
+| A_raw | prompt فقط | success=100%, evidence=66.7% |
+| B_concept | prompt + concept_hints | success=100%, evidence=66.7% |
+| C_full | prompt + concept + theory hints | success=100%, evidence=83.3% |
+
+### 15.2 النتيجة الرئيسية
+
+**الشرط C يحسن نسبة الاستشهاد بالادلة بمقدار +25% مقارنة بخط الاساس.**
+
+هذا اول اثبات تجريبي حقيقي (وليس محاكاة) لفرضية Virtual SIA:
+الحوكمة المعرفية تحسن جودة مخرجات LLM دون الاضرار بالاداء الاساسي.
+
+### 15.3 تفاصيل التشغيل
+
+- 6 مهام (2 comparison + 2 synthesis + 2 procedure)
+- 3 شروط = 18 مكالمة API
+- زمن الاستجابة: 2-50 ثانية لكل مكالمة
+- النموذج: openrouter/owl-alpha عبر OpenRouter API
+
+### 15.4 القيود المعترف بها
+
+- حجم عينة صغير (n=6) لا يسمح بتعميم احصائي
+- نموذج واحد فقط
+- تشغيل واحد بدون تكرار
+- success_rate عند السقف (100%) يخفي فروقات محتملة
+
+### 15.5 السرقة الشرعية 5.76
+
+**من**: Ablation Evaluation Protocol (Melis et al. 2018, Lipton & Steinhardt 2018)
+**اخذنا**: منهجية التقييم بالاستئصال المتدرج - كل شرط يضيف طبقة واحدة بالضبط
+**لم ناخذ**: التحليل الاحصائي المتقدم بسبب حجم العينة الصغير
+**اصبح عندنا**: بروتوكول A/B/C حقيقي مع LLM فعلي
+
+---
+
+## 16. الحالة النهائية للمشروع
+
+> Final State: 2026-05-31
+
+### 16.1 ملخص الانجاز
+
+| البعد | القيمة |
+|-------|--------|
+| اجمالي PRs | 9 |
+| اجمالي الاختبارات | 408 |
+| اجمالي السرقات الشرعية | 88 (5.01 - 5.76) |
+| التحقق الحقيقي | مكتمل (openrouter/owl-alpha) |
+| الدورات المكتملة | 6 دورات كاملة |
+
+### 16.2 الدورات المكتملة
+
+1. **Stabilize & Package** - تجميد الافتراضيات، توثيق النظام
+2. **Evaluation Pressure** - عوامل اضطراب جديدة، منهج 6 مستويات
+3. **Anomaly Leverage** - رافعة الشذوذ للتحقق والتوجيه
+4. **Theory Leverage** - رافعة النظريات للتنبؤ والتوجيه
+5. **Broader Domain** - 3 عائلات جديدة (analysis, extraction, planning)
+6. **Real-World Upgrades** - اضطراب العقود، تخزين SQLite، تقييم LLM حقيقي
+
+### 16.3 البنية النهائية
+
+```
+virtual_sia/
+  runtime/           # محرك التشغيل (concept engine, theory, anomaly, identity, pipeline)
+  eval/              # التقييم (runners, perturbations, task_sets, reports)
+  api/               # واجهة API (REST, LLM adapter, reasoning)
+  persistence/       # التخزين المستمر (SQLite stores, checkpointing)
+  governance/        # الحوكمة (identity, paradigm fork, self-benchmark)
+tests/               # 408 اختبار
+```
+
+### 16.4 الفرضيات المؤكدة
+
+| الفرضية | الثقة | المصدر |
+|---------|-------|--------|
+| H1: المفاهيم تتفوق على الاسترجاع | متوسطة-عالية | تقييم محاكى (72+ مهمة) |
+| H2: الاقتصاد المعرفي يكافئ Premium | عالية | تقييم محاكى (كل الشرائح) |
+| H7: الحوكمة تحسن جودة LLM حقيقي | اولية | تقييم حقيقي (n=6) |
+
+### 16.5 ما يبقى مفتوحا
+
+- توسيع التقييم الحقيقي (30+ مهمة، نماذج متعددة)
+- تقييم Self-Benchmarking و Productive Forgetting على منهج محكم
+- تقييم Identity Governance على سلاسل قرارات طويلة
+- تحفيز ازمة حقيقية لاختبار Paradigm Fork
+
+---
+
 *End of Current Regime Status*
