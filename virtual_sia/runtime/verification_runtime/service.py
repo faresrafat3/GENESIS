@@ -276,6 +276,7 @@ def verify_output_theory_guided(
         primary_hits_count = sum(1 for marker in primary_markers if marker in normalized) if primary_markers else 0
         strict_primary_hit = primary_hits_count >= 2 if primary_markers else len(output_text) > 50
         strict_evidence_ok = required_ok and strict_primary_hit
+        secondary_hit = any(marker in normalized for marker in secondary_markers) if secondary_markers else False
     else:
         # Difficulty mode: base evidence + require secondary marker hit
         primary_hit = base_result["evidence_checks"]["passed"]
@@ -284,7 +285,6 @@ def verify_output_theory_guided(
         primary_hits_count = sum(1 for marker in primary_markers if marker in normalized) if primary_markers else 0
         strict_primary_hit = primary_hits_count >= 1 if primary_markers else True
 
-    secondary_hit = any(marker in normalized for marker in secondary_markers) if secondary_markers else False
     strict_good_enough = schema_ok and strict_evidence_ok and shortcuts_ok
 
     strict_result = dict(base_result)

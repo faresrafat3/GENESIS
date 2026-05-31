@@ -248,6 +248,11 @@ def run_minimal_pipeline(
     # Theory leverage post-processing: update predictive value and check contradiction explanations
     if use_theory_leverage and active_theory and theory_prediction:
         # Determine if prediction was correct
+        # NOTE: Known simplification for this cycle - both predicts_failure and
+        # predicts_difficulty use the same condition (not actual_good_enough) to
+        # determine correctness. This conflates severity levels but is intentionally
+        # simple for the initial implementation. Full differentiation (e.g. difficulty
+        # confirmed by escalation needed vs outright failure) is deferred to a future cycle.
         actual_good_enough = verification["verification_summary"]["good_enough"]
         if theory_prediction["predicts_failure"]:
             prediction_correct = not actual_good_enough

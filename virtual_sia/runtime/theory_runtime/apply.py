@@ -25,6 +25,10 @@ def build_theory_hints(theories: Iterable[LocalTheoryObject]) -> list[str]:
 
 
 def _tokenize(text: str) -> set[str]:
+    # NOTE: Known limitation - no stop-word filtering is applied. Common words like
+    # "tasks", "with", "will" can cause spurious matches. This is acceptable for the
+    # current prototype where the concept set is small and token overlap provides
+    # sufficient signal. Full stop-word filtering is deferred to a future cycle.
     return {t.strip('.,:;!?()[]{}').lower() for t in text.split() if t.strip()}
 
 

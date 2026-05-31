@@ -182,8 +182,13 @@ def select_applicable_concepts_theory_guided(
     """
     from ...core.objects.theory import LocalTheoryObject as _TheoryType  # noqa: F811
 
+    # Materialize concepts to a list at entry to prevent iterator-consumption bugs.
+    # If a generator or single-pass iterable is passed, it would be exhausted after
+    # select_applicable_concepts and the later resolution loop would silently yield nothing.
+    concepts_list: List[ConceptCard] = list(concepts) if not isinstance(concepts, list) else concepts
+
     selected, decisions = select_applicable_concepts(
-        task_family, task_text, concepts,
+        task_family, task_text, concepts_list,
         limit=limit, min_overlap=min_overlap,
         min_activation_score=min_activation_score,
         task_contract=task_contract,
@@ -197,7 +202,7 @@ def select_applicable_concepts_theory_guided(
     _, fam_min_score, _ = _family_policy(task_family, limit, min_activation_score)
 
     # Boost selected concepts that are in theory refs + admit near-threshold concepts
-    admitted: List[ConceptCard] = []
+    admitted: List[str] = []
     updated_decisions: List[ConceptActivationDecision] = []
 
     for decision in decisions:
@@ -240,8 +245,7 @@ def select_applicable_concepts_theory_guided(
 
     # Resolve admitted concepts back to ConceptCard objects
     if admitted:
-        all_concepts_list = list(concepts) if not isinstance(concepts, list) else concepts
-        for concept in all_concepts_list:
+        for concept in concepts_list:
             if concept.id in admitted and concept not in selected:
                 selected.append(concept)
 
