@@ -1,0 +1,7 @@
+{
+  "task_id": "task-wave3-self-benchmark-forgetting",
+  "task_description": "Implement Self-Benchmarking (H8) and Productive Forgetting (H3) features for Virtual-SIA with full Arabic documentation and Legitimate Theft methodology. Branch: feat/wave3-self-benchmark-forgetting.",
+  "status": "in_progress",
+  "feature_order": ["FEAT-001", "FEAT-002", "FEAT-003"],
+  "blocked_reason": null
+}

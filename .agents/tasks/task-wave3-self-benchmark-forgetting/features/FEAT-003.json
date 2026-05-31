@@ -1,0 +1,27 @@
+{
+  "id": "FEAT-003",
+  "type": "docs",
+  "description": "Documentation deliverables: Legitimate Thefts Wave3 (5.45-5.54), Self-Benchmarking Implementation Memo, Productive Forgetting Implementation Memo, and update Current Regime Status. All in Arabic following the established theft template.",
+  "status": "pending",
+  "steps": [
+    "1. Create Virtual_SIA_Legitimate_Thefts_Wave3_AR.md documenting thefts 5.45-5.54 using the exact template format from Virtual_SIA_Legitimate_Thefts_Cycle4_AR.md. Each theft must have: section header '## X.XX من [SOURCE]', subsection 'ما الذي أخذناه؟', subsection 'ما الذي لم نأخذه الآن؟', subsection 'ماذا أصبح عندنا؟'. Thefts: 5.45 FunSearch (benchmark search under evaluator), 5.46 AutoTTS (self-discovering testing heuristics), 5.47 Novelty Search (Lehman & Stanley 2011, diversity-driven generation), 5.48 Metamorphic Testing (Chen et al. 2018, relations between test inputs), 5.49 Curriculum Self-Play (AlphaZero concept), 5.50 Ebbinghaus Forgetting Curve (1885, decay over time), 5.51 Retrieval-Induced Forgetting (Anderson et al. 1994), 5.52 Memory Reconsolidation (Nader et al. 2000), 5.53 Desirable Difficulties (Bjork 1994), 5.54 MemOS (lifecycle management with explicit forgetting).",
+    "2. Create Virtual_SIA_Self_Benchmarking_Implementation_Memo_AR.md documenting what was built (benchmark_generator, blind_spot_discovery, diagnostic_value, run_self_benchmark_cycle), design decisions, how it connects to theory doc, and how to use it.",
+    "3. Create Virtual_SIA_Productive_Forgetting_Implementation_Memo_AR.md documenting what was built (decay, archive/deprecate/delete, utility scoring, forgetting policy, pipeline integration), design decisions, connection to theory doc sections, and usage.",
+    "4. Update Virtual_SIA_Current_Regime_Status_AR.md: add new section for Wave 3 capabilities (Self-Benchmarking and Productive Forgetting), both gated behind bool flags, not yet part of frozen defaults."
+  ],
+  "acceptance_criteria": [
+    "Virtual_SIA_Legitimate_Thefts_Wave3_AR.md exists with all 10 thefts (5.45-5.54) in correct Arabic template format",
+    "Virtual_SIA_Self_Benchmarking_Implementation_Memo_AR.md exists documenting the implementation",
+    "Virtual_SIA_Productive_Forgetting_Implementation_Memo_AR.md exists documenting the implementation",
+    "Virtual_SIA_Current_Regime_Status_AR.md updated with Wave 3 section",
+    "All documentation is in Arabic",
+    "Theft numbering continues from 5.44 correctly"
+  ],
+  "verification": [
+    "Verify files exist and are non-empty",
+    "Verify theft numbering 5.45-5.54 is present in Wave3 thefts file",
+    "~/.pyenv/versions/3.12.13/bin/python -m pytest tests/ --tb=short -q (all tests still pass)"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}
