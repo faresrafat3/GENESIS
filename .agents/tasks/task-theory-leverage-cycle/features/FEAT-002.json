@@ -2,7 +2,7 @@
   "id": "FEAT-002",
   "type": "feat",
   "description": "Create comprehensive test suite for theory leverage (20+ tests) following the pattern in tests/test_anomaly_leverage.py",
-  "status": "pending",
+  "status": "in_progress",
   "steps": [
     "Step 1 - Create tests/test_theory_leverage.py with proper imports from all modified modules",
     "Step 2 - Add helper functions: _make_theory() that creates a LocalTheoryObject with scope, predictive_claims, concept_refs. _make_task() and _make_blackboard() and _make_memory_pack() following test_anomaly_leverage.py pattern",
