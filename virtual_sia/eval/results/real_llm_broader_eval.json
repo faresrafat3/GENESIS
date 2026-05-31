@@ -1,0 +1,431 @@
+{
+  "model": "openrouter/owl-alpha",
+  "mode": "real",
+  "conditions": [
+    "A_raw",
+    "B_concept",
+    "C_concept_theory"
+  ],
+  "task_count": 6,
+  "started_at": "2026-05-31 20:57:52",
+  "runs": [
+    {
+      "task_id": "cmp-1",
+      "family": "comparison",
+      "conditions": {
+        "A_raw": {
+          "latency_s": 39.57,
+          "score": {
+            "error": false,
+            "property_hits": 3,
+            "property_total": 3,
+            "property_detail": {
+              "explicit comparison": true,
+              "evidence-backed choice": true,
+              "decisive contrast": true
+            },
+            "shortcut_violations": 0,
+            "has_structure": true,
+            "cites_evidence": true,
+            "separates_fact_inference": true,
+            "length": 5971,
+            "good_enough": true
+          },
+          "response_preview": "# Blue-Green Deployment vs. Canary Deployment: A Comparative Analysis\n\n## Overview\n\nBoth blue-green and canary deployments are **zero-downtime release strategies** designed to reduce the risk associated with deploying new software versions. While they share this common goal, their mechanisms, risk p"
+        },
+        "B_concept": {
+          "latency_s": 14.26,
+          "score": {
+            "error": false,
+            "property_hits": 3,
+            "property_total": 3,
+            "property_detail": {
+              "explicit comparison": true,
+              "evidence-backed choice": true,
+              "decisive contrast": true
+            },
+            "shortcut_violations": 0,
+            "has_structure": true,
+            "cites_evidence": true,
+            "separates_fact_inference": false,
+            "length": 1456,
+            "good_enough": true
+          },
+          "response_preview": "When comparing blue-green deployment and canary deployment, the decisive difference lies in **risk exposure during rollout**: blue-green deployment switches traffic entirely between two identical environments (blue and green), enabling instant rollback but requiring full infrastructure duplication; "
+        },
+        "C_concept_theory": {
+          "latency_s": 19.0,
+          "score": {
+            "error": false,
+            "property_hits": 3,
+            "property_total": 3,
+            "property_detail": {
+              "explicit comparison": true,
+              "evidence-backed choice": true,
+              "decisive contrast": true
+            },
+            "shortcut_violations": 0,
+            "has_structure": true,
+            "cites_evidence": true,
+            "separates_fact_inference": false,
+            "length": 2650,
+            "good_enough": true
+          },
+          "response_preview": "# Blue-Green Deployment vs. Canary Deployment\n\n## Evidence for Blue-Green Deployment\n\nBlue-green deployment involves maintaining two identical production environments — \"blue\" (current) and \"green\" (new release). Documented characteristics:\n\n- **Zero-downtime rollback**: Traffic is switched entirely"
+        }
+      }
+    },
+    {
+      "task_id": "cmp-2",
+      "family": "comparison",
+      "conditions": {
+        "A_raw": {
+          "latency_s": 50.09,
+          "score": {
+            "error": false,
+            "property_hits": 3,
+            "property_total": 3,
+            "property_detail": {
+              "explicit comparison": true,
+              "evidence-backed choice": true,
+              "tradeoff articulation": true
+            },
+            "shortcut_violations": 0,
+            "has_structure": true,
+            "cites_evidence": true,
+            "separates_fact_inference": false,
+            "length": 3155,
+            "good_enough": true
+          },
+          "response_preview": "For a small self-hosted team, **Prometheus** is the more defensible choice when compared to Datadog. This decision hinges on cost, operational complexity, control, and alignment with in-house expertise—especially important for teams prioritizing autonomy and budget constraints.\n\n### Key Tradeoffs an"
+        },
+        "B_concept": {
+          "latency_s": 13.29,
+          "score": {
+            "error": false,
+            "property_hits": 2,
+            "property_total": 3,
+            "property_detail": {
+              "explicit comparison": false,
+              "evidence-backed choice": true,
+              "tradeoff articulation": true
+            },
+            "shortcut_violations": 0,
+            "has_structure": true,
+            "cites_evidence": true,
+            "separates_fact_inference": false,
+            "length": 768,
+            "good_enough": true
+          },
+          "response_preview": "For a small self-hosted team, **Prometheus** is more defensible—not because it’s inherently “better,” but because its tradeoffs align tightly with the team’s constraints:\n\n- **Cost**: Prometheus is open-source and free; Datadog requires per-host pricing that scales poorly for small teams.\n- **Self-h"
+        },
+        "C_concept_theory": {
+          "latency_s": 9.61,
+          "score": {
+            "error": false,
+            "property_hits": 3,
+            "property_total": 3,
+            "property_detail": {
+              "explicit comparison": true,
+              "evidence-backed choice": true,
+              "tradeoff articulation": true
+            },
+            "shortcut_violations": 0,
+            "has_structure": true,
+            "cites_evidence": true,
+            "separates_fact_inference": false,
+            "length": 1005,
+            "good_enough": true
+          },
+          "response_preview": "For a small self-hosted team, **Prometheus** is more defensible than Datadog when evaluated through concrete tradeoffs:\n\n- **Cost**: Prometheus is open-source and free to deploy, avoiding recurring licensing fees. Datadog incurs per-host or per-container costs that scale with infrastructure size, cr"
+        }
+      }
+    },
+    {
+      "task_id": "syn-1",
+      "family": "synthesis",
+      "conditions": {
+        "A_raw": {
+          "latency_s": 9.93,
+          "score": {
+            "error": false,
+            "property_hits": 2,
+            "property_total": 2,
+            "property_detail": {
+              "evidence-grounded conclusion": true,
+              "fact vs inference separation": true
+            },
+            "shortcut_violations": 0,
+            "has_structure": true,
+            "cites_evidence": true,
+            "separates_fact_inference": true,
+            "length": 1140,
+            "good_enough": true
+          },
+          "response_preview": "## Observed Facts\n\n1. **Latency rose at 14:00.**  \n2. **A deploy happened at 13:55.**  \n3. **Error rate was flat.**\n\n## Inferences\n\n1. The timing of the latency increase (14:00) closely follows the deployment (13:55), suggesting a possible causal relationship.\n2. Since the error rate remained flat, "
+        },
+        "B_concept": {
+          "latency_s": 12.82,
+          "score": {
+            "error": false,
+            "property_hits": 2,
+            "property_total": 2,
+            "property_detail": {
+              "evidence-grounded conclusion": true,
+              "fact vs inference separation": true
+            },
+            "shortcut_violations": 0,
+            "has_structure": true,
+            "cites_evidence": true,
+            "separates_fact_inference": true,
+            "length": 849,
+            "good_enough": true
+          },
+          "response_preview": "**Observed Facts:**\n\n- A latency increase occurred starting at 14:00.\n- A deployment was executed at 13:55.\n- The error rate remained flat (unchanged) during this period.\n\n**Inference:**\n\nThe timing of the latency increase—occurring five minutes after the deployment—strongly suggests that the deploy"
+        },
+        "C_concept_theory": {
+          "latency_s": 9.24,
+          "score": {
+            "error": false,
+            "property_hits": 2,
+            "property_total": 2,
+            "property_detail": {
+              "evidence-grounded conclusion": true,
+              "fact vs inference separation": true
+            },
+            "shortcut_violations": 0,
+            "has_structure": true,
+            "cites_evidence": true,
+            "separates_fact_inference": true,
+            "length": 1177,
+            "good_enough": true
+          },
+          "response_preview": "## Grounded Explanation\n\n### Observed Facts (Directly Stated Fragments)\n- **Fragment (a):** Latency rose at 14:00.\n- **Fragment (b):** A deploy happened at 13:55.\n- **Fragment (c):** Error rate was flat.\n\n### Inferences (Not Directly Stated; Derived from Combining Facts)\n- The timing of the latency "
+        }
+      }
+    },
+    {
+      "task_id": "syn-2",
+      "family": "synthesis",
+      "conditions": {
+        "A_raw": {
+          "latency_s": 38.16,
+          "score": {
+            "error": false,
+            "property_hits": 3,
+            "property_total": 3,
+            "property_detail": {
+              "evidence-grounded conclusion": true,
+              "fact vs inference separation": true,
+              "conflict handling": true
+            },
+            "shortcut_violations": 0,
+            "has_structure": true,
+            "cites_evidence": true,
+            "separates_fact_inference": true,
+            "length": 3287,
+            "good_enough": true
+          },
+          "response_preview": "## Merged Outage Report: Coherent Account with Inference Flags\n\n**Incident Summary:**  \nOn June 12, 2024, between 08:15 and 11:47 UTC, a cascading failure in the primary database cluster (DB-PROD-01) caused widespread service degradation across the North American user authentication and transaction "
+        },
+        "B_concept": {
+          "latency_s": 29.41,
+          "score": {
+            "error": false,
+            "property_hits": 3,
+            "property_total": 3,
+            "property_detail": {
+              "evidence-grounded conclusion": true,
+              "fact vs inference separation": true,
+              "conflict handling": true
+            },
+            "shortcut_violations": 0,
+            "has_structure": true,
+            "cites_evidence": true,
+            "separates_fact_inference": true,
+            "length": 4425,
+            "good_enough": true
+          },
+          "response_preview": "# Merged Outage Status Report\n\n## Coherent Account\n\n### 1. Incident Onset\n\n**Observed:** All three reports confirm an outage occurred on the platform. Reports A and B agree on the service involved (the primary payment processing pipeline). Report C references \"a core system\" without specifying, whic"
+        },
+        "C_concept_theory": {
+          "latency_s": 45.88,
+          "score": {
+            "error": false,
+            "property_hits": 3,
+            "property_total": 3,
+            "property_detail": {
+              "evidence-grounded conclusion": true,
+              "fact vs inference separation": true,
+              "conflict handling": true
+            },
+            "shortcut_violations": 0,
+            "has_structure": true,
+            "cites_evidence": true,
+            "separates_fact_inference": true,
+            "length": 3489,
+            "good_enough": true
+          },
+          "response_preview": "# Merged Outage Status Report\n\n## Source Reports\n\n**Report A (Network Operations Center):**\n- Core router R-47 experienced a hardware failure at 14:32 UTC.\n- All downstream services were rerouted through backup path B-12 by 14:48 UTC.\n- Full service restoration confirmed at 15:10 UTC.\n\n**Report B (A"
+        }
+      }
+    },
+    {
+      "task_id": "prc-1",
+      "family": "procedure",
+      "conditions": {
+        "A_raw": {
+          "latency_s": 9.38,
+          "score": {
+            "error": false,
+            "property_hits": 2,
+            "property_total": 2,
+            "property_detail": {
+              "stable structured layout": true,
+              "field completeness": true
+            },
+            "shortcut_violations": 0,
+            "has_structure": true,
+            "cites_evidence": false,
+            "separates_fact_inference": false,
+            "length": 123,
+            "good_enough": true
+          },
+          "response_preview": "```json\n{\n  \"timestamp\": \"09:12\",\n  \"severity\": \"SEV2\",\n  \"affected_service\": \"auth-service\",\n  \"status\": \"mitigated\"\n}\n```"
+        },
+        "B_concept": {
+          "latency_s": 3.62,
+          "score": {
+            "error": false,
+            "property_hits": 2,
+            "property_total": 2,
+            "property_detail": {
+              "stable structured layout": true,
+              "field completeness": true
+            },
+            "shortcut_violations": 0,
+            "has_structure": true,
+            "cites_evidence": false,
+            "separates_fact_inference": false,
+            "length": 80,
+            "good_enough": true
+          },
+          "response_preview": "timestamp: 09:12\nseverity: SEV2\naffected_service: auth-service\nstatus: mitigated"
+        },
+        "C_concept_theory": {
+          "latency_s": 3.08,
+          "score": {
+            "error": false,
+            "property_hits": 2,
+            "property_total": 2,
+            "property_detail": {
+              "stable structured layout": true,
+              "field completeness": true
+            },
+            "shortcut_violations": 0,
+            "has_structure": true,
+            "cites_evidence": false,
+            "separates_fact_inference": false,
+            "length": 80,
+            "good_enough": true
+          },
+          "response_preview": "timestamp: 09:12\nseverity: SEV2\naffected_service: auth-service\nstatus: mitigated"
+        }
+      }
+    },
+    {
+      "task_id": "prc-2",
+      "family": "procedure",
+      "conditions": {
+        "A_raw": {
+          "latency_s": 7.37,
+          "score": {
+            "error": false,
+            "property_hits": 2,
+            "property_total": 2,
+            "property_detail": {
+              "stable structured layout": true,
+              "ordered steps": true
+            },
+            "shortcut_violations": 0,
+            "has_structure": true,
+            "cites_evidence": false,
+            "separates_fact_inference": false,
+            "length": 511,
+            "good_enough": true
+          },
+          "response_preview": "# Normalized Checklist\n\n## Procedure: Node Restart & Traffic Drain Sequence\n\n| Step | Field | Action | Verification |\n|------|-------|--------|------------|\n| 1 | **Node_Action | Restart target node | Confirm service restart initiated |\n| 2 | **Traffic_Drain | Drain all active traffic from node | Va"
+        },
+        "B_concept": {
+          "latency_s": 9.11,
+          "score": {
+            "error": false,
+            "property_hits": 1,
+            "property_total": 2,
+            "property_detail": {
+              "stable structured layout": false,
+              "ordered steps": true
+            },
+            "shortcut_violations": 0,
+            "has_structure": true,
+            "cites_evidence": false,
+            "separates_fact_inference": false,
+            "length": 187,
+            "good_enough": true
+          },
+          "response_preview": "1. [ACTION] Restart the affected node  \n2. [ACTION] Drain traffic from the node  \n3. [VERIFY] Confirm node health status  \n4. [ESCALATE] If health status is red, page the on-call engineer"
+        },
+        "C_concept_theory": {
+          "latency_s": 7.25,
+          "score": {
+            "error": false,
+            "property_hits": 2,
+            "property_total": 2,
+            "property_detail": {
+              "stable structured layout": true,
+              "ordered steps": true
+            },
+            "shortcut_violations": 0,
+            "has_structure": true,
+            "cites_evidence": true,
+            "separates_fact_inference": false,
+            "length": 583,
+            "good_enough": true
+          },
+          "response_preview": "**Stable Procedure Reuse Checklist: Node Restart and Traffic Drain**\n\n**Procedure Steps (Ordered and Labeled):**\n\n1. **[ACTION: Restart Node]**  \n   Perform a graceful restart of the target node.\n\n2. **[ACTION: Drain Traffic]**  \n   Redirect all incoming traffic away from the node to ensure it is no"
+        }
+      }
+    }
+  ],
+  "runs_partial": true,
+  "aggregate": {
+    "A_raw": {
+      "n": 6,
+      "success_rate": 1.0,
+      "avg_property_hits": 2.5,
+      "structure_rate": 1.0,
+      "evidence_rate": 0.667,
+      "avg_shortcut_violations": 0.0,
+      "errors": 0
+    },
+    "B_concept": {
+      "n": 6,
+      "success_rate": 1.0,
+      "avg_property_hits": 2.17,
+      "structure_rate": 1.0,
+      "evidence_rate": 0.667,
+      "avg_shortcut_violations": 0.0,
+      "errors": 0
+    },
+    "C_concept_theory": {
+      "n": 6,
+      "success_rate": 1.0,
+      "avg_property_hits": 2.5,
+      "structure_rate": 1.0,
+      "evidence_rate": 0.833,
+      "avg_shortcut_violations": 0.0,
+      "errors": 0
+    }
+  },
+  "finished_at": "2026-05-31 21:03:23"
+}
