@@ -66,7 +66,7 @@ def generate_domain_transfer_report(
     for concept_id, family_counts in concept_family_counts.items():
         old_activations = sum(family_counts.get(f, 0) for f in original_families)
         new_activations = sum(family_counts.get(f, 0) for f in new_families)
-        coeff = new_activations / old_activations if old_activations > 0 else (1.0 if new_activations > 0 else 0.0)
+        coeff = new_activations / old_activations if old_activations > 0 else 0.0
         transfer_coefficients.append({
             "concept_id": concept_id,
             "old_activations": old_activations,
@@ -77,7 +77,9 @@ def generate_domain_transfer_report(
     # Compute overall transfer rate
     total_old = sum(concept_activations_per_family.get(f, 0) for f in original_families)
     total_new = sum(concept_activations_per_family.get(f, 0) for f in new_families)
-    overall_transfer_rate = total_new / total_old if total_old > 0 else (1.0 if total_new > 0 else 0.0)
+    # When total_old is 0, there is no baseline to measure transfer against,
+    # so return 0.0 regardless of total_new.
+    overall_transfer_rate = total_new / total_old if total_old > 0 else 0.0
 
     # Compute family pair transfer matrix
     # matrix[old_family][new_family] = number of concepts that activated on both
