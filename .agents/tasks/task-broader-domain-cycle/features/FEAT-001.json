@@ -2,7 +2,7 @@
   "id": "FEAT-001",
   "type": "feat",
   "description": "Add new task families (analysis, extraction, planning) to the system: enums, classification keywords, concept engine config, and task ingress service. Also create the broader domain task set (prototype_v7_broader_domain.py) with 18 tasks across 3 new families, the domain transfer eval runner (run_broader_domain_eval.py), and the domain transfer report module (domain_transfer.py). Finally add family-specific selectivity config for the new families.",
-  "status": "in_progress",
+  "status": "completed",
   "steps": [
     "Step 1: Add TaskFamily enum to virtual_sia/core/ontology/enums.py with values: comparison, synthesis, procedure, analysis, extraction, planning, unknown. This is optional/informational since the system uses strings, but documents the valid families.",
     "Step 2: Update virtual_sia/runtime/task_ingress/service.py FAMILY_KEYWORDS dict to add 3 new families with appropriate keyword lists: 'analysis' keywords (root cause, causal, why, diagnose, infer, system failure, contributing factor, mechanism, explain why, analyze, investigate, تحليل, سبب), 'extraction' keywords (extract structured, pull out, identify entities, data points, key information, parse fields, slot fill, tabulate, استخراج, بيانات), 'planning' keywords (plan, steps, schedule, sequence, dependencies, constraints, milestones, prioritize, timeline, roadmap, تخطيط, خطوات). Also update default_success_criteria() to include criteria for the new families.",
@@ -28,5 +28,5 @@
     "Run: ~/.pyenv/versions/3.12.13/bin/python -c \"from virtual_sia.eval.runners.run_broader_domain_eval import run_broader_domain_eval; r = run_broader_domain_eval(); print(r['task_count'], r['domain_transfer']['overall_transfer_rate'])\" and confirm it executes"
   ],
   "blocked_reason": null,
-  "findings": ""
+  "findings": "All 163 tests pass (126 existing + 37 new). Verification commands confirm: PROTOTYPE_V7_BROADER_DOMAIN_CASES has 18 items, run_broader_domain_eval() executes successfully and returns expected keys including domain_transfer with overall_transfer_rate. Transfer rate is 0.0 in synthetic eval (expected since no real concept formation happens in the simulated pipeline), but the metric infrastructure is correct. Classification correctly routes analysis/extraction/planning prompts to the right families."
 }
