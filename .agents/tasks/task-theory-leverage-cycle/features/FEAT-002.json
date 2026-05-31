@@ -2,7 +2,7 @@
   "id": "FEAT-002",
   "type": "feat",
   "description": "Create comprehensive test suite for theory leverage (20+ tests) following the pattern in tests/test_anomaly_leverage.py",
-  "status": "in_progress",
+  "status": "completed",
   "steps": [
     "Step 1 - Create tests/test_theory_leverage.py with proper imports from all modified modules",
     "Step 2 - Add helper functions: _make_theory() that creates a LocalTheoryObject with scope, predictive_claims, concept_refs. _make_task() and _make_blackboard() and _make_memory_pack() following test_anomaly_leverage.py pattern",
@@ -27,5 +27,5 @@
     "Run: ~/.pyenv/versions/3.12.13/bin/python -m pytest tests/ --tb=short -q - all tests (88 existing + new) pass"
   ],
   "blocked_reason": null,
-  "findings": ""
+  "findings": "38 test methods created covering all 6 functions plus pipeline integration. All 126 tests pass (88 existing + 38 new). Key finding: check_theory_explains_contradiction requires >= 2 token overlap between theory claims and contradiction content - test data must share at least 2 meaningful words. The tokenizer strips punctuation and lowercases."
 }
