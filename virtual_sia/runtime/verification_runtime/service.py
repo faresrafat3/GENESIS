@@ -128,3 +128,86 @@ def _shortcut_check(shortcut: str, normalized: str) -> bool:
 
 def is_good_enough(verification_state: Dict[str, Any]) -> bool:
     return bool(verification_state.get("verification_summary", {}).get("good_enough", False))
+
+
+def verify_output_anomaly_aware(
+    task_family: str,
+    output_text: str,
+    anomaly_severity: float = 0.0,
+    framing_candidates: Iterable[str] | None = None,
+    task_contract: Dict[str, Any] | None = None,
+) -> Dict[str, Any]:
+    """Anomaly-aware verification that applies stricter checks when anomaly_severity > 0.5.
+
+    ## سرقة شرعية (Legitimate Theft)
+
+    المصدر 6.8: Predictive Processing / Active Inference (Friston, 2010)
+    ما الذي اخذناه؟
+        عندما يرتفع خطا التنبؤ (anomaly_severity)، يجب ان يصبح النظام اكثر
+        حذرا ودقة في قبول المخرجات - تماما كما يزيد الدماغ من دقة التحقق
+        عند مواجهة مفاجات حسية.
+    ما الذي لم ناخذه الان؟
+        التحديث الديناميكي المستمر لعتبات القبول بناء على تاريخ كامل.
+    ماذا اصبح عندنا؟
+        دالة تحقق تشدد معاييرها عند ارتفاع شدة الشذوذ فوق 0.5:
+        تتطلب نجاح كل الخصائص، وتطلب ضرب علامتين اوليتين بدلا من واحدة.
+
+    المصدر 6.12: Ashby - Law of Requisite Variety (1956)
+    ما الذي اخذناه؟
+        anomaly pressure requires matched response variety: ضغط الشذوذ يتطلب
+        تنوعا مطابقا في الاستجابة. التشديد هو شكل من اشكال زيادة تنوع الاستجابة.
+    ما الذي لم ناخذه الان؟
+        الحساب الكامل لتنوع الاستجابة المطلوب.
+    ماذا اصبح عندنا؟
+        تشديد يتناسب مع شدة الشذوذ المكتشف.
+    """
+    base_result = verify_output(
+        task_family, output_text,
+        framing_candidates=framing_candidates,
+        task_contract=task_contract,
+    )
+
+    if anomaly_severity <= 0.5:
+        base_result["anomaly_severity_applied"] = anomaly_severity
+        return base_result
+
+    # Stricter mode: anomaly_severity > 0.5
+    normalized = output_text.lower()
+    property_checks = base_result.get("property_checks", {})
+    primary_markers = _markers_for_family(task_family)
+
+    # Require ALL required_properties to pass (no partial credit)
+    required_ok = all(property_checks.values()) if property_checks else True
+
+    # Require at least 2 primary_markers to hit instead of 1
+    primary_hits_count = sum(1 for marker in primary_markers if marker in normalized) if primary_markers else 0
+    strict_primary_hit = primary_hits_count >= 2 if primary_markers else len(output_text) > 50
+
+    # Add extra evidence markers requirement
+    candidate_families = list(framing_candidates or [])
+    secondary_markers = _markers_for_secondary([f for f in candidate_families if f != task_family])
+    secondary_hit = any(marker in normalized for marker in secondary_markers) if secondary_markers else False
+
+    shortcut_checks = base_result.get("shortcut_checks", {})
+    shortcuts_ok = not any(shortcut_checks.values())
+
+    schema_ok = base_result["schema_checks"]["passed"]
+    strict_evidence_ok = required_ok and strict_primary_hit
+    strict_good_enough = schema_ok and strict_evidence_ok and shortcuts_ok
+
+    strict_result = dict(base_result)
+    strict_result["evidence_checks"] = {
+        "passed": strict_evidence_ok,
+        "primary_hit": strict_primary_hit,
+        "primary_hits_count": primary_hits_count,
+        "secondary_hit": secondary_hit,
+        "framing_candidates_used": candidate_families,
+        "strict_mode": True,
+    }
+    strict_result["verification_summary"] = {
+        "good_enough": strict_good_enough,
+        "task_family": task_family,
+        "anomaly_strict_mode": True,
+    }
+    strict_result["anomaly_severity_applied"] = anomaly_severity
+    return strict_result

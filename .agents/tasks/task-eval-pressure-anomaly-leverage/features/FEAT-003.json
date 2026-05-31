@@ -2,7 +2,7 @@
   "id": "FEAT-003",
   "type": "feat",
   "description": "Cycle 2 - Minimal Anomaly Leverage (A1+A2+A3). Enhance the anomaly runtime with severity scoring, make the verification runtime anomaly-aware (stricter checks when anomaly patterns detected), and make the economy router anomaly-aware (prefer escalation when anomaly signals present). Wire anomaly signals into the pipeline. Each mechanism documents its Legitimate Theft source.",
-  "status": "pending",
+  "status": "in_progress",
   "steps": [
     "Step 1 - Enhance virtual_sia/runtime/anomaly_runtime/service.py: Add a compute_anomaly_severity_score() function that takes a list of AnomalyCandidate objects and returns a composite severity float (0.0-1.0). Scoring considers: number of candidates, max severity among candidates, source_type diversity (more diverse = higher score). Also add a matches_known_anomaly_pattern() function that checks if a task_result matches patterns from previously seen anomalies (property_gap + shortcut_pattern co-occurrence, repeated family failures, contradiction clustering).",
     "Step 2 - Enhance virtual_sia/runtime/verification_runtime/service.py: Add a new function verify_output_anomaly_aware() that wraps verify_output() but applies stricter checking when anomaly_severity > 0.5. Stricter means: require ALL required_properties to pass (no partial credit), add extra evidence markers that must be present, lower tolerance by requiring at least 2 primary_markers to hit instead of 1. The function takes an additional parameter anomaly_severity: float = 0.0.",
