@@ -22,6 +22,10 @@ class MemoryUnit(BaseObject):
     ownership: str = "task-derived"
     linked_objects: List[str] = field(default_factory=list)
     last_used_at: Optional[datetime] = None
+    decay_score: float = 1.0
+    last_accessed: int = 0
+    access_count: int = 0
+    memory_status: str = "active"
 
     @classmethod
     def create(cls, summary: str, memory_type: str = "episodic") -> "MemoryUnit":

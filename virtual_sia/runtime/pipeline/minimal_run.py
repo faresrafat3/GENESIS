@@ -11,6 +11,7 @@ from ..economy_control.ledger import InMemoryLedgerStore
 from ..economy_control.router import choose_tier, choose_tier_anomaly_aware, choose_tier_theory_guided
 from ..memory_os.retriever import retrieve_memory
 from ..memory_os.store import InMemoryMemoryStore
+from ..memory_os.forgetting_policy import apply_forgetting_policy
 from ..reasoning_runtime.service import run_reasoning
 from ..task_ingress.service import ingest_task
 from ..theory_runtime.registry import InMemoryTheoryRegistry
@@ -31,6 +32,7 @@ def run_minimal_pipeline(
     use_concepts: bool = False,
     use_anomaly_leverage: bool = False,
     use_theory_leverage: bool = False,
+    use_productive_forgetting: bool = False,
 ) -> dict:
     store = store or InMemoryMemoryStore()
     ledger_store = ledger_store or InMemoryLedgerStore()
@@ -50,6 +52,11 @@ def run_minimal_pipeline(
     concept_items = concept_registry.list_concepts() if use_concepts else []
     theory_items = theory_registry.list_theories()
     family_candidates = [task.task_family] + secondary_frames
+
+    # Apply decay if productive forgetting is enabled
+    if use_productive_forgetting:
+        store.apply_decay(0.05)
+
     memory_pack = retrieve_memory(
         task.task_family,
         task.normalized_text,
@@ -59,7 +66,8 @@ def run_minimal_pipeline(
         theory_items=theory_items,
         family_candidates=family_candidates,
         task_contract=task_contract,
-    ) if use_memory else retrieve_memory(task.task_family, task.normalized_text, [], budget=0, concept_items=concept_items, theory_items=theory_items, family_candidates=family_candidates, task_contract=task_contract)
+        active_only=use_productive_forgetting,
+    ) if use_memory else retrieve_memory(task.task_family, task.normalized_text, [], budget=0, concept_items=concept_items, theory_items=theory_items, family_candidates=family_candidates, task_contract=task_contract, active_only=use_productive_forgetting)
     blackboard.retrieved_memory_pack = memory_pack
 
     # Compute anomaly severity from previous anomaly candidates if anomaly leverage is enabled
@@ -278,6 +286,7 @@ def run_minimal_pipeline(
         "used_memory": use_memory,
         "used_economy": use_economy,
         "used_concepts": use_concepts,
+        "use_productive_forgetting": use_productive_forgetting,
         "secondary_frames": secondary_frames,
         "ranked_frames": ranked_frames,
         "required_properties": task_contract.get("required_properties", []),
@@ -286,6 +295,11 @@ def run_minimal_pipeline(
         "shortcut_checks": verification.get("shortcut_checks", {}),
     }
     store.store_memory(episode_memory)
+
+    # Apply forgetting policy if enabled and store has enough memories
+    forgetting_report = None
+    if use_productive_forgetting and len(store.get_active_memories()) > 10:
+        forgetting_report = apply_forgetting_policy(store)
 
     close_blackboard(
         blackboard,
@@ -315,4 +329,5 @@ def run_minimal_pipeline(
         "use_theory_leverage": use_theory_leverage,
         "theory_prediction": theory_prediction,
         "theory_predictive_value": active_theory.predictive_value if active_theory else None,
+        "forgetting_report": forgetting_report,
     }

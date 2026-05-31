@@ -27,10 +27,14 @@ def retrieve_memory(
     theory_items: Iterable[LocalTheoryObject] | None = None,
     family_candidates: Sequence[str] | None = None,
     task_contract: Mapping[str, Any] | None = None,
+    active_only: bool = False,
 ) -> BlackboardMemoryPack:
     candidate_families = list(family_candidates or [task_family])
     if task_family not in candidate_families:
         candidate_families.insert(0, task_family)
+
+    if active_only:
+        store_items = [item for item in store_items if getattr(item, 'memory_status', 'active') == 'active']
 
     episodic, semantic, procedural, negative, concept_refs, theory_refs = [], [], [], [], [], []
     rationale_parts = []
