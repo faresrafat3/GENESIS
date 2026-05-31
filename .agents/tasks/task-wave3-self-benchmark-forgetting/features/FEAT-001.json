@@ -2,7 +2,7 @@
   "id": "FEAT-001",
   "type": "feat",
   "description": "Self-Benchmarking (H8): Implement anomaly-derived benchmark generation, blind spot discovery, diagnostic value metrics, and the self-benchmark cycle runner. This makes the eval system self-growing by turning failure signals into new evaluation pressure.",
-  "status": "in_progress",
+  "status": "completed",
   "steps": [
     "1. Create virtual_sia/eval/benchmark_generator.py with generate_from_anomaly_candidates(anomalies) -> List[TaskCase]. Takes anomaly candidate dicts (as produced by extract_anomaly_candidates), creates diagnostic TaskCase objects targeting those anomaly patterns. Each generated task has diagnostic_purpose=['anomaly_derived', 'self_benchmark']. Use TaskCase.create() factory. Map anomaly source_type to appropriate task families and prompts.",
     "2. Create virtual_sia/eval/reports/blind_spot_discovery.py with discover_blind_spots(all_results, all_cases) -> dict. Analyzes which combinations of (family, perturbation_type, difficulty_class) have never been tested or always succeed (100% rate). Returns a BlindSpotReport dict with fields: untested_combinations (list), suspiciously_easy_regions (list of combos with 100% success), coverage_matrix (dict), coverage_ratio (float).",
@@ -25,5 +25,5 @@
     "~/.pyenv/versions/3.12.13/bin/python -m pytest tests/ --tb=short -q (all tests pass including existing 163)"
   ],
   "blocked_reason": null,
-  "findings": ""
+  "findings": "All 202 tests pass (163 existing + 39 new). The __init__.py files for eval/reports and eval/runners only have __all__ = [] so no import updates needed. Coverage ratio edge case with empty inputs fixed to return 1.0 (vacuous truth)."
 }
