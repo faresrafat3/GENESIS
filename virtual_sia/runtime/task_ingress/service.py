@@ -100,7 +100,6 @@ def classify_task_family(text: str) -> tuple[str, dict[str, int], bool, list[str
 
     best_family = ranked[0]
     best_score = scores[best_family]
-    second_score = scores[ranked[1]] if len(ranked) > 1 else 0
 
     # Disambiguation: when procedure wins or ties with extraction by a narrow
     # margin, check for high-confidence extraction multi-word signals. If the
