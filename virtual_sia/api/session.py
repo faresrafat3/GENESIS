@@ -1,6 +1,7 @@
 """Session management for Virtual-SIA production API."""
 from __future__ import annotations
 
+import threading
 import uuid
 from datetime import datetime, timezone
 
@@ -31,24 +32,32 @@ class Session:
 
 
 class SessionManager:
-    """Manages session lifecycle: create, get, end."""
+    """Manages session lifecycle: create, get, end.
+
+    Thread-safe: all public methods acquire an internal lock before
+    mutating or reading the sessions dict.
+    """
 
     def __init__(self) -> None:
         self.sessions: dict[str, Session] = {}
+        self._lock = threading.Lock()
 
     def create_session(self) -> Session:
         """Create a new active session."""
         session = Session()
-        self.sessions[session.id] = session
+        with self._lock:
+            self.sessions[session.id] = session
         return session
 
     def get_session(self, session_id: str) -> Session | None:
         """Retrieve a session by ID."""
-        return self.sessions.get(session_id)
+        with self._lock:
+            return self.sessions.get(session_id)
 
     def end_session(self, session_id: str) -> dict:
         """End a session: apply forgetting policy and consolidate."""
-        session = self.sessions.get(session_id)
+        with self._lock:
+            session = self.sessions.get(session_id)
         if session is None:
             return {"error": "session_not_found", "session_id": session_id}
 
@@ -74,4 +83,19 @@ class SessionManager:
 
     def list_active(self) -> list[str]:
         """Return IDs of all active sessions."""
-        return [sid for sid, s in self.sessions.items() if s.state == "active"]
+        with self._lock:
+            return [sid for sid, s in self.sessions.items() if s.state == "active"]
+
+    def cleanup_closed_sessions(self) -> int:
+        """Remove all sessions in 'closed' state from the sessions dict.
+
+        Returns the number of sessions removed.
+
+        Note: This is suitable for prototype use. A production system would
+        use time-based expiry or an LRU eviction policy instead.
+        """
+        with self._lock:
+            closed_ids = [sid for sid, s in self.sessions.items() if s.state == "closed"]
+            for sid in closed_ids:
+                del self.sessions[sid]
+        return len(closed_ids)

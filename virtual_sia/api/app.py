@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import threading
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 from .config import APIConfig
@@ -37,15 +38,26 @@ class SIAHandler(BaseHTTPRequestHandler):
         else:
             self._send_json(404, {"error": "not_found", "path": self.path})
 
+    def do_OPTIONS(self) -> None:
+        """Handle CORS preflight requests."""
+        self.send_response(204)
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.send_header("Content-Length", "0")
+        self.end_headers()
+
     def _handle_health(self) -> None:
         self._send_json(200, {"status": "ok", "version": "0.1.0"})
 
     def _handle_status(self) -> None:
         manager = self.server.session_manager
+        with self.server.tasks_lock:
+            total = self.server.total_tasks_processed
         self._send_json(200, {
             "active_sessions": len(manager.list_active()),
             "total_sessions": len(manager.sessions),
-            "total_tasks_processed": self.server.total_tasks_processed,
+            "total_tasks_processed": total,
         })
 
     def _handle_session_start(self) -> None:
@@ -92,6 +104,10 @@ class SIAHandler(BaseHTTPRequestHandler):
             if session is None:
                 self._send_json(404, {"error": "session_not_found", "session_id": session_id})
                 return
+            # Reject tasks on non-active sessions
+            if session.state != "active":
+                self._send_json(409, {"error": "session_not_active"})
+                return
 
         # Use session stores or create ephemeral ones
         if session:
@@ -133,9 +149,16 @@ class SIAHandler(BaseHTTPRequestHandler):
             identity=identity,
         )
 
-        self.server.total_tasks_processed += 1
+        with self.server.tasks_lock:
+            self.server.total_tasks_processed += 1
         if session:
             session.task_count += 1
+
+        # Generate LLM response if adapter is available
+        llm_response = None
+        adapter = self.server.llm_adapter
+        if adapter is not None:
+            llm_response = adapter.generate(text)
 
         # Build response summary
         response_data = {
@@ -145,6 +168,7 @@ class SIAHandler(BaseHTTPRequestHandler):
             "concept_count": result["concept_count"],
             "anomaly_severity": result["anomaly_severity"],
             "session_id": session_id,
+            "llm_response": llm_response,
         }
         self._send_json(200, response_data)
 
@@ -180,6 +204,7 @@ class SIAServer(HTTPServer):
         self.session_manager = SessionManager()
         self.llm_adapter = llm_adapter or LLMAdapter()
         self.total_tasks_processed = 0
+        self.tasks_lock = threading.Lock()
         super().__init__((config.host, config.port), SIAHandler)
 
 

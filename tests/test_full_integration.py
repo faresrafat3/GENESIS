@@ -91,7 +91,12 @@ class TestFullIntegration:
         all_flags_rate = all_flags["aggregate_metrics"]["success_rate"]
         concept_only_rate = concept_only["aggregate_metrics"]["success_rate"]
 
-        # All-flags should be at least as good as concept-only
+        # Why this holds: The deterministic pipeline with simulated reasoning
+        # produces identical results for both conditions (both achieve 1.0 on
+        # simple tasks), so >= is trivially satisfied. The real value of this
+        # test is confirming no regression from adding governance flags -- i.e.,
+        # enabling all five governance mechanisms does not degrade the success
+        # rate below the concept-only baseline.
         assert all_flags_rate >= concept_only_rate
 
     def test_integration_runner_returns_valid_payload(self):

@@ -1,7 +1,6 @@
 """LLM adapter for OpenRouter API with mock fallback."""
 from __future__ import annotations
 
-import hashlib
 import json
 import os
 import urllib.request
