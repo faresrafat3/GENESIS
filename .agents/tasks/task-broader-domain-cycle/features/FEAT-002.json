@@ -1,0 +1,25 @@
+{
+  "id": "FEAT-002",
+  "type": "docs",
+  "description": "Create all Arabic documentation for the Broader Domain cycle: Legitimate Thefts document (Cycle 4, thefts 5.39+), Broader Domain Cycle Memo, and update Current Regime Status. Each new mechanism must be documented with the theft template (source, what we took, what we left, what we have now).",
+  "status": "pending",
+  "steps": [
+    "Step 1: Create Virtual_SIA_Legitimate_Thefts_Cycle4_AR.md with thefts 5.39-5.44 covering: 5.39 from Bloom's Taxonomy (analysis as higher-order thinking -> analysis family), 5.40 from Information Extraction literature/Sarawagi 2008 (structured extraction from text -> extraction family), 5.41 from Classical AI Planning/STRIPS/PDDL (multi-step planning with constraints -> planning family), 5.42 from Transfer Learning/Domain Adaptation (Pan & Yang 2010) (measuring concept transfer across domains -> domain_transfer report and transfer_coefficient), 5.43 from Curriculum Learning (Bengio et al 2009) (progressive difficulty across new domains -> broader domain curriculum), 5.44 from Cross-Domain Generalization/Meta-Learning (Thrun 1998) (testing if learned abstractions port to new task families -> portability verdict). Each theft follows the full Arabic template.",
+    "Step 2: Create Virtual_SIA_Broader_Domain_Cycle_Memo_AR.md documenting: what Option D means, what was implemented (new families, task sets, eval runner, domain transfer analysis), key findings (does the system generalize?), what concepts transfer and what doesn't, architectural implications. Written in Arabic with section headers.",
+    "Step 3: Update Virtual_SIA_Current_Regime_Status_AR.md to add a new section documenting the Broader Domain Cycle completion: what was added, current test count, current theft count (now up to 5.44), and next cycle options."
+  ],
+  "acceptance_criteria": [
+    "Virtual_SIA_Legitimate_Thefts_Cycle4_AR.md exists with thefts 5.39-5.44, each following the Arabic template with sections: ما الذي أخذناه؟, ما الذي لم نأخذه الآن؟, ماذا أصبح عندنا؟",
+    "Virtual_SIA_Broader_Domain_Cycle_Memo_AR.md exists and documents Option D implementation and findings in Arabic",
+    "Virtual_SIA_Current_Regime_Status_AR.md is updated with new section for Broader Domain Cycle",
+    "All documentation is in Arabic with proper markdown formatting"
+  ],
+  "verification": [
+    "Run: grep -c '5\\.39\\|5\\.40\\|5\\.41\\|5\\.42\\|5\\.43\\|5\\.44' Virtual_SIA_Legitimate_Thefts_Cycle4_AR.md and confirm count >= 6",
+    "Run: grep -l 'Broader Domain' Virtual_SIA_Broader_Domain_Cycle_Memo_AR.md and confirm file exists",
+    "Run: grep 'Broader Domain' Virtual_SIA_Current_Regime_Status_AR.md and confirm section added",
+    "All tests still pass: ~/.pyenv/versions/3.12.13/bin/python -m pytest tests/ -q"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}

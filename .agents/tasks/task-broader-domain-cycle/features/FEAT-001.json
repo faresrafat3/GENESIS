@@ -1,0 +1,32 @@
+{
+  "id": "FEAT-001",
+  "type": "feat",
+  "description": "Add new task families (analysis, extraction, planning) to the system: enums, classification keywords, concept engine config, and task ingress service. Also create the broader domain task set (prototype_v7_broader_domain.py) with 18 tasks across 3 new families, the domain transfer eval runner (run_broader_domain_eval.py), and the domain transfer report module (domain_transfer.py). Finally add family-specific selectivity config for the new families.",
+  "status": "in_progress",
+  "steps": [
+    "Step 1: Add TaskFamily enum to virtual_sia/core/ontology/enums.py with values: comparison, synthesis, procedure, analysis, extraction, planning, unknown. This is optional/informational since the system uses strings, but documents the valid families.",
+    "Step 2: Update virtual_sia/runtime/task_ingress/service.py FAMILY_KEYWORDS dict to add 3 new families with appropriate keyword lists: 'analysis' keywords (root cause, causal, why, diagnose, infer, system failure, contributing factor, mechanism, explain why, analyze, investigate, تحليل, سبب), 'extraction' keywords (extract structured, pull out, identify entities, data points, key information, parse fields, slot fill, tabulate, استخراج, بيانات), 'planning' keywords (plan, steps, schedule, sequence, dependencies, constraints, milestones, prioritize, timeline, roadmap, تخطيط, خطوات). Also update default_success_criteria() to include criteria for the new families.",
+    "Step 3: Update virtual_sia/runtime/concept_engine/config.py: Add DEFAULT_FAMILY_SELECTIVITY entries for 'analysis' (max_active: 2, min_score: 6), 'extraction' (max_active: 1, min_score: 7), 'planning' (max_active: 2, min_score: 6). Add FAMILY_SELECTIVITY_STRATEGY entries: 'analysis' -> 'semantic_balanced', 'extraction' -> 'contract_heavy', 'planning' -> 'semantic_balanced'.",
+    "Step 4: Create virtual_sia/eval/task_sets/prototype_v7_broader_domain.py following the pattern in prototype_v6_cases.py. Create helper functions _analysis_case(), _extraction_case(), _planning_case() that build TaskCase objects with appropriate required_properties, forbidden_shortcuts, diagnostic_purpose, and target_thesis. Create PROTOTYPE_V7_BROADER_DOMAIN_CASES list with 18 tasks: 6 analysis (causal reasoning, root cause, system diagnosis), 6 extraction (extract structured data from noisy text), 6 planning (multi-step plans with constraints). Add build_v7_broader_domain_curriculum() function using build_curriculum_from_cases.",
+    "Step 5: Create virtual_sia/eval/reports/domain_transfer.py with function generate_domain_transfer_report(task_results, original_families=['comparison','synthesis','procedure'], new_families=['analysis','extraction','planning']). It should measure: concept_activation_rate_per_family (do concepts formed from old families activate on new ones?), transfer_coefficient per concept (ratio of activation on new vs old families), overall_transfer_rate, and family_pair_transfer_matrix.",
+    "Step 6: Create virtual_sia/eval/runners/run_broader_domain_eval.py following run_local_eval_v6.py pattern. It should: import PROTOTYPE_V7_BROADER_DOMAIN_CASES and build_v7_broader_domain_curriculum, run compare_conditions with DEFAULT_CONDITIONS against the new tasks, build classification_report using a build_case_report function, generate domain_transfer report, generate perturbation_resistance report, and write results to virtual_sia/eval/results/broader_domain_summary.json.",
+    "Step 7: Create tests/test_broader_domain.py with tests covering: new family classification (keywords in service.py classify correctly), new task set validity (all 18 cases are valid TaskCase objects with correct families), domain transfer report generation (produces correct structure), concept engine handles new families (selectivity config works), and the eval runner executes without error. Ensure all 126 existing tests still pass."
+  ],
+  "acceptance_criteria": [
+    "FAMILY_KEYWORDS in service.py contains 'analysis', 'extraction', 'planning' entries with relevant keywords",
+    "DEFAULT_FAMILY_SELECTIVITY in config.py has entries for 'analysis', 'extraction', 'planning'",
+    "FAMILY_SELECTIVITY_STRATEGY in config.py has entries for the 3 new families",
+    "prototype_v7_broader_domain.py exports PROTOTYPE_V7_BROADER_DOMAIN_CASES with exactly 18 TaskCase objects (6 per family)",
+    "domain_transfer.py exports generate_domain_transfer_report() that returns a dict with keys: concept_activation_rate_per_family, transfer_coefficients, overall_transfer_rate, family_pair_transfer_matrix",
+    "run_broader_domain_eval.py exports run_broader_domain_eval() that executes and writes to eval/results/broader_domain_summary.json",
+    "tests/test_broader_domain.py has at least 10 test cases covering classification, task set validity, report generation, and concept config",
+    "All 126 existing tests plus new tests pass with pytest"
+  ],
+  "verification": [
+    "Run: ~/.pyenv/versions/3.12.13/bin/python -m pytest tests/ -q and confirm all tests pass (126 existing + new)",
+    "Run: ~/.pyenv/versions/3.12.13/bin/python -c \"from virtual_sia.eval.task_sets.prototype_v7_broader_domain import PROTOTYPE_V7_BROADER_DOMAIN_CASES; print(len(PROTOTYPE_V7_BROADER_DOMAIN_CASES))\" and confirm output is 18",
+    "Run: ~/.pyenv/versions/3.12.13/bin/python -c \"from virtual_sia.eval.runners.run_broader_domain_eval import run_broader_domain_eval; r = run_broader_domain_eval(); print(r['task_count'], r['domain_transfer']['overall_transfer_rate'])\" and confirm it executes"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}

@@ -23,6 +23,18 @@ FAMILY_KEYWORDS = {
         "extract", "format", "reformat", "classify", "parse", "checklist", "fields", "attributes", "structured",
         "handoff", "layout", "operator", "labeled values", "field-oriented", "normalize", "نسق", "استخرج", "صنف",
     ],
+    "analysis": [
+        "root cause", "causal", "why did", "diagnose", "infer", "system failure", "contributing factor",
+        "mechanism", "explain why", "analyze", "investigate", "underlying", "تحليل", "سبب",
+    ],
+    "extraction": [
+        "extract structured", "pull out", "identify entities", "data points", "key information",
+        "parse fields", "slot fill", "tabulate", "extract all", "structured output", "استخراج", "بيانات",
+    ],
+    "planning": [
+        "plan", "steps to", "schedule", "sequence", "dependencies", "constraints", "milestones",
+        "prioritize", "timeline", "roadmap", "multi-step", "تخطيط", "خطوات",
+    ],
 }
 
 
@@ -102,6 +114,9 @@ def default_success_criteria(task_family: str) -> list[str]:
         "comparison": ["clear contrasts", "supported conclusion"],
         "synthesis": ["evidence coverage", "coherent merged answer"],
         "procedure": ["correct format", "rule compliance"],
+        "analysis": ["causal chain identified", "root cause supported by evidence"],
+        "extraction": ["all fields extracted", "structured output valid"],
+        "planning": ["steps sequenced correctly", "constraints satisfied"],
         "unknown": ["reasonable answer", "format validity"],
     }
     return family_map.get(task_family, family_map["unknown"])

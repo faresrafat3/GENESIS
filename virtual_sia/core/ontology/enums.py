@@ -43,3 +43,18 @@ class Tier(str, Enum):
     TIER_1 = "tier_1"
     TIER_2 = "tier_2"
     TIER_3 = "tier_3"
+
+
+class TaskFamily(str, Enum):
+    """Informational enum documenting valid task families.
+
+    The runtime uses string-based classification (FAMILY_KEYWORDS in service.py),
+    but this enum provides a canonical reference of supported families.
+    """
+    COMPARISON = "comparison"
+    SYNTHESIS = "synthesis"
+    PROCEDURE = "procedure"
+    ANALYSIS = "analysis"
+    EXTRACTION = "extraction"
+    PLANNING = "planning"
+    UNKNOWN = "unknown"

@@ -10,6 +10,9 @@ DEFAULT_FAMILY_SELECTIVITY = {
     'comparison': {'max_active': 1, 'min_score': 7},
     'synthesis': {'max_active': 2, 'min_score': 7},
     'procedure': {'max_active': 0, 'min_score': 99},
+    'analysis': {'max_active': 2, 'min_score': 6},
+    'extraction': {'max_active': 1, 'min_score': 7},
+    'planning': {'max_active': 2, 'min_score': 6},
 }
 
 # Strategy descriptors per family.
@@ -20,4 +23,7 @@ FAMILY_SELECTIVITY_STRATEGY = {
     'comparison': 'contract_heavy',
     'synthesis': 'semantic_balanced',
     'procedure': 'structural_only',
+    'analysis': 'semantic_balanced',
+    'extraction': 'contract_heavy',
+    'planning': 'semantic_balanced',
 }
