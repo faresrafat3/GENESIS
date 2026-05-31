@@ -2,7 +2,7 @@
   "id": "FEAT-001",
   "type": "feat",
   "description": "Implement Theory Leverage Core: data model extension (LocalTheoryObject fields), theory prediction/update functions (B4), theory-contradiction interaction (B5), theory-guided verification (B1), theory-guided concept activation (B2), theory-guided routing (B3), and pipeline integration - all gated behind use_theory_leverage: bool = False",
-  "status": "in_progress",
+  "status": "completed",
   "steps": [
     "Step 1 - Extend LocalTheoryObject in virtual_sia/core/objects/theory.py: add fields predictive_value: float = 0.5, prediction_count: int = 0, correct_predictions: int = 0, explanatory_power: float = 0.0. Keep the create() classmethod and all existing fields unchanged.",
     "Step 2 - Add B4 functions to virtual_sia/runtime/theory_runtime/apply.py: (a) get_theory_prediction_for_task(theory: LocalTheoryObject, task_family: str, task_text: str) -> dict with keys 'predicts_difficulty' (bool), 'predicts_failure' (bool), 'confidence' (float), 'relevant_claims' (list[str]). Logic: check predictive_claims against task_text tokens, return predictions. (b) update_theory_predictive_value(theory: LocalTheoryObject, prediction_correct: bool) -> None. Logic: increment prediction_count, if correct increment correct_predictions, compute predictive_value = (correct_predictions + 1) / (prediction_count + 2) (Laplace smoothing). Include Arabic theft docstrings citing Popper (falsifiability) + Bayesian updating.",
@@ -35,5 +35,5 @@
     "Run: ~/.pyenv/versions/3.12.13/bin/python -c \"from virtual_sia.runtime.pipeline.minimal_run import run_minimal_pipeline; r = run_minimal_pipeline('test task', use_theory_leverage=True); print('theory leverage OK:', r.get('use_theory_leverage'));\""
   ],
   "blocked_reason": null,
-  "findings": ""
+  "findings": "All 88 existing tests pass. All 6 new functions verified via import and manual functional tests. Pipeline with use_theory_leverage=False produces identical output (theory_prediction and theory_predictive_value are None). Pipeline with use_theory_leverage=True correctly computes predictions when theories exist. Fixed a bug where the anomaly_aware tier routing lost its decision_reason update for the 0.4 severity threshold case during the str_replace operation. The concept_engine theory_guided function required importing LocalTheoryObject type annotation conditionally to avoid circular imports."
 }
