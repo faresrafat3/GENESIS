@@ -26,7 +26,7 @@
 
 ### ID2: Drift Detection (كشف الانجراف)
 
-**الملف**: `virtual_sia/runtime/identity_runtime/service.py`
+**الملف**: `virtual_sia/runtime/identity_runtime/drift_detector.py`
 
 آلية قياس انحراف السلوك الحالي عن الالتزامات المعلنة:
 - **الآلية**: token overlap بين نص السلوك/القرار وبين الالتزامات
@@ -36,7 +36,7 @@
 
 ### ID3: Commitment Ledger (سجل الالتزامات)
 
-**الملف**: `virtual_sia/runtime/identity_runtime/service.py`
+**الملف**: `virtual_sia/runtime/identity_runtime/commitment_ledger.py`
 
 سجل يتتبع حالة كل التزام عبر الزمن:
 - `active_commitments: List[str]` - الالتزامات النشطة حاليا
@@ -47,15 +47,15 @@
 
 ### ID4: Identity-Aware Governance (حوكمة واعية بالهوية)
 
-**الملف**: `virtual_sia/runtime/identity_runtime/service.py`
+**الملف**: `virtual_sia/runtime/identity_runtime/governance.py`
 
 فحص كل قرار كبير مقابل الالتزامات قبل التنفيذ:
 - **المدخل**: القرار المقترح + identity object
 - **العملية**: حساب drift_score للقرار مقابل الالتزامات
 - **المخرج**: recommendation واحدة من ثلاث:
-  - `continue` - الانحراف منخفض (drift <= 0.3)، يمكن المتابعة
-  - `review_decision` - الانحراف متوسط (0.3 < drift <= 0.6)، يحتاج مراجعة
-  - `halt_and_review` - الانحراف مرتفع (drift > 0.6)، يجب التوقف والمراجعة
+  - `continue` - الانحراف منخفض (drift < 0.5)، يمكن المتابعة
+  - `review_decision` - الانحراف متوسط (0.5 <= drift <= 0.7)، يحتاج مراجعة
+  - `halt_and_review` - الانحراف مرتفع (drift > 0.7)، يجب التوقف والمراجعة
 
 ### ID5: Pipeline Integration (تكامل مع خط الانابيب)
 

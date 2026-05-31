@@ -1,0 +1,20 @@
+{
+  "id": "FEAT-004",
+  "type": "fix",
+  "description": "Fix review issues #3 and #4: correct governance thresholds and file references in Identity Governance Implementation Memo",
+  "status": "in_progress",
+  "steps": [
+    "Update Virtual_SIA_Identity_Governance_Implementation_Memo_AR.md section ID4 to use correct thresholds: continue (drift < 0.5), review_decision (0.5 <= drift <= 0.7), halt_and_review (drift > 0.7)",
+    "Update Virtual_SIA_Identity_Governance_Implementation_Memo_AR.md sections ID2, ID3, ID4 to reference correct file paths: drift_detector.py, commitment_ledger.py, governance.py instead of service.py"
+  ],
+  "acceptance_criteria": [
+    "Memo thresholds match code: continue < 0.5, review_decision 0.5-0.7, halt_and_review > 0.7",
+    "Memo file references match actual files: drift_detector.py, commitment_ledger.py, governance.py",
+    "All 285 tests still pass"
+  ],
+  "verification": [
+    "~/.pyenv/versions/3.12.13/bin/python -m pytest tests/ --tb=short -q"
+  ],
+  "blocked_reason": null,
+  "findings": null
+}
