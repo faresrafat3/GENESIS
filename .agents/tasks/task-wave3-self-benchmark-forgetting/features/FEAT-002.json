@@ -2,7 +2,7 @@
   "id": "FEAT-002",
   "type": "feat",
   "description": "Productive Forgetting (H3): Implement memory decay, forgetting operations (archive/deprecate/delete), memory utility scoring, forgetting policy, and pipeline integration. This gives the memory system lifecycle management so it stays clean and relevant.",
-  "status": "pending",
+  "status": "completed",
   "steps": [
     "1. Enhance virtual_sia/core/objects/memory.py MemoryUnit dataclass: add decay_score: float = 1.0, last_accessed: int = 0, access_count: int = 0, memory_status: str = 'active' (values: active, archived, deprecated, deleted).",
     "2. Enhance virtual_sia/runtime/memory_os/store.py InMemoryMemoryStore: (a) Add apply_decay(decay_rate: float) method that reduces decay_score for all active memories based on staleness (current_tick - last_accessed) * decay_rate. (b) Add archive_memory(memory_id) - sets memory_status='archived'. (c) Add deprecate_memory(memory_id) - sets memory_status='deprecated'. (d) Add delete_memory(memory_id) - sets memory_status='deleted'. (e) Add get_active_memories() - returns only memories with status='active'. (f) Add record_access(memory_id, tick: int) - updates last_accessed and access_count. (g) Add a tick: int = 0 counter to the store that increments on store_memory calls.",
@@ -30,5 +30,5 @@
     "~/.pyenv/versions/3.12.13/bin/python -m pytest tests/ --tb=short -q (all tests pass including existing 163)"
   ],
   "blocked_reason": null,
-  "findings": ""
+  "findings": "All 234 tests pass (202 existing + 32 new). Productive forgetting adds 4 fields to MemoryUnit (decay_score, last_accessed, access_count, memory_status), 7 new methods to InMemoryMemoryStore, utility.py and forgetting_policy.py as new modules, active_only parameter in retriever, and use_productive_forgetting pipeline gate. Backward compatible - all defaults preserve existing behavior."
 }
