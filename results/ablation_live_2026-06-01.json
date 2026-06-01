@@ -1,0 +1,17 @@
+{
+  "baseline": {
+    "success_rate": 0.9861,
+    "cost_avg": 0.000736,
+    "tasks": 72
+  },
+  "theory_leverage": {
+    "success_rate": 0.9861,
+    "cost_avg": 0.000736,
+    "tasks": 72
+  },
+  "anomaly_leverage": {
+    "success_rate": 0.9861,
+    "cost_avg": 0.000736,
+    "tasks": 72
+  }
+}
