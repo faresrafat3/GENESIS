@@ -82,11 +82,15 @@ hierarchy واضحة".
 python -m virtual_sia.eval.runners.run_local_eval_v3b_curriculum
 ```
 
-### 2.2 الـ Canonical Evidence Path
-- **الشريحة الأساسية للأطروحة:** `prototype_v3b_curriculum` (72 مهمة)
-- **الشريحة التشخيصية:** `prototype_v4_cases`
+### 2.2 الـ Canonical Evidence Path — الشرائح المعتمدة (Official Slices)
+- **`primary_thesis_slice = prototype_v3b_curriculum`** (72 task) — شريحة الأطروحة الأساسية (peak performance، مع B=OFF).
+- **`primary_diagnostic_slice = adversarial_hard_cases`** (6 tasks) — الشريحة التشخيصية الرسمية (robustness، تكشف قيمة B).
+- **شريحة تشخيصية ثانوية:** `prototype_v4_cases`
 - **شرائح المعايرة:** v2 / v3
-- **التحقق الحقيقي (LLM):** `run_adversarial_llm_eval` (أول دليل غير متشبّع)
+- **التحقق الحقيقي (LLM):** `run_adversarial_llm_eval` (أول دليل غير متشبّع: A=0% → B/C=50%)
+
+> **التمييز الجوهري:** الشريحة الأساسية تقيس **الأداء الأقصى** (هل النظام يحل المهام؟)، والشريحة
+> التشخيصية تقيس **المتانة** (هل يقاوم الاختصارات تحت الإغراء؟). الحوكمة B تُقيَّم على الثانية لا الأولى.
 
 ### 2.3 الـ Canonical Configuration (defaults مجمّدة)
 ```python

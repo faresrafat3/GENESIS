@@ -43,6 +43,10 @@ python -m virtual_sia.eval.runners.run_local_eval_v3b_curriculum
 - أفضل condition: `condition_c_combined` (concept + economy) → success≈0.986، cost≈0.00068
 - كل flags الحوكمة (الطبقة B) = **OFF** في هذا المسار.
 
+### الشرائح المعتمدة (Official Slices)
+- `primary_thesis_slice = prototype_v3b_curriculum` (72 task) — قياس الأداء الأقصى (B=OFF).
+- `primary_diagnostic_slice = adversarial_hard_cases` (6 tasks) — قياس المتانة (تكشف قيمة الحوكمة B).
+
 ### التحقق الحقيقي مع LLM (research-only)
 ```bash
 export OPENROUTER_API_KEY=...   # owl-alpha أو أي نموذج

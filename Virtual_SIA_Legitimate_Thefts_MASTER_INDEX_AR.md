@@ -246,4 +246,21 @@
 
 ---
 
+## 7) ملحق المصدر (Provenance) — السرقات 5.65–5.83
+
+أُضيفت هذه السرقات بتاريخ **2026-05-31 / 2026-06-01** عبر آخر دفعة من العمل، ومصادرها داخل المشروع:
+
+| المدى | الدفعة (commit theme) | الملفات الناتجة |
+|-------|------------------------|------------------|
+| 5.65–5.68 | **Contract Perturbation** | `eval/perturbations/contract_perturbations.py` |
+| 5.69–5.72 | **SQLite Persistence** | `persistence/*.py` |
+| 5.73–5.76 | **Real LLM Eval** | `api/llm_reasoning.py`, `eval/runners/run_real_llm_*` |
+| 5.77–5.80 | **Adversarial Validation** | `eval/task_sets/adversarial_hard_cases.py`, `eval/runners/run_adversarial_llm_eval.py` |
+| 5.81–5.83 | **Internal Regime Lock** | `Virtual_SIA_Internal_Regime_Lock_AR.md` |
+
+> كل هذه السرقات موثّقة بالتفصيل الكامل (ما أُخذ / ما تُرك / ما أصبح) في وثائقها الأصلية المذكورة
+> في §6، ومُلخّصة في الجداول أعلاه (§1).
+
+---
+
 *نهاية السجل الموحّد الشامل — هذه الوثيقة هي المرجع الرسمي لمنهجية السرقة الشرعية في Virtual-SIA.*
