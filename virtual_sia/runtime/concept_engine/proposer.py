@@ -110,16 +110,102 @@ def _operational_meaning_for_candidate(candidate: ConceptCandidate) -> str:
     return "Use this concept to influence retrieval, verification emphasis, or procedural reuse decisions."
 
 
-def promote_candidate(registry: InMemoryConceptRegistry, candidate_id: str) -> ConceptCard | None:
+def _compute_evidence_strength(candidate: ConceptCandidate) -> tuple[float, float]:
+    """Compute (confidence_score, transfer_score) from evidence strength.
+
+    Factors:
+      - Number of supporting episodes (more = higher confidence)
+      - Contrastive basis count (more contrastive axes = higher value)
+      - Presence of counterexamples (narrows transfer)
+      - Scope breadth (broader scope = higher transfer risk)
+    """
+    n_support = len(candidate.supporting_episode_refs or [])
+    n_basis = len(candidate.contrastive_basis or [])
+    n_counter = len(candidate.counterexample_refs or [])
+    n_families = len(candidate.candidate_scope.task_families or [])
+
+    # Confidence: evidence volume + contrastive richness
+    base_confidence = 0.5
+    support_bonus = min(n_support * 0.04, 0.25)  # up to +0.25
+    basis_bonus = min(n_basis * 0.05, 0.15)       # up to +0.15
+    counterexample_penalty = min(n_counter * 0.03, 0.1)
+    confidence = min(base_confidence + support_bonus + basis_bonus - counterexample_penalty, 0.95)
+    confidence = max(confidence, 0.3)
+
+    # Transfer: inversely related to specificity
+    base_transfer = 0.3
+    family_penalty = max(0, (n_families - 1) * 0.05)  # multi-family = slightly riskier
+    counterexample_transfer_penalty = min(n_counter * 0.04, 0.15)
+    transfer = max(base_transfer - family_penalty - counterexample_transfer_penalty, 0.1)
+    # Strong evidence can slightly raise transfer
+    if n_support >= 4 and n_basis >= 2:
+        transfer = min(transfer + 0.1, 0.5)
+
+    return round(confidence, 2), round(transfer, 2)
+
+
+def _is_redundant(candidate: ConceptCandidate, existing_concepts: list[ConceptCard]) -> bool:
+    """Check if a candidate is semantically redundant with an existing concept.
+
+    Uses token overlap on name + definition to detect near-duplicates.
+    """
+    candidate_tokens = _tokenize(candidate.proposed_name + " " + candidate.short_definition)
+    for concept in existing_concepts:
+        existing_tokens = _tokenize(concept.name + " " + concept.definition)
+        if len(candidate_tokens) == 0 or len(existing_tokens) == 0:
+            continue
+        overlap = len(candidate_tokens & existing_tokens)
+        union = len(candidate_tokens | existing_tokens)
+        jaccard = overlap / union if union > 0 else 0.0
+        # Threshold: 60% Jaccard overlap OR exact family+type match with high token overlap
+        if jaccard >= 0.6:
+            return True
+        if overlap >= 5:
+            return True
+    return False
+
+
+def _tokenize(text: str) -> set[str]:
+    """Tokenize with basic stopword filtering to reduce noise in comparisons."""
+    _STOPWORDS = {
+        "a", "an", "the", "is", "are", "was", "were", "be", "been", "being",
+        "have", "has", "had", "do", "does", "did", "will", "would", "could",
+        "should", "may", "might", "shall", "can", "to", "of", "in", "for",
+        "on", "with", "at", "by", "from", "as", "into", "about", "between",
+        "through", "during", "before", "after", "above", "below", "not",
+        "no", "nor", "and", "but", "or", "if", "than", "that", "this",
+        "these", "those", "it", "its", "when", "where", "how", "what",
+        "which", "who", "whom", "while", "because", "so", "very", "too",
+        "also", "just", "then", "there", "here", "each", "every", "all",
+        "both", "few", "more", "most", "other", "some", "such", "only",
+        "own", "same", "often", "repeatedly", "worth", "without",
+    }
+    raw = {t.strip('.,:;!?()[]{}').lower() for t in text.split()}
+    return {t for t in raw if t and t not in _STOPWORDS and len(t) > 1}
+
+
+def promote_candidate(
+    registry: InMemoryConceptRegistry,
+    candidate_id: str,
+    skip_redundancy_check: bool = False,
+) -> ConceptCard | None:
     candidate = registry.get_candidate(candidate_id)
     if not candidate:
         return None
+
+    # --- Drift guard: reject promotion if redundant with existing concepts ---
+    if not skip_redundancy_check and _is_redundant(candidate, registry.list_concepts()):
+        return None
+
+    # --- Evidence-based scoring instead of hardcoded values ---
+    confidence, transfer = _compute_evidence_strength(candidate)
+
     concept = ConceptCard.from_candidate(
         candidate,
         operational_meaning=_operational_meaning_for_candidate(candidate),
     )
     concept.activation_conditions = candidate.candidate_scope.positive_conditions.copy()
-    concept.confidence_score = 0.6
-    concept.transfer_score = 0.3
+    concept.confidence_score = confidence
+    concept.transfer_score = transfer
     registry.add_concept(concept)
     return concept

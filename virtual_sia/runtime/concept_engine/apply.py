@@ -27,8 +27,27 @@ class ConceptActivationDecision:
     notes: str = ""
 
 
+# Domain stopwords that add noise to semantic matching without contributing
+# to discriminative power.  Keeps token-overlap signals clean.
+_DOMAIN_STOPWORDS = {
+    "a", "an", "the", "is", "are", "was", "were", "be", "been", "being",
+    "have", "has", "had", "do", "does", "did", "will", "would", "could",
+    "should", "may", "might", "shall", "can", "to", "of", "in", "for",
+    "on", "with", "at", "by", "from", "as", "into", "about", "between",
+    "through", "during", "before", "after", "above", "below", "not",
+    "no", "nor", "and", "but", "or", "if", "than", "that", "this",
+    "these", "those", "it", "its", "when", "where", "how", "what",
+    "which", "who", "whom", "while", "because", "so", "very", "too",
+    "also", "just", "then", "there", "here", "each", "every", "all",
+    "both", "few", "more", "most", "other", "some", "such", "only",
+    "own", "same", "often", "repeatedly", "worth", "without",
+    "use", "used", "using", "task", "tasks", "based", "ensure",
+}
+
+
 def _tokenize(text: str) -> set[str]:
-    return {t.strip('.,:;!?()[]{}').lower() for t in text.split() if t.strip()}
+    raw = {t.strip('.,:;!?()[]{}').lower() for t in text.split()}
+    return {t for t in raw if t and t not in _DOMAIN_STOPWORDS and len(t) > 1}
 
 
 def _contract_tokens(task_contract: Mapping[str, Any] | None) -> set[str]:
@@ -53,6 +72,15 @@ def _family_policy(task_family: str, max_active: int | None, min_activation_scor
         fam_min if min_activation_score is None else min_activation_score,
         strategy,
     )
+
+
+def _compute_jaccard(set_a: set[str], set_b: set[str]) -> float:
+    """Jaccard similarity between two token sets."""
+    if not set_a or not set_b:
+        return 0.0
+    intersection = len(set_a & set_b)
+    union = len(set_a | set_b)
+    return intersection / union if union > 0 else 0.0
 
 
 def select_applicable_concepts(
@@ -81,12 +109,19 @@ def select_applicable_concepts(
         family_fit = 2
 
         # Strategy-differentiated scoring.
-        # Note: structural_only differentiation is in the high-threshold fallback
-        # below, not in the scoring formula itself.
         if strategy == 'contract_heavy':
             base_score = family_fit + (contract_fit * 2) + semantic_fit
         else:
             base_score = family_fit + contract_fit + semantic_fit
+
+        # Confidence-adjusted scoring: high-confidence concepts get a bonus,
+        # low-confidence concepts get penalised.  Prevents drift from
+        # low-evidence concepts dominating.
+        confidence = concept.confidence_score if concept.confidence_score is not None else 0.5
+        if confidence >= 0.7:
+            base_score += 1  # reward well-evidenced concepts
+        elif confidence < 0.4:
+            base_score -= 1  # penalise weak-evidence concepts
 
         if semantic_fit >= min_overlap or contract_fit > 0:
             scored_rows.append((base_score, family_fit, contract_fit, semantic_fit, concept))
@@ -97,10 +132,18 @@ def select_applicable_concepts(
     used_token_sets: List[set[str]] = []
     for rank, (score, family_fit, contract_fit, semantic_fit, concept) in enumerate(scored_rows, start=1):
         concept_tokens = _tokenize(concept.name + ' ' + concept.definition + ' ' + concept.operational_meaning)
+
+        # --- Strengthened redundancy detection ---
         redundancy_penalty = 0
         if used_token_sets:
+            max_jaccard = max(_compute_jaccard(concept_tokens, prev) for prev in used_token_sets)
             max_overlap = max(len(concept_tokens & prev) for prev in used_token_sets)
-            redundancy_penalty = 1 if max_overlap >= 4 else 0
+            # Penalise if Jaccard > 0.35 OR raw overlap >= 3 tokens (was 4)
+            if max_jaccard >= 0.35 or max_overlap >= 3:
+                redundancy_penalty = 2
+            elif max_jaccard >= 0.2 or max_overlap >= 2:
+                redundancy_penalty = 1
+
         adjusted = score - redundancy_penalty
         select = adjusted >= fam_min_score and len(selected) < fam_limit
 
@@ -183,8 +226,6 @@ def select_applicable_concepts_theory_guided(
     from ...core.objects.theory import LocalTheoryObject as _TheoryType  # noqa: F811
 
     # Materialize concepts to a list at entry to prevent iterator-consumption bugs.
-    # If a generator or single-pass iterable is passed, it would be exhausted after
-    # select_applicable_concepts and the later resolution loop would silently yield nothing.
     concepts_list: List[ConceptCard] = list(concepts) if not isinstance(concepts, list) else concepts
 
     selected, decisions = select_applicable_concepts(
