@@ -109,19 +109,25 @@ class TestAPI:
         assert "total_tasks_processed" in data
 
     def test_mock_llm_adapter(self):
+        import os
+        from unittest.mock import patch
         from virtual_sia.api.llm_adapter import LLMAdapter
 
-        adapter = LLMAdapter()  # No API key
-        result = adapter.generate("Hello world, this is a test prompt")
-        assert isinstance(result, str)
-        assert "Mock response for:" in result
-        assert "Hello world" in result
+        with patch.dict(os.environ, {"OPENROUTER_API_KEY": ""}):
+            adapter = LLMAdapter()  # No API key
+            result = adapter.generate("Hello world, this is a test prompt")
+            assert isinstance(result, str)
+            assert "Mock response for:" in result
+            assert "Hello world" in result
 
     def test_llm_adapter_deterministic(self):
+        import os
+        from unittest.mock import patch
         from virtual_sia.api.llm_adapter import LLMAdapter
 
-        adapter = LLMAdapter()
-        prompt = "Deterministic test prompt for consistency check"
-        result1 = adapter.generate(prompt)
-        result2 = adapter.generate(prompt)
-        assert result1 == result2
+        with patch.dict(os.environ, {"OPENROUTER_API_KEY": ""}):
+            adapter = LLMAdapter()
+            prompt = "Deterministic test prompt for consistency check"
+            result1 = adapter.generate(prompt)
+            result2 = adapter.generate(prompt)
+            assert result1 == result2
