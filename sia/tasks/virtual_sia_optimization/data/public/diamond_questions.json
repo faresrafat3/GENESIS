@@ -1,0 +1,29 @@
+[
+  {
+    "id": 0,
+    "module": "concept_engine",
+    "target_files": [
+      "virtual_sia/runtime/concept_engine/service.py",
+      "virtual_sia/runtime/concept_engine/builder.py"
+    ],
+    "description": "Optimize the concept formation generalization rules and selectivity mechanism to prevent semantic drift."
+  },
+  {
+    "id": 1,
+    "module": "economy_control",
+    "target_files": [
+      "virtual_sia/runtime/economy_control/ledger.py",
+      "virtual_sia/runtime/economy_control/router.py"
+    ],
+    "description": "Refine the cognitive budget allocation and tier router to optimize model tier selection based on task difficulty."
+  },
+  {
+    "id": 2,
+    "module": "memory_os",
+    "target_files": [
+      "virtual_sia/runtime/memory_os/short_term.py",
+      "virtual_sia/runtime/memory_os/long_term.py"
+    ],
+    "description": "Enhance memory consolidation, strategic lesson retrieval, and productive forgetting."
+  }
+]
