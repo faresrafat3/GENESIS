@@ -3,9 +3,9 @@
 
 > Document Type: Master Theft Registry (Single Source of Truth)
 > Status: Authoritative / Living Document
-> Date: 2026-05-31
-> Scope: يجمع كل السرقات الشرعية (5.1–5.80 بحثية + 6.1–6.13 كلاسيكية) في مرجع واحد
-> Total: 80 سرقة بحثية + 13 سرقة كلاسيكية = **93 سرقة موثقة**
+> Date: 2026-06-01
+> Scope: يجمع كل السرقات الشرعية (5.1–5.83 بحثية + 6.1–6.13 كلاسيكية) في مرجع واحد
+> Total: 83 سرقة بحثية + 13 سرقة كلاسيكية = **96 سرقة موثقة**
 
 ---
 
@@ -157,6 +157,14 @@
 | 5.79 | **Sycophancy (Perez 2023, Anthropic)** ([arxiv](https://arxiv.org/abs/2212.09251)) | النماذج تأخذ اختصارات لإرضاء الصياغة | `strict_failure_markers` | 🟢 |
 | 5.80 | **CheckList Failure-Rate (Ribeiro 2020)** ([arxiv](https://arxiv.org/abs/2005.04118)) | معدل الفشل هو الإشارة | strict scorer (shortcut/evidence rate) | 🟢 |
 
+### مرحلة القفل الداخلي (5.81–5.83) — Internal Regime Lock (anti-sprawl)
+
+| # | المصدر | ما أخذناه (مختصر) | ما أصبح عندنا | الحالة |
+|---|--------|-------------------|----------------|:---:|
+| 5.81 | **Model Cards (Mitchell et al. 2019, Google)** ([arxiv](https://arxiv.org/abs/1810.03993)) | بطاقة رسمية تحدد النطاق المعتمد + الاستخدام المقصود + الحدود كمرجع واحد | `Virtual_SIA_Internal_Regime_Lock_AR.md` كـ "بطاقة معمارية" (نواة/نطاق/حدود) | 🟢 |
+| 5.82 | **Golden Configuration / Baselines (ITIL · NIST SP 800-128)** ([nist](https://csrc.nist.gov/pubs/sp/800/128/final)) | "تهيئة ذهبية" مجمّدة كخط أساس، وأي انحراف يُبرَّر | Canonical Configuration المجمّدة (§2.3) + قاعدة "كل flag حوكمة OFF افتراضيًا" | 🟢 |
+| 5.83 | **SemVer + Trunk-Based Release Trains (Preston-Werner)** ([semver](https://semver.org/)) | فصل النواة المستقرة (trunk) عن التوسّعات قبل نضجها | تصنيف الطبقات A/B/C + قواعد منع التشعّب (anti-sprawl) | 🟢 |
+
 ---
 
 ## 2) الجدول الرئيسي — السرقات الكلاسيكية (6.1–6.13)
@@ -197,18 +205,19 @@
 | `persistence/` (SQLite) | 5.69–5.72 |
 | `api/` | 5.63, 5.64 |
 | `runtime/pipeline/minimal_run.py` | 6.1, 6.5, 6.6, 6.7 |
+| `Virtual_SIA_Internal_Regime_Lock_AR.md` (منهجية القفل/anti-sprawl) | 5.81–5.83 |
 
 ---
 
 ## 4) إحصاء حالة التنفيذ (شفافية كاملة)
 
-من الـ 93 سرقة:
+من الـ 96 سرقة:
 
 | الحالة | العدد | النسبة | المعنى |
 |--------|:---:|:---:|--------|
-| 🟢 مُنفَّذ (كود + اختبارات) | ~58 | ~62% | فكرة تحوّلت لمكوّن شغّال مُختبَر |
-| 🟡 مبدأ/جزئي | ~26 | ~28% | موجّه معماري أو plumbing بلا أثر سلوكي قوي مُثبَت |
-| ⚪ مسار مستقبلي | ~9 | ~10% | اتجاه مذكور لم يُبنَ بعد |
+| 🟢 مُنفَّذ (كود + اختبارات) | ~61 | ~64% | فكرة تحوّلت لمكوّن شغّال مُختبَر |
+| 🟡 مبدأ/جزئي | ~26 | ~27% | موجّه معماري أو plumbing بلا أثر سلوكي قوي مُثبَت |
+| ⚪ مسار مستقبلي | ~9 | ~9% | اتجاه مذكور لم يُبنَ بعد |
 
 > **ملاحظة صدق علمي:** "مُنفَّذ" تعني "موجود كود يعمل ومُختبَر" — **لا** تعني "مُثبَت تجريبيًا
 > أنه يحسّن الأداء". الإثبات التجريبي منفصل وموثّق في `Virtual_SIA_Adversarial_Validation_Memo_AR.md`
@@ -227,6 +236,7 @@
 - **بنية التفكير (Reasoning):** 5.6, 5.18, 5.19, 6.1, 6.5, 6.6, 6.8, 6.9
 - **التحسّن الذاتي (Self-Improvement):** 5.5, 5.10, 5.11, 5.12, 5.13, 5.21, 5.45, 5.46
 - **البنية التحتية (Infrastructure):** 5.63, 5.64, 5.69–5.72
+- **حماية الاتساع (Anti-Sprawl / Project Governance):** 5.81–5.83
 
 ---
 
@@ -243,6 +253,7 @@
 - `Virtual_SIA_Legitimate_Thefts_RealWorld_AR.md` (5.65–5.75)
 - `Virtual_SIA_Real_LLM_Broader_Results_AR.md` (5.76)
 - `Virtual_SIA_Adversarial_Validation_Memo_AR.md` (5.77–5.80)
+- `Virtual_SIA_Internal_Regime_Lock_AR.md` (5.81–5.83)
 
 ---
 

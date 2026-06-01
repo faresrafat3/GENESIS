@@ -40,12 +40,29 @@ artifacts + plumbing، تأثير سلوكي خفيف غير مُثبَت بال
 python -m virtual_sia.eval.runners.run_local_eval_v3b_curriculum
 ```
 - الشريحة الأساسية: `prototype_v3b_curriculum` (72 مهمة)
-- أفضل condition: `condition_c_combined` (concept + economy) → success≈0.986، cost≈0.00068
+- أفضل condition: `condition_c_combined` (concept + economy) → success≈0.986، cost≈0.000736
 - كل flags الحوكمة (الطبقة B) = **OFF** في هذا المسار.
 
 ### الشرائح المعتمدة (Official Slices)
 - `primary_thesis_slice = prototype_v3b_curriculum` (72 task) — قياس الأداء الأقصى (B=OFF).
 - `primary_diagnostic_slice = adversarial_hard_cases` (6 tasks) — قياس المتانة (تكشف قيمة الحوكمة B).
+
+### الدورة 5.1 — استئصال الحوكمة (نتيجة حيّة)
+استئصال على المسار المعتمد (`condition_c_combined`، 72 task، `errors=0`) أثبت أن الحوكمة B تشتري
+**المتانة لا الذروة الرخيصة**:
+
+| Run | success | cost_avg | ×baseline |
+|-----|:---:|:---:|:---:|
+| Baseline (B=OFF) | 0.9861 | 0.000736 | 1.00× |
+| + `use_theory_leverage` | 0.9861 | 0.002167 | 2.94× |
+| + `use_anomaly_leverage` | 1.0000 | 0.010000 | 13.59× |
+
+`theory_leverage` لا يرفع 98.6% (تكلفة ×3 فقط)؛ `anomaly_leverage` يصل 100% لكن بثمن premium كامل.
+التفاصيل: `results/ablation_summary_2026-06-01.md`. التشغيل (gated، default OFF):
+```bash
+VIRTUAL_SIA_USE_THEORY_LEVERAGE=true  python -m virtual_sia.eval.runners.run_local_eval_v3b_curriculum
+VIRTUAL_SIA_USE_ANOMALY_LEVERAGE=true python -m virtual_sia.eval.runners.run_local_eval_v3b_curriculum
+```
 
 ### التحقق الحقيقي مع LLM (research-only)
 ```bash
@@ -78,7 +95,7 @@ pytest -q          # 424 اختبار
 | **القفل البنيوي (الأعلى)** | `Virtual_SIA_Internal_Regime_Lock_AR.md` |
 | حالة النظام الحالية | `Virtual_SIA_Current_Regime_Status_AR.md` |
 | المعمارية النظرية | `Virtual_SIA_Master_Architecture_AR.md` |
-| سجل السرقات الموحّد (93) | `Virtual_SIA_Legitimate_Thefts_MASTER_INDEX_AR.md` |
+| سجل السرقات الموحّد (96) | `Virtual_SIA_Legitimate_Thefts_MASTER_INDEX_AR.md` |
 | البرنامج البحثي (H1–H9) | `Virtual_SIA_Research_Program_AR.md` |
 | الأدلة (LLM حقيقي) | `Virtual_SIA_Adversarial_Validation_Memo_AR.md` |
 

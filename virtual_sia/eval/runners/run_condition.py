@@ -69,7 +69,14 @@ def _warmup_concepts(tasks: List[object], memory_store: InMemoryMemoryStore, led
     }
 
 
-def run_condition(condition_id: str, tasks: Iterable[object], task_set_ref: str = "local_dev") -> EvaluationResult:
+def run_condition(
+    condition_id: str,
+    tasks: Iterable[object],
+    task_set_ref: str = "local_dev",
+    *,
+    use_theory_leverage: bool = False,
+    use_anomaly_leverage: bool = False,
+) -> EvaluationResult:
     config = CONDITIONS[condition_id]
     task_list = list(tasks)
     memory_store = InMemoryMemoryStore()
@@ -97,6 +104,8 @@ def run_condition(condition_id: str, tasks: Iterable[object], task_set_ref: str 
             concept_registry=concept_registry,
             theory_registry=theory_registry,
             use_concepts=config["use_concepts"],
+            use_theory_leverage=use_theory_leverage,
+            use_anomaly_leverage=use_anomaly_leverage,
         )
         task_results.append(run)
         if config["use_concepts"]:

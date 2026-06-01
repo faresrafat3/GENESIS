@@ -107,7 +107,28 @@ DEFAULT_FAMILY_SELECTIVITY = {
 
 ### 2.4 الـ Canonical Best Condition
 **`condition_c_combined`** (concept-aware + economy-aware) — أفضل مسار تشغيلي مُثبَت:
-success=0.986، cost=0.00068 على v3b_curriculum.
+success=0.986، cost≈0.000736 على v3b_curriculum (live 2026-06-01، Cycle 5.1؛ القيمة القديمة 0.00068
+في artifact `eval/results` متأخرة عن الكود الحالي ولا تُعتمد).
+
+### 2.5 الدورة 5.1 — استئصال الحوكمة (نتيجة تجريبية حيّة) 🆕
+> سؤال الجودة: هل الحوكمة (الطبقة B) تشتري **الذروة (peak)** أم **المتانة (robustness)** فقط؟
+> الإجابة الحيّة (3 تشغيلات على `condition_c_combined` · 72 task · `errors=0`):
+
+| Run | success | cost_avg | ×baseline | القراءة |
+|-----|:---:|:---:|:---:|---------|
+| Baseline (B=OFF) | 0.9861 | 0.000736 | 1.00× | المسار المعتمد |
+| + `use_theory_leverage` | 0.9861 | 0.002167 | 2.94× | **لا ذروة**، تكلفة ×3 (انضباط/متانة) |
+| + `use_anomaly_leverage` | 1.0000 | 0.010000 | 13.59× | ذروة +1.4% لكن بثمن premium الكامل |
+
+**الحكم المعتمد:** الحوكمة **لا تشتري ذروة رخيصة**. `theory_leverage` لا يرفع 98.6% (يرفع التكلفة فقط)؛
+`anomaly_leverage` يلمس 100% **حصرًا** بصرف أقصى مورد (= تكلفة `tier_2`-always). القيمة الحقيقية للحوكمة
+متانة على الشريحة العدائية (0%→50%، shortcut 33%→16.7%)، لا أداء أقصى على الشريحة المشبعة.
+**لذلك القرار سليم: كل flags الطبقة B تبقى OFF في المسار المعتمد.**
+التفاصيل والأرقام الخام: `results/ablation_summary_2026-06-01.md` + `results/v3b_{baseline,theory,anomaly}.json`.
+
+> **آلية التشغيل (gated، بلا لمس Core A):** الـ flags تُمرَّر عبر env اختياري
+> (`VIRTUAL_SIA_USE_THEORY_LEVERAGE` / `VIRTUAL_SIA_USE_ANOMALY_LEVERAGE`) وتظل default = OFF.
+> المسار المعتمد بدون env **مطابق بايت-ببايت** للسلوك المقفول. الس‌ويت كامل **424 passed** بعد التوصيل.
 
 ---
 

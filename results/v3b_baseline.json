@@ -1,0 +1,52 @@
+{
+  "leverage": {
+    "use_theory_leverage": false,
+    "use_anomaly_leverage": false
+  },
+  "task_count": 72,
+  "canonical_condition": "condition_c_combined",
+  "success_rate": 0.9861111111111112,
+  "cost_avg": 0.0007361111111111116,
+  "errors": 0,
+  "per_condition": {
+    "baseline_1": {
+      "success_rate": 0.7916666666666666,
+      "avg_estimated_cost": 0.0010000000000000007
+    },
+    "baseline_2_premium_always": {
+      "success_rate": 0.8611111111111112,
+      "avg_estimated_cost": 0.010000000000000005
+    },
+    "condition_a_concept_ready": {
+      "success_rate": 0.9861111111111112,
+      "avg_estimated_cost": 0.0010000000000000007
+    },
+    "condition_b_economy": {
+      "success_rate": 0.8611111111111112,
+      "avg_estimated_cost": 0.0023472222222222228
+    },
+    "condition_c_combined": {
+      "success_rate": 0.9861111111111112,
+      "avg_estimated_cost": 0.0007361111111111116
+    }
+  },
+  "thesis_signals": {
+    "thesis_1_concept_vs_retrieval": {
+      "baseline_success": 0.7916666666666666,
+      "concept_success": 0.9861111111111112,
+      "same_cost_order": true,
+      "concept_activation_rate": 0.6527777777777778
+    },
+    "thesis_2_economy_vs_premium_always": {
+      "premium_success": 0.8611111111111112,
+      "economy_success": 0.8611111111111112,
+      "premium_avg_cost": 0.010000000000000005,
+      "economy_avg_cost": 0.0023472222222222228
+    },
+    "combined_condition": {
+      "combined_success": 0.9861111111111112,
+      "combined_avg_cost": 0.0007361111111111116,
+      "combined_concept_activation_rate": 0.6527777777777778
+    }
+  }
+}
