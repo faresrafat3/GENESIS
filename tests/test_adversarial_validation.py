@@ -5,11 +5,11 @@ pure scorer directly with synthetic responses.
 """
 from __future__ import annotations
 
-from virtual_sia.eval.task_sets.adversarial_hard_cases import (
+from virtual_genesis.eval.task_sets.adversarial_hard_cases import (
     ADVERSARIAL_HARD_CASES,
     get_adversarial_cases,
 )
-from virtual_sia.eval.runners.run_adversarial_llm_eval import score_strict, _aggregate
+from virtual_genesis.eval.runners.run_adversarial_llm_eval import score_strict, _aggregate
 
 
 def _task(task_id: str) -> dict:

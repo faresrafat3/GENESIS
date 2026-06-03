@@ -10,18 +10,18 @@
   "setup_instructions": "Python 3.12 via pyenv already installed. Package installed in editable mode.",
   "environment_constraints": "Pure Python, no external dependencies. OPEN_INTERNET network mode.",
   "contribution_requirements": "Arabic documentation using the Legitimate Theft template. All new features gated behind bool parameters defaulting to False. Follow existing dataclass patterns for objects.",
-  "key_patterns": "1. Core objects in virtual_sia/core/objects/ as @dataclass(slots=True) with BaseObject parent and .create() classmethod. 2. Runtime modules in virtual_sia/runtime/<name>/ with service.py or apply.py as main. 3. Pipeline wires features via run_minimal_pipeline with gated bool params. 4. Tests in tests/test_<feature>.py with class-based grouping and helper factories. 5. Thefts documented in Arabic markdown with exact template format.",
+  "key_patterns": "1. Core objects in virtual_genesis/core/objects/ as @dataclass(slots=True) with BaseObject parent and .create() classmethod. 2. Runtime modules in virtual_genesis/runtime/<name>/ with service.py or apply.py as main. 3. Pipeline wires features via run_minimal_pipeline with gated bool params. 4. Tests in tests/test_<feature>.py with class-based grouping and helper factories. 5. Thefts documented in Arabic markdown with exact template format.",
   "relevant_files": [
-    "virtual_sia/core/objects/base.py",
-    "virtual_sia/core/objects/theory.py",
-    "virtual_sia/core/objects/anomaly.py",
-    "virtual_sia/core/objects/memory.py",
-    "virtual_sia/core/objects/scope.py",
-    "virtual_sia/core/objects/__init__.py",
-    "virtual_sia/runtime/pipeline/minimal_run.py",
-    "virtual_sia/runtime/theory_runtime/apply.py",
-    "virtual_sia/runtime/anomaly_runtime/service.py",
-    "virtual_sia/runtime/memory_os/store.py",
+    "virtual_genesis/core/objects/base.py",
+    "virtual_genesis/core/objects/theory.py",
+    "virtual_genesis/core/objects/anomaly.py",
+    "virtual_genesis/core/objects/memory.py",
+    "virtual_genesis/core/objects/scope.py",
+    "virtual_genesis/core/objects/__init__.py",
+    "virtual_genesis/runtime/pipeline/minimal_run.py",
+    "virtual_genesis/runtime/theory_runtime/apply.py",
+    "virtual_genesis/runtime/anomaly_runtime/service.py",
+    "virtual_genesis/runtime/memory_os/store.py",
     "Virtual_SIA_Agent_Identity_Theory_AR.md",
     "Virtual_SIA_Anomaly_Crisis_Paradigm_Theory_AR.md",
     "Virtual_SIA_Legitimate_Thefts_Wave3_AR.md",
@@ -29,5 +29,5 @@
     "tests/test_self_benchmarking.py",
     "tests/test_productive_forgetting.py"
   ],
-  "directory_structure": "virtual_sia/core/objects/ - dataclass domain objects; virtual_sia/runtime/ - runtime modules (pipeline, anomaly, theory, concept_engine, memory_os, etc.); virtual_sia/eval/ - evaluation runners/reports; tests/ - pytest tests; root *.md - Arabic documentation"
+  "directory_structure": "virtual_genesis/core/objects/ - dataclass domain objects; virtual_genesis/runtime/ - runtime modules (pipeline, anomaly, theory, concept_engine, memory_os, etc.); virtual_genesis/eval/ - evaluation runners/reports; tests/ - pytest tests; root *.md - Arabic documentation"
 }

@@ -1,8 +1,8 @@
 """Tests for task ingress: ingest_task and classify_task_family."""
 from __future__ import annotations
 
-from virtual_sia.core.objects.task_case import TaskCase
-from virtual_sia.runtime.task_ingress.service import ingest_task, classify_task_family
+from virtual_genesis.core.objects.task_case import TaskCase
+from virtual_genesis.runtime.task_ingress.service import ingest_task, classify_task_family
 
 
 def test_ingest_task_raw_string():

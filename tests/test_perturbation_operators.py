@@ -1,8 +1,8 @@
 """Tests for Cycle 1 perturbation operators, extended curriculum, and anti-shortcut benchmark."""
 from __future__ import annotations
 
-from virtual_sia.core.objects.task_case import TaskCase
-from virtual_sia.eval.perturbations.taskcase_variants import (
+from virtual_genesis.core.objects.task_case import TaskCase
+from virtual_genesis.eval.perturbations.taskcase_variants import (
     build_curriculum_from_cases,
     build_curriculum_levels,
     contrast_weakening,
@@ -11,16 +11,16 @@ from virtual_sia.eval.perturbations.taskcase_variants import (
     structure_weakening,
     support_removal,
 )
-from virtual_sia.eval.task_sets.anti_shortcut_benchmark import (
+from virtual_genesis.eval.task_sets.anti_shortcut_benchmark import (
     ANTI_SHORTCUT_BENCHMARK,
     KNOWN_SHORTCUTS,
     generate_anti_shortcut_benchmark,
 )
-from virtual_sia.eval.task_sets.prototype_v6_cases import (
+from virtual_genesis.eval.task_sets.prototype_v6_cases import (
     PROTOTYPE_V6_CASES,
     build_v6_curriculum,
 )
-from virtual_sia.eval.reports.perturbation_resistance import (
+from virtual_genesis.eval.reports.perturbation_resistance import (
     generate_perturbation_resistance_report,
 )
 

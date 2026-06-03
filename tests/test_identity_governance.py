@@ -1,11 +1,11 @@
 """Tests for agent identity governance: identity object, drift detection, commitment ledger, governance, pipeline."""
 from __future__ import annotations
 
-from virtual_sia.core.objects.identity import AgentIdentityObject
-from virtual_sia.runtime.identity_runtime.drift_detector import measure_drift
-from virtual_sia.runtime.identity_runtime.commitment_ledger import CommitmentLedger
-from virtual_sia.runtime.identity_runtime.governance import check_identity_alignment
-from virtual_sia.runtime.pipeline.minimal_run import run_minimal_pipeline
+from virtual_genesis.core.objects.identity import AgentIdentityObject
+from virtual_genesis.runtime.identity_runtime.drift_detector import measure_drift
+from virtual_genesis.runtime.identity_runtime.commitment_ledger import CommitmentLedger
+from virtual_genesis.runtime.identity_runtime.governance import check_identity_alignment
+from virtual_genesis.runtime.pipeline.minimal_run import run_minimal_pipeline
 
 
 # ---------------------------------------------------------------------------

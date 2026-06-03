@@ -1,11 +1,11 @@
 """Tests for eval runners: CONDITIONS dict, compare_conditions, and summarize_comparison."""
 from __future__ import annotations
 
-from virtual_sia.eval.runners.run_condition import CONDITIONS
-from virtual_sia.eval.runners.compare_conditions import compare_conditions
-from virtual_sia.eval.reports.summary import summarize_comparison
-from virtual_sia.eval.runners.run_selectivity_ablation import _set_selectivity
-from virtual_sia.runtime.concept_engine import config as concept_config
+from virtual_genesis.eval.runners.run_condition import CONDITIONS
+from virtual_genesis.eval.runners.compare_conditions import compare_conditions
+from virtual_genesis.eval.reports.summary import summarize_comparison
+from virtual_genesis.eval.runners.run_selectivity_ablation import _set_selectivity
+from virtual_genesis.runtime.concept_engine import config as concept_config
 
 
 def test_conditions_dict_has_expected_keys():

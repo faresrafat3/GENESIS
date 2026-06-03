@@ -1,6 +1,6 @@
 {
   "task_id": "task-wave3-identity-paradigm",
-  "task_description": "Implement Wave 3 final features for Virtual-SIA: Agent Identity Governance (H9) and Paradigm Forking / Self-Redesign, with full Arabic documentation and tests",
+  "task_description": "Implement Wave 3 final features for Virtual-GENESIS: Agent Identity Governance (H9) and Paradigm Forking / Self-Redesign, with full Arabic documentation and tests",
   "status": "completed",
   "feature_order": ["FEAT-001", "FEAT-002", "FEAT-003"],
   "blocked_reason": null,

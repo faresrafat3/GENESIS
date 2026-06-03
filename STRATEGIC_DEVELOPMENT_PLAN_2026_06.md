@@ -17,7 +17,7 @@
 - ✅ 93 "سرقة مشروعة" موثقة من العلوم المعرفية
 
 ### المشاكل الحرجة
-- ❌ **انقطاع كامل** بين Orchestrator و Virtual SIA
+- ❌ **انقطاع كامل** بين Orchestrator و GENESIS
 - ❌ الـ "ذكاء" = string templates مش real reasoning
 - ❌ Classification = hardcoded keywords
 - ❌ Verification = keyword presence check
@@ -101,9 +101,9 @@
 ## 3. 🎯 خطة التطوير — 5 مراحل
 
 ### المرحلة 1: ربط النظامين (الأولوية القصوى)
-**المشكلة:** Orchestrator و Virtual SIA منفصلين
+**المشكلة:** Orchestrator و GENESIS منفصلين
 **الحل:**
-1. target_agent.py يستخدم Virtual SIA pipeline كـ reasoning substrate
+1. target_agent.py يستخدم GENESIS pipeline كـ reasoning substrate
 2. concept hints + theory predictions + memory retrievals تروح في الـ LLM prompt
 3. failed tasks تولّد negative memories
 4. concepts تتكون من failure patterns
@@ -145,9 +145,9 @@
 
 ### Task 1: Bridge Orchestrator-VirtualSIA
 **الأولوية:** 🔴 حرجة
-**المهمة:** ربط الـ orchestrator بـ Virtual SIA pipeline
+**المهمة:** ربط الـ orchestrator بـ GENESIS pipeline
 **التفاصيل:**
-- target_agent.py يستدعي `run_minimal_pipeline()` من virtual_sia
+- target_agent.py يستدعي `run_minimal_pipeline()` من virtual_genesis
 - concept hints تروح في الـ LLM prompt
 - failed tasks تولّد negative memories
 - success metrics: genuine reasoning مش keyword matching
@@ -191,7 +191,7 @@
 
 ### بعد المرحلة 1 (ربط النظامين):
 - الـ 98.6% success يبقى genuine reasoning مش keyword matching
-- الـ orchestrator يستخدم Virtual SIA كـ cognitive substrate
+- الـ orchestrator يستخدم GENESIS كـ cognitive substrate
 
 ### بعد المرحلة 2-3 (GRASP + ExpGraph):
 - concepts أقوى وأكثر utility

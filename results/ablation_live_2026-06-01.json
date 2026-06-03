@@ -2,7 +2,7 @@
   "meta": {
     "date": "2026-06-01",
     "cycle": "5.1 Governance Ablation",
-    "runner": "virtual_sia.eval.runners.run_local_eval_v3b_curriculum",
+    "runner": "virtual_genesis.eval.runners.run_local_eval_v3b_curriculum",
     "slice": "prototype_v3b_curriculum",
     "canonical_condition": "condition_c_combined",
     "task_count": 72,

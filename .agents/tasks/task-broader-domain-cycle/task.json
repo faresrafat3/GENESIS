@@ -1,6 +1,6 @@
 {
   "task_id": "task-broader-domain-cycle",
-  "task_description": "Implement Broader Domain Cycle (Option D) for Virtual-SIA: add 3 new task families (analysis, extraction, planning), create 18 new tasks across these families, build domain transfer evaluation infrastructure, measure cross-domain concept generalization, and document everything using the Legitimate Theft methodology in Arabic.",
+  "task_description": "Implement Broader Domain Cycle (Option D) for Virtual-GENESIS: add 3 new task families (analysis, extraction, planning), create 18 new tasks across these families, build domain transfer evaluation infrastructure, measure cross-domain concept generalization, and document everything using the Legitimate Theft methodology in Arabic.",
   "status": "completed",
   "feature_order": ["FEAT-001", "FEAT-002"],
   "blocked_reason": null,

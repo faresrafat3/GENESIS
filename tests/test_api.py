@@ -1,4 +1,4 @@
-"""Tests for the Virtual-SIA production API."""
+"""Tests for the Virtual-GENESIS production API."""
 from __future__ import annotations
 
 import json
@@ -9,12 +9,12 @@ import urllib.error
 
 
 class TestAPI:
-    """Integration tests for the SIA HTTP API server."""
+    """Integration tests for the GENESIS HTTP API server."""
 
     @classmethod
     def setup_class(cls):
-        from virtual_sia.api.app import create_app
-        from virtual_sia.api.config import APIConfig
+        from virtual_genesis.api.app import create_app
+        from virtual_genesis.api.config import APIConfig
 
         config = APIConfig()
         config.port = 0  # Let OS assign port
@@ -111,7 +111,7 @@ class TestAPI:
     def test_mock_llm_adapter(self):
         import os
         from unittest.mock import patch
-        from virtual_sia.api.llm_adapter import LLMAdapter
+        from virtual_genesis.api.llm_adapter import LLMAdapter
 
         with patch.dict(os.environ, {"OPENROUTER_API_KEY": ""}):
             adapter = LLMAdapter()  # No API key
@@ -123,7 +123,7 @@ class TestAPI:
     def test_llm_adapter_deterministic(self):
         import os
         from unittest.mock import patch
-        from virtual_sia.api.llm_adapter import LLMAdapter
+        from virtual_genesis.api.llm_adapter import LLMAdapter
 
         with patch.dict(os.environ, {"OPENROUTER_API_KEY": ""}):
             adapter = LLMAdapter()

@@ -1,6 +1,6 @@
 *.pyc
 __pycache__/
-virtual_sia.egg-info/
+virtual_genesis.egg-info/
 
 # Secrets — NEVER commit
 .env
@@ -11,7 +11,7 @@ virtual_sia.egg-info/
 # Generated artifacts
 runs/
 research_memory.json
-sia_agent.egg-info/
+genesis_agent.egg-info/
 
 # Virtual environments
 .venv/

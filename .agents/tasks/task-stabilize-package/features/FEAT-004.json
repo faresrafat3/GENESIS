@@ -21,8 +21,8 @@
   ],
   "verification": [
     "~/.pyenv/versions/3.12.13/bin/python -m pytest tests/ -v",
-    "~/.pyenv/versions/3.12.13/bin/python -m virtual_sia.eval.runners.run_selectivity_ablation",
-    "~/.pyenv/versions/3.12.13/bin/python -m virtual_sia.eval.runners.run_family_selectivity_ablation"
+    "~/.pyenv/versions/3.12.13/bin/python -m virtual_genesis.eval.runners.run_selectivity_ablation",
+    "~/.pyenv/versions/3.12.13/bin/python -m virtual_genesis.eval.runners.run_family_selectivity_ablation"
   ],
   "blocked_reason": null,
   "findings": "All 6 review issues addressed. Tests pass (13 total). Eval runners produce correct results. synthesis_top2 now uses the default max_active=2 which matches current_default config (no behavioral difference in eval results since no second concept is competitive). Retriever cap fix ensures secondary-family concepts are preserved."

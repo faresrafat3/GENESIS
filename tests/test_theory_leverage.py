@@ -3,23 +3,23 @@ contradiction explanation, theory-guided verification, concept selection, tier r
 and pipeline integration."""
 from __future__ import annotations
 
-from virtual_sia.core.objects.concept import ConceptCard
-from virtual_sia.core.objects.scope import Scope
-from virtual_sia.core.objects.task import TaskObject
-from virtual_sia.core.objects.theory import LocalTheoryObject
-from virtual_sia.core.objects.blackboard import BlackboardObject, BlackboardMemoryPack, BlackboardTaskCore
-from virtual_sia.runtime.theory_runtime.apply import (
+from virtual_genesis.core.objects.concept import ConceptCard
+from virtual_genesis.core.objects.scope import Scope
+from virtual_genesis.core.objects.task import TaskObject
+from virtual_genesis.core.objects.theory import LocalTheoryObject
+from virtual_genesis.core.objects.blackboard import BlackboardObject, BlackboardMemoryPack, BlackboardTaskCore
+from virtual_genesis.runtime.theory_runtime.apply import (
     get_theory_prediction_for_task,
     update_theory_predictive_value,
     check_theory_explains_contradiction,
     select_applicable_theories,
     build_theory_hints,
 )
-from virtual_sia.runtime.theory_runtime.registry import InMemoryTheoryRegistry
-from virtual_sia.runtime.verification_runtime.service import verify_output_theory_guided
-from virtual_sia.runtime.concept_engine.apply import select_applicable_concepts_theory_guided
-from virtual_sia.runtime.economy_control.router import choose_tier_theory_guided
-from virtual_sia.runtime.pipeline.minimal_run import run_minimal_pipeline
+from virtual_genesis.runtime.theory_runtime.registry import InMemoryTheoryRegistry
+from virtual_genesis.runtime.verification_runtime.service import verify_output_theory_guided
+from virtual_genesis.runtime.concept_engine.apply import select_applicable_concepts_theory_guided
+from virtual_genesis.runtime.economy_control.router import choose_tier_theory_guided
+from virtual_genesis.runtime.pipeline.minimal_run import run_minimal_pipeline
 
 
 # --- Helpers ---
@@ -67,7 +67,7 @@ def _make_memory_pack() -> BlackboardMemoryPack:
 
 
 def _make_concept(name: str, family: str = "comparison", concept_id: str | None = None) -> ConceptCard:
-    from virtual_sia.core.objects.base import make_id
+    from virtual_genesis.core.objects.base import make_id
     card = ConceptCard(
         id=concept_id or make_id("concept"),
         object_type="concept",
@@ -361,7 +361,7 @@ class TestSelectApplicableConceptsTheoryGuided:
         theory = _make_theory(family="comparison", concept_refs=["concept_marginal_1"])
 
         # Without theory: concept might not be selected
-        from virtual_sia.runtime.concept_engine.apply import select_applicable_concepts
+        from virtual_genesis.runtime.concept_engine.apply import select_applicable_concepts
         selected_base, decisions_base = select_applicable_concepts(
             "comparison", task_text, [concept],
         )
@@ -383,7 +383,7 @@ class TestSelectApplicableConceptsTheoryGuided:
         theory = _make_theory(family="comparison", concept_refs=["different_id_not_matching"])
         task_text = "compare evidence in comparison tasks with some_concept definition"
 
-        from virtual_sia.runtime.concept_engine.apply import select_applicable_concepts
+        from virtual_genesis.runtime.concept_engine.apply import select_applicable_concepts
         selected_normal, decisions_normal = select_applicable_concepts(
             "comparison", task_text, [concept],
         )

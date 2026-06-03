@@ -12,18 +12,18 @@
   "contribution_requirements": "All documentation in Arabic. 'Legitimate Theft' methodology MANDATORY for all new mechanisms - each must document source using Arabic template with sections: ما الذي أخذناه؟ / ما الذي لم نأخذه الآن؟ / ماذا أصبح عندنا؟. New thefts start at 5.33. New features gated behind parameters (default OFF). Existing 88 tests must continue passing.",
   "key_patterns": "1) Anomaly leverage pattern: functions like verify_output_anomaly_aware, choose_tier_anomaly_aware with docstrings containing Arabic theft docs. 2) Pipeline gating: use_anomaly_leverage: bool = False parameter pattern. 3) Theory runtime: LocalTheoryObject with scope, predictive_claims, mechanism_claims. 4) Registry pattern: InMemoryTheoryRegistry with add_theory/list_theories. 5) DataObject pattern: BaseObject with @classmethod create(), slots=True dataclass.",
   "relevant_files": [
-    "virtual_sia/core/objects/theory.py",
-    "virtual_sia/runtime/theory_runtime/apply.py",
-    "virtual_sia/runtime/theory_runtime/builder.py",
-    "virtual_sia/runtime/theory_runtime/registry.py",
-    "virtual_sia/runtime/verification_runtime/service.py",
-    "virtual_sia/runtime/concept_engine/apply.py",
-    "virtual_sia/runtime/economy_control/router.py",
-    "virtual_sia/runtime/economy_control/escalation.py",
-    "virtual_sia/runtime/pipeline/minimal_run.py",
+    "virtual_genesis/core/objects/theory.py",
+    "virtual_genesis/runtime/theory_runtime/apply.py",
+    "virtual_genesis/runtime/theory_runtime/builder.py",
+    "virtual_genesis/runtime/theory_runtime/registry.py",
+    "virtual_genesis/runtime/verification_runtime/service.py",
+    "virtual_genesis/runtime/concept_engine/apply.py",
+    "virtual_genesis/runtime/economy_control/router.py",
+    "virtual_genesis/runtime/economy_control/escalation.py",
+    "virtual_genesis/runtime/pipeline/minimal_run.py",
     "tests/test_anomaly_leverage.py",
     "Virtual_SIA_Legitimate_Thefts_Cycle2_AR.md",
     "Virtual_SIA_Current_Regime_Status_AR.md"
   ],
-  "directory_structure": "virtual_sia/core/objects/ - data models (theory.py, anomaly.py, task.py, etc). virtual_sia/runtime/ - runtime modules (theory_runtime/, verification_runtime/, concept_engine/, economy_control/, pipeline/). tests/ - pytest tests. Root - markdown docs in Arabic."
+  "directory_structure": "virtual_genesis/core/objects/ - data models (theory.py, anomaly.py, task.py, etc). virtual_genesis/runtime/ - runtime modules (theory_runtime/, verification_runtime/, concept_engine/, economy_control/, pipeline/). tests/ - pytest tests. Root - markdown docs in Arabic."
 }

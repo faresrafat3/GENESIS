@@ -4,7 +4,7 @@
   "description": "Produce a comprehensive analysis document covering the concept_engine architecture, eval system findings, and current regime status. This documents the deep analysis results and serves as the 'clean current regime package' called for in the Decision Memo's stabilization plan.",
   "status": "completed",
   "steps": [
-    "Step 1: Run all remaining eval runners to ensure results are fresh: (a) ~/.pyenv/versions/3.12.13/bin/python -m virtual_sia.eval.runners.run_local_eval_v4, (b) ~/.pyenv/versions/3.12.13/bin/python -m virtual_sia.eval.runners.run_selectivity_ablation, (c) ~/.pyenv/versions/3.12.13/bin/python -m virtual_sia.eval.runners.run_family_selectivity_ablation. Capture outputs.",
+    "Step 1: Run all remaining eval runners to ensure results are fresh: (a) ~/.pyenv/versions/3.12.13/bin/python -m virtual_genesis.eval.runners.run_local_eval_v4, (b) ~/.pyenv/versions/3.12.13/bin/python -m virtual_genesis.eval.runners.run_selectivity_ablation, (c) ~/.pyenv/versions/3.12.13/bin/python -m virtual_genesis.eval.runners.run_family_selectivity_ablation. Capture outputs.",
     "Step 2: Create Virtual_SIA_Concept_Engine_Deep_Analysis_AR.md at project root documenting: (a) Architecture overview of the concept engine (selector.py builds contrastive groups, proposer.py creates candidates, registry.py stores them, apply.py selects at query time, cycle.py orchestrates), (b) The family-specific selectivity design and rationale, (c) How concept activation decisions flow from config through apply.py to retriever.py, (d) The scoring formula: activation_score = family_fit(2) + contract_fit + semantic_fit - redundancy_penalty, with family-specific weights, (e) Known limitations and next steps.",
     "Step 3: Create Virtual_SIA_Eval_System_Analysis_AR.md documenting: (a) Eval architecture (task_sets -> perturbations -> curriculum, runners -> conditions -> pipeline, reports -> analytics), (b) Current results summary across all runners with specific numbers, (c) Thesis 1 and Thesis 2 evidence status with per-family breakdown, (d) The role of each eval slice (v3b_curriculum as primary thesis slice, v4 as diagnostic, v5 as stress test), (e) Selectivity ablation findings showing that min_score=7 gives better efficiency (lower activation_rate) with same success.",
     "Step 4: Create Virtual_SIA_Current_Regime_Status_AR.md as the stabilization package artifact documenting: (a) Current best operating defaults (family selectivity config, tier routing, concept engine settings), (b) What is frozen and what remains open for tuning, (c) Current evidence quality and confidence level per thesis, (d) Recommended next cycle options from Decision Memo."
@@ -17,8 +17,8 @@
   ],
   "verification": [
     "~/.pyenv/versions/3.12.13/bin/python -c \"import pathlib; files = ['Virtual_SIA_Concept_Engine_Deep_Analysis_AR.md', 'Virtual_SIA_Eval_System_Analysis_AR.md', 'Virtual_SIA_Current_Regime_Status_AR.md']; assert all((pathlib.Path(f)).exists() for f in files), 'Missing docs'; print('All docs exist')\"",
-    "~/.pyenv/versions/3.12.13/bin/python -m virtual_sia.eval.runners.run_selectivity_ablation",
-    "~/.pyenv/versions/3.12.13/bin/python -m virtual_sia.eval.runners.run_family_selectivity_ablation"
+    "~/.pyenv/versions/3.12.13/bin/python -m virtual_genesis.eval.runners.run_selectivity_ablation",
+    "~/.pyenv/versions/3.12.13/bin/python -m virtual_genesis.eval.runners.run_family_selectivity_ablation"
   ],
   "blocked_reason": null,
   "findings": "All three deep analysis documents created with real eval numbers. V4 results show 0.833 combined_success (not 1.0 as mentioned in feature context - the context was slightly off). The selectivity ablation shows all four configs produce identical activation_rate (0.653) meaning the current concept set is perfectly calibrated. Family selectivity ablation confirmed current_default is optimal."

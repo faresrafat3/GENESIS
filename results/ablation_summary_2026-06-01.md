@@ -4,7 +4,7 @@
 > Date: 2026-06-01
 > Question: هل الحوكمة (B) بتزود peak performance ولا robustness فقط؟
 > Status: ✅ **LIVE RUN مُنفَّذ فعليًا** (sandbox · pyenv python 3.11.15) — يحلّ محل التقدير التحليلي السابق
-> Runner: `virtual_sia.eval.runners.run_local_eval_v3b_curriculum`
+> Runner: `virtual_genesis.eval.runners.run_local_eval_v3b_curriculum`
 > Slice: `prototype_v3b_curriculum` (72 task) · Canonical condition: `condition_c_combined`
 
 ---
@@ -89,13 +89,13 @@ pyenv global 3.11.15
 python -m pip install -e ".[dev]"
 
 # Baseline (B=OFF) — المسار المعتمد
-python -m virtual_sia.eval.runners.run_local_eval_v3b_curriculum > results/v3b_baseline.json
+python -m virtual_genesis.eval.runners.run_local_eval_v3b_curriculum > results/v3b_baseline.json
 
 # theory_leverage فقط
-VIRTUAL_SIA_USE_THEORY_LEVERAGE=true  python -m virtual_sia.eval.runners.run_local_eval_v3b_curriculum > results/v3b_theory.json
+VIRTUAL_SIA_USE_THEORY_LEVERAGE=true  python -m virtual_genesis.eval.runners.run_local_eval_v3b_curriculum > results/v3b_theory.json
 
 # anomaly_leverage فقط
-VIRTUAL_SIA_USE_ANOMALY_LEVERAGE=true python -m virtual_sia.eval.runners.run_local_eval_v3b_curriculum > results/v3b_anomaly.json
+VIRTUAL_SIA_USE_ANOMALY_LEVERAGE=true python -m virtual_genesis.eval.runners.run_local_eval_v3b_curriculum > results/v3b_anomaly.json
 
 pytest -q   # => 424 passed
 ```

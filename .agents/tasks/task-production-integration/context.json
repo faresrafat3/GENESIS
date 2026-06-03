@@ -10,17 +10,17 @@
   "setup_instructions": "pip install pytest; cd /projects/sandbox/sia",
   "environment_constraints": "OPEN_INTERNET network mode. Python 3.12.13 via pyenv. No external dependencies allowed (pure stdlib). Use http.server for API, not flask/fastapi.",
   "contribution_requirements": "All documentation in Arabic. Legitimate theft methodology must be followed (5.63+ numbering). Arabic template for thefts: ## X.XX من [SOURCE_NAME] / ### ما الذي أخذناه؟ / ### ما الذي لم نأخذه الآن؟ / ### ماذا أصبح عندنا؟",
-  "key_patterns": "Pipeline at virtual_sia/runtime/pipeline/minimal_run.py with governance flags (use_anomaly_leverage, use_theory_leverage, use_productive_forgetting, use_identity_governance, use_paradigm_fork). Eval runners at virtual_sia/eval/runners/ using compare_conditions pattern. Task sets at virtual_sia/eval/task_sets/. Reports at virtual_sia/eval/reports/. Tests use class-based structure with helper functions.",
+  "key_patterns": "Pipeline at virtual_genesis/runtime/pipeline/minimal_run.py with governance flags (use_anomaly_leverage, use_theory_leverage, use_productive_forgetting, use_identity_governance, use_paradigm_fork). Eval runners at virtual_genesis/eval/runners/ using compare_conditions pattern. Task sets at virtual_genesis/eval/task_sets/. Reports at virtual_genesis/eval/reports/. Tests use class-based structure with helper functions.",
   "relevant_files": [
-    "virtual_sia/runtime/pipeline/minimal_run.py",
-    "virtual_sia/eval/runners/run_condition.py",
-    "virtual_sia/eval/runners/compare_conditions.py",
-    "virtual_sia/eval/runners/run_local_eval_v3b_curriculum.py",
-    "virtual_sia/eval/runners/run_broader_domain_eval.py",
-    "virtual_sia/eval/runners/run_self_benchmark_cycle.py",
-    "virtual_sia/eval/task_sets/prototype_v3b_curriculum.py",
-    "virtual_sia/eval/task_sets/prototype_v6_cases.py",
-    "virtual_sia/eval/task_sets/prototype_v7_broader_domain.py",
+    "virtual_genesis/runtime/pipeline/minimal_run.py",
+    "virtual_genesis/eval/runners/run_condition.py",
+    "virtual_genesis/eval/runners/compare_conditions.py",
+    "virtual_genesis/eval/runners/run_local_eval_v3b_curriculum.py",
+    "virtual_genesis/eval/runners/run_broader_domain_eval.py",
+    "virtual_genesis/eval/runners/run_self_benchmark_cycle.py",
+    "virtual_genesis/eval/task_sets/prototype_v3b_curriculum.py",
+    "virtual_genesis/eval/task_sets/prototype_v6_cases.py",
+    "virtual_genesis/eval/task_sets/prototype_v7_broader_domain.py",
     "tests/test_eval_runners.py",
     "tests/test_identity_governance.py",
     "tests/test_paradigm_fork.py",
@@ -29,5 +29,5 @@
     "Virtual_SIA_Legitimate_Thefts_Wave3b_AR.md",
     "Virtual_SIA_Full_Documentation_AR.md"
   ],
-  "directory_structure": "virtual_sia/core/objects/ (domain objects), virtual_sia/runtime/ (runtime modules: pipeline, memory_os, concept_engine, economy_control, etc.), virtual_sia/eval/ (evaluation: runners, reports, task_sets, perturbations), tests/ (test files), *.md (documentation in Arabic)"
+  "directory_structure": "virtual_genesis/core/objects/ (domain objects), virtual_genesis/runtime/ (runtime modules: pipeline, memory_os, concept_engine, economy_control, etc.), virtual_genesis/eval/ (evaluation: runners, reports, task_sets, perturbations), tests/ (test files), *.md (documentation in Arabic)"
 }

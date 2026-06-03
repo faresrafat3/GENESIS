@@ -6,12 +6,12 @@ import tempfile
 
 import pytest
 
-from virtual_sia.core.objects.concept import ConceptCandidate, ConceptCard
-from virtual_sia.core.objects.identity import AgentIdentityObject
-from virtual_sia.core.objects.memory import MemoryUnit
-from virtual_sia.core.objects.scope import Scope
-from virtual_sia.core.objects.theory import LocalTheoryObject
-from virtual_sia.persistence import (
+from virtual_genesis.core.objects.concept import ConceptCandidate, ConceptCard
+from virtual_genesis.core.objects.identity import AgentIdentityObject
+from virtual_genesis.core.objects.memory import MemoryUnit
+from virtual_genesis.core.objects.scope import Scope
+from virtual_genesis.core.objects.theory import LocalTheoryObject
+from virtual_genesis.persistence import (
     SQLiteConceptRegistry,
     SQLiteIdentityStore,
     SQLiteMemoryStore,
@@ -353,8 +353,8 @@ class TestCheckpoint:
 
 class TestSessionWithPersistence:
     def test_session_uses_sqlite_stores(self, db_path):
-        from virtual_sia.api.config import APIConfig
-        from virtual_sia.api.session import Session
+        from virtual_genesis.api.config import APIConfig
+        from virtual_genesis.api.session import Session
 
         config = APIConfig(use_persistence=True, db_path=db_path)
         session = Session(config=config)
@@ -363,17 +363,17 @@ class TestSessionWithPersistence:
         assert isinstance(session.theory_registry, SQLiteTheoryRegistry)
 
     def test_session_without_persistence_uses_inmemory(self):
-        from virtual_sia.api.config import APIConfig
-        from virtual_sia.api.session import Session
-        from virtual_sia.runtime.memory_os.store import InMemoryMemoryStore
+        from virtual_genesis.api.config import APIConfig
+        from virtual_genesis.api.session import Session
+        from virtual_genesis.runtime.memory_os.store import InMemoryMemoryStore
 
         config = APIConfig(use_persistence=False)
         session = Session(config=config)
         assert isinstance(session.memory_store, InMemoryMemoryStore)
 
     def test_session_no_config_uses_inmemory(self):
-        from virtual_sia.api.session import Session
-        from virtual_sia.runtime.memory_os.store import InMemoryMemoryStore
+        from virtual_genesis.api.session import Session
+        from virtual_genesis.runtime.memory_os.store import InMemoryMemoryStore
 
         session = Session()
         assert isinstance(session.memory_store, InMemoryMemoryStore)

@@ -3,24 +3,24 @@ classification keywords, concept engine config, task set, domain transfer report
 and eval runner."""
 from __future__ import annotations
 
-from virtual_sia.core.objects.task_case import TaskCase
-from virtual_sia.core.ontology.enums import TaskFamily
-from virtual_sia.runtime.task_ingress.service import (
+from virtual_genesis.core.objects.task_case import TaskCase
+from virtual_genesis.core.ontology.enums import TaskFamily
+from virtual_genesis.runtime.task_ingress.service import (
     classify_task_family,
     default_success_criteria,
     ingest_task,
     FAMILY_KEYWORDS,
 )
-from virtual_sia.runtime.concept_engine.config import (
+from virtual_genesis.runtime.concept_engine.config import (
     DEFAULT_FAMILY_SELECTIVITY,
     FAMILY_SELECTIVITY_STRATEGY,
 )
-from virtual_sia.eval.task_sets.prototype_v7_broader_domain import (
+from virtual_genesis.eval.task_sets.prototype_v7_broader_domain import (
     PROTOTYPE_V7_BROADER_DOMAIN_CASES,
     build_v7_broader_domain_curriculum,
 )
-from virtual_sia.eval.reports.domain_transfer import generate_domain_transfer_report
-from virtual_sia.eval.runners.run_broader_domain_eval import run_broader_domain_eval
+from virtual_genesis.eval.reports.domain_transfer import generate_domain_transfer_report
+from virtual_genesis.eval.runners.run_broader_domain_eval import run_broader_domain_eval
 
 
 # --- Tests for TaskFamily enum ---

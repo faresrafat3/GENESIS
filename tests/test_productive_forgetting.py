@@ -3,11 +3,11 @@ from __future__ import annotations
 
 import pytest
 
-from virtual_sia.core.objects.memory import MemoryUnit
-from virtual_sia.runtime.memory_os.store import InMemoryMemoryStore
-from virtual_sia.runtime.memory_os.utility import compute_memory_utility, compute_all_utilities
-from virtual_sia.runtime.memory_os.forgetting_policy import apply_forgetting_policy
-from virtual_sia.runtime.pipeline.minimal_run import run_minimal_pipeline
+from virtual_genesis.core.objects.memory import MemoryUnit
+from virtual_genesis.runtime.memory_os.store import InMemoryMemoryStore
+from virtual_genesis.runtime.memory_os.utility import compute_memory_utility, compute_all_utilities
+from virtual_genesis.runtime.memory_os.forgetting_policy import apply_forgetting_policy
+from virtual_genesis.runtime.pipeline.minimal_run import run_minimal_pipeline
 
 
 # ---------------------------------------------------------------------------
@@ -348,7 +348,7 @@ class TestPipelineIntegration:
 
 class TestRetrieverFiltering:
     def test_active_only_filters_archived(self):
-        from virtual_sia.runtime.memory_os.retriever import retrieve_memory
+        from virtual_genesis.runtime.memory_os.retriever import retrieve_memory
 
         m1 = _make_memory()
         m1.scope.task_families = ["test"]
@@ -363,7 +363,7 @@ class TestRetrieverFiltering:
         assert m2.id not in all_refs
 
     def test_active_only_false_includes_all(self):
-        from virtual_sia.runtime.memory_os.retriever import retrieve_memory
+        from virtual_genesis.runtime.memory_os.retriever import retrieve_memory
 
         m1 = _make_memory()
         m1.scope.task_families = ["test"]
@@ -377,7 +377,7 @@ class TestRetrieverFiltering:
         assert m2.id in all_refs
 
     def test_active_only_filters_deprecated_and_deleted(self):
-        from virtual_sia.runtime.memory_os.retriever import retrieve_memory
+        from virtual_genesis.runtime.memory_os.retriever import retrieve_memory
 
         m1 = _make_memory()
         m1.scope.task_families = ["test"]

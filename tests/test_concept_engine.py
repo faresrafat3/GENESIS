@@ -1,12 +1,12 @@
 """Tests for the concept engine: selectivity, family policy, and contrastive groups."""
 from __future__ import annotations
 
-from virtual_sia.core.objects.concept import ConceptCard
-from virtual_sia.core.objects.scope import Scope
-from virtual_sia.core.objects.memory import MemoryUnit
-from virtual_sia.runtime.concept_engine.apply import select_applicable_concepts, _family_policy
-from virtual_sia.runtime.concept_engine.config import DEFAULT_FAMILY_SELECTIVITY, FAMILY_SELECTIVITY_STRATEGY
-from virtual_sia.runtime.concept_engine.selector import build_contrastive_groups
+from virtual_genesis.core.objects.concept import ConceptCard
+from virtual_genesis.core.objects.scope import Scope
+from virtual_genesis.core.objects.memory import MemoryUnit
+from virtual_genesis.runtime.concept_engine.apply import select_applicable_concepts, _family_policy
+from virtual_genesis.runtime.concept_engine.config import DEFAULT_FAMILY_SELECTIVITY, FAMILY_SELECTIVITY_STRATEGY
+from virtual_genesis.runtime.concept_engine.selector import build_contrastive_groups
 
 
 def _make_concept(name: str, definition: str, families: list[str], operational_meaning: str = "") -> ConceptCard:

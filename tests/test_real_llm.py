@@ -35,7 +35,7 @@ class TestLLMAdapterCostTracking:
     """Test cost tracking in LLMAdapter."""
 
     def test_initial_state_zero_cost(self):
-        from virtual_sia.api.llm_adapter import LLMAdapter
+        from virtual_genesis.api.llm_adapter import LLMAdapter
         adapter = LLMAdapter(api_key="test-key")
         report = adapter.get_cost_report()
         assert report["total_calls"] == 0
@@ -45,7 +45,7 @@ class TestLLMAdapterCostTracking:
     @patch("urllib.request.urlopen")
     def test_generate_with_tracking_increments_cost(self, mock_urlopen):
         mock_urlopen.return_value = _make_mock_urlopen()
-        from virtual_sia.api.llm_adapter import LLMAdapter
+        from virtual_genesis.api.llm_adapter import LLMAdapter
         adapter = LLMAdapter(api_key="test-key")
 
         response, cost_info = adapter.generate_with_tracking("test prompt")
@@ -58,7 +58,7 @@ class TestLLMAdapterCostTracking:
     @patch("urllib.request.urlopen")
     def test_multiple_calls_accumulate_cost(self, mock_urlopen):
         mock_urlopen.return_value = _make_mock_urlopen()
-        from virtual_sia.api.llm_adapter import LLMAdapter
+        from virtual_genesis.api.llm_adapter import LLMAdapter
         adapter = LLMAdapter(api_key="test-key")
 
         adapter.generate_with_tracking("prompt 1")
@@ -72,7 +72,7 @@ class TestLLMAdapterCostTracking:
     @patch("urllib.request.urlopen")
     def test_per_model_calls_tracked(self, mock_urlopen):
         mock_urlopen.return_value = _make_mock_urlopen()
-        from virtual_sia.api.llm_adapter import LLMAdapter
+        from virtual_genesis.api.llm_adapter import LLMAdapter
         adapter = LLMAdapter(api_key="test-key")
 
         adapter.generate_with_tracking("p1", model_tier="tier_0")
@@ -87,18 +87,18 @@ class TestLLMAdapterAPIKey:
     """Test API key resolution."""
 
     def test_api_key_from_constructor(self):
-        from virtual_sia.api.llm_adapter import LLMAdapter
+        from virtual_genesis.api.llm_adapter import LLMAdapter
         adapter = LLMAdapter(api_key="custom-key")
         assert adapter.api_key == "custom-key"
 
     @patch.dict("os.environ", {"OPENROUTER_API_KEY": "env-key"})
     def test_api_key_from_env(self):
-        from virtual_sia.api.llm_adapter import LLMAdapter
+        from virtual_genesis.api.llm_adapter import LLMAdapter
         adapter = LLMAdapter(api_key=None)
         assert adapter.api_key == "env-key"
 
     def test_api_key_from_config_fallback(self):
-        from virtual_sia.api.llm_adapter import LLMAdapter
+        from virtual_genesis.api.llm_adapter import LLMAdapter
         adapter = LLMAdapter(use_config_fallback=True)
         # In test env without env var, key may be empty string (mock mode)
         assert adapter.api_key is not None
@@ -108,7 +108,7 @@ class TestPromptBuilding:
     """Test prompt building functions in llm_reasoning."""
 
     def test_build_raw_prompt(self):
-        from virtual_sia.api.llm_reasoning import build_raw_prompt
+        from virtual_genesis.api.llm_reasoning import build_raw_prompt
         result = build_raw_prompt("Compare A and B")
         assert "## Task" in result
         assert "Compare A and B" in result
@@ -116,7 +116,7 @@ class TestPromptBuilding:
         assert "Relevant Concepts" not in result
 
     def test_build_augmented_prompt_with_concepts_only(self):
-        from virtual_sia.api.llm_reasoning import build_augmented_prompt
+        from virtual_genesis.api.llm_reasoning import build_augmented_prompt
         result = build_augmented_prompt(
             "Do the task",
             concept_hints=["Concept 1", "Concept 2"],
@@ -128,7 +128,7 @@ class TestPromptBuilding:
         assert "Applicable Theories" not in result
 
     def test_build_augmented_prompt_with_theories(self):
-        from virtual_sia.api.llm_reasoning import build_augmented_prompt
+        from virtual_genesis.api.llm_reasoning import build_augmented_prompt
         result = build_augmented_prompt(
             "Do the task",
             concept_hints=["C1"],
@@ -141,7 +141,7 @@ class TestPromptBuilding:
         assert "## Instructions" in result
 
     def test_build_augmented_prompt_no_hints_no_instructions(self):
-        from virtual_sia.api.llm_reasoning import build_augmented_prompt
+        from virtual_genesis.api.llm_reasoning import build_augmented_prompt
         result = build_augmented_prompt("Just the task")
         assert "## Task" in result
         assert "Just the task" in result
@@ -154,7 +154,7 @@ class TestGenerateWithConcepts:
     @patch("urllib.request.urlopen")
     def test_successful_call(self, mock_urlopen):
         mock_urlopen.return_value = _make_mock_urlopen("Generated text here")
-        from virtual_sia.api.llm_reasoning import generate_with_concepts
+        from virtual_genesis.api.llm_reasoning import generate_with_concepts
 
         result = generate_with_concepts(
             "Test task",
@@ -169,7 +169,7 @@ class TestGenerateWithConcepts:
         mock_urlopen.side_effect = urllib.error.HTTPError(
             "http://test", 429, "Rate limited", {}, None
         )
-        from virtual_sia.api.llm_reasoning import generate_with_concepts
+        from virtual_genesis.api.llm_reasoning import generate_with_concepts
 
         result = generate_with_concepts("Test", api_key="key")
         assert "[LLM_ERROR]" in result
@@ -182,7 +182,7 @@ class TestGenerateWithConcepts:
         mock_resp.__enter__ = lambda s: s
         mock_resp.__exit__ = MagicMock(return_value=False)
         mock_urlopen.return_value = mock_resp
-        from virtual_sia.api.llm_reasoning import generate_with_concepts
+        from virtual_genesis.api.llm_reasoning import generate_with_concepts
 
         result = generate_with_concepts("Test", api_key="key")
         assert "[LLM_ERROR]" in result
@@ -191,7 +191,7 @@ class TestGenerateWithConcepts:
     @patch("urllib.request.urlopen")
     def test_request_structure(self, mock_urlopen):
         mock_urlopen.return_value = _make_mock_urlopen("ok")
-        from virtual_sia.api.llm_reasoning import generate_with_concepts
+        from virtual_genesis.api.llm_reasoning import generate_with_concepts
 
         generate_with_concepts("My task", api_key="sk-test-123", model="test-model")
 
@@ -212,7 +212,7 @@ class TestEvalRunnerTaskSelection:
     """Test the eval runner task selection logic."""
 
     def test_select_eval_tasks_default(self):
-        from virtual_sia.eval.runners.run_real_llm_eval import select_eval_tasks
+        from virtual_genesis.eval.runners.run_real_llm_eval import select_eval_tasks
         tasks = select_eval_tasks(count_per_family=2)
         assert len(tasks) == 6
         families = [t.expected_primary_family for t in tasks]
@@ -221,7 +221,7 @@ class TestEvalRunnerTaskSelection:
         assert families.count("procedure") == 2
 
     def test_select_eval_tasks_one_per_family(self):
-        from virtual_sia.eval.runners.run_real_llm_eval import select_eval_tasks
+        from virtual_genesis.eval.runners.run_real_llm_eval import select_eval_tasks
         tasks = select_eval_tasks(count_per_family=1)
         assert len(tasks) == 3
 
@@ -230,7 +230,7 @@ class TestComputeEvalSummary:
     """Test the evaluation summary computation."""
 
     def test_basic_summary(self):
-        from virtual_sia.eval.runners.run_real_llm_eval import compute_eval_summary
+        from virtual_genesis.eval.runners.run_real_llm_eval import compute_eval_summary
         results = [
             {"condition": "A_raw", "task_family": "comparison", "good_enough": True},
             {"condition": "A_raw", "task_family": "synthesis", "good_enough": False},
@@ -250,7 +250,7 @@ class TestComputeEvalSummary:
         assert summary["total_lift"] == 0.5
 
     def test_summary_by_family(self):
-        from virtual_sia.eval.runners.run_real_llm_eval import compute_eval_summary
+        from virtual_genesis.eval.runners.run_real_llm_eval import compute_eval_summary
         results = [
             {"condition": "A_raw", "task_family": "comparison", "good_enough": True},
             {"condition": "A_raw", "task_family": "synthesis", "good_enough": False},
@@ -262,7 +262,7 @@ class TestComputeEvalSummary:
         assert summary["by_family"]["synthesis"]["A_raw"]["success_rate"] == 0.0
 
     def test_empty_results(self):
-        from virtual_sia.eval.runners.run_real_llm_eval import compute_eval_summary
+        from virtual_genesis.eval.runners.run_real_llm_eval import compute_eval_summary
         summary = compute_eval_summary([])
         assert summary["total_evaluations"] == 0
         assert summary["concept_lift"] == 0.0
@@ -271,10 +271,10 @@ class TestComputeEvalSummary:
 class TestRunSingleCondition:
     """Test run_single_condition with mocked LLM."""
 
-    @patch("virtual_sia.eval.runners.run_real_llm_eval._call_openrouter")
+    @patch("virtual_genesis.eval.runners.run_real_llm_eval._call_openrouter")
     def test_condition_a_raw(self, mock_call):
         mock_call.return_value = MOCK_LLM_RESPONSE
-        from virtual_sia.eval.runners.run_real_llm_eval import run_single_condition, select_eval_tasks
+        from virtual_genesis.eval.runners.run_real_llm_eval import run_single_condition, select_eval_tasks
 
         tasks = select_eval_tasks(count_per_family=1)
         task = tasks[0]  # comparison task
@@ -286,10 +286,10 @@ class TestRunSingleCondition:
         assert "response_preview" in result
         assert result["response_length"] > 0
 
-    @patch("virtual_sia.eval.runners.run_real_llm_eval._call_openrouter")
+    @patch("virtual_genesis.eval.runners.run_real_llm_eval._call_openrouter")
     def test_condition_c_full_passes_verification(self, mock_call):
         mock_call.return_value = MOCK_LLM_RESPONSE
-        from virtual_sia.eval.runners.run_real_llm_eval import run_single_condition, select_eval_tasks
+        from virtual_genesis.eval.runners.run_real_llm_eval import run_single_condition, select_eval_tasks
 
         tasks = select_eval_tasks(count_per_family=1)
         task = tasks[0]  # comparison task
@@ -304,10 +304,10 @@ class TestRunSingleCondition:
         # Mock response has keywords that should pass comparison verification
         assert result["good_enough"] is True
 
-    @patch("virtual_sia.eval.runners.run_real_llm_eval._call_openrouter")
+    @patch("virtual_genesis.eval.runners.run_real_llm_eval._call_openrouter")
     def test_error_in_llm_returns_error_result(self, mock_call):
         mock_call.return_value = "[LLM_ERROR] HTTPError: 500"
-        from virtual_sia.eval.runners.run_real_llm_eval import run_single_condition, select_eval_tasks
+        from virtual_genesis.eval.runners.run_real_llm_eval import run_single_condition, select_eval_tasks
 
         tasks = select_eval_tasks(count_per_family=1)
         task = tasks[0]
@@ -323,20 +323,20 @@ class TestConfigConstants:
     """Test that config constants are properly set."""
 
     def test_openrouter_api_key_exists(self):
-        from virtual_sia.api.config import OPENROUTER_API_KEY
+        from virtual_genesis.api.config import OPENROUTER_API_KEY
         # Key is loaded from env var; in test env it may be empty string
         assert isinstance(OPENROUTER_API_KEY, str)
 
     def test_openrouter_base_url(self):
-        from virtual_sia.api.config import OPENROUTER_BASE_URL
+        from virtual_genesis.api.config import OPENROUTER_BASE_URL
         assert "openrouter.ai" in OPENROUTER_BASE_URL
 
     def test_default_model(self):
-        from virtual_sia.api.config import DEFAULT_MODEL
+        from virtual_genesis.api.config import DEFAULT_MODEL
         assert DEFAULT_MODEL == "openrouter/owl-alpha"
 
     def test_model_mapping_uses_owl_alpha(self):
-        from virtual_sia.api.config import APIConfig
+        from virtual_genesis.api.config import APIConfig
         config = APIConfig()
         assert config.model_mapping["tier_0"] == "openrouter/owl-alpha"
         assert config.model_mapping["tier_1"] == "openrouter/owl-alpha"

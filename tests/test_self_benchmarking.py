@@ -2,14 +2,14 @@
 blind spot discovery, diagnostic value metrics, and the self-benchmark cycle runner."""
 from __future__ import annotations
 
-from virtual_sia.core.objects.task_case import TaskCase
-from virtual_sia.eval.benchmark_generator import generate_from_anomaly_candidates
-from virtual_sia.eval.reports.blind_spot_discovery import discover_blind_spots
-from virtual_sia.eval.reports.diagnostic_value import (
+from virtual_genesis.core.objects.task_case import TaskCase
+from virtual_genesis.eval.benchmark_generator import generate_from_anomaly_candidates
+from virtual_genesis.eval.reports.blind_spot_discovery import discover_blind_spots
+from virtual_genesis.eval.reports.diagnostic_value import (
     compute_diagnostic_value,
     compute_diagnostic_value_report,
 )
-from virtual_sia.eval.runners.run_self_benchmark_cycle import run_self_benchmark_cycle
+from virtual_genesis.eval.runners.run_self_benchmark_cycle import run_self_benchmark_cycle
 
 
 # --- Helper factories ---

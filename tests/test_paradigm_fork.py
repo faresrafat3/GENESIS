@@ -1,17 +1,17 @@
 """Tests for paradigm forking / self-redesign: crisis detection, fork protocol, safety, pipeline."""
 from __future__ import annotations
 
-from virtual_sia.core.objects.identity import AgentIdentityObject
-from virtual_sia.core.objects.theory import LocalTheoryObject
-from virtual_sia.runtime.identity_runtime.crisis_detector import detect_crisis
-from virtual_sia.runtime.identity_runtime.paradigm_fork import (
+from virtual_genesis.core.objects.identity import AgentIdentityObject
+from virtual_genesis.core.objects.theory import LocalTheoryObject
+from virtual_genesis.runtime.identity_runtime.crisis_detector import detect_crisis
+from virtual_genesis.runtime.identity_runtime.paradigm_fork import (
     MINIMUM_CYCLES_BETWEEN_FORKS,
     execute_fork,
     propose_fork,
 )
-from virtual_sia.runtime.memory_os.store import InMemoryMemoryStore
-from virtual_sia.runtime.theory_runtime.registry import InMemoryTheoryRegistry
-from virtual_sia.runtime.pipeline.minimal_run import run_minimal_pipeline
+from virtual_genesis.runtime.memory_os.store import InMemoryMemoryStore
+from virtual_genesis.runtime.theory_runtime.registry import InMemoryTheoryRegistry
+from virtual_genesis.runtime.pipeline.minimal_run import run_minimal_pipeline
 
 
 # ---------------------------------------------------------------------------
@@ -261,7 +261,7 @@ class TestPipelineParadigmFork:
             theory_registry.add_theory(theory)
 
         # Pre-populate store with failing memories to create anomaly history
-        from virtual_sia.core.objects.memory import MemoryUnit
+        from virtual_genesis.core.objects.memory import MemoryUnit
         for i in range(6):
             mem = MemoryUnit.create(summary=f"failed task {i}", memory_type="episodic")
             mem.meta = {"good_enough": False, "task_family": "test"}

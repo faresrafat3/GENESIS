@@ -1,0 +1,790 @@
+# GENESIS - Current Regime Status
+# حالة النظام الحالي
+
+> Document Type: Stabilization Package
+> Status: Frozen Regime
+> Date: 2026-05-31
+> Phase: Option B - Stabilize and Package (from Decision Memo)
+
+---
+
+## 1. Frozen Defaults
+
+The following configuration values are frozen as the current operating regime. Changes require new evaluation evidence.
+
+### 1.1 Concept Engine Configuration
+
+Source: `virtual_genesis/runtime/concept_engine/config.py`
+
+```python
+DEFAULT_GLOBAL_MAX_ACTIVE_CONCEPTS = 1
+DEFAULT_MIN_OVERLAP = 2
+DEFAULT_MIN_ACTIVATION_SCORE = 7
+```
+
+### 1.2 Family-Specific Selectivity
+
+```python
+DEFAULT_FAMILY_SELECTIVITY = {
+    'comparison': {'max_active': 1, 'min_score': 7},
+    'synthesis': {'max_active': 2, 'min_score': 7},
+    'procedure': {'max_active': 0, 'min_score': 99},
+}
+
+FAMILY_SELECTIVITY_STRATEGY = {
+    'comparison': 'contract_heavy',
+    'synthesis': 'semantic_balanced',
+    'procedure': 'structural_only',
+}
+```
+
+### 1.3 Rationale for Frozen Values
+
+| Parameter | Value | Evidence |
+|-----------|-------|----------|
+| Global max_active | 1 | Selectivity ablation: top2 gives identical success (0.986) and activation_rate (0.653) as top1 |
+| Min activation score | 7 | Score 6 and score 7 produce identical results on current concept set; 7 is more conservative for future growth |
+| Comparison max_active | 1 | Family ablation: current_default already achieves maximum success |
+| Synthesis max_active | 2 | Raised to enable secondary concept admission when a competitive second concept exists via semantic_balanced strategy |
+| Procedure max_active | 0 | procedure_top1 raises activation_rate (0.653 to 0.708) without improving success |
+| Comparison strategy | contract_heavy | Contract alignment is the primary distinguishing signal for comparison tasks |
+| Synthesis strategy | semantic_balanced | Broader token matching suits multi-source integration tasks |
+| Procedure strategy | structural_only | Conservative - procedure concepts not yet proven beneficial |
+
+---
+
+## 2. Current Best Path
+
+### 2.1 Optimal Operating Condition
+
+**condition_c_combined** (concept-aware + economy-aware tier routing) is the current best operating path:
+
+- Success rate: 0.986 (v3b_curriculum, 72 tasks)
+- Average inference cost: 0.00068 per task
+- Versus premium-always: +12.5pp success at 14.7x lower cost
+- Versus baseline (retrieval-only): +19.4pp success at same cost order
+
+### 2.2 Curriculum-Based Evaluation
+
+The evaluation operates under a `TaskCase`-based curriculum model:
+
+1. Tasks are organized by family (comparison, synthesis, procedure)
+2. Each family has 4 difficulty levels in the curriculum
+3. The warmup phase runs concept cycles on all curriculum tasks to build the concept registry
+4. Post-warmup: 8 concepts + 4 theories available for activation
+5. At inference time, concepts are selected per-family using the frozen selectivity configuration
+
+### 2.3 Tier Routing Logic
+
+The economy-aware tier router (condition_b / condition_c):
+- Defaults to standard model (cost=0.001)
+- Escalates to premium model (cost=0.010) when estimated difficulty exceeds threshold
+- On v3b_curriculum: escalates 13 out of 72 tasks (18% escalation rate)
+- Combined with concepts, escalation drops to 0 tasks (concepts handle the difficulty)
+
+---
+
+## 3. What Remains Open
+
+### 3.1 Synthesis Top-2 Policy
+
+**Status**: Enabled (max_active=2).
+
+- Raised synthesis to max_active=2 to enable secondary concept admission when a competitive second concept exists
+- The semantic_balanced strategy admits a secondary concept if it also exceeds the min_score threshold
+- Result on current concept set: identical success (0.986) and identical activation rate (0.653) since no competitive second candidate exists yet
+- **Decision**: Keep synthesis at max_active=2 so the secondary admission path is available as the concept set grows
+
+### 3.2 Procedure Concept Activation
+
+**Status**: Currently disabled (max_active=0).
+
+- procedure_top1 configuration increases activation_rate from 0.653 to 0.708
+- No improvement in success rate
+- Procedure tasks rely on structural workflow reuse rather than concept-guided reasoning
+- **Decision**: Leave disabled until evidence shows concept activation improves procedure outcomes
+
+### 3.3 Governance-to-Control Bridge
+
+**Status**: Not yet implemented.
+
+- The governance layer (theory runtime, anomaly detection) currently operates independently
+- A bridge to control concept formation (e.g., governance can veto concept promotion) is architecturally planned
+- **Decision**: Deferred to next cycle - requires design specification before implementation
+
+### 3.4 V4 Classification Accuracy
+
+**Status**: Known limitation.
+
+- Top-1 match rate is 0.667 on v4's deliberately ambiguous tasks
+- Top-2 match rate is 0.917, showing the ranker identifies the correct family within its top 2
+- The 50% ambiguity rate means many tasks genuinely belong to multiple families
+- **Decision**: Accept as a characteristic of the diagnostic slice. The top-2 performance is adequate for concept selection.
+
+### 3.5 Cross-Family Concept Transfer
+
+**Status**: Not yet explored.
+
+- Currently each concept is scoped to exactly one family
+- A concept like "Evidence Sufficiency Contrast" could potentially benefit both comparison and synthesis
+- **Decision**: Deferred. Requires new eval slice that tests transfer scenarios.
+
+---
+
+## 4. Evidence Confidence Assessment
+
+### 4.1 Thesis 1: Concept Formation Beats Retrieval-Only
+
+| Dimension | Assessment |
+|-----------|-----------|
+| Signal strength | +19.4pp on primary slice (0.792 to 0.986) |
+| Consistency | Positive across v2, v3, v3b, v3b_curriculum, v3c_curriculum |
+| Cost parity | Yes - concept-aware runs at same cost as baseline (0.001/task) |
+| Exceptions | v4 diagnostic shows no separation (expected - high ambiguity blocks activation) |
+| Overall confidence | **Moderate-to-high** |
+
+**Caveats**: The evaluation is simulated (deterministic contract checking rather than live LLM output). The concept set is small (8-11 concepts). The task families are limited to comparison/synthesis/procedure.
+
+### 4.2 Thesis 2: Cognitive Economy Matches Premium
+
+| Dimension | Assessment |
+|-----------|-----------|
+| Signal strength | Equal success at 4-6x lower cost across all slices |
+| Consistency | Perfect across every evaluated slice |
+| Combined effect | When paired with concepts: 14.7x cost reduction with +12.5pp improvement |
+| Exceptions | None observed |
+| Overall confidence | **High** |
+
+**Caveats**: The cost model is simplified (two discrete tiers). Real-world API pricing may differ. The escalation heuristic has not been tested against streaming or latency-sensitive workloads.
+
+---
+
+## 5. Next Cycle Options
+
+From the Decision Memo (Option B stabilization), the following cycles are available:
+
+### 5.1 Concept Leverage Cycle
+
+**Goal**: Increase the benefit derived from existing concepts.
+
+- Explore cross-family concept transfer
+- Test concept combinations (when max_active > 1 becomes relevant)
+- Add concept confidence decay based on activation outcomes
+- Estimated effort: Medium
+
+### 5.2 Governance Control Cycle
+
+**Goal**: Connect governance runtime to concept formation decisions.
+
+- Implement governance veto on concept promotion
+- Add anomaly-triggered concept re-evaluation
+- Build the theory-to-concept feedback loop
+- Estimated effort: High
+
+### 5.3 Broader Domain Cycle
+
+**Goal**: Validate findings beyond the current three families.
+
+- Design v5 task set with new families (classification, extraction, generation)
+- Test whether concept formation advantage transfers to unfamiliar domains
+- Measure whether the economy advantage holds with larger task diversity
+- Estimated effort: Medium-High
+
+### 5.4 Live Model Validation Cycle
+
+**Goal**: Move from simulated evaluation to live LLM-backed verification.
+
+- Replace deterministic contract checking with actual LLM output evaluation
+- Measure real latency and cost under API constraints
+- Validate that simulated success rates correspond to real performance
+- Estimated effort: High (requires API budget)
+
+---
+
+## 6. Regime Summary Table
+
+| Category | Item | Value | Status |
+|----------|------|-------|--------|
+| Config | max_active_concepts | 1 | Frozen |
+| Config | min_activation_score | 7 | Frozen |
+| Config | min_overlap | 2 | Frozen |
+| Config | comparison strategy | contract_heavy | Frozen |
+| Config | synthesis strategy | semantic_balanced | Frozen |
+| Config | procedure activation | disabled | Frozen |
+| Eval | primary slice | v3b_curriculum (72 tasks) | Active |
+| Eval | diagnostic slice | v4 (12 tasks) | Active |
+| Eval | stress slice | v3c_curriculum (72 tasks) | Active |
+| Result | best success | 0.986 (combined) | Verified |
+| Result | best cost | 0.00068/task (combined) | Verified |
+| Result | concept count post-warmup | 8 | Stable |
+| Result | theory count post-warmup | 4 | Stable |
+| Thesis | Thesis 1 confidence | Moderate-to-high | Documented |
+| Thesis | Thesis 2 confidence | High | Documented |
+| Open | synthesis top-2 | Enabled (max_active=2), no second candidate yet | Monitor |
+| Open | procedure concepts | No benefit observed | Monitor |
+| Open | governance bridge | Not implemented | Deferred |
+| Open | cross-family transfer | Not explored | Deferred |
+
+---
+
+## 7. Expanded Evaluation Regime (Cycle 2 - Evaluation Pressure)
+
+> Added: 2026-06-01
+> Source: Evaluation Pressure Cycle (Option C)
+
+### 7.1 New Perturbation Operators
+
+Five new operators added to `virtual_genesis/eval/perturbations/taskcase_variants.py`:
+
+| Operator | Function | Theft Source |
+|----------|----------|-------------|
+| `support_removal` | Removes supporting evidence phrases | 5.24 - Zeiler & Fergus |
+| `evidence_reordering` | Shuffles sentence order | 5.25 - Hogarth & Einhorn |
+| `contrast_weakening` | Replaces strong contrast words with weaker ones | 5.26 - Nie et al. / Gardner et al. |
+| `structure_weakening` | Removes structural cues (numbering, lists) | 5.27 - Mann & Thompson |
+| `stronger_shortcut_lures` | Adds misleading shortcut paths | 5.28 - Goodfellow / Geirhos |
+
+### 7.2 Extended Curriculum (6 Levels)
+
+Source: 5.29 - Bengio et al. (Curriculum Learning)
+
+| Level | Perturbation | Composition |
+|-------|-------------|-------------|
+| 0 | None | Original task |
+| 1 | keyword_noise | Light noise |
+| 2 | sentence_injection | Distracting sentence |
+| 3 | full_reformulation | Complete rewrite |
+| 4 | support_removal + contrast_weakening | Evidence weakening |
+| 5 | evidence_reordering + stronger_shortcut_lures + structure_weakening | Maximum compound pressure |
+
+### 7.3 V6 Task Set
+
+- **File**: `virtual_genesis/eval/task_sets/prototype_v6_cases.py`
+- **Size**: 18 base cases (6 comparison + 6 synthesis + 6 procedure)
+- **Curriculum output**: 108 cases (18 x 6 levels)
+- **Runner**: `virtual_genesis/eval/runners/run_local_eval_v6.py`
+- **Difficulty**: Higher than v5, designed to stress-test the system
+
+### 7.4 Perturbation Resistance Report
+
+- **File**: `virtual_genesis/eval/reports/perturbation_resistance.py`
+- **Source**: 5.30 - Ribeiro et al. (CheckList)
+- **Outputs**: success_rate per perturbation_type, per curriculum_level, breaking_point, per-family resistance scores
+
+### 7.5 Anti-Shortcut Benchmark
+
+- **File**: `virtual_genesis/eval/task_sets/anti_shortcut_benchmark.py`
+- **Source**: 5.28 - Goodfellow / Geirhos
+- **Size**: 9 cases (3 per family)
+- **Purpose**: Tasks that can only pass if shortcuts are genuinely avoided
+
+---
+
+## 8. Anomaly Leverage Mechanism (Cycle 2 - Minimal Anomaly Leverage)
+
+> Added: 2026-06-01
+> Source: Minimal Anomaly Leverage (Option A)
+> Status: Gated behind `use_anomaly_leverage=False` (default OFF)
+
+### 8.1 Anomaly Severity Scoring
+
+- **Function**: `compute_anomaly_severity_score()` in `anomaly_runtime/service.py`
+- **Source**: 5.31 - Chandola et al. + 6.8 - Predictive Processing
+- **Range**: 0.0 to 1.0
+- **Factors**: candidate count, max severity, source_type diversity
+
+### 8.2 Anomaly Pattern Matching
+
+- **Function**: `matches_known_anomaly_pattern()` in `anomaly_runtime/service.py`
+- **Source**: 6.3 - Kuhn (anomaly accumulation -> behavioral change)
+- **Patterns detected**: property_gap + shortcut co-occurrence, repeated family failures, contradiction clustering
+
+### 8.3 Anomaly-Aware Verification
+
+- **Function**: `verify_output_anomaly_aware()` in `verification_runtime/service.py`
+- **Behavior**: When severity > 0.5, requires ALL properties to pass, adds extra markers, raises threshold
+- **Source**: 6.3 - Kuhn + 5.30 - Ribeiro CheckList
+
+### 8.4 Anomaly-Aware Economy Routing
+
+- **Function**: `choose_tier_anomaly_aware()` in `economy_control/router.py`
+- **Source**: 6.12 - Ashby (Requisite Variety)
+- **Behavior**:
+  - severity > 0.4: never tier_0 (minimum tier_1)
+  - severity > 0.7: forces tier_2
+
+### 8.5 Anomaly-Aware Escalation
+
+- **Function**: `should_escalate_anomaly_aware()` in `economy_control/escalation.py`
+- **Source**: 5.32 - PagerDuty/Datadog
+- **Behavior**: severity > 0.5 and not tier_2 -> always escalate
+
+### 8.6 Pipeline Integration
+
+- **File**: `virtual_genesis/runtime/pipeline/minimal_run.py`
+- **Parameter**: `use_anomaly_leverage: bool = False`
+- **When enabled**: severity computed from anomaly_candidates, passed to verification/routing/escalation
+
+### 8.7 Gating Decision
+
+The mechanism is OFF by default to:
+- Preserve existing frozen behavior
+- Allow controlled comparison (with/without)
+- Prevent unintended behavioral changes
+- Require explicit opt-in for evaluation
+
+---
+
+## 9. New Conditions Available
+
+### 9.1 Evaluation Conditions
+
+| Condition | Description | Status |
+|-----------|-------------|--------|
+| v6_baseline | V6 tasks, no perturbation | Available |
+| v6_curriculum | V6 tasks, all 6 levels | Available |
+| v6_anti_shortcut | Anti-shortcut benchmark | Available |
+| v6_perturbation_resistance | Full resistance analysis | Available |
+
+### 9.2 Runtime Conditions
+
+| Condition | Description | Status |
+|-----------|-------------|--------|
+| anomaly_leverage_off | Pipeline with use_anomaly_leverage=False | Default |
+| anomaly_leverage_on | Pipeline with use_anomaly_leverage=True | Available (opt-in) |
+
+### 9.3 Relationship to Frozen Defaults
+
+All frozen defaults from Section 1 remain **unchanged**:
+- Concept selectivity: unchanged
+- Family policies: unchanged
+- Tier routing base behavior: unchanged
+
+The new mechanisms are **additive** - they layer on top when explicitly enabled, they do not modify any frozen configuration.
+
+---
+
+## 10. Updated Regime Summary Table
+
+| Category | Item | Value | Status |
+|----------|------|-------|--------|
+| Config | max_active_concepts | 1 | Frozen |
+| Config | min_activation_score | 7 | Frozen |
+| Config | min_overlap | 2 | Frozen |
+| Config | comparison strategy | contract_heavy | Frozen |
+| Config | synthesis strategy | semantic_balanced | Frozen |
+| Config | procedure activation | disabled | Frozen |
+| Config | use_anomaly_leverage | False | Frozen (default OFF) |
+| Config | **use_theory_leverage** | **False** | **Frozen (default OFF)** |
+| Eval | primary slice | v3b_curriculum (72 tasks) | Active |
+| Eval | diagnostic slice | v4 (12 tasks) | Active |
+| Eval | stress slice | v3c_curriculum (72 tasks) | Active |
+| Eval | **pressure slice** | **v6_curriculum (108 tasks)** | **New** |
+| Eval | **anti-shortcut slice** | **v6_anti_shortcut (9 tasks)** | **New** |
+| Eval | **perturbation operators** | **8 total (3 original + 5 new)** | **Expanded** |
+| Eval | **curriculum levels** | **6 (was 4)** | **Expanded** |
+| Result | best success | 0.986 (combined, v3b) | Verified |
+| Result | best cost | 0.00068/task (combined) | Verified |
+| Result | concept count post-warmup | 8 | Stable |
+| Result | theory count post-warmup | 4 | Stable |
+| Runtime | **anomaly severity scoring** | **0.0-1.0 composite** | **New (gated)** |
+| Runtime | **anomaly-aware verification** | **stricter when severity > 0.5** | **New (gated)** |
+| Runtime | **anomaly-aware routing** | **bias to higher tier** | **New (gated)** |
+| Runtime | **anomaly-aware escalation** | **auto-escalate at severity > 0.5** | **New (gated)** |
+| Runtime | **theory-guided verification** | **stricter when theory predicts failure** | **New (gated)** |
+| Runtime | **theory-guided routing** | **bias to higher tier on theory prediction** | **New (gated)** |
+| Runtime | **theory-guided concept activation** | **boost + admission for theory-aligned concepts** | **New (gated)** |
+| Runtime | **theory predictive value** | **Laplace-smoothed accuracy (0.0-1.0)** | **New (gated)** |
+| Runtime | **theory-contradiction interaction** | **explanatory_power accumulation** | **New (gated)** |
+| Config | **use_identity_governance** | **False** | **Frozen (default OFF)** |
+| Config | **use_paradigm_fork** | **False** | **Frozen (default OFF)** |
+| Runtime | **identity drift detection** | **token overlap 0.0-1.0** | **New (gated)** |
+| Runtime | **commitment ledger** | **violations + evolutions tracking** | **New (gated)** |
+| Runtime | **crisis detection** | **3 levels: normal/warning/crisis** | **New (gated)** |
+| Runtime | **paradigm fork protocol** | **propose -> safety check -> execute** | **New (gated)** |
+| Thesis | Thesis 1 confidence | Moderate-to-high | Documented |
+| Thesis | Thesis 2 confidence | High | Documented |
+| Open | synthesis top-2 | Enabled (max_active=2), no second candidate yet | Monitor |
+| Open | procedure concepts | No benefit observed | Monitor |
+| Open | governance bridge | **Further implemented via theory leverage** | **Updated** |
+| Open | cross-family transfer | Not explored | Deferred |
+
+---
+
+## 11. Theory Leverage Mechanism (Cycle 3 - Local Theory Leverage)
+
+> Added: 2026-06-01
+> Source: Local Theory Leverage (Option B)
+> Status: Gated behind `use_theory_leverage=False` (default OFF)
+
+### 11.1 Theory Predictive Value (B4)
+
+- **Function**: `get_theory_prediction_for_task()` in `theory_runtime/apply.py`
+- **Source**: 5.33 - Popper (Falsifiability) + 5.37 - Scientific Realism (Boyd)
+- **Behavior**: Generates prediction dict with `predicts_failure`, `predicts_difficulty`, `confidence`, `relevant_claims`
+- **Mechanism**: Token overlap between theory.predictive_claims and task_text; confidence = theory.predictive_value
+- **Update**: `update_theory_predictive_value()` applies Laplace smoothing: `(correct+1)/(total+2)`
+- **Source (Update)**: 5.34 - Bayesian Epistemology (Howson & Urbach)
+
+### 11.2 Theory-Contradiction Interaction (B5)
+
+- **Function**: `check_theory_explains_contradiction()` in `theory_runtime/apply.py`
+- **Source**: 6.2 - Lakatos (Research Programmes) + 6.3 - Kuhn (Scientific Revolutions)
+- **Behavior**: If theory.predictive_claims tokens overlap contradiction content (threshold 2+ tokens), returns True
+- **Side Effect**: theory.explanatory_power += 0.1 (capped at 1.0) on successful explanation
+- **Scope Check**: Only applies when contradiction.task_family is in theory.scope.task_families
+
+### 11.3 Theory-Guided Verification (B1)
+
+- **Function**: `verify_output_theory_guided()` in `verification_runtime/service.py`
+- **Source**: 6.8 - Predictive Processing (Friston) + 5.33 - Popper
+- **Behavior**:
+  - When theory predicts failure: requires 2 primary markers AND all properties pass
+  - When theory predicts difficulty: requires base evidence AND secondary marker hit
+  - When no prediction: returns base verification result unchanged
+- **Layering**: When both theory and anomaly leverage active, takes the stricter result
+
+### 11.4 Theory-Guided Concept Activation (B2)
+
+- **Function**: `select_applicable_concepts_theory_guided()` in `concept_engine/apply.py`
+- **Source**: 5.35 - Theory-Theory (Gopnik & Wellman) + 5.36 - Explanation-Based Learning (DeJong & Mooney)
+- **Behavior**:
+  - Concepts in theory.concept_refs get +3 activation score boost [theory_boost]
+  - Non-selected concepts within 2 points of fam_min_score get admitted if in theory.concept_refs [theory_admission]
+  - Non-aligned concepts remain unchanged
+
+### 11.5 Theory-Guided Routing (B3)
+
+- **Function**: `choose_tier_theory_guided()` in `economy_control/router.py`
+- **Source**: 5.34 - Bayesian Epistemology + 5.38 - DevOps Runbook Automation (Google SRE)
+- **Behavior**:
+  - predicts_difficulty AND confidence >= 0.5: prevents tier_0 (minimum tier_1)
+  - predicts_failure AND confidence >= 0.6: forces tier_2
+  - No prediction or low confidence: no change from base routing
+- **Layering**: When both active, anomaly_severity layers on top of theory-guided decision
+
+### 11.6 Pipeline Integration
+
+- **File**: `virtual_genesis/runtime/pipeline/minimal_run.py`
+- **Parameter**: `use_theory_leverage: bool = False`
+- **When enabled**:
+  1. Selects applicable theories for task_family
+  2. Generates prediction from first applicable theory
+  3. Routes via choose_tier_theory_guided (with anomaly layering if both active)
+  4. Selects concepts via select_applicable_concepts_theory_guided (if use_concepts=True)
+  5. Verifies via verify_output_theory_guided (with anomaly layering if both active)
+  6. Post-processes: updates predictive_value, checks contradiction explanations
+- **Return dict additions**: `use_theory_leverage`, `theory_prediction`, `theory_predictive_value`
+
+### 11.7 Gating Decision
+
+The mechanism is OFF by default to:
+- Preserve existing frozen behavior (all 88 baseline tests pass unchanged)
+- Allow controlled comparison (with/without theory leverage)
+- Prevent unintended behavioral changes to verified results
+- Require explicit opt-in for evaluation
+- Maintain consistency with the anomaly_leverage gating pattern from Cycle 2
+- Enable incremental activation: theory_leverage can be enabled independently or combined with anomaly_leverage
+
+---
+
+---
+
+## الدورة الرابعة: التوسع المجالي (Option D) - مكتملة
+
+### ما تم إضافته
+- 3 عائلات مهام جديدة: analysis, extraction, planning
+- 18 مهمة جديدة عبر العائلات الثلاث في prototype_v7_broader_domain.py
+- تقرير النقل المفاهيمي (domain_transfer.py) يقيس انتقال المفاهيم عبر المجالات
+- محرك تقييم التوسع المجالي (run_broader_domain_eval.py)
+- تهيئة محرك المفاهيم للعائلات الجديدة (selectivity + strategy)
+- 37 اختبار جديد (المجموع الحالي: 163 اختبار)
+
+### السرقات الشرعية الجديدة
+- 5.39: Bloom's Taxonomy -> عائلة التحليل
+- 5.40: Information Extraction (Sarawagi 2008) -> عائلة الاستخراج
+- 5.41: Classical AI Planning (STRIPS/PDDL) -> عائلة التخطيط
+- 5.42: Transfer Learning (Pan & Yang 2010) -> تقرير النقل المفاهيمي
+- 5.43: Curriculum Learning (Bengio et al 2009) -> منهج التوسع المجالي
+- 5.44: Meta-Learning (Thrun 1998) -> حكم القابلية للنقل
+
+### الحالة الحالية
+- إجمالي السرقات: 5.01 - 5.62
+- إجمالي الاختبارات: 163
+- الدورات المكتملة: Stabilize, Eval Pressure, Anomaly Leverage, Theory Leverage, Broader Domain
+
+---
+
+## 12. Wave 3 Capabilities (Not Yet Frozen)
+
+### 12.1 Self-Benchmarking (H8)
+
+**Status**: Implemented, gated behind `use_self_benchmarking: bool = False`
+
+الميزة تحول اشارات الفشل (anomaly candidates) الى ضغط تقييمي جديد عبر:
+- توليد TaskCase تشخيصية من anomalies
+- اكتشاف المناطق العمياء (blind spots) في coverage matrix
+- قياس القيمة التشخيصية لكل اختبار عبر conditions
+- دورة تقييم ذاتي كاملة (run_self_benchmark_cycle)
+
+**Not frozen** لان: لم تُجرَ بعد تجارب مقارنة مع/بدون self-benchmarking على المنهج المحكم.
+
+### 12.2 Productive Forgetting (H3)
+
+**Status**: Implemented, gated behind `use_productive_forgetting: bool = False`
+
+الميزة تعطي نظام الذاكرة ادارة دورة حياة كاملة:
+- decay score يضعف الذكريات غير المستخدمة
+- عمليات صريحة: archive / deprecate / delete
+- utility scoring يقيم فائدة كل ذاكرة
+- forgetting policy تؤرشف/تُهمل الذكريات منخفضة الفائدة تلقائيا
+
+**Not frozen** لان: لم تُجرَ بعد تجارب مقارنة retention vs forgetting على مسار التحسن طويل الامد.
+
+### 12.3 Legitimate Thefts (5.45-5.54)
+
+موثقة في `Virtual_SIA_Legitimate_Thefts_Wave3_AR.md`:
+- 5.45-5.49: مصادر Self-Benchmarking (FunSearch, AutoTTS, Novelty Search, Metamorphic Testing, Curriculum Self-Play)
+- 5.50-5.54: مصادر Productive Forgetting (Ebbinghaus, RIF, Reconsolidation, Desirable Difficulties, MemOS)
+
+---
+
+## 13. Wave 3b Capabilities (Not Yet Frozen)
+
+### 13.1 Agent Identity Governance (H9)
+
+**Status**: Implemented, gated behind `use_identity_governance: bool = False`
+
+الميزة تعطي الوكيل هوية صريحة قابلة للفحص عبر:
+- Identity Object مع commitments, self_model, lineage, drift_score, accountability_log
+- Drift Detection يقيس انحراف السلوك عن الالتزامات عبر token overlap
+- Commitment Ledger يتتبع الالتزامات النشطة والانتهاكات والتطورات
+- Identity-Aware Governance يفحص كل قرار مقابل الالتزامات قبل التنفيذ
+
+**Not frozen** لأن: لم تُجرَ بعد تجارب مقارنة مع/بدون identity governance على سلاسل قرارات طويلة.
+
+### 13.2 Paradigm Forking / Self-Redesign
+
+**Status**: Implemented, gated behind `use_paradigm_fork: bool = False`
+
+الميزة تعطي الوكيل القدرة على اكتشاف الأزمات البنيوية واعادة تصميم نفسه عبر:
+- Crisis Detection يراقب تراكم الشذوذات + فشل النظريات + انجراف الهوية
+- Paradigm Fork Protocol يقترح وينفذ تفريع عند الأزمة
+- Fork Safety: تبرير مطلوب، حد أدنى 10 دورات بين التفريعات، حفظ السلالة
+
+**Not frozen** لأن: لم تُجرَ بعد تجارب تحفيز أزمة حقيقية ومقارنة مسارات مع/بدون fork.
+
+### 13.3 Legitimate Thefts (5.55-5.62)
+
+موثقة في `Virtual_SIA_Legitimate_Thefts_Wave3b_AR.md`:
+- 5.55-5.58: مصادر Identity Governance (Personal Identity Philosophy, Organizational Governance, Version Control Systems, Constitutional AI)
+- 5.59-5.62: مصادر Paradigm Forking (Kuhn, Lakatos, Git Branching Model, Punctuated Equilibrium)
+
+---
+
+## 14. Real-World Upgrades (Cycle 5)
+
+> Added: 2026-05-31
+> Source: Real-World Upgrades Task
+> Status: Implemented
+
+### 14.1 Contract-Level Perturbations
+
+- **File**: `virtual_genesis/eval/perturbations/contract_perturbations.py`
+- **Operators**: property_addition, property_removal, shortcut_injection, contract_flip, contract_tightening_strict, counterfactual_contract
+- **Source**: 5.65-5.68 (CheckList, Contrast Sets, Counterfactual Data, Dynabench)
+- **Curriculum**: Levels 6-7 added (contract perturbations on top of prompt perturbations)
+
+### 14.2 SQLite Persistent Storage
+
+- **Package**: `virtual_genesis/persistence/`
+- **Stores**: SQLiteMemoryStore, SQLiteConceptRegistry, SQLiteTheoryRegistry, SQLiteIdentityStore
+- **Checkpointing**: save_checkpoint/load_checkpoint for full session state
+- **Source**: 5.69-5.72 (Mem0, MemGPT, LangGraph, SQLite WAL)
+- **Gating**: `use_persistence=False` (default OFF)
+
+### 14.3 Real LLM Evaluation
+
+- **File**: `virtual_genesis/eval/runners/run_real_llm_eval.py`
+- **Reasoning**: `virtual_genesis/api/llm_reasoning.py`
+- **Model**: openrouter/owl-alpha via OpenRouter API
+- **Source**: 5.73-5.75 (SWE-bench, LATS, DSPy)
+- **Conditions**:
+  - A_raw: prompt فقط بدون اضافات
+  - B_concept: prompt + concept_hints
+  - C_full: prompt + concept_hints + theory_hints
+- **Metrics**: concept_lift, theory_lift, total_lift
+- **Cost tracking**: مدمج في LLMAdapter
+- **Status**: جاهز للتشغيل عبر `if __name__ == '__main__'`
+
+### 14.4 Updated Config Constants
+
+| Constant | Value | Purpose |
+|----------|-------|---------|
+| OPENROUTER_BASE_URL | https://openrouter.ai/api/v1/chat/completions | API endpoint |
+| DEFAULT_MODEL | openrouter/owl-alpha | Default LLM model |
+| model_mapping (all tiers) | openrouter/owl-alpha | Unified model for evaluation |
+
+### 14.5 Legitimate Thefts (5.65-5.75)
+
+| Theft | Source | What We Took |
+|-------|--------|-------------|
+| 5.65 | CheckList (Ribeiro 2020) | Minimum functionality tests |
+| 5.66 | Contrast Sets (Gardner 2020) | Minimal edits for closest failure |
+| 5.67 | Counterfactual Data (Kaushik 2020) | Same text, reversed label |
+| 5.68 | Dynabench (Kiela 2021) | Dynamic adversarial benchmark |
+| 5.69 | Mem0 (2024) | Memory CRUD lifecycle |
+| 5.70 | MemGPT/Letta (Packer 2023) | Memory as OS hierarchy |
+| 5.71 | LangGraph Persistence (2024) | State checkpointing |
+| 5.72 | SQLite WAL | Zero-dependency ACID storage |
+| 5.73 | SWE-bench (Jimenez 2024) | Real-task A/B evaluation |
+| 5.74 | LATS (Zhou 2024) | Comparing reasoning strategies |
+| 5.75 | DSPy (Khattab 2024) | Metric-driven prompt optimization |
+
+---
+
+## 15. التحقق الحقيقي بنموذج LLM فعلي (Cycle 6 - Real Validation)
+
+> Added: 2026-05-31
+> Source: Real LLM Evaluation Run
+> Status: Completed
+> Model: openrouter/owl-alpha
+
+### 15.1 بروتوكول التقييم
+
+تم تشغيل بروتوكول A/B/C ablation ladder على نموذج حقيقي:
+
+| الشرط | الوصف | النتيجة |
+|--------|--------|---------|
+| A_raw | prompt فقط | success=100%, evidence=66.7% |
+| B_concept | prompt + concept_hints | success=100%, evidence=66.7% |
+| C_full | prompt + concept + theory hints | success=100%, evidence=83.3% |
+
+### 15.2 النتيجة الرئيسية
+
+**الشرط C يحسن نسبة الاستشهاد بالادلة بمقدار +25% مقارنة بخط الاساس.**
+
+هذا اول اثبات تجريبي حقيقي (وليس محاكاة) لفرضية GENESIS:
+الحوكمة المعرفية تحسن جودة مخرجات LLM دون الاضرار بالاداء الاساسي.
+
+### 15.3 تفاصيل التشغيل
+
+- 6 مهام (2 comparison + 2 synthesis + 2 procedure)
+- 3 شروط = 18 مكالمة API
+- زمن الاستجابة: 2-50 ثانية لكل مكالمة
+- النموذج: openrouter/owl-alpha عبر OpenRouter API
+
+### 15.4 القيود المعترف بها
+
+- حجم عينة صغير (n=6) لا يسمح بتعميم احصائي
+- نموذج واحد فقط
+- تشغيل واحد بدون تكرار
+- success_rate عند السقف (100%) يخفي فروقات محتملة
+
+### 15.5 السرقة الشرعية 5.76
+
+**من**: Ablation Evaluation Protocol (Melis et al. 2018, Lipton & Steinhardt 2018)
+**اخذنا**: منهجية التقييم بالاستئصال المتدرج - كل شرط يضيف طبقة واحدة بالضبط
+**لم ناخذ**: التحليل الاحصائي المتقدم بسبب حجم العينة الصغير
+**اصبح عندنا**: بروتوكول A/B/C حقيقي مع LLM فعلي
+
+---
+
+## 16. الحالة النهائية للمشروع
+
+> Final State: 2026-05-31
+
+### 16.1 ملخص الانجاز
+
+| البعد | القيمة |
+|-------|--------|
+| اجمالي PRs | 9 |
+| اجمالي الاختبارات | 408 |
+| اجمالي السرقات الشرعية | 88 (5.01 - 5.76) |
+| التحقق الحقيقي | مكتمل (openrouter/owl-alpha) |
+| الدورات المكتملة | 6 دورات كاملة |
+
+### 16.2 الدورات المكتملة
+
+1. **Stabilize & Package** - تجميد الافتراضيات، توثيق النظام
+2. **Evaluation Pressure** - عوامل اضطراب جديدة، منهج 6 مستويات
+3. **Anomaly Leverage** - رافعة الشذوذ للتحقق والتوجيه
+4. **Theory Leverage** - رافعة النظريات للتنبؤ والتوجيه
+5. **Broader Domain** - 3 عائلات جديدة (analysis, extraction, planning)
+6. **Real-World Upgrades** - اضطراب العقود، تخزين SQLite، تقييم LLM حقيقي
+
+### 16.3 البنية النهائية
+
+```
+virtual_genesis/
+  runtime/           # محرك التشغيل (concept engine, theory, anomaly, identity, pipeline)
+  eval/              # التقييم (runners, perturbations, task_sets, reports)
+  api/               # واجهة API (REST, LLM adapter, reasoning)
+  persistence/       # التخزين المستمر (SQLite stores, checkpointing)
+  governance/        # الحوكمة (identity, paradigm fork, self-benchmark)
+tests/               # 408 اختبار
+```
+
+### 16.4 الفرضيات المؤكدة
+
+| الفرضية | الثقة | المصدر |
+|---------|-------|--------|
+| H1: المفاهيم تتفوق على الاسترجاع | متوسطة-عالية | تقييم محاكى (72+ مهمة) |
+| H2: الاقتصاد المعرفي يكافئ Premium | عالية | تقييم محاكى (كل الشرائح) |
+| H7: الحوكمة تحسن جودة LLM حقيقي | اولية | تقييم حقيقي (n=6) |
+
+### 16.5 ما يبقى مفتوحا
+
+- توسيع التقييم الحقيقي (30+ مهمة، نماذج متعددة)
+- تقييم Self-Benchmarking و Productive Forgetting على منهج محكم
+- تقييم Identity Governance على سلاسل قرارات طويلة
+- تحفيز ازمة حقيقية لاختبار Paradigm Fork
+
+---
+
+*End of Current Regime Status*
+
+
+
+---
+
+## 17) مزامنة مع قفل النظام الداخلي (Internal Regime Lock) — التحديث الأحدث
+
+> أُضيف هذا القسم لمزامنة STATUS مع `Virtual_SIA_Internal_Regime_Lock_AR.md` (المرجع البنيوي الأعلى)
+> و`virtual_genesis/README.md`. عند أي تعارض: **القفل الداخلي ثم هذا المستند** هما المعتمدان.
+
+### 17.1 التصنيف الثلاثي المعتمد للطبقات
+- **الطبقة A — Core Epistemic Engine** 🔒 مقفولة: task framing, memory, concepts+selectivity,
+  economy routing, verification, blackboard, pipeline, evaluation regimes. مركز الثقل، لا تُلمَس إلا بمبرر تجريبي.
+- **الطبقة B — Governance Expansion** 🧪 مُقيَّدة وكلها **OFF افتراضيًا**: contradiction, anomaly,
+  theory, self-benchmarking, productive forgetting, identity governance, paradigm forking.
+- **الطبقة C — Interface/Infrastructure** 🔌 منفصلة ومُصنَّفة: API + LLM adapter + sessions
+  (production-facing)، SQLite persistence (production-facing)، broader-domain + real-LLM runners (research-only).
+
+> القاعدة الذهبية: الطبقة A لا تعتمد على B أو C — النواة تعمل وحدها.
+
+### 17.2 المسار المعتمد الحالي (Canonical Path)
+- **Runner واحد:** `python -m virtual_genesis.eval.runners.run_local_eval_v3b_curriculum`
+- **Evidence path:** `prototype_v3b_curriculum` (أساسي) + `prototype_v4_cases` (تشخيصي) + v2/v3 (معايرة)
+- **أفضل condition:** `condition_c_combined` → success≈0.986، cost≈0.00068
+- **كل flags الطبقة B = OFF** في المسار المعتمد.
+
+### 17.3 التحقق الحقيقي مع LLM (أحدث دليل)
+- `run_adversarial_llm_eval` (openrouter/owl-alpha، 18 استدعاء): **أول نتيجة غير متشبّعة**
+  → A_raw=0% ← B_concept=50% ← C_concept_theory=50% (shortcut C=16.7% < B=33.3%، evidence C=66.7%).
+- المرجع: `Virtual_SIA_Adversarial_Validation_Memo_AR.md`.
+- النتيجة المتشبّعة السابقة (success=100% للجميع) موثّقة في `Virtual_SIA_Real_LLM_Broader_Results_AR.md`.
+
+### 17.4 الحالة النهائية للأرقام
+- 10 PRs مدفوعة · 424 اختبار · 93 سرقة شرعية موثّقة (5.1–5.83 + 6.1–6.13).
+- السرقات الجديدة لأداة الحوكمة نفسها: 5.81 Model Cards، 5.82 Golden Config/NIST، 5.83 SemVer.
+- السجل الموحّد: `Virtual_SIA_Legitimate_Thefts_MASTER_INDEX_AR.md`.
+
+### 17.5 قواعد منع التشعّب (Anti-Sprawl) — سارية الآن
+1. لا توسّع في الطبقة A إلا بمبرر تجريبي مقاس.
+2. أي flag في الطبقة B يبقى OFF حتى يُثبَت قيمته على الـ canonical evidence path.
+3. الطبقة C لا تدخل المسار المعتمد.
+4. كل توسّع جديد يُصنَّف فورًا (A/B/C) ويُسجَّل في القفل الداخلي.
+5. كل feature جديدة تتبع منهجية السرقة الشرعية.
+
+*نهاية قسم المزامنة — STATUS الآن متطابق مع ARCHITECTURE (القفل) و README.*

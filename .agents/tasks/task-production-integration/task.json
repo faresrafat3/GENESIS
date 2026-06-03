@@ -1,6 +1,6 @@
 {
   "task_id": "task-production-integration",
-  "task_description": "Execute all 4 remaining tasks for Virtual-SIA: Full integration testing (all governance flags), Production API (http.server + OpenRouter), Research Paper framing (Arabic), and Merge Strategy document (Arabic). New branch feat/production-integration from wave3-identity-paradigm HEAD.",
+  "task_description": "Execute all 4 remaining tasks for Virtual-GENESIS: Full integration testing (all governance flags), Production API (http.server + OpenRouter), Research Paper framing (Arabic), and Merge Strategy document (Arabic). New branch feat/production-integration from wave3-identity-paradigm HEAD.",
   "status": "completed",
   "feature_order": ["FEAT-001", "FEAT-002", "FEAT-003", "FEAT-004"],
   "blocked_reason": null,

@@ -5,10 +5,10 @@
   "status": "completed",
   "steps": [
     "Step 1: Create pyproject.toml at the project root (/projects/sandbox/sia/pyproject.toml) with: [project] name='virtual-sia', version='0.1.0', requires-python='>=3.10', description from the Decision Memo, [project.optional-dependencies] dev=['pytest>=7.0']. Use [build-system] requires=['setuptools>=68']. Add [tool.pytest.ini_options] testpaths=['tests'].",
-    "Step 2: Create tests/__init__.py and tests/test_concept_engine.py with pytest tests covering: (a) select_applicable_concepts returns empty list when no concepts match family, (b) select_applicable_concepts respects family-specific max_active limits, (c) select_applicable_concepts applies redundancy penalty, (d) _family_policy returns correct values for each family from DEFAULT_FAMILY_SELECTIVITY, (e) build_contrastive_groups correctly groups memories by family. Use the actual data objects from virtual_sia.core.objects.",
+    "Step 2: Create tests/__init__.py and tests/test_concept_engine.py with pytest tests covering: (a) select_applicable_concepts returns empty list when no concepts match family, (b) select_applicable_concepts respects family-specific max_active limits, (c) select_applicable_concepts applies redundancy penalty, (d) _family_policy returns correct values for each family from DEFAULT_FAMILY_SELECTIVITY, (e) build_contrastive_groups correctly groups memories by family. Use the actual data objects from virtual_genesis.core.objects.",
     "Step 3: Create tests/test_eval_runners.py with tests covering: (a) run_condition imports and CONDITIONS dict has expected keys, (b) compare_conditions returns dict keyed by condition_id, (c) summarize_comparison produces thesis_signals keys. These should be lightweight - test the plumbing not the full eval run.",
     "Step 4: Create tests/test_task_ingress.py with tests covering: (a) ingest_task with raw string produces TaskObject with classified family, (b) ingest_task with TaskCase object preserves expected_primary_family in meta, (c) classify_task_family correctly classifies known prompts.",
-    "Step 5: Run the v4 diagnostic eval: ~/.pyenv/versions/3.12.13/bin/python -m virtual_sia.eval.runners.run_local_eval_v4 to regenerate virtual_sia/eval/results/prototype_v4_summary.json with the latest code.",
+    "Step 5: Run the v4 diagnostic eval: ~/.pyenv/versions/3.12.13/bin/python -m virtual_genesis.eval.runners.run_local_eval_v4 to regenerate virtual_genesis/eval/results/prototype_v4_summary.json with the latest code.",
     "Step 6: Run pytest to verify all new tests pass: ~/.pyenv/versions/3.12.13/bin/python -m pytest tests/ -v"
   ],
   "acceptance_criteria": [
@@ -17,11 +17,11 @@
     "tests/test_concept_engine.py has at least 5 test functions",
     "tests/test_eval_runners.py has at least 3 test functions",
     "tests/test_task_ingress.py has at least 3 test functions",
-    "virtual_sia/eval/results/prototype_v4_summary.json is regenerated"
+    "virtual_genesis/eval/results/prototype_v4_summary.json is regenerated"
   ],
   "verification": [
     "~/.pyenv/versions/3.12.13/bin/python -m pytest tests/ -v",
-    "~/.pyenv/versions/3.12.13/bin/python -m virtual_sia.eval.runners.run_local_eval_v4"
+    "~/.pyenv/versions/3.12.13/bin/python -m virtual_genesis.eval.runners.run_local_eval_v4"
   ],
   "blocked_reason": null,
   "findings": "All 11 tests pass. pytest installed via pip. v4 eval regenerated successfully (match_rate=0.667, top2_match_rate=0.917). The prototype_v4_summary.json was already tracked so only modified. No issues encountered."

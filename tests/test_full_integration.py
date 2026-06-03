@@ -1,14 +1,14 @@
 """Tests for full integration: pipeline with all governance flags and integration runner."""
 from __future__ import annotations
 
-from virtual_sia.core.objects.identity import AgentIdentityObject
-from virtual_sia.runtime.pipeline.minimal_run import run_minimal_pipeline
-from virtual_sia.eval.runners.run_full_integration import (
+from virtual_genesis.core.objects.identity import AgentIdentityObject
+from virtual_genesis.runtime.pipeline.minimal_run import run_minimal_pipeline
+from virtual_genesis.eval.runners.run_full_integration import (
     run_condition_all_flags,
     run_condition_concept_only,
     run_condition_combined_baseline,
 )
-from virtual_sia.eval.reports.integration_summary import generate_integration_summary_report
+from virtual_genesis.eval.reports.integration_summary import generate_integration_summary_report
 
 
 # ---------------------------------------------------------------------------

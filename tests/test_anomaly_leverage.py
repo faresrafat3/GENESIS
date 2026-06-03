@@ -2,17 +2,17 @@
 anomaly-aware tier routing, anomaly-aware escalation, and pipeline integration."""
 from __future__ import annotations
 
-from virtual_sia.core.objects.anomaly import AnomalyCandidate
-from virtual_sia.core.objects.task import TaskObject
-from virtual_sia.core.objects.blackboard import BlackboardObject, BlackboardMemoryPack
-from virtual_sia.runtime.anomaly_runtime.service import (
+from virtual_genesis.core.objects.anomaly import AnomalyCandidate
+from virtual_genesis.core.objects.task import TaskObject
+from virtual_genesis.core.objects.blackboard import BlackboardObject, BlackboardMemoryPack
+from virtual_genesis.runtime.anomaly_runtime.service import (
     compute_anomaly_severity_score,
     matches_known_anomaly_pattern,
 )
-from virtual_sia.runtime.verification_runtime.service import verify_output_anomaly_aware
-from virtual_sia.runtime.economy_control.router import choose_tier_anomaly_aware
-from virtual_sia.runtime.economy_control.escalation import should_escalate_anomaly_aware
-from virtual_sia.runtime.pipeline.minimal_run import run_minimal_pipeline
+from virtual_genesis.runtime.verification_runtime.service import verify_output_anomaly_aware
+from virtual_genesis.runtime.economy_control.router import choose_tier_anomaly_aware
+from virtual_genesis.runtime.economy_control.escalation import should_escalate_anomaly_aware
+from virtual_genesis.runtime.pipeline.minimal_run import run_minimal_pipeline
 
 
 # --- Helpers ---
@@ -36,7 +36,7 @@ def _make_task(family: str = "comparison", difficulty: str = "medium", criticali
 
 def _make_blackboard(task: TaskObject | None = None) -> BlackboardObject:
     task = task or _make_task()
-    from virtual_sia.core.objects.blackboard import BlackboardTaskCore
+    from virtual_genesis.core.objects.blackboard import BlackboardTaskCore
     task_core = BlackboardTaskCore(
         task_id=task.id,
         task_family=task.task_family,
@@ -290,8 +290,8 @@ class TestPipelineAnomalyLeverage:
         assert result["anomaly_severity"] == 0.0
 
     def test_pipeline_anomaly_leverage_with_history(self):
-        from virtual_sia.runtime.memory_os.store import InMemoryMemoryStore
-        from virtual_sia.core.objects.memory import MemoryUnit
+        from virtual_genesis.runtime.memory_os.store import InMemoryMemoryStore
+        from virtual_genesis.core.objects.memory import MemoryUnit
 
         store = InMemoryMemoryStore()
         # Seed store with failed memory entries to trigger anomaly severity

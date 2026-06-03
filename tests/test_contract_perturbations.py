@@ -1,8 +1,8 @@
 """Tests for contract-level perturbation operators and curriculum integration."""
 from __future__ import annotations
 
-from virtual_sia.core.objects.task_case import TaskCase
-from virtual_sia.eval.perturbations.contract_perturbations import (
+from virtual_genesis.core.objects.task_case import TaskCase
+from virtual_genesis.eval.perturbations.contract_perturbations import (
     contract_flip,
     contract_tightening_strict,
     counterfactual_contract,
@@ -10,7 +10,7 @@ from virtual_sia.eval.perturbations.contract_perturbations import (
     property_removal,
     shortcut_injection,
 )
-from virtual_sia.eval.perturbations.taskcase_variants import (
+from virtual_genesis.eval.perturbations.taskcase_variants import (
     build_curriculum_from_cases,
     build_curriculum_levels,
 )

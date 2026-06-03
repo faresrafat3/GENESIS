@@ -15,7 +15,7 @@
 | المزود | `https://api.pioneer.ai/v1` |
 | الاختبارات | 424 passing |
 | أفضل نتيجة سابقة | success≈0.986 (keyword matching) |
-| المرحلة الحالية | Phase 1 — ربط Orchestrator + Virtual SIA |
+| المرحلة الحالية | Phase 1 — ربط Orchestrator + GENESIS |
 
 ---
 
@@ -98,7 +98,7 @@ Research Memory Module:
 ## 🎯 خريطة الطريق — 5 مراحل
 
 ### Phase 1: Cognitive-LLM Integration ✅ (95-100%)
-- [x] ربط orchestrator بـ Virtual SIA pipeline
+- [x] ربط orchestrator بـ GENESIS pipeline
 - [x] استبدال string templates بـ LLM reasoning
 - [x] Cognitive context injection (task classification + memory + concepts + tier)
 - [x] Memory formation من كل task execution
