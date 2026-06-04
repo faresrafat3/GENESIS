@@ -786,9 +786,15 @@ General principles for any task:
 - For each question: 
   - Extract the question text, options (A/B/C/D or similar), and any context.
   - Call the pipeline with raw_task = the full question + options for cognitive guidance (tier, theory, memory).
-  - Then use the OpenAI client (MODEL) to do step-by-step reasoning and select the best letter (A, B, C, or D). Be explicit in the prompt to the client: "Think step by step. The answer must be exactly one letter: A, B, C or D."
-- Collect answers in a list or dict (e.g. [{{ "question_id": ..., "answer": "B" }}, ...] or simple list of letters).
-- Write the answers to a file the evaluate.py can use (often answers.json, submission.json, or the agent_execution.json if that's what it reads). If unsure, write both a clean answers file and the execution log.
+  - Then use the OpenAI client (MODEL) to do step-by-step reasoning and select the best letter (A, B, C, or D ONLY). Be explicit in the prompt to the client: "Think step by step. The answer must be exactly one letter from A, B, C or D. Output ONLY the letter, no other text in the final answer."
+- Collect answers as a list of dicts in this EXACT format for compatibility with evaluate.py:
+  answers_list = [{"question_id": qid, "model_answer": letter} for each question]
+- Save as JSON to answers.json (or submission.json) in the gen dir using:
+  with open(os.path.join(WORKING_DIR, "answers.json"), "w") as f:
+      json.dump({"details": answers_list}, f, indent=2)
+- This matches the "details" format that evaluate_submission supports (question_id and model_answer).
+- Also save the full execution log as before.
+- IMPORTANT: Always use the real question_id from the loaded questions data (not just sequential numbers if ids are present).
 - Use try/except around each question so one bad question doesn't kill the whole run.
 - Always print progress: "Processing question X/Y", "Chose answer: B for question X".
 - If no JSON found, fall back gracefully but still try to produce some output.
@@ -863,7 +869,7 @@ CURRENT CODE:
 
 CRITICAL INSTRUCTIONS FOR FIX:
 - If you see "Failed to write execution log: cannot access local variable 'json'" or similar scope/import error, ensure imports are at VERY TOP (os, sys, json, datetime, pandas, numpy, openai, virtual_genesis imports), and include the EXACT ROBUST EXECUTION LOGGING block from the meta prompt at the end (before final print).
-- For gpqa-like QA tasks: if the agent says "No recognizable data files", add proper JSON loading for questions (diamond_questions.json etc.), per-question pipeline call + client reasoning to choose A/B/C/D, and write answers in the format evaluate.py expects.
+- For gpqa-like QA tasks: ensure proper JSON loading for questions (diamond_questions.json etc. with ids), per-question pipeline + client reasoning to choose ONLY A/B/C/D, and write answers as {"details": [{"question_id": id, "model_answer": letter}, ...]} to answers.json so evaluate.py picks it up (it looks for details or answers format). Fix any "I" or invalid letters.
 - If data shape is wrong (e.g. (870, 2) instead of full ~ (8693,14) for titanic-like), fix data loading to use full pd.read_csv for train.csv + test.csv, print full shapes, detect target generally.
 - Always keep the code GENERAL (no hardcodes to specific columns like 'Mars' or question formats).
 - Fix any accuracy faking: compute only on val split if possible.
