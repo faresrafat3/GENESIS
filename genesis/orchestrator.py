@@ -787,7 +787,7 @@ General principles for any task:
   - Extract the question text, options (A/B/C/D or similar), and any context.
   - Call the pipeline with raw_task = the full question + options for cognitive guidance (tier, theory, memory).
   - Then use the OpenAI client (MODEL) to do step-by-step reasoning and select the best letter (A, B, C, or D). Be explicit in the prompt to the client: "Think step by step. The answer must be exactly one letter: A, B, C or D."
-- Collect answers in a list or dict (e.g. [{"question_id": ..., "answer": "B"}, ...] or simple list of letters).
+- Collect answers in a list or dict (e.g. [{{ "question_id": ..., "answer": "B" }}, ...] or simple list of letters).
 - Write the answers to a file the evaluate.py can use (often answers.json, submission.json, or the agent_execution.json if that's what it reads). If unsure, write both a clean answers file and the execution log.
 - Use try/except around each question so one bad question doesn't kill the whole run.
 - Always print progress: "Processing question X/Y", "Chose answer: B for question X".
