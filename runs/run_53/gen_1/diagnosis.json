@@ -1,0 +1,79 @@
+{
+  "run_dir": "runs/run_53/gen_1",
+  "findings": [
+    {
+      "bug": "question_field_case_mismatch",
+      "severity": "CRITICAL",
+      "actual_keys_in_json": [
+        "id",
+        "domain",
+        "subdomain",
+        "Question",
+        "options",
+        "correct_answer",
+        "correct_answer_letter",
+        "Explanation"
+      ],
+      "actual_question_key": "Question",
+      "keys_agent_tries": [
+        "question_id",
+        "question"
+      ],
+      "extraction_line": "qtext = q.get('question') or q.get('text') or ''",
+      "impact": "Empty question string sent to LLM → model guesses randomly from options"
+    },
+    {
+      "bug": "no_chain_of_thought",
+      "severity": "HIGH",
+      "max_tokens": 50,
+      "has_step_by_step_instruction": true,
+      "has_only_letter_constraint": true,
+      "issues": [
+        "max_tokens=50 is too low for graduate-level reasoning",
+        "'ONLY the letter' instruction can suppress CoT even with step-by-step"
+      ],
+      "impact": "Model cannot reason through hard graduate-level questions"
+    },
+    {
+      "bug": "pipeline_not_used_in_answer",
+      "severity": "OK",
+      "runs_pipeline": true,
+      "pipeline_called_n_times": 1,
+      "pipeline_in_question_loop": false,
+      "pipeline_output_injected_in_prompt": true,
+      "impact": "OK"
+    },
+    {
+      "bug": "invalid_answer_defaults_to_A",
+      "severity": "MEDIUM",
+      "fallback_block": "answer = answer[0] if answer and answer[0] in [\"A\",\"B\",\"C\",\"D\"] else \"A\"\n            answers_list.append({\"question_id\": qid, \"model_answer\": answer})\n            print(f\"Processing question {idx+1}/{len(questions)}: chose {answer}\")\n        except Exception as ques_e:\n            print(f\"Error proc",
+      "impact": "All invalid/empty responses become 'A' → biases ~25% baseline upward only if A happens to be correct often"
+    }
+  ],
+  "prediction_analysis": {
+    "total": 198,
+    "accuracy_percent": 30.303030303030305,
+    "prediction_distribution": {
+      "A": 30,
+      "B": 54,
+      "C": 57,
+      "D": 57,
+      "other": 0
+    },
+    "truth_distribution": {
+      "A": 57,
+      "B": 50,
+      "C": 51,
+      "D": 40
+    },
+    "correct_by_truth_letter": {
+      "A": 12,
+      "B": 17,
+      "C": 18,
+      "D": 13
+    },
+    "chi_like_vs_uniform": 10.36,
+    "predictions_look_uniform_random": true,
+    "interpretation": "Predictions are nearly uniform (~25% each letter) → model is guessing"
+  }
+}
