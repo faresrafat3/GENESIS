@@ -16,4 +16,4 @@ dev = ["pytest>=7.0"]
 testpaths = ["tests"]
 
 [tool.setuptools.packages.find]
-include = ["virtual_genesis*"]
+include = ["virtual_genesis*", "genesis*"]
