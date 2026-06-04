@@ -16,4 +16,8 @@ dev = ["pytest>=7.0"]
 testpaths = ["tests"]
 
 [tool.setuptools.packages.find]
-include = ["virtual_genesis*"]
+include = ["genesis*", "virtual_genesis*"]
+
+[tool.setuptools.package-data]
+"genesis" = ["tasks/**/*", "**/*.md", "**/*.json"]
+"virtual_genesis" = ["**/*"]

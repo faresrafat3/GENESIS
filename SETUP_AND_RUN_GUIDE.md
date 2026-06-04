@@ -66,6 +66,16 @@ python -m pytest tests/test_evolutionary_discovery.py -q
 python -m genesis.orchestrator --help
 ```
 
+
+**CRITICAL: After any git pull or code changes, re-install the package in your venv to make "genesis" and "virtual_genesis" importable:**
+```bash
+# activate venv if not
+source .venv/bin/activate
+pip install -e .
+```
+
+Then use `python -m genesis.orchestrator ...` or the benchmark script (preferred).
+
 ## Step 5: Run on Benchmarks
 
 We use the prepared `run_openrouter_benchmark.py` script (or direct orchestrator calls).
@@ -84,12 +94,16 @@ python run_openrouter_benchmark.py \
   --run_id 1 \
   --use_evolutionary_discovery
 
-# gpqa (hard reasoning)
+# gpqa (hard reasoning) - after 5.89 fixes (KeyError escape, submission finder, real eval in evo, BOTH files, A/B/C/D strict)
+# Make sure: source .venv/bin/activate && pip install -e .
 python run_openrouter_benchmark.py \
   --task gpqa \
   --max_gen 2 \
-  --run_id 2 \
+  --run_id 53 \
   --use_evolutionary_discovery
+# Or direct:
+# python -m genesis.orchestrator --run_id 53 --task gpqa --max_gen 2 --use_evolutionary_discovery --backend openai --task_model openai/gpt-oss-120b:free
+
 ```
 
 The script automatically:
