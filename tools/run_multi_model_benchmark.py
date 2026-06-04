@@ -76,10 +76,11 @@ If you are unsure, still output your best guess in the ANSWER line — never ref
 
 
 FORCE_LETTER_PROMPT = (
-    "Your previous response did not end with a valid `ANSWER: X` line. "
-    "Looking at your reasoning above, output ONLY a single line in the form:\n\n"
-    "ANSWER: X\n\nwhere X is your best guess from A, B, C, or D. "
-    "Do not repeat the reasoning. Do not add any other text."
+    "STOP THINKING. Just output one line with your best guess in this exact format:\n\n"
+    "ANSWER: X\n\n"
+    "where X is one of A, B, C, or D. Output ONLY that single line — no reasoning, "
+    "no explanation, no markdown, nothing else. Just the literal string 'ANSWER: ' "
+    "followed by one capital letter."
 )
 
 
@@ -161,6 +162,77 @@ def build_prompt(q: dict[str, Any]) -> str:
 #                  Per-model evaluation
 # ============================================================
 
+def extract_response_text(resp) -> tuple[str, dict]:
+    """يستخرج النص الكامل من response مع fallback على reasoning content.
+
+    بعض النماذج (Nemotron, gpt-oss في reasoning mode) بترجع:
+      - message.content = ""  (فاضي لو max_tokens خلص في reasoning)
+      - message.reasoning أو reasoning_details = "<chain-of-thought>"
+
+    نرجع (combined_text, meta) حيث combined_text = content + reasoning
+    لو الاتنين موجودين، أو fallback على reasoning لو content فاضي.
+    """
+    msg = resp.choices[0].message
+    content = msg.content or ""
+    reasoning_text = ""
+
+    # OpenRouter normalizes reasoning into reasoning_details list
+    for attr in ("reasoning", "reasoning_content"):
+        v = getattr(msg, attr, None)
+        if v and isinstance(v, str):
+            reasoning_text = v
+            break
+
+    if not reasoning_text:
+        rd = getattr(msg, "reasoning_details", None)
+        if rd:
+            try:
+                if isinstance(rd, list):
+                    parts = []
+                    for item in rd:
+                        if isinstance(item, dict):
+                            parts.append(item.get("text", "") or item.get("content", ""))
+                        else:
+                            t = getattr(item, "text", None) or getattr(item, "content", None)
+                            if t:
+                                parts.append(t)
+                    reasoning_text = "\n".join(p for p in parts if p)
+            except Exception:
+                pass
+
+    # combined: content (visible) أولاً، ثم reasoning كـ fallback
+    if content and reasoning_text:
+        combined = content + "\n\n[REASONING]\n" + reasoning_text
+    elif content:
+        combined = content
+    elif reasoning_text:
+        combined = reasoning_text
+    else:
+        combined = ""
+
+    meta = {
+        "finish_reason": resp.choices[0].finish_reason,
+        "content_chars": len(content),
+        "reasoning_chars": len(reasoning_text),
+    }
+    try:
+        u = resp.usage
+        meta["usage"] = {
+            "prompt_tokens": u.prompt_tokens,
+            "completion_tokens": u.completion_tokens,
+            "total_tokens": u.total_tokens,
+        }
+        # capture reasoning_tokens lo موجود (OpenRouter)
+        ctd = getattr(u, "completion_tokens_details", None)
+        if ctd:
+            rt = getattr(ctd, "reasoning_tokens", None)
+            if rt is not None:
+                meta["usage"]["reasoning_tokens"] = rt
+    except Exception:
+        pass
+    return combined, meta
+
+
 def evaluate_model(
     pool: APIKeyPool,
     model_id: str,
@@ -214,6 +286,7 @@ def evaluate_model(
             print(f"  PROMPT preview: {user_msg[:200].replace(chr(10), ' / ')}...")
 
         # ===== Round 1: full reasoning =====
+        round1_meta = {}
         try:
             resp = pool.call_with_retry(
                 lambda c, m=messages_round1: make_call(c, m, max_tokens),
@@ -224,7 +297,7 @@ def evaluate_model(
                 max_attempts=max(len(pool._keys), 3),
                 per_attempt_sleep=0.3,
             )
-            txt = resp.choices[0].message.content or ""
+            txt, round1_meta = extract_response_text(resp)
         except Exception as e:
             txt = ""
             print(f"  ✗ Q{i} round 1 all keys failed: {str(e)[:120]}")
@@ -234,25 +307,59 @@ def evaluate_model(
         used_followup = False
         followup_txt = ""
 
-        # ===== Round 2: force-letter follow-up لو الأول ميديش letter =====
-        if not pred and use_force_followup and txt:
+        # ===== Round 2: force-letter follow-up =====
+        # نعمل follow-up لو:
+        # (1) مفيش letter في الـ round1 (ANY content)
+        # (2) أو الـ visible content فاضي بس فيه reasoning (model thought but didn't output)
+        # (3) أو الـ finish_reason = "length" (max_tokens انتهى وسط reasoning)
+        needs_followup = (
+            use_force_followup and
+            not pred and
+            (txt or round1_meta.get("reasoning_chars", 0) > 0
+             or round1_meta.get("finish_reason") == "length")
+        )
+        if needs_followup:
             used_followup = True
+            # نعمل follow-up حتى لو txt فاضي — لأن النموذج "فكر" داخلياً
+            assistant_content = txt if txt else "(I was thinking but ran out of tokens before answering)"
             messages_round2 = messages_round1 + [
-                {"role": "assistant", "content": txt},
+                {"role": "assistant", "content": assistant_content},
                 {"role": "user", "content": FORCE_LETTER_PROMPT},
             ]
             try:
+                # الـ follow-up: reasoning=low + max_tokens 256 عشان نسمح
+                # بـ tiny reasoning + الـ letter. لو النموذج بيدخل thinking loop،
+                # على الأقل عنده space كافي للـ letter في الآخر.
+                def make_followup(client):
+                    return client.chat.completions.create(
+                        model=model_id,
+                        messages=messages_round2,
+                        temperature=0.0,
+                        max_tokens=256,
+                        extra_body={"reasoning": {"effort": "low"}},
+                    )
                 resp2 = pool.call_with_retry(
-                    lambda c, m=messages_round2: make_call(c, m, 32),  # 32 tokens كفاية
+                    make_followup,
                     max_attempts=max(len(pool._keys), 3),
                     per_attempt_sleep=0.3,
                 )
-                followup_txt = resp2.choices[0].message.content or ""
+                followup_txt, _ = extract_response_text(resp2)
                 pred = extract_letter(followup_txt)
                 if pred:
                     recovered += 1
             except Exception as e:
                 print(f"  ⚠ Q{i} follow-up failed: {str(e)[:80]}")
+
+            # ===== Round 3: last resort — try to extract letter
+            # from the round-1 REASONING text itself.
+            # حتى لو الـ visible content فاضي، فيه أحياناً letter في الـ reasoning.
+            if not pred and round1_meta.get("reasoning_chars", 0) > 100:
+                # نأخذ آخر 2000 حرف من الـ reasoning (أكتر فرصة فيهم answer)
+                reasoning_tail = txt[-2000:] if txt else ""
+                pred = extract_letter(reasoning_tail)
+                if pred:
+                    recovered += 1
+                    print(f"  💡 Q{i} recovered from reasoning tail: {pred}")
 
         ok = (pred == correct_letter) if pred else False
         if pred not in ("A", "B", "C", "D"):
@@ -279,6 +386,7 @@ def evaluate_model(
             "used_followup": used_followup,
             "is_correct": ok,
             "response_chars": len(txt),
+            "round1_meta": round1_meta,
             "response_excerpt": txt[:400] + ("..." if len(txt) > 400 else ""),
             "followup_excerpt": followup_txt[:200] if used_followup else None,
         })
@@ -472,7 +580,10 @@ def main() -> int:
     p.add_argument("--limit", type=int, default=20,
                    help="0 = all questions; else first N")
     p.add_argument("--reasoning", choices=["low", "medium", "high"], default="high")
-    p.add_argument("--max_tokens", type=int, default=4096)
+    p.add_argument("--max_tokens", type=int, default=16384,
+                   help="Includes reasoning tokens for reasoning models. "
+                        "Models like Nemotron Nano can consume 1200-2000 reasoning tokens "
+                        "even before producing visible content; 4096 is too tight.")
     p.add_argument("--temperature", type=float, default=0.0)
     p.add_argument("--output_dir", default=None,
                    help="Default: results/multi_<timestamp>")

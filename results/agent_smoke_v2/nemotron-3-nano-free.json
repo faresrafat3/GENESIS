@@ -1,0 +1,515 @@
+{
+  "summary": {
+    "model_id": "nvidia/nemotron-3-nano-30b-a3b:free",
+    "reasoning_effort": "high",
+    "max_tokens": 8192,
+    "temperature": 0.0,
+    "total": 20,
+    "correct": 13,
+    "incorrect": 4,
+    "invalid": 3,
+    "recovered_via_followup": 1,
+    "accuracy_percent": 65.0,
+    "per_domain": {
+      "Physics": {
+        "total": 11,
+        "correct": 10,
+        "accuracy_percent": 90.9090909090909
+      },
+      "Chemistry": {
+        "total": 6,
+        "correct": 1,
+        "accuracy_percent": 16.666666666666664
+      },
+      "Biology": {
+        "total": 3,
+        "correct": 2,
+        "accuracy_percent": 66.66666666666666
+      }
+    },
+    "elapsed_seconds": 530.27,
+    "timestamp": "2026-06-04T23:23:47.205770"
+  },
+  "details": [
+    {
+      "question_id": 1,
+      "domain": "Physics",
+      "subdomain": "Physics (general)",
+      "correct_answer_letter": "A",
+      "predicted_letter": "A",
+      "round1_pred": "A",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 3855,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 449,
+        "reasoning_chars": 3392,
+        "usage": {
+          "prompt_tokens": 314,
+          "completion_tokens": 1298,
+          "total_tokens": 1612,
+          "reasoning_tokens": 899
+        }
+      },
+      "response_excerpt": "The naturallinewidth of a quantum state is set by the time–energy uncertainty principle, ΔE ≈ ħ/τ.  \n\n- For τ₁ = 10⁻⁹ s, ΔE₁ ≈ ħ/10⁻⁹ ≈ 6.6 × 10⁻⁷ eV.  \n- For τ₂ = 10⁻⁸ s, ΔE₂ ≈ ħ/10⁻⁸ ≈ 6.6 × 10⁻⁸ eV.  \n\nTo resolve two spectral lines, their energy separation must exceed the larger of these uncertainties, i.e., be greater than ~10⁻⁷ eV. Among the given choices, only 10⁻⁴ eV satisfies this requirem...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 2,
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "correct_answer_letter": "A",
+      "predicted_letter": "",
+      "round1_pred": "",
+      "used_followup": true,
+      "is_correct": false,
+      "response_chars": 29858,
+      "round1_meta": {
+        "finish_reason": "length",
+        "content_chars": 0,
+        "reasoning_chars": 29858,
+        "usage": {
+          "prompt_tokens": 315,
+          "completion_tokens": 8192,
+          "total_tokens": 8507,
+          "reasoning_tokens": 7564
+        }
+      },
+      "response_excerpt": "We need to parse the synthetic sequence.\n\nWe have trans-cinnamaldehyde treated with methylmagnesium bromide, forming product 1.\n\nThen product 1 treated with pyridinium chlorochromate (PCC), forming product 2.\n\nThen \"3 was treated with (dimethyl(oxo)-l6-sulfaneylidene)methane in DMSO at elevated temperature, forming product 3.\" Wait: It says \"3 was treated with (dimethyl(oxo)-l6-sulfaneylidene)meth...",
+      "followup_excerpt": "We need to output answer line only. But we need to determine correct answer. Let's solve fully.\n\nWe have trans-cinnamaldehyde (C9). Reaction with MeMgBr yields product 1. Then PCC oxidation yields pro"
+    },
+    {
+      "question_id": 3,
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "correct_answer_letter": "B",
+      "predicted_letter": "B",
+      "round1_pred": "B",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 1280,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 9,
+        "reasoning_chars": 1257,
+        "usage": {
+          "prompt_tokens": 332,
+          "completion_tokens": 731,
+          "total_tokens": 1063,
+          "reasoning_tokens": 372
+        }
+      },
+      "response_excerpt": "ANSWER: B\n\n[REASONING]\nWe need to compute expectation value of operator O = 10 σ_z + 5 σ_x for a spin-1/2 particle in state |ψ> = 0.5 |↑> + (√3)/2 |↓>. Note that |↑> and |↓> are eigenstates of σ_z with eigenvalues +1 and -1 respectively. Also σ_x has matrix representation that flips spin: σ_x|↑> = |↓>, σ_x|↓> = |↑>. So expectation value <ψ| O |ψ> = 10 <ψ|σ_z|ψ> + 5 <ψ|σ_x|ψ>.\n\nWe can compute direc...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 4,
+      "domain": "Physics",
+      "subdomain": "Electromagnetism and Photonics",
+      "correct_answer_letter": "C",
+      "predicted_letter": "C",
+      "round1_pred": "C",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 16559,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 405,
+        "reasoning_chars": 16140,
+        "usage": {
+          "prompt_tokens": 322,
+          "completion_tokens": 3752,
+          "total_tokens": 4074,
+          "reasoning_tokens": 4188
+        }
+      },
+      "response_excerpt": "The existence of isolated magnetic poles (magnetic monopoles) would modify Maxwell’s equations in a symmetric way: the divergence of the magnetic field would no longer be zero, and the curl of the electric field would acquire an extra term involving magnetic current. These are precisely the equations concerning the circulation of the electric field and the divergence of the magnetic field.  \n\nANSW...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 5,
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "correct_answer_letter": "B",
+      "predicted_letter": "B",
+      "round1_pred": "B",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 6829,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 9,
+        "reasoning_chars": 6806,
+        "usage": {
+          "prompt_tokens": 528,
+          "completion_tokens": 1999,
+          "total_tokens": 2527,
+          "reasoning_tokens": 1733
+        }
+      },
+      "response_excerpt": "ANSWER: B\n\n[REASONING]\nWe need to parse the question: \"Calculate the eigenvector of a quantum mechanical operator $\\vec{P}$ for a muon along an arbitrary direction $\\vec{n}$ lying in the x-z plane corresponding to the eigenvalue $+\\hbar/2$. Given the $X-$component, $P_x$ of the operator $P$ as $\\hbar/2$ times a 2 by 2 square matrix having elements in the first row as $(0 1)$, and that in the secon...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 6,
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "correct_answer_letter": "B",
+      "predicted_letter": "B",
+      "round1_pred": "B",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 5668,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 824,
+        "reasoning_chars": 4830,
+        "usage": {
+          "prompt_tokens": 365,
+          "completion_tokens": 2360,
+          "total_tokens": 2725,
+          "reasoning_tokens": 1271
+        }
+      },
+      "response_excerpt": "The potential can be rewritten in Cartesiancoordinates. Using \\(x=r\\cos\\theta\\) and \\(y=r\\sin\\theta\\),\n\n\\[\nV(r,\\theta)=\\frac12k(x^2+y^2)+\\frac32k(x^2+y^2)\\frac{x^2}{x^2+y^2}\n          =\\frac12k(x^2+y^2)+\\frac32k x^2\n          =2k\\,x^2+\\frac12k\\,y^2 .\n\\]\n\nThus the Hamiltonian separates into two independent one‑dimensional harmonic oscillators with effective frequencies\n\n\\[\n\\frac12 m\\omega_x^2 x^2 =...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 7,
+      "domain": "Physics",
+      "subdomain": "High-energy particle physics",
+      "correct_answer_letter": "C",
+      "predicted_letter": "C",
+      "round1_pred": "C",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 5249,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 1441,
+        "reasoning_chars": 3794,
+        "usage": {
+          "prompt_tokens": 353,
+          "completion_tokens": 1832,
+          "total_tokens": 2185,
+          "reasoning_tokens": 1004
+        }
+      },
+      "response_excerpt": "The pair‑production process \\(\\gamma\\gamma\\to e^{+}e^{-}\\) can occur only when the centre‑of‑mass energy of the two photons exceeds the rest‑mass energy of the electron‑positron pair:\n\n\\[\n\\sqrt{s}\\ge 2m_ec^2 \\quad\\Longrightarrow\\quad s\\ge (2m_ec^2)^2 .\n\\]\n\nFor two photons with energies \\(\\varepsilon\\) (CMB photon) and \\(E_\\gamma\\) (high‑energy \\(\\gamma\\)‑ray) colliding head‑on (\\(\\theta=\\pi\\)), th...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 8,
+      "domain": "Biology",
+      "subdomain": "Genetics",
+      "correct_answer_letter": "D",
+      "predicted_letter": "D",
+      "round1_pred": "D",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 27648,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 8,
+        "reasoning_chars": 27626,
+        "usage": {
+          "prompt_tokens": 631,
+          "completion_tokens": 7233,
+          "total_tokens": 7864,
+          "reasoning_tokens": 7013
+        }
+      },
+      "response_excerpt": "ANSWER:D\n\n[REASONING]\nWe need to parse the experiment and the data.\n\nWe have three candidate genes G1, G2, G3. They knocked out each individually (g1, g2, g3) and double mutants (g1g2, g1g3, g2g3). They suspect at least one is a transcription factor upstream of others.\n\nThey test resistance to anthracnose. Control (wild-type) has 100% resistance. The percentages represent level of resistance relat...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 9,
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "correct_answer_letter": "C",
+      "predicted_letter": "A",
+      "round1_pred": "A",
+      "used_followup": false,
+      "is_correct": false,
+      "response_chars": 33490,
+      "round1_meta": {
+        "finish_reason": "length",
+        "content_chars": 0,
+        "reasoning_chars": 33490,
+        "usage": {
+          "prompt_tokens": 415,
+          "completion_tokens": 8192,
+          "total_tokens": 8607,
+          "reasoning_tokens": 8425
+        }
+      },
+      "response_excerpt": "We need to answer which molecule has C3h symmetry. Options: A quinuclidine, B benzo[1,2-c:3,4-c':5,6-c'']trifuran-1,3,4,6,7,9-hexaone, C triphenyleno[1,2-c:5,6-c':9,10-c'']trifuran-1,3,6,8,11,13-hexaone, D triisopropyl borate.\n\nWe need to identify which has C3h symmetry. C3h point group: has a C3 principal axis, a horizontal mirror plane (σh), and three C2 axes perpendicular to C3? Actually C3h in...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 10,
+      "domain": "Physics",
+      "subdomain": "Astrophysics",
+      "correct_answer_letter": "D",
+      "predicted_letter": "D",
+      "round1_pred": "D",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 3075,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 9,
+        "reasoning_chars": 3052,
+        "usage": {
+          "prompt_tokens": 313,
+          "completion_tokens": 921,
+          "total_tokens": 1234,
+          "reasoning_tokens": 798
+        }
+      },
+      "response_excerpt": "ANSWER: D\n\n[REASONING]\nWe need to parse the question: \"Among the following exoplanets, which one has the highest density?\" Then they list four options a,b,c,d describing planets. Then they give multiple-choice options A) d, B) b, C) a, D) c. We need to select which of those corresponds to the highest density.\n\nWe need to evaluate each described planet's density.\n\nOption a: \"An Earth-mass and Earth...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 11,
+      "domain": "Biology",
+      "subdomain": "Molecular Biology",
+      "correct_answer_letter": "A",
+      "predicted_letter": "A",
+      "round1_pred": "A",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 36252,
+      "round1_meta": {
+        "finish_reason": "length",
+        "content_chars": 0,
+        "reasoning_chars": 36252,
+        "usage": {
+          "prompt_tokens": 538,
+          "completion_tokens": 8192,
+          "total_tokens": 8730,
+          "reasoning_tokens": 9180
+        }
+      },
+      "response_excerpt": "We need to answer a multiple-choice question: \"All the following statements about the molecular biology of Severe Acute Respiratory Syndrome Coronavirus 2 (SARS‑CoV‑2) are correct except\". So we need to identify which statement is incorrect (i.e., false). Options A, B, C, D. We must pick the one that is NOT correct.\n\nWe need to analyze each statement's scientific correctness.\n\nFirst, some backgrou...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 12,
+      "domain": "Physics",
+      "subdomain": "High-energy particle physics",
+      "correct_answer_letter": "B",
+      "predicted_letter": "B",
+      "round1_pred": "B",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 4550,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 9,
+        "reasoning_chars": 4527,
+        "usage": {
+          "prompt_tokens": 335,
+          "completion_tokens": 2061,
+          "total_tokens": 2396,
+          "reasoning_tokens": 1195
+        }
+      },
+      "response_excerpt": "ANSWER: B\n\n[REASONING]\nWe need to parse the question: \"Find KE of product particles in, Pi(+) = mu(+) + nu here Pi(+) is stationary. Rest mass of Pi(+) & mu(+) is 139.6 MeV & 105.7 MeV respectively.\"\n\nSo we have a stationary pi+ decaying into mu+ and neutrino (presumably anti-neutrino? Actually pi+ -> mu+ + ν_μ? Actually pi+ decays to mu+ + ν_μ (muon neutrino). The neutrino is massless (or negligi...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 13,
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "correct_answer_letter": "B",
+      "predicted_letter": "",
+      "round1_pred": "",
+      "used_followup": true,
+      "is_correct": false,
+      "response_chars": 31120,
+      "round1_meta": {
+        "finish_reason": "length",
+        "content_chars": 0,
+        "reasoning_chars": 31120,
+        "usage": {
+          "prompt_tokens": 466,
+          "completion_tokens": 8192,
+          "total_tokens": 8658,
+          "reasoning_tokens": 7816
+        }
+      },
+      "response_excerpt": "We need to parse the synthetic sequence to determine product 4 structure. Starting material: (R)-(+)-Limonene in methanol solution, stirred with Pd/C under H2. After 1 equivalent of hydrogen is consumed, product 1 is isolated as major product.\n\nWe need to identify product 1. Then treat with 3-chloroperbenzoic acid (mCPBA) to form product 2. Then treat with sodium methoxide to form product 3. Then ...",
+      "followup_excerpt": "We need to output the answer line only. The question: \"what is a valid structure of product 4? (product 4 exists as a mixture of isomers. the correct answer is one of them). Options: A, B, C, D.\" We n"
+    },
+    {
+      "question_id": 14,
+      "domain": "Biology",
+      "subdomain": "Molecular Biology",
+      "correct_answer_letter": "A",
+      "predicted_letter": "D",
+      "round1_pred": "D",
+      "used_followup": false,
+      "is_correct": false,
+      "response_chars": 28528,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 8,
+        "reasoning_chars": 28506,
+        "usage": {
+          "prompt_tokens": 313,
+          "completion_tokens": 5453,
+          "total_tokens": 5766,
+          "reasoning_tokens": 7213
+        }
+      },
+      "response_excerpt": "ANSWER:D\n\n[REASONING]\nWe need to answer a multiple-choice about ChIP-seq on a PFA-fixed sample with an antibody to IKAROS transcription factor in human B cells. The question: \"ChIP-seq on a PFA-fixed sample with an antibody to the IKAROS transcription factor in human B cells followed by next-generation sequencing and standard quality control, alignment and peak-calling steps produced ChIP peaks th...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 15,
+      "domain": "Physics",
+      "subdomain": "Physics (general)",
+      "correct_answer_letter": "C",
+      "predicted_letter": "C",
+      "round1_pred": "C",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 8594,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 9,
+        "reasoning_chars": 8571,
+        "usage": {
+          "prompt_tokens": 467,
+          "completion_tokens": 2438,
+          "total_tokens": 2905,
+          "reasoning_tokens": 2217
+        }
+      },
+      "response_excerpt": "ANSWER: C\n\n[REASONING]\nWe need to parse the problem: Two Earth-like planets, Planet_1 and Planet_2. They have been detected via RV, so we know their minimum masses and orbital periods. Both have same masses (i.e., planet masses are equal). Orbital period of Planet_1 is three times shorter than that of Planet_2. Both have circular orbits. Host star masses: star of Planet_1 has mass twice that of st...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 16,
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "correct_answer_letter": "C",
+      "predicted_letter": "",
+      "round1_pred": "",
+      "used_followup": true,
+      "is_correct": false,
+      "response_chars": 32137,
+      "round1_meta": {
+        "finish_reason": "length",
+        "content_chars": 0,
+        "reasoning_chars": 32137,
+        "usage": {
+          "prompt_tokens": 378,
+          "completion_tokens": 8192,
+          "total_tokens": 8570,
+          "reasoning_tokens": 8108
+        }
+      },
+      "response_excerpt": "We need to count how many of the listed compounds will exhibit optical activity (i.e., are chiral, lacking internal plane of symmetry, etc., and thus rotate plane-polarized light). The question: \"How many of the following compounds will exhibit optical activity?\" Then list 7 compounds. Options: A) 4, B) 5, C) 3, D) 2. So we need to determine which of the listed compounds are chiral (optically acti...",
+      "followup_excerpt": "We need to output the answer line only. The question: \"How many of the following compounds will exhibit optical activity?\" Options: A) 4, B) 5, C) 3, D) 2. We need to determine the correct number of c"
+    },
+    {
+      "question_id": 17,
+      "domain": "Chemistry",
+      "subdomain": "Chemistry (general)",
+      "correct_answer_letter": "D",
+      "predicted_letter": "D",
+      "round1_pred": "D",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 5053,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 9,
+        "reasoning_chars": 5030,
+        "usage": {
+          "prompt_tokens": 326,
+          "completion_tokens": 1682,
+          "total_tokens": 2008,
+          "reasoning_tokens": 1334
+        }
+      },
+      "response_excerpt": "ANSWER: D\n\n[REASONING]\nWe need to parse the question: \"What is the concentration of calcium ions in a solution containing 0.02 M stoichiometric Ca-EDTA complex (we assume that the pH is ideal, T = 25 °C). KCa-EDTA = 5x10^10.\"\n\nWe have a solution containing 0.02 M of Ca-EDTA complex. That is, the total analytical concentration of the complex is 0.02 M. The complex is Ca-EDTA, which is a 1:1 complex...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 18,
+      "domain": "Physics",
+      "subdomain": "Physics (general)",
+      "correct_answer_letter": "C",
+      "predicted_letter": "B",
+      "round1_pred": "B",
+      "used_followup": false,
+      "is_correct": false,
+      "response_chars": 12679,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 9,
+        "reasoning_chars": 12656,
+        "usage": {
+          "prompt_tokens": 408,
+          "completion_tokens": 4662,
+          "total_tokens": 5070,
+          "reasoning_tokens": 3277
+        }
+      },
+      "response_excerpt": "ANSWER: B\n\n[REASONING]\nWe need to parse the problem. Two stars have masses 1.5 and 1.2 solar masses. They have elemental abundances determined via EW method using LTE. Given:\n\n- [Si/Fe]_1 = 0.3 dex\n- [Mg/Si]_2 = 0.3 dex\n- [Fe/H]_1 = 0 dex\n- [Mg/H]_2 = 0 dex\n\nPhotospheric composition for the Sun: 12 + log10(nFe/nH) = 7.5 and 12 + log10(nMg/nH) = 7.\n\nWe need to calculate the ratio of silicon atoms i...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 19,
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "correct_answer_letter": "D",
+      "predicted_letter": "A",
+      "round1_pred": "",
+      "used_followup": true,
+      "is_correct": false,
+      "response_chars": 30246,
+      "round1_meta": {
+        "finish_reason": "length",
+        "content_chars": 0,
+        "reasoning_chars": 30246,
+        "usage": {
+          "prompt_tokens": 645,
+          "completion_tokens": 8192,
+          "total_tokens": 8837,
+          "reasoning_tokens": 7630
+        }
+      },
+      "response_excerpt": "We need to parse the question. It describes Michael reaction: nucleophile adds to a molecule containing a C=C adjacent to a carbonyl group (i.e., a Michael acceptor). The question gives two reactions:\n\n1) methyl 2-oxocyclohexane-1-carboxylate + (NaOEt, THF, 2,4-dimethyl-1-(vinylsulfinyl)benzene) → A\n\n2) ethyl 2-ethylbutanoate + (NaH, THF, methyl 2-cyclopentylidene-2-phenylacetate) → B\n\nWe need to ...",
+      "followup_excerpt": "We need to output the answer line only. The question: \"Answer the following multiple choice question. The last line of your response should be in the following format: 'ANSWER: A/B/C/D' (e.g. 'ANSWER:"
+    },
+    {
+      "question_id": 20,
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "correct_answer_letter": "C",
+      "predicted_letter": "C",
+      "round1_pred": "C",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 7228,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 9,
+        "reasoning_chars": 7205,
+        "usage": {
+          "prompt_tokens": 362,
+          "completion_tokens": 1511,
+          "total_tokens": 1873,
+          "reasoning_tokens": 1837
+        }
+      },
+      "response_excerpt": "ANSWER: C\n\n[REASONING]\nWe need to parse the question: \"A common approximation made in many-body nuclear calculations of some interaction (for example an electroweak interaction) is to suppose that nucleons in a nucleus behave in the same way as free nucleons. Which of the following four assumptions jointly imply this 'impulse' approximation?\"\n\nWe have four assumptions listed:\n\n1. The interaction c...",
+      "followup_excerpt": null
+    }
+  ]
+}

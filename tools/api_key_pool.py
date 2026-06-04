@@ -262,14 +262,19 @@ class APIKeyPool:
     # ----- internal -----
 
     def _next_available_key_id(self) -> str:
-        """ميكانيكية round-robin بسيطة، يتخطى المفاتيح الميتة / المرهقة."""
+        """Round-robin يقدم cursor بعد كل اختيار، يتخطى المفاتيح الميتة / المرهقة.
+
+        ده الـ behavior الصح: كل طلب جديد يستخدم مفتاح تالي بالدور،
+        مش نفس المفتاح لحد ما يفشل.
+        """
         n = len(self._order)
         for _ in range(n):
             kid = self._order[self._cursor]
+            # 🔑 تقديم الـ cursor للطلب التالي مهما كان الناتج
+            self._cursor = (self._cursor + 1) % n
             if self._stats[kid].is_available(self.rate_limit_cooldown):
                 return kid
-            self._cursor = (self._cursor + 1) % n
-        # كل المفاتيح إما ميتة أو في cooldown — نرجع أقل واحد cooldown
+        # كل المفاتيح إما ميتة أو في cooldown
         candidates = [
             (s.rate_limited_at or float("inf"), kid)
             for kid, s in self._stats.items()
