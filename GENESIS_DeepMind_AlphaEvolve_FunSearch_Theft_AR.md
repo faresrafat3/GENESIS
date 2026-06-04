@@ -190,12 +190,49 @@ FunSearch و AlphaEvolve هما **نظام تطوري (evolutionary search) مد
 - Update الـ theft memos + MASTER_INDEX بـ 5.88+ لو لقينا patterns جديدة من الـ runs.
 - في الـ evo engine: استخدم الـ real agent_execution.json + constitutional_report كـ fitness بدل الـ proxy 0.8 (يربط أقوى بالـ AlphaEvolve evaluator).
 
-**الحالة**: 🟢 (prompts محسنة + run_49 evidence موثق + GENERAL protected).
+**الحالة**: 🟢 (prompts محسنة + run_49 + run_50 evidence موثق + GENERAL protected).
 
-**ما أصبح عندنا دلوقتي**: الـ evolutionary loop بقى أكثر استقرارًا (من run_48 فشل → run_49 نجاح جزئي مع bugs مصححة بالـ feedback). الـ AlphaEvolve theft (5.84) + هذا الـ 5.87 بيخلّي الـ generator أقوى و الـ self-improvement أقرب للـ "discovery engine" الحقيقي.
+**ما أصبح عندنا دلوقتي**: الـ evolutionary loop بقى أكثر استقرارًا (من run_48 فشل → run_49 نجاح جزئي مع bugs مصححة بالـ feedback → run_50 على gpqa بدون أي crash في الـ format). الـ AlphaEvolve theft (5.84) + 5.87 (robust logging) + 5.88 (QA guidance) بيخلّي الـ generator أقوى و الـ self-improvement أقرب للـ "discovery engine" الحقيقي.
 
-لو عايز نكمل "حلب" الـ DeepMind (Co-Scientist أو Aletheia) أو نعدل حاجة، قولي فورًا. الـ next step: git pull, rm -rf runs/run_49, run run_50 مع gpqa + evo، و نراجع الـ generated agents للـ adherence للـ GENERAL principles.
+### سرقة شرعية إضافية 5.88 (امتداد لـ AlphaEvolve + run_50 على gpqa)
 
-**الدليل الكامل**: الـ log اللي بعته + الـ changes في orchestrator.py (prompts) + MASTER_INDEX update.
+**المصدر (+ رابط)**: 
+- الـ run_50 (2026-06-04) على gpqa (الـ hard reasoning benchmark) مع --use_evolutionary_discovery + gpt-oss-120b:free.
+- الدليل: الـ log الكامل (الـ crash السابق "KeyError: 'train_df'" اختفى، الـ target_agent اتولد بنجاح في الـ gen_1 و gen_2، الـ execution log اتكتب صح، الـ evaluate.py اشتغل وطلع evaluation_results.json لـ 198 سؤال، constitutional ارتفع من 0/10 لـ 5/10 في Gen2، evo اشتغل مرتين بنفس الـ fitness 0.800. بس الـ agent قال "No recognizable data files found for task." و الـ accuracy 0.00% (198 missing) لأنه ما عملش processing حقيقي للـ JSON questions).
 
-🏴‍☠️ سرقة شرعية عالية الجودة — protected the long-term vision.
+**الفكرة الأساسية (السرقة)**: 
+- أول run حقيقي على benchmark صعب (gpqa diamond — graduate science multiple choice).
+- الـ LLM generator لسه بيستخدم fallback عام ("no data files") بدل ما يعمل الـ logic الصح لـ QA tasks (load json, per question pipeline + client reasoning لـ اختيار A/B/C/D).
+- السرقة: نضيف guidance قوي و GENERAL في الـ prompt للـ Q&A tasks عشان الـ evo ينتج agents بترد على أسئلة حقيقية مش بس بتكتب كود generic.
+
+**ما أخذناه**: 
+- الـ run_50 log + الـ evaluation output كـ evidence أن الـ harness شغال (evaluate.py + constitutional + evo + logging).
+- الـ failure mode ("No recognizable data files") كـ signal للـ prompt improvement.
+
+**ما تركناه عمدًا**: 
+- أي hardcoding لـ gpqa file names أو domains (biology/chemistry/physics) — كل حاجة GENERAL لـ "Q&A/reasoning tasks".
+
+**ما أصبح عندنا**: 
+- في `genesis/orchestrator.py`: قسم جديد "**DEDICATED GUIDANCE FOR Q&A / MULTIPLE-CHOICE / GRADUATE REASONING TASKS**" (load json, per-question pipeline + client for letter choice, per-question try/except, write answers for evaluate.py).
+- FEEDBACK prompt محدث بنفس الـ guidance.
+- الـ run_50 نجح كامل (أول hard benchmark مع evo بدون crash في الـ prompt).
+
+**الدليل**: 
+- run_50 log: no KeyError, evo x2, constitutional 0→5/10, evaluate.py ran on 198 questions and saved evaluation_results.json (even if 0%).
+- الـ agent لسه generic (0%) — ده الـ signal اللي خلّانا نضيف الـ QA section.
+
+**نقاط الدمج**: orchestrator prompts + run_openrouter_benchmark + MASTER_INDEX (5.88) + theft memo.
+
+**المخاطر**: لسه الـ accuracy 0% (الـ agent ما بيجاوبش الأسئلة) — لازم نراجع الـ generated target_agent.py من الـ run_50 عشان نشوف الـ code الفعلي ونحسن أكتر.
+
+**الـ Tasks المقترحة**: 
+- Task 6.3: بعد الـ prompt الجديد، اعمل run_51 على gpqa و قارن الـ accuracy و الـ agent code.
+- Task 9: استمر في الـ real benchmarks (gpqa lift + SWE-bench).
+
+**الحالة**: 🟢 (5.88 مضاف + prompt pushed).
+
+**الدليل الكامل**: الـ log اللي بعته لـ run_50 + الـ commit 40a4a72 + MASTER_INDEX update.
+
+🏴‍☠️ سرقة شرعية عالية الجودة — protected the long-term vision. 
+
+لو عايز نكمل "حلب" أو نعدل الـ prompt أكتر (أو نشوف الـ generated code من run_50)، قولي فورًا. الـ next step المقترح: git pull + rm -rf runs/run_50 + re-run نفس الـ command عشان تشوف تأثير الـ QA section الجديد.

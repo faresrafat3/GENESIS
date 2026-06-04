@@ -4,8 +4,8 @@
 > Document Type: Master Theft Registry (Single Source of Truth)
 > Status: Authoritative / Living Document
 > Date: 2026-06-04
-> Scope: يجمع كل السرقات الشرعية (5.1–5.87 بحثية + 6.1–6.13 كلاسيكية) في مرجع واحد
-> Total: 86 سرقة بحثية + 13 سرقة كلاسيكية = **99 سرقة موثقة**
+> Scope: يجمع كل السرقات الشرعية (5.1–5.88 بحثية + 6.1–6.13 كلاسيكية) في مرجع واحد
+> Total: 87 سرقة بحثية + 13 سرقة كلاسيكية = **100 سرقة موثقة**
 
 ---
 
@@ -35,7 +35,7 @@
 
 ---
 
-## 1) الجدول الرئيسي — السرقات البحثية (5.1–5.87)
+## 1) الجدول الرئيسي — السرقات البحثية (5.1–5.88)
 
 ### الموجة التأسيسية (5.1–5.23) — من Master Architecture
 
@@ -57,6 +57,7 @@
 | 5.85 | **Co-Scientist (Gemini for Science, DeepMind 2025-2026)** | multi-agent "idea tournament" + hypothesis generation/debate/verification with citations + computational discovery | `GENESIS_DeepMind_CoScientist_Theft_AR.md` (detailed 2026 theft) → Co-Scientist Scientific Discovery Layer in orchestrator + blackboard + theory/concept (Task 7) | 🟡 (detailed theft + integration plan ready) |
 | 5.86 | **Aletheia (Gemini Deep Think, DeepMind 2026)** | tripartite Generator-Verifier-Reviser loop + iterative generate-verify-revise in natural language + tool-grounded literature + failure admission for research-level proofs/theories | `GENESIS_DeepMind_Aletheia_Theft_AR.md` (detailed 2026 theft) → Aletheia-style Proof-Driven Verification & Theory Engine in verification_runtime + theory_runtime + orchestrator (Task 8) | 🟡 (detailed theft + integration plan ready) |
 | 5.87 | **Robust Target Agent Code Generation + Execution Logging (from AlphaEvolve evo runs with gpt-oss-120b:free, run_49)** | Robust import-at-top enforcement, GENERAL data loading template (full shapes, no column hardcodes), mandatory robust execution logging block with fallbacks to prevent scope errors ("json" local var), fake accuracy, and partial data bugs in LLM-generated target_agent.py during evolutionary discovery | Updated META_AGENT_PROMPT + FEEDBACK_AGENT_PROMPT in `genesis/orchestrator.py` (with explicit templates + CRITICAL instructions); tested in run_49 (Gen1 had json scope error + (870,2) shape, Gen2 fixed by feedback; evo + feedback stabilized) | 🟢 (prompts updated + run evidence; ties directly to 5.84 AlphaEvolve integration in orchestrator) |
+| 5.88 | **GPQA-style QA/Reasoning Agent Generation (from run_50 on gpqa, AlphaEvolve evo)** | Explicit GENERAL template for loading JSON questions (diamond_questions.json etc.), per-question pipeline call + client step-by-step reasoning to choose A/B/C/D, robust per-question error handling, and output compatible with evaluate.py. Addresses "No recognizable data files" fallback that caused 0% in first hard benchmark run. | Added dedicated "DEDICATED GUIDANCE FOR Q&A..." section + strengthened FEEDBACK in `genesis/orchestrator.py`; run_50 on gpqa succeeded without crash (constitutional lifted to 5/10 on Gen2), evaluate.py ran and produced results (198 questions), but agent still defaulted to generic path (0% accuracy — expected at this stage). | 🟢 (prompt update pushed; evidence from first real GPQA run with evo) |
 | 5.13 | **AutoTTS** ([arxiv](https://arxiv.org/abs/2605.08083)) | ابنِ environment يكتشف heuristics | Replay Research Lab | 🟡 |
 | 5.14 | **Mem0** ([arxiv](https://arxiv.org/pdf/2504.19413)) | memory ops: add/update/delete/noop | explicit memory operations | 🟢 |
 | 5.15 | **MemOS** ([arxiv](https://arxiv.org/html/2505.22101v1)) | memory as managed resource + lifecycle | Memory OS core plane | 🟢 |
@@ -276,7 +277,7 @@
 | 5.73–5.76 | **Real LLM Eval** | `api/llm_reasoning.py`, `eval/runners/run_real_llm_*` |
 | 5.77–5.80 | **Adversarial Validation** | `eval/task_sets/adversarial_hard_cases.py`, `eval/runners/run_adversarial_llm_eval.py` |
 | 5.81–5.83 | **Internal Regime Lock** | `Virtual_SIA_Internal_Regime_Lock_AR.md` |
-| 5.84–5.87 | **DeepMind Science Thefts (AlphaEvolve + Co-Scientist + Aletheia) + Robust Evo Code Gen** | `GENESIS_DeepMind_AlphaEvolve_FunSearch_Theft_AR.md`, `GENESIS_DeepMind_CoScientist_Theft_AR.md`, `GENESIS_DeepMind_Aletheia_Theft_AR.md` (Cycle 6 memos) + prompt robustness in orchestrator (run_49 evidence) |
+| 5.84–5.88 | **DeepMind Science Thefts (AlphaEvolve + Co-Scientist + Aletheia) + Robust Evo Code Gen** | `GENESIS_DeepMind_AlphaEvolve_FunSearch_Theft_AR.md`, `GENESIS_DeepMind_CoScientist_Theft_AR.md`, `GENESIS_DeepMind_Aletheia_Theft_AR.md` (Cycle 6 memos) + prompt robustness in orchestrator (run_49 evidence) |
 
 > كل هذه السرقات موثّقة بالتفصيل الكامل (ما أُخذ / ما تُرك / ما أصبح) في وثائقها الأصلية المذكورة
 > في §6، ومُلخّصة في الجداول أعلاه (§1).

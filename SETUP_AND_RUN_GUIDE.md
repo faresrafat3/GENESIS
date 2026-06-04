@@ -156,12 +156,13 @@ Use the existing ablation tools (`virtual_genesis/eval/runners/`) for deeper ana
 - **Packaging issues**: Re-run `pip install -e .`
 - **No tasks found**: Use `--task_dir` for external or ensure bundled tasks are accessible.
 
-## Recent Prompt Robustness Fixes (from run_49, 2026-06-04)
-- Added to META/FEEDBACK prompts: explicit "imports at VERY TOP", GENERAL data loading (full pd.read_csv shapes, no column hardcodes like 'Mars'), MANDATORY robust execution logging block with fallback.
-- This fixed (in run_49 vs prior): Gen1 json scope error + wrong data shape (870,2); Gen2 wrote agent_execution.json successfully; evo ran clean; no file-not-found.
-- Always use --use_evolutionary_discovery to test AlphaEvolve (5.84) + 5.87.
-- Reminder: keep ALL changes GENERAL to protect long-term vision (no overfitting to spaceship-titanic proxy).
-- Next recommended: rm -rf runs/run_49; python run_openrouter_benchmark.py --task gpqa --max_gen 2 --run_id 50 --use_evolutionary_discovery (test transfer).
+## Recent Prompt Robustness Fixes (run_49 + run_50, 2026-06-04)
+- 5.87 (run_49): imports at top, GENERAL data loading, robust logging block → fixed json scope + data shape errors.
+- 5.88 (run_50 on gpqa): Added dedicated GENERAL section for Q&A/reasoning tasks (load JSON questions, per-question pipeline + client for A/B/C/D choice, per-question try/except, output for evaluate.py).
+- run_50 results: no crashes, evo worked, evaluate.py ran on 198 questions (saved evaluation_results.json), constitutional improved to 5/10, but agent still fell back to "No recognizable data files" → 0% (expected; the new QA guidance should help on re-run).
+- Always use --use_evolutionary_discovery.
+- Reminder: everything GENERAL.
+- Next: git pull, rm -rf runs/run_50, re-run the gpqa command to test the new QA section.
 - **Evo not triggering**: Confirm `--use_evolutionary_discovery` flag and that the call site in orchestrator is reached.
 - For SWE-bench full harness: You will need Docker + the official SWE-bench eval code.
 
