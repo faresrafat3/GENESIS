@@ -738,12 +738,20 @@ verification = blackboard.get("verification_state", {{}}) if isinstance(result, 
 print(f"Tier: {{tier_decision.get('chosen_tier', 'unknown')}}, Verification good_enough: {{verification.get('verification_summary', {{}}).get('good_enough', False)}}")
 ```
 
-Then, implement TASK-SPECIFIC logic:
-- For spaceship-titanic / tabular: load train.csv/test.csv from DATASET_DIR, use pipeline to reason about features/survival, train simple model or use LLM to predict, output submission.csv in WORKING_DIR.
+Then, implement TASK-SPECIFIC logic (use the packages in the venv: pandas, numpy, scikit-learn):
+- For spaceship-titanic (tabular binary classification on Kaggle-style data):
+  - import pandas as pd
+  - train = pd.read_csv(os.path.join(DATASET_DIR, 'train.csv'))
+  - test = pd.read_csv(os.path.join(DATASET_DIR, 'test.csv'))
+  - Basic cleaning: fillna for numerics/categoricals, pd.get_dummies for HomePlanet, Destination, etc. (avoid string-to-float errors on 'Mars', 'Europa')
+  - Call pipeline on a row summary or full task_text for reasoning/guidance
+  - Use simple sklearn model (LogisticRegression or RandomForest) or LLM calls on features + pipeline result to predict 'Transported' (True/False)
+  - Create submission = pd.DataFrame({'PassengerId': test['PassengerId'], 'Transported': predictions})
+  - submission.to_csv(os.path.join(WORKING_DIR, 'submission.csv'), index=False)
 - For gpqa / Q&A: load questions, for each use pipeline + LLM to answer, save trajectories.
-- Always: use the cognitive result to guide decisions (avoid shortcuts per theory).
+- Always: use the cognitive result (tier, verification, etc.) to guide decisions (avoid shortcuts per theory).
 - If needed, make LLM calls for final answer using the client + MODEL above.
-- Handle errors gracefully.
+- Handle errors gracefully with try/except per section.
 
 MUST log execution:
 - Use MultiTrajectoryLogger (define the class if multiple items) or save agent_execution.json with messages list.
