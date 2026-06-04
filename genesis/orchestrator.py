@@ -860,7 +860,7 @@ STOP after writing. NO FILE READING.
                     agent_code = f.read()
                 evo_result = evolutionary_discovery_engine(
                     current_agent_code=agent_code,
-                    task_text=TASK if 'TASK' in dir() else "current task",
+                    task_text=TASK_MD,  # use the loaded task spec (available from SECTION 1)
                     population_size=6,  # smaller for skeleton
                     generations=1,
                 )
@@ -870,8 +870,23 @@ STOP after writing. NO FILE READING.
                     json.dump(evo_result, f, indent=2, default=str)
                 logger.info(f"  ✓ Evolutionary results saved to {evo_path}")
                 logger.info(f"    Best evo variant fitness: {evo_result['best_variant']['fitness']:.3f}")
-                # In full impl: replace or augment the target_agent with the best evo variant
-                # For skeleton: just log and record (next step: actually write improved code)
+                # Apply the best variant: write it as evolved_target_agent.py for use in feedback or next steps
+                try:
+                    best_code = evo_result['best_variant'].get('code', agent_code)
+                    evolved_path = os.path.join(current_gen_directory, "evolved_target_agent.py")
+                    with open(evolved_path, "w", encoding="utf-8") as f:
+                        f.write(best_code)
+                    logger.info(f"  ✓ Best evolved variant written to {evolved_path} (ready for feedback or next gen)")
+                    # Record in research memory if available (ties to theft integration)
+                    if research_memory:
+                        research_memory.record_run_completion(
+                            run_id=f"evo_{current_gen}",
+                            total_generations=1,
+                            best_score=evo_result['best_variant']['fitness'],
+                            improvements=[f"Evo gen {current_gen}: fitness {evo_result['best_variant']['fitness']:.3f}"],
+                        )
+                except Exception as apply_e:
+                    logger.warning(f"  ⚠ Could not apply best evo variant: {apply_e}")
             except Exception as e:
                 logger.warning(f"  ⚠ Evolutionary discovery failed: {e}")
 
