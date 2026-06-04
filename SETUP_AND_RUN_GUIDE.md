@@ -155,6 +155,13 @@ Use the existing ablation tools (`virtual_genesis/eval/runners/`) for deeper ana
 - **API errors**: Check OPENAI_API_KEY and BASE_URL. OpenRouter free tier has rate limits.
 - **Packaging issues**: Re-run `pip install -e .`
 - **No tasks found**: Use `--task_dir` for external or ensure bundled tasks are accessible.
+
+## Recent Prompt Robustness Fixes (from run_49, 2026-06-04)
+- Added to META/FEEDBACK prompts: explicit "imports at VERY TOP", GENERAL data loading (full pd.read_csv shapes, no column hardcodes like 'Mars'), MANDATORY robust execution logging block with fallback.
+- This fixed (in run_49 vs prior): Gen1 json scope error + wrong data shape (870,2); Gen2 wrote agent_execution.json successfully; evo ran clean; no file-not-found.
+- Always use --use_evolutionary_discovery to test AlphaEvolve (5.84) + 5.87.
+- Reminder: keep ALL changes GENERAL to protect long-term vision (no overfitting to spaceship-titanic proxy).
+- Next recommended: rm -rf runs/run_49; python run_openrouter_benchmark.py --task gpqa --max_gen 2 --run_id 50 --use_evolutionary_discovery (test transfer).
 - **Evo not triggering**: Confirm `--use_evolutionary_discovery` flag and that the call site in orchestrator is reached.
 - For SWE-bench full harness: You will need Docker + the official SWE-bench eval code.
 

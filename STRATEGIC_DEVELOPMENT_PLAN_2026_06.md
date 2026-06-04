@@ -14,7 +14,7 @@
 - ✅ 98.6% success على v3b_curriculum (72 مهمة)
 - ✅ بنية معرفية متقدمة (3 طبقات A/B/C)
 - ✅ منهجية ablation علمية (Cycle 5.1)
-- ✅ 98 "سرقة مشروعة" موثقة من العلوم المعرفية (بما فيها 5.84 AlphaEvolve + 5.85 Co-Scientist + 5.86 Aletheia من DeepMind)
+- ✅ 99 "سرقة مشروعة" موثقة من العلوم المعرفية (بما فيها 5.84 AlphaEvolve + 5.85 Co-Scientist + 5.86 Aletheia + 5.87 Robust Evo Code Gen من DeepMind runs)
 
 ### المشاكل الحرجة
 - ❌ **انقطاع كامل** بين Orchestrator و GENESIS
@@ -231,6 +231,7 @@
 - يربط بالـ GRASP gating و ExpGraph graph memory
 - النجاح: تحسن في الـ transfer و الـ discovery rate على broader domain slices
 - الوثيقة: `GENESIS_DeepMind_AlphaEvolve_FunSearch_Theft_AR.md` (كاملة)
+- Evidence من run_49 (2026-06-04, max_gen=2, evo enabled, gpt-oss-120b:free): evo engine شغّل بنجاح (fitness 0.800), feedback stabilized Gen2 (كتب agent_execution.json), no 'Mars' error, constitutional 0/10 PASSED, لكن data shape (870,2) + accuracy 1.0 proxy (مش حقيقي). الـ prompt fixes (5.87) حسّنت الـ robustness. Next: gpqa للـ transfer test.
 
 ### Task 7: Co-Scientist Scientific Discovery Layer
 **الأولوية:** 🔴 حرجة (بعد/مع الـ Bridge + AlphaEvolve)

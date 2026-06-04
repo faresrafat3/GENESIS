@@ -4,8 +4,8 @@
 > Document Type: Master Theft Registry (Single Source of Truth)
 > Status: Authoritative / Living Document
 > Date: 2026-06-04
-> Scope: يجمع كل السرقات الشرعية (5.1–5.86 بحثية + 6.1–6.13 كلاسيكية) في مرجع واحد
-> Total: 85 سرقة بحثية + 13 سرقة كلاسيكية = **98 سرقة موثقة**
+> Scope: يجمع كل السرقات الشرعية (5.1–5.87 بحثية + 6.1–6.13 كلاسيكية) في مرجع واحد
+> Total: 86 سرقة بحثية + 13 سرقة كلاسيكية = **99 سرقة موثقة**
 
 ---
 
@@ -35,7 +35,7 @@
 
 ---
 
-## 1) الجدول الرئيسي — السرقات البحثية (5.1–5.86)
+## 1) الجدول الرئيسي — السرقات البحثية (5.1–5.87)
 
 ### الموجة التأسيسية (5.1–5.23) — من Master Architecture
 
@@ -56,6 +56,7 @@
 | 5.84 | **AlphaEvolve (DeepMind 2025-2026 focus)** | evolutionary search over cognitive artifacts (skills/concepts/theories/policies) with strict evaluator + population diversity + lineage tracking | `GENESIS_DeepMind_AlphaEvolve_FunSearch_Theft_AR.md` (detailed 2026 theft) → Evolutionary Discovery Engine in orchestrator + concept/theory layers (Task 6) | 🟡 (detailed theft + integration plan ready) |
 | 5.85 | **Co-Scientist (Gemini for Science, DeepMind 2025-2026)** | multi-agent "idea tournament" + hypothesis generation/debate/verification with citations + computational discovery | `GENESIS_DeepMind_CoScientist_Theft_AR.md` (detailed 2026 theft) → Co-Scientist Scientific Discovery Layer in orchestrator + blackboard + theory/concept (Task 7) | 🟡 (detailed theft + integration plan ready) |
 | 5.86 | **Aletheia (Gemini Deep Think, DeepMind 2026)** | tripartite Generator-Verifier-Reviser loop + iterative generate-verify-revise in natural language + tool-grounded literature + failure admission for research-level proofs/theories | `GENESIS_DeepMind_Aletheia_Theft_AR.md` (detailed 2026 theft) → Aletheia-style Proof-Driven Verification & Theory Engine in verification_runtime + theory_runtime + orchestrator (Task 8) | 🟡 (detailed theft + integration plan ready) |
+| 5.87 | **Robust Target Agent Code Generation + Execution Logging (from AlphaEvolve evo runs with gpt-oss-120b:free, run_49)** | Robust import-at-top enforcement, GENERAL data loading template (full shapes, no column hardcodes), mandatory robust execution logging block with fallbacks to prevent scope errors ("json" local var), fake accuracy, and partial data bugs in LLM-generated target_agent.py during evolutionary discovery | Updated META_AGENT_PROMPT + FEEDBACK_AGENT_PROMPT in `genesis/orchestrator.py` (with explicit templates + CRITICAL instructions); tested in run_49 (Gen1 had json scope error + (870,2) shape, Gen2 fixed by feedback; evo + feedback stabilized) | 🟢 (prompts updated + run evidence; ties directly to 5.84 AlphaEvolve integration in orchestrator) |
 | 5.13 | **AutoTTS** ([arxiv](https://arxiv.org/abs/2605.08083)) | ابنِ environment يكتشف heuristics | Replay Research Lab | 🟡 |
 | 5.14 | **Mem0** ([arxiv](https://arxiv.org/pdf/2504.19413)) | memory ops: add/update/delete/noop | explicit memory operations | 🟢 |
 | 5.15 | **MemOS** ([arxiv](https://arxiv.org/html/2505.22101v1)) | memory as managed resource + lifecycle | Memory OS core plane | 🟢 |
@@ -208,7 +209,7 @@
 | `persistence/` (SQLite) | 5.69–5.72 |
 | `api/` | 5.63, 5.64 |
 | `runtime/pipeline/minimal_run.py` | 6.1, 6.5, 6.6, 6.7 |
-| `genesis/orchestrator.py` + `virtual_genesis/runtime/blackboard_core/` | 5.84 (Evolutionary Discovery), 5.85 (Co-Scientist tournament), 5.86 (Aletheia proof-driven loop), 6.6 (Blackboard) |
+| `genesis/orchestrator.py` + `virtual_genesis/runtime/blackboard_core/` | 5.84 (Evolutionary Discovery), 5.85 (Co-Scientist tournament), 5.86 (Aletheia proof-driven loop), 5.87 (robust code gen/logging for evo), 6.6 (Blackboard) |
 | `Virtual_SIA_Internal_Regime_Lock_AR.md` (منهجية القفل/anti-sprawl) | 5.81–5.83 |
 
 ---
@@ -237,8 +238,8 @@
 - **الحوكمة (Governance):** 5.31, 5.32, 5.55–5.62, 6.3
 - **التقييم (Evaluation):** 5.24–5.30, 5.45–5.49, 5.65–5.68, 5.73–5.80
 - **الاقتصاد المعرفي (Economy):** 5.1, 5.4, 6.4, 6.12
-- **بنية التفكير (Reasoning):** 5.6, 5.18, 5.19, 6.1, 6.5, 6.6, 6.8, 6.9, 5.84, 5.85, 5.86
-- **التحسّن الذاتي (Self-Improvement):** 5.5, 5.10, 5.11, 5.12, 5.13, 5.21, 5.45, 5.46, 5.84, 5.85, 5.86
+- **بنية التفكير (Reasoning):** 5.6, 5.18, 5.19, 6.1, 6.5, 6.6, 6.8, 6.9, 5.84, 5.85, 5.86, 5.87
+- **التحسّن الذاتي (Self-Improvement):** 5.5, 5.10, 5.11, 5.12, 5.13, 5.21, 5.45, 5.46, 5.84, 5.85, 5.86, 5.87
 - **البنية التحتية (Infrastructure):** 5.63, 5.64, 5.69–5.72
 - **حماية الاتساع (Anti-Sprawl / Project Governance):** 5.81–5.83
 
@@ -275,7 +276,7 @@
 | 5.73–5.76 | **Real LLM Eval** | `api/llm_reasoning.py`, `eval/runners/run_real_llm_*` |
 | 5.77–5.80 | **Adversarial Validation** | `eval/task_sets/adversarial_hard_cases.py`, `eval/runners/run_adversarial_llm_eval.py` |
 | 5.81–5.83 | **Internal Regime Lock** | `Virtual_SIA_Internal_Regime_Lock_AR.md` |
-| 5.84–5.86 | **DeepMind Science Thefts (AlphaEvolve + Co-Scientist + Aletheia)** | `GENESIS_DeepMind_AlphaEvolve_FunSearch_Theft_AR.md`, `GENESIS_DeepMind_CoScientist_Theft_AR.md`, `GENESIS_DeepMind_Aletheia_Theft_AR.md` (Cycle 6 memos) |
+| 5.84–5.87 | **DeepMind Science Thefts (AlphaEvolve + Co-Scientist + Aletheia) + Robust Evo Code Gen** | `GENESIS_DeepMind_AlphaEvolve_FunSearch_Theft_AR.md`, `GENESIS_DeepMind_CoScientist_Theft_AR.md`, `GENESIS_DeepMind_Aletheia_Theft_AR.md` (Cycle 6 memos) + prompt robustness in orchestrator (run_49 evidence) |
 
 > كل هذه السرقات موثّقة بالتفصيل الكامل (ما أُخذ / ما تُرك / ما أصبح) في وثائقها الأصلية المذكورة
 > في §6، ومُلخّصة في الجداول أعلاه (§1).

@@ -657,15 +657,18 @@ TASK: Create target_agent.py that:
 - Produces required outputs in working_dir (e.g. submission.csv, answers, logs).
 - Logs execution for feedback: prefer multi-trajectory to agent_execution/ folder if multiple samples, else agent_execution.json.
 
-MUST include EXACT imports at top:
+MUST include EXACT imports at top (VERY FIRST LINES of the file, before ANY other code or functions. Do NOT put imports inside functions, try blocks, or after any executable code. This prevents scope errors like "cannot access local variable 'json'"):
 ```python
 import os
 import sys
 import json
 import argparse
 import asyncio
+import datetime
 import httpx
 import openai
+import pandas as pd
+import numpy as np
 
 from virtual_genesis.runtime.pipeline.minimal_run import run_minimal_pipeline
 from virtual_genesis.runtime.memory_os.store import InMemoryMemoryStore
@@ -741,6 +744,33 @@ print(f"Tier: {{tier_decision.get('chosen_tier', 'unknown')}}, Verification good
 Then, implement TASK-SPECIFIC logic in a GENERAL and ROBUST way (use the packages in the venv: pandas, numpy, scikit-learn when appropriate for the task type). 
 IMPORTANT: Always produce clean, error-handling, production-quality code. Use the GENESIS pipeline result for cognitive guidance on ANY task. Never hardcode task-specific strings if possible; detect the task type from the data or task.md.
 
+**CRITICAL GENERAL DATA HANDLING (applies to ANY tabular/data task — NO overfitting to specific columns like 'Mars', 'HomePlanet', 'Transported' etc. Use detection + try/except always):**
+- Always load full data (never partial like 2 columns):
+  ```python
+  try:
+      train_df = pd.read_csv(os.path.join(DATASET_DIR, "train.csv"))
+      test_df = pd.read_csv(os.path.join(DATASET_DIR, "test.csv"))
+      print(f"Full train shape: {train_df.shape}")
+      print(f"Full test shape: {test_df.shape}")
+      print(f"Train columns sample: {list(train_df.columns)[:5]}...")
+  except Exception as load_e:
+      print(f"Data load error: {load_e}")
+      train_df, test_df = None, None
+  ```
+- Detect task type and target column GENERALLY (from task_text or data, no hardcodes):
+  target_col = None
+  if "train_df" in locals() and train_df is not None:
+      for col in ["Transported", "target", "label", "y", "class", "Survived"]:  # common but fallback
+          if col in train_df.columns:
+              target_col = col
+              break
+      if not target_col:
+          target_col = train_df.columns[-1]  # last col fallback
+- For submission: always produce ID col (e.g. PassengerId) + predictions from test_df.
+- Compute accuracy ONLY on a held-out val split from train (NEVER report train accuracy as final; if no labels on test, use placeholder 0.0 or skip).
+- Handle types robustly to avoid "could not convert string to float": use pd.to_numeric(..., errors='coerce').fillna(0), pd.get_dummies for categoricals generally, etc.
+- Print shapes, columns, dtypes for debugging always.
+
 General principles for any task:
 - Load data from DATASET_DIR as needed (csv, json, etc.).
 - Call the pipeline early for reasoning, tier decision, verification.
@@ -754,9 +784,39 @@ General principles for any task:
 - If needed, make LLM calls for final answer using the client + MODEL above.
 - Handle errors gracefully with try/except per section. Make the code maintainable and general.
 
-MUST log execution:
-- Use MultiTrajectoryLogger (define the class if multiple items) or save agent_execution.json with messages list.
-- Example: save to os.path.join(WORKING_DIR, "agent_execution.json") or folder.
+**MUST log execution ROBUSTLY (include this EXACT pattern or very close equivalent at the END of your logic, before final print. This prevents json scope errors like "cannot access local variable 'json'" and ensures feedback agent gets usable log):**
+```python
+# === ROBUST EXECUTION LOGGING (MANDATORY - put this before the final success print) ===
+try:
+    execution_log = {
+        "timestamp": datetime.datetime.now().isoformat(),
+        "task_preview": task_text[:300] if "task_text" in locals() else "unknown task",
+        "pipeline_result_keys": list(result.keys()) if isinstance(result, dict) else str(type(result)),
+        "tier": tier_decision.get("chosen_tier", "unknown") if isinstance(tier_decision, dict) else "unknown",
+        "verification_good_enough": verification.get("verification_summary", {}).get("good_enough", False) if isinstance(verification, dict) else False,
+        "detected_task_type": "classification" if "train_df" in locals() and train_df is not None else "unknown",
+        "loaded_data_shape": str(train_df.shape) if "train_df" in locals() and train_df is not None else "N/A",
+        "accuracy": 0.0,  # compute real val accuracy here if possible; 0.0 if no labels
+        "submission_path": os.path.join(WORKING_DIR, "submission.csv"),
+        "messages": [  # minimal trajectory for feedback; expand if multi-turn
+            {"role": "system", "content": "Target agent executed with GENESIS pipeline + task logic."},
+            {"role": "user", "content": task_text[:200] if "task_text" in locals() else ""},
+            {"role": "assistant", "content": "Completed task with accuracy reported above."}
+        ]
+    }
+    log_path = os.path.join(WORKING_DIR, "agent_execution.json")
+    with open(log_path, "w", encoding="utf-8") as f:
+        json.dump(execution_log, f, indent=2, ensure_ascii=False)
+    print(f"Execution log saved to {log_path}")
+except Exception as log_err:
+    print(f"Failed to write execution log: {log_err}")
+    # Fallback: write a minimal log even on error
+    try:
+        with open(os.path.join(WORKING_DIR, "agent_execution.json"), "w", encoding="utf-8") as f:
+            json.dump({"error": str(log_err), "timestamp": datetime.datetime.now().isoformat()}, f)
+    except:
+        pass
+```
 
 At very end:
 ```python
@@ -768,7 +828,7 @@ Write the FULL code to {META_AGENT_WORKING_DIRECTORY}/target_agent.py using the 
 Verify syntax with bash tool: python3 -c 'compile(open("target_agent.py").read(), "target_agent.py", "exec"); print("OK")'
 STOP after writing the one file. No more actions, no reading other files.
 
-Note: The meta-agent will fill in the task-specific parts intelligently. Make the code robust, use try/except, dict access everywhere for pipeline result.
+Note: The meta-agent will fill in the task-specific parts intelligently. Make the code robust, use try/except, dict access everywhere for pipeline result. The logging block above MUST be present (verbatim or closely adapted) + imports at VERY TOP to avoid scope/import errors.
 """
     META_AGENT_PROMPT = META_AGENT_PROMPT.format(
     task_model=task_model,
@@ -788,7 +848,12 @@ CURRENT CODE:
 {AGENT_PY}
 ```
 
-CRITICAL: You MUST use the write_file tool to write the FULL improved target_agent.py to {IMPROVEMENT_DIR}/target_agent.py as your very last action. Do not stop or say you are done until you have successfully called write_file for target_agent.py and verified it with the bash syntax check. This is mandatory.
+CRITICAL INSTRUCTIONS FOR FIX:
+- If you see "Failed to write execution log: cannot access local variable 'json'" or similar scope/import error, ensure imports are at VERY TOP (os, sys, json, datetime, pandas, numpy, openai, virtual_genesis imports), and include the EXACT ROBUST EXECUTION LOGGING block from the meta prompt at the end (before final print).
+- If data shape is wrong (e.g. (870, 2) instead of full ~ (8693,14) for titanic-like), fix data loading to use full pd.read_csv for train.csv + test.csv, print full shapes, detect target generally.
+- Always keep the code GENERAL (no hardcodes to specific columns like 'Mars').
+- Fix any accuracy faking: compute only on val split if possible.
+- You MUST use the write_file tool to write the FULL improved target_agent.py to {IMPROVEMENT_DIR}/target_agent.py as your very last action. Do not stop or say you are done until you have successfully called write_file for target_agent.py and verified it with the bash syntax check. This is mandatory.
 
 Write IMPROVED code to: {IMPROVEMENT_DIR}/target_agent.py using write_file.
 Verify syntax: bash("python3 -c 'compile(open(\"target_agent.py\").read(),\"target_agent.py\",\"exec\"); print(\"OK\")'")

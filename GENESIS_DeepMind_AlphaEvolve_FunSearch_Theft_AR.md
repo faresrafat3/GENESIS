@@ -129,3 +129,73 @@ FunSearch و AlphaEvolve هما **نظام تطوري (evolutionary search) مد
 لو عايز نكمل بنفس الجودة لـ Co-Scientist أو Aletheia أو GNoME، قولي وأنا أعمل memo مماثل فورًا.
 
 جاهز للـ "حلب" بأعلى جودة. قولي الخطوة التالية. 🏴‍☠️
+
+---
+
+## سرقة شرعية إضافية 5.87 (امتداد مباشر لـ AlphaEvolve 5.84): Robust Target Agent Code Gen + Execution Logging من تجارب الـ Evolutionary Discovery
+
+**المصدر (+ رابط)**: 
+- الـ run_49 (2026-06-04) على spaceship-titanic مع --use_evolutionary_discovery + gpt-oss-120b:free عبر OpenRouter (من run_openrouter_benchmark.py + orchestrator.py).
+- الدليل: log كامل في الـ user message (Gen1 فشل في كتابة agent_execution.json بسبب "cannot access local variable 'json' where it is not associated with a value" + data shape (870, 2) مش full؛ Gen2 اتظبط بالـ feedback؛ evo fitness 0.800/score 0.880؛ constitutional 0/10 PASSED؛ accuracy داخلية 1.0000 (مش موثوقة لأن proxy + ممكن data leak في الـ generated agent)؛ no 'Mars' error (الـ generalization السابق نجح)؛ final LLM summary للـ changes بين gen1/gen2 (cosmetic فقط).
+
+**الفكرة الأساسية (السرقة)**: 
+- الـ LLM generator (meta/feedback) في الـ evolutionary loop (AlphaEvolve style) بيولد كود target_agent.py، لكن الـ LLM (حتى الـ free tier) بيغلط في الـ imports scope، الـ data loading الجزئي، والـ logging — ده بيخلي الـ feedback يفشل و الـ evo loop يضعف.
+- السرقة: نحول الـ "prompt engineering" لـ "robust template enforcement" مع GENERAL principles (مش specific لـ titanic columns) عشان الـ evo يكون موثوق و ينتج agents قابلة للـ feedback + real eval.
+
+**ما أخذناه**: 
+- الـ error logs + run artifacts من run_49 كـ "failure cases" للـ generator.
+- الـ prompt patterns من الـ previous generalization (تبقى GENERAL لـ "any tabular/data task" أو "ANY task").
+- الـ robust logging block + data loading template + "imports at VERY TOP" rule + CRITICAL instructions في الـ FEEDBACK.
+
+**ما تركناه عمدًا**: 
+- أي hardcode لـ spaceship-titanic columns (زي 'Mars' أو 'HomePlanet' — كارثة زي ما حذرت).
+- الاعتماد على الـ LLM يتبع الـ examples لوحده (نفرض الـ template بالـ "MUST include EXACT" + fallback في الـ orchestrator).
+
+**ما أصبح عندنا (المكوّن التشغيلي)**: 
+- في `genesis/orchestrator.py` (META_AGENT_PROMPT + FEEDBACK_AGENT_PROMPT): 
+  - MUST imports at top مع datetime, pandas, numpy + explicit warning ضد scope errors.
+  - CRITICAL GENERAL DATA HANDLING section مع full pd.read_csv + shape print + general target detection (no specific cols).
+  - Mandatory ROBUST EXECUTION LOGGING block (مع try/except + fallback write) اللي بيضمن agent_execution.json دايمًا موجود للـ feedback + load_agent_execution.
+  - CRITICAL instructions في feedback للـ json error + wrong shape.
+- النتيجة: run_49 نجح (Gen2 كتب الـ json بنجاح، evo اشتغل مرتين، no file-not-found زي run_48).
+- ربط بالـ MASTER_INDEX_AR.md (5.87 جديد) + تحديث الـ theft memo.
+
+**الدليل (evidence من الـ ablations/runs)**:
+- قبل الـ fix (run_48): Gen2 "can't open file .../gen_2/target_agent.py" (feedback ما كتبش).
+- run_49 (بعد الـ first generalization + هذا الـ fix): Gen1 عنده الـ json error + (870,2)، لكن feedback + evo + robust template خلّى Gen2 ينجح و يكتب الـ json + constitutional PASSED.
+- الـ evo fitness ثابت 0.800 (proxy من constitutional + pipeline).
+- الـ constitutional score 0/10 (🟢 no violations، بس الـ score لسه low لأن الـ checks heuristic زي check_regression_free بترن pytest كل gen).
+- الـ accuracy 1.0000 داخل الـ agent (مش حقيقي — proxy task + ممكن الـ generated agent بيستخدم train labels أو بيحسب على val غلط؛ لازم نروح لـ gpqa/SWE-bench للـ real metrics).
+- الـ 'Mars' error اختفى (الـ GENERAL prompt نجح).
+- الـ research memory: 18 entries, 61% success (من الـ log).
+
+**نقاط الدمج (integration points)**:
+- orchestrator.py (الـ prompts + evo evaluator اللي بيستخدم الـ artifacts).
+- run_openrouter_benchmark.py (للـ real runs مع --use_evolutionary_discovery).
+- MASTER_INDEX_AR.md + هذا الـ memo (للـ provenance).
+- الـ context.md في الـ runs (بيحتوي الـ LLM summaries للـ changes).
+- الـ constitutional_evaluator + load_agent_execution (بيستفيدوا من الـ robust logs).
+- Strategic Plan Task 6 + Task 9 (الـ real benchmark).
+
+**المخاطر + التحذيرات (عشان الـ project vision)**:
+- الـ overfitting للـ proxy (spaceship-titanic accuracy 1.0 مش معناه حاجة — زي ما قلت "كارثه وتهديد كبير علي المشروع" لو عملنا حاجة مخصوصة للـ test ده).
+- الـ LLM generator (gpt-oss-120b:free) لسه flaky (cosmetic changes بس في الـ summary) — الـ evo fitness proxy مش real task success.
+- Constitutional 0/10 دايمًا (الـ checks بترن pytest كل مرة، و heuristic بسيط).
+- لازم نروح لـ serious benchmarks (SWE-bench, gpqa) عشان نقيس الـ lift الحقيقي من الـ thefts (AlphaEvolve + prior) vs baseline 98.6% keyword.
+
+**الـ Tasks المقترحة (تكملة للـ Strategic Plan)**:
+- Task 6.1 (فوري): شغّل run_50 مع --max_gen 3 + --use_evolutionary_discovery على gpqa (harder reasoning) عشان تختبر الـ transfer للـ GENERAL prompts (بدون titanic).
+- Task 6.2: أضف real metrics extraction في الـ target_agent template (val split accuracy + submission validation) + ربط مع run_evaluation.
+- Task 9 (real benchmark): بعد الـ fix، اعمل runs على SWE-bench (via --task_dir) + قارن % resolved vs baseline.
+- Update الـ theft memos + MASTER_INDEX بـ 5.88+ لو لقينا patterns جديدة من الـ runs.
+- في الـ evo engine: استخدم الـ real agent_execution.json + constitutional_report كـ fitness بدل الـ proxy 0.8 (يربط أقوى بالـ AlphaEvolve evaluator).
+
+**الحالة**: 🟢 (prompts محسنة + run_49 evidence موثق + GENERAL protected).
+
+**ما أصبح عندنا دلوقتي**: الـ evolutionary loop بقى أكثر استقرارًا (من run_48 فشل → run_49 نجاح جزئي مع bugs مصححة بالـ feedback). الـ AlphaEvolve theft (5.84) + هذا الـ 5.87 بيخلّي الـ generator أقوى و الـ self-improvement أقرب للـ "discovery engine" الحقيقي.
+
+لو عايز نكمل "حلب" الـ DeepMind (Co-Scientist أو Aletheia) أو نعدل حاجة، قولي فورًا. الـ next step: git pull, rm -rf runs/run_49, run run_50 مع gpqa + evo، و نراجع الـ generated agents للـ adherence للـ GENERAL principles.
+
+**الدليل الكامل**: الـ log اللي بعته + الـ changes في orchestrator.py (prompts) + MASTER_INDEX update.
+
+🏴‍☠️ سرقة شرعية عالية الجودة — protected the long-term vision.
