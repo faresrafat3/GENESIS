@@ -72,11 +72,11 @@ def resolve_task_dir(task: str | None, task_dir: str | None) -> tuple[str, str]:
     - --task <name>  → bundled genesis.tasks/<name>/, shared_dir = bundled genesis.tasks/_shared/
     - --task_dir P   → P, shared_dir = P/../_shared/ if present else bundled _shared/
     """
-    bundled_root = Path(str(resource_files("genesis.tasks")))
-    bundled_shared = bundled_root / "_shared"
+    bundled_root = resource_files("genesis.tasks")
+    bundled_shared = Path(str(bundled_root / "_shared"))
 
     if task:
-        resolved = bundled_root / task
+        resolved = Path(str(bundled_root / task))
         if not resolved.is_dir():
             available = ", ".join(BUNDLED_TASKS)
             raise SystemExit(f"Bundled task '{task}' not found. Available: {available}")
