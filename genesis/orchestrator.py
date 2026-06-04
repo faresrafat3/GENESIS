@@ -672,8 +672,8 @@ result = run_minimal_pipeline(task_text, store=store, concept_registry=concept_r
 LLM call:
 ```python
 import openai, httpx
-client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"), base_url=os.getenv("OPENAI_BASE_URL","https://api.pioneer.ai/v1"))
-resp = client.chat.completions.create(model="deepseek-ai/DeepSeek-V4-Flash", messages=[...])
+client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"), base_url=os.getenv("OPENAI_BASE_URL","https://openrouter.ai/api/v1"))
+resp = client.chat.completions.create(model="{actual_model}", messages=[...])
 ```
 
 Memory storage:
