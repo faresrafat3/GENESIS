@@ -5,14 +5,21 @@ virtual_genesis.egg-info/
 # Secrets — NEVER commit
 .env
 .env.*
+!.env.example
 .pioneer_key
 .pioneer_env
+keys.json
+.secrets/
+logs/api_key_pool_stats.json
+scripts/setup_keys_local.sh
+!scripts/setup_keys_local.sh.example
 
 # Generated artifacts
 runs/**/venv/
 runs/**/__pycache__/
 research_memory.json
 genesis_agent.egg-info/
+results/multi_*/pool_stats.json
 
 # Virtual environments
 .venv/
