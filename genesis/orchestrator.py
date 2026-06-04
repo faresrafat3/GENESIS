@@ -339,7 +339,7 @@ def evolutionary_discovery_engine(
                         from virtual_genesis.runtime.pipeline.minimal_run import run_minimal_pipeline
                         # Use a short task slice for quick eval (in full: use the actual task + traces from agent_execution)
                         pipeline_result = run_minimal_pipeline(
-                            task_text=task[:200] if task else "sample task",
+                            raw_task=task[:200] if task else "sample task",
                             # In real: pass memory/concept/theory from the run, but skeleton uses defaults
                         )
                         # Extract real metrics from pipeline output (success, verification, etc.)
@@ -649,12 +649,25 @@ def main():
     # SECTION 3: Define Prompts
     # ========================
 
-    META_AGENT_PROMPT = f"""You are a meta-agent. Write target_agent.py NOW. Do NOT explore.
+    META_AGENT_PROMPT = """You are a meta-agent. Write a COMPLETE, runnable target_agent.py NOW. Do NOT explore, do NOT use read_file tool on existing code, do NOT ask questions. Generate the FULL file from the spec below + your knowledge of GENESIS pipeline. The file must be self-contained and run without errors when invoked with --dataset_dir and --working_dir.
 
-TASK: Create a target_agent.py that uses Virtual-GENESIS's cognitive pipeline + LLM.
+TASK: Create target_agent.py that:
+- Uses Virtual-GENESIS cognitive pipeline for structured reasoning/memory/concept/theory.
+- Handles the specific task (e.g. classification, Q&A) by loading data from dataset_dir if needed (csv, json, task.md).
+- Produces required outputs in working_dir (e.g. submission.csv, answers, logs).
+- Logs execution for feedback: prefer multi-trajectory to agent_execution/ folder if multiple samples, else agent_execution.json.
 
-IMPORTS (copy exactly):
+MUST include EXACT imports at top:
 ```python
+import os
+import sys
+import json
+import argparse
+import asyncio
+import httpx
+import openai
+from dotenv import load_dotenv
+
 from virtual_genesis.runtime.pipeline.minimal_run import run_minimal_pipeline
 from virtual_genesis.runtime.memory_os.store import InMemoryMemoryStore
 from virtual_genesis.runtime.concept_engine.registry import InMemoryConceptRegistry
@@ -663,29 +676,97 @@ from virtual_genesis.runtime.economy_control.ledger import InMemoryLedgerStore
 from virtual_genesis.core.objects.memory import MemoryUnit
 ```
 
-Pipeline call:
+MUST parse args (copy this):
 ```python
-result = run_minimal_pipeline(task_text, store=store, concept_registry=concept_registry, theory_registry=theory_registry, ledger_store=ledger_store)
-# result has: task, memory_pack, concept_items, tier_decision, theory_prediction, verification
+parser = argparse.ArgumentParser()
+parser.add_argument("--dataset_dir", required=True)
+parser.add_argument("--working_dir", required=True)
+args = parser.parse_args()
+DATASET_DIR = args.dataset_dir
+WORKING_DIR = args.working_dir
+os.makedirs(WORKING_DIR, exist_ok=True)
+load_dotenv()
 ```
 
-LLM call:
+MUST setup client (use the model exactly as shown; env vars are set for OpenRouter):
 ```python
-import openai, httpx
-client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"), base_url=os.getenv("OPENAI_BASE_URL","https://openrouter.ai/api/v1"))
-resp = client.chat.completions.create(model="{actual_model}", messages=[...])
+MODEL = "{task_model}"
+client = openai.OpenAI(
+    api_key=os.getenv("OPENAI_API_KEY"),
+    base_url=os.getenv("OPENAI_BASE_URL", "https://openrouter.ai/api/v1")
+)
 ```
 
-Memory storage:
+MUST create stores:
 ```python
-memory = MemoryUnit.create(summary=summary, memory_type="episodic" if success else "negative")
-store.store_memory(memory)
+store = InMemoryMemoryStore()
+concept_registry = InMemoryConceptRegistry()
+theory_registry = InMemoryTheoryRegistry()
+ledger_store = InMemoryLedgerStore()
 ```
 
-Write ONE file to {META_AGENT_WORKING_DIRECTORY}/target_agent.py using write_file.
-Verify: bash("python3 -c 'compile(open(\"target_agent.py\").read(),\"target_agent.py\",\"exec\"); print(\"OK\")'")
-Do NOT read files. JUST WRITE THE CODE.
+MUST load task:
+```python
+task_md_path = os.path.join(DATASET_DIR, "task.md")
+if os.path.exists(task_md_path):
+    with open(task_md_path, encoding="utf-8") as f:
+        task_text = f.read()
+else:
+    task_text = "Solve the task using data in " + DATASET_DIR
+print(f"Task loaded: {{task_text[:200]}}...")
+```
+
+Pipeline call (CORRECT - result is DICT, not object. Use .get() or [] for safety):
+```python
+result = run_minimal_pipeline(
+    raw_task=task_text,
+    store=store,
+    concept_registry=concept_registry,
+    theory_registry=theory_registry,
+    ledger_store=ledger_store,
+    use_memory=True,
+    use_economy=True,
+    use_concepts=False,  # enable if needed
+)
+print("Pipeline result keys:", list(result.keys()) if isinstance(result, dict) else type(result))
+
+# Safe access (dict, not attributes!):
+task_info = result.get("task", {{}}) if isinstance(result, dict) else {{}}
+blackboard = result.get("blackboard", {{}}) if isinstance(result, dict) else {{}}
+tier_decision = result.get("tier_decision", {{}}) if isinstance(result, dict) else {{}}
+theory_pred = result.get("theory_prediction") if isinstance(result, dict) else None
+verification = blackboard.get("verification_state", {{}}) if isinstance(result, dict) else {{}}
+print(f"Tier: {{tier_decision.get('chosen_tier', 'unknown')}}, Verification good_enough: {{verification.get('verification_summary', {{}}).get('good_enough', False)}}")
+```
+
+Then, implement TASK-SPECIFIC logic:
+- For spaceship-titanic / tabular: load train.csv/test.csv from DATASET_DIR, use pipeline to reason about features/survival, train simple model or use LLM to predict, output submission.csv in WORKING_DIR.
+- For gpqa / Q&A: load questions, for each use pipeline + LLM to answer, save trajectories.
+- Always: use the cognitive result to guide decisions (avoid shortcuts per theory).
+- If needed, make LLM calls for final answer using the client + MODEL above.
+- Handle errors gracefully.
+
+MUST log execution:
+- Use MultiTrajectoryLogger (define the class if multiple items) or save agent_execution.json with messages list.
+- Example: save to os.path.join(WORKING_DIR, "agent_execution.json") or folder.
+
+At very end:
+```python
+print("Target agent completed successfully for task.")
+# Optionally write results.json or other artifacts
+```
+
+Write the FULL code to {META_AGENT_WORKING_DIRECTORY}/target_agent.py using the write_file tool.
+Verify syntax with bash tool: python3 -c 'compile(open("target_agent.py").read(), "target_agent.py", "exec"); print("OK")'
+STOP after writing the one file. No more actions, no reading other files.
+
+Note: The meta-agent will fill in the task-specific parts intelligently. Make the code robust, use try/except, dict access everywhere for pipeline result.
 """
+    META_AGENT_PROMPT = META_AGENT_PROMPT.format(
+    task_model=task_model,
+    META_AGENT_WORKING_DIRECTORY=META_AGENT_WORKING_DIRECTORY,
+)
+
 
     FEEDBACK_AGENT_PROMPT = """Fix target_agent.py based on execution report. JUST WRITE CODE, NO EXPLORATION.
 
