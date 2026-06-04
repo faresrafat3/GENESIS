@@ -1,7 +1,7 @@
 # 🏴‍☠️ SIA Strategic Development Plan — يونيو 2026
 ## خطة التطوير الاستراتيجية مع "سرقات" من أحدث الأبحاث
 
-> **תאריך:** 2026-06-02
+> **תאריך:** 2026-06-04
 > **מטרة:** تحويل SIA من prototype بحثي إلى أقوى self-improving AI framework
 > **الاستراتيجية:** سرقة + تكامل + تطوير = ثورة معرفية
 
@@ -14,7 +14,7 @@
 - ✅ 98.6% success على v3b_curriculum (72 مهمة)
 - ✅ بنية معرفية متقدمة (3 طبقات A/B/C)
 - ✅ منهجية ablation علمية (Cycle 5.1)
-- ✅ 93 "سرقة مشروعة" موثقة من العلوم المعرفية
+- ✅ 98 "سرقة مشروعة" موثقة من العلوم المعرفية (بما فيها 5.84 AlphaEvolve + 5.85 Co-Scientist + 5.86 Aletheia من DeepMind)
 
 ### المشاكل الحرجة
 - ❌ **انقطاع كامل** بين Orchestrator و GENESIS
@@ -95,6 +95,42 @@
 - verifier-guided self-healing
 
 **الدليل:** 98.8% task success vs 94.5% retry-only
+
+### 2.9 AlphaEvolve / FunSearch (DeepMind 2025-2026)
+**المصدر:** Nature 2023 (FunSearch) + 2025-2026 AlphaEvolve updates (DeepMind)
+**الفكرة:** LLM + strict evaluator in evolutionary loop over artifacts (code, heuristics, strategies). Population-based search with diversity and lineage.
+**السرقة لـ GENESIS:**
+- evolutionary search over cognitive artifacts (concepts, theories, skills, policies, reasoning structures)
+- LLM as generator + evaluator-driven selection + population diversity
+- turns self-improvement from simple refinement into active discovery engine
+- directly supports the pending Bridge task and turns "keyword matching" into genuine evolutionary scientific discovery
+
+**الدليل:** Solved long-standing math problems (Cap Set), improved real Google systems (data centers, chip design). Full detailed theft in `GENESIS_DeepMind_AlphaEvolve_FunSearch_Theft_AR.md`.
+
+### 2.10 Co-Scientist (Gemini for Science, DeepMind 2025-2026)
+**المصدر:** DeepMind Co-Scientist blog (I/O 2026) + Gemini for Science + related papers (e.g. arXiv references in Gemini for Science ecosystem).
+**الفكرة:** Multi-agent "AI partner" that simulates the scientific method: hypothesis generation, debate/idea tournament, evaluation with citations, experiment design, result analysis, and iterative refinement. Integrates computational discovery (building on AlphaEvolve).
+**السرقة لـ GENESIS:**
+- Multi-agent "idea tournament" layer: specialized agents (proposer, critic, literature reviewer, experimental designer) collaborate via blackboard.
+- Hypothesis generation + verification loop with rigor (citations, verifiability).
+- Computational discovery engine for parallel generation/evaluation of modeling approaches.
+- Turns the orchestrator into a scientific discovery collaborator (not just code improver).
+- Directly complements AlphaEvolve (evolutionary depth + collaborative breadth).
+
+**الدليل:** Accelerates real research workflows (biomedicine, epidemiology); part of Gemini for Science vision linking to AlphaFold/AlphaEvolve. Full detailed theft in `GENESIS_DeepMind_CoScientist_Theft_AR.md`.
+
+### 2.11 Aletheia (Gemini Deep Think, DeepMind 2026)
+**المصدر:** arXiv:2602.10177 (Feb 2026) + Gemini Deep Think blog (https://deepmind.google/blog/accelerating-mathematical-and-scientific-discovery-with-gemini-deep-think/)
+**الفكرة:** Agentic tripartite loop (Generator → Verifier (natural lang critique) → Reviser) for iterative generate-verify-revise on research-level proofs/theories. Uses web tools for literature grounding + admits failure. Achieves autonomous publishable papers + solves open Erdős problems.
+**السرقة لـ GENESIS:**
+- Tripartite generate-verify-revise loop over cognitive artifacts (theories, concepts, proofs, policies).
+- Natural language verifier + targeted revision (not just scores).
+- Tool-grounded literature + failure admission for efficiency.
+- Turns verification/theory from keyword/refinement into genuine proof-driven research loop.
+- Directly addresses "genuine reasoning vs keyword matching" core limitation.
+- Complements AlphaEvolve (generation/evolution) + Co-Scientist (collab/debate) with deep verification.
+
+**الدليل:** 95.1% on IMO-ProofBench Advanced; 4 open Erdős problems solved autonomously; Feng26 autonomous publishable paper (eigenweights in arithmetic geometry); PhD-level on FutureMath. Full detailed theft in `GENESIS_DeepMind_Aletheia_Theft_AR.md`.
 
 ---
 
@@ -185,6 +221,41 @@
 - targeted recovery actions
 - verifier-guided recovery
 
+### Task 6: Evolutionary Discovery Engine (AlphaEvolve-style)
+**الأولوية:** 🔴 حرجة (بعد/مع الـ Bridge)
+**المهمة:** إضافة evolutionary search layer فوق الـ orchestrator و concept/theory engines
+**التفاصيل:**
+- الـ meta/feedback agents يولدوا population من variants (agents / concepts / theories)
+- يقيّموهم باستخدام الـ pipeline + strict evaluator (performance + cost + robustness + diversity)
+- population management + lineage tracking + mutation/crossover
+- يربط بالـ GRASP gating و ExpGraph graph memory
+- النجاح: تحسن في الـ transfer و الـ discovery rate على broader domain slices
+- الوثيقة: `GENESIS_DeepMind_AlphaEvolve_FunSearch_Theft_AR.md` (كاملة)
+
+### Task 7: Co-Scientist Scientific Discovery Layer
+**الأولوية:** 🔴 حرجة (بعد/مع الـ Bridge + AlphaEvolve)
+**المهمة:** إضافة multi-agent "idea tournament" layer للـ hypothesis generation والـ experiment design والـ scientific collaboration
+**التفاصيل:**
+- الـ orchestrator يدير tournament من 3-5 agents متخصصين (proposer, critic, literature reviewer, experimental designer) باستخدام الـ pipeline كـ substrate
+- يدعم hypothesis_state + debate_traces + experiment proposals في الـ blackboard
+- ربط بالـ anomaly/theory leverage (tournament يركز على high-anomaly أو low-predictive areas)
+- إضافة "Scientific Discovery Report" metrics (hypotheses generated, novelty, verifiability, citation coverage)
+- النجاح: الـ orchestrator يولد فرضيات مدعومة بـ citations و linked للـ blackboard; تحسن في discovery rate والـ scientific utility
+- الوثيقة: `GENESIS_DeepMind_CoScientist_Theft_AR.md` (كاملة)
+- الاعتمادات: يعتمد على الـ Bridge + Task 6 (AlphaEvolve) + existing blackboard/theory/concept
+
+### Task 8: Aletheia-style Proof-Driven Verification & Theory Engine
+**الأولوية:** 🔴 حرجة (بعد/مع الـ Bridge + Task 6 + Task 7)
+**المهمة:** إضافة tripartite Generator-Verifier-Reviser loop + iterative generate-verify-revise (natural language critique + revision + failure admission) للـ verification_runtime + theory_runtime + orchestrator
+**التفاصيل:**
+- الـ verification يستخدم LLM critique (natural lang) + existing contracts/anomaly/theory predictions كـ multi-signal
+- الـ theory engine يولد variants → verify (predictive + contradiction + grounding) → revise → re-verify
+- الـ orchestrator يدير الـ research loop فوق الـ pipeline (Aletheia mode)
+- أضف metrics: revision_depth, proof_quality, autonomy_level, failure_admission_rate
+- النجاح: الـ verification يبقى genuine proof-driven مش keyword matching; تحسن في theory robustness + "genuine reasoning" metrics
+- الوثيقة: `GENESIS_DeepMind_Aletheia_Theft_AR.md` (كاملة)
+- الاعتمادات: يعتمد على الـ Bridge + Task 6 (evolutionary candidates) + Task 7 (collaborative critique) + GRASP gating + existing verification/theory/blackboard
+
 ---
 
 ## 5. 📊 المتوقع
@@ -217,5 +288,5 @@
 
 ---
 
-*آخر تحديث: 2026-06-02*
-*الحالة: جاهز للتنفيذ*
+*آخر تحديث: 2026-06-04*
+*الحالة: جاهز للتنفيذ (مع Task 6 AlphaEvolve + Task 7 Co-Scientist + Task 8 Aletheia من DeepMind thefts)*
