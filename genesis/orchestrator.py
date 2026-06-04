@@ -235,15 +235,23 @@ def run_evaluation(gen_directory, task_dir, venv_dir):
                 "output": eval_output,
             }
 
-        # Check if results.json was created
+        # Check if results.json or evaluation_results.json was created (support both)
         results_json_path = os.path.join(gen_directory, "results.json")
+        eval_results_path = os.path.join(gen_directory, "evaluation_results.json")
         if os.path.exists(results_json_path):
+            found_path = results_json_path
+        elif os.path.exists(eval_results_path):
+            found_path = eval_results_path
+        else:
+            found_path = None
+
+        if found_path:
             logger.info("  ✓ Evaluation completed successfully")
-            logger.info(f"  ✓ Results saved to: {results_json_path}")
+            logger.info(f"  ✓ Results saved to: {found_path}")
 
             # Load and log results
             try:
-                with open(results_json_path) as f:
+                with open(found_path) as f:
                     results = json.load(f)
                 logger.info(f"    Results: {json.dumps(results, indent=2)}")
             except Exception:
@@ -252,11 +260,11 @@ def run_evaluation(gen_directory, task_dir, venv_dir):
             return {
                 "status": "success",
                 "log_path": eval_log_file,
-                "results_path": results_json_path,
+                "results_path": found_path,
                 "output": eval_output,
             }
         else:
-            logger.warning("  ⚠ Evaluation completed but results.json not found")
+            logger.warning("  ⚠ Evaluation completed but results.json / evaluation_results.json not found")
             return {
                 "status": "warning",
                 "reason": "results.json not created by evaluate.py",
@@ -318,7 +326,7 @@ def evolutionary_discovery_engine(
                     details = "proxy (no prior data)"
 
                     import glob
-                    possible_results = glob.glob("runs/run_*/gen_*/results.json") + glob.glob("runs/run_*/gen_*/constitutional_report.json")
+                    possible_results = glob.glob("runs/run_*/gen_*/evaluation_results.json") + glob.glob("runs/run_*/gen_*/results.json") + glob.glob("runs/run_*/gen_*/constitutional_report.json")
                     if possible_results:
                         latest = max(possible_results, key=os.path.getmtime)
                         if "constitutional" in latest:
@@ -330,9 +338,19 @@ def evolutionary_discovery_engine(
                         else:
                             with open(latest) as f:
                                 res = json.load(f)
-                            fitness = res.get("overall_score", 0.75) or res.get("success_rate", 0.75)
-                            robustness = res.get("robustness", 0.85)
-                            details = "from results.json (real eval)"
+                            # Prefer real accuracy from GPQA/SWE-bench eval if present (for true performance, not proxy)
+                            if "accuracy_percent" in res:
+                                fitness = res.get("accuracy_percent", 0) / 100.0
+                                robustness = min(1.0, fitness + 0.1)  # high if accurate
+                                details = f"from evaluation_results.json (real accuracy {fitness*100:.1f}%)"
+                            elif "accuracy" in res:
+                                fitness = res.get("accuracy", 0.75)
+                                robustness = res.get("robustness", 0.85)
+                                details = "from results.json (real eval)"
+                            else:
+                                fitness = res.get("overall_score", 0.75) or res.get("success_rate", 0.75)
+                                robustness = res.get("robustness", 0.85)
+                                details = "from results.json (real eval)"
 
                     # Now attempt real pipeline call as strict evaluator (AlphaEvolve style)
                     try:
@@ -788,16 +806,19 @@ General principles for any task:
   - Call the pipeline with raw_task = the full question + options for cognitive guidance (tier, theory, memory).
   - Then use the OpenAI client (MODEL) to do step-by-step reasoning and select the best letter (A, B, C, or D ONLY). Be explicit in the prompt to the client: "Think step by step. The answer must be exactly one letter from A, B, C or D. Output ONLY the letter, no other text in the final answer."
 - Collect answers as a list of dicts in this EXACT format for compatibility with evaluate.py:
-  answers_list = [{"question_id": qid, "model_answer": letter} for each question]
-- Save as JSON to answers.json (or submission.json) in the gen dir using:
+  answers_list = [{{"question_id": qid, "model_answer": letter}} for each question]
+- Save as JSON to BOTH answers.json AND submission.json (copy the same content to both) in the gen dir using:
   with open(os.path.join(WORKING_DIR, "answers.json"), "w") as f:
-      json.dump({"details": answers_list}, f, indent=2)
+      json.dump({{"details": answers_list}}, f, indent=2)
+  with open(os.path.join(WORKING_DIR, "submission.json"), "w") as f:
+      json.dump({{"details": answers_list}}, f, indent=2)
 - This matches the "details" format that evaluate_submission supports (question_id and model_answer).
 - Also save the full execution log as before.
 - IMPORTANT: Always use the real question_id from the loaded questions data (not just sequential numbers if ids are present).
 - Use try/except around each question so one bad question doesn't kill the whole run.
 - Always print progress: "Processing question X/Y", "Chose answer: B for question X".
 - If no JSON found, fall back gracefully but still try to produce some output.
+- CRITICAL: The final answer for EACH question MUST be exactly one of A, B, C, or D (uppercase letter only). NEVER output "I", "unknown", explanations in the model_answer field, or anything else. If unsure, pick the best letter anyway. The client prompt to LLM must enforce: "Output ONLY the single letter A/B/C/D, nothing else." 
 
 - Always: use the cognitive result (tier, verification, etc.) to guide decisions (avoid shortcuts per theory).
 - If needed, make LLM calls for final answer using the client + MODEL above.
@@ -869,7 +890,7 @@ CURRENT CODE:
 
 CRITICAL INSTRUCTIONS FOR FIX:
 - If you see "Failed to write execution log: cannot access local variable 'json'" or similar scope/import error, ensure imports are at VERY TOP (os, sys, json, datetime, pandas, numpy, openai, virtual_genesis imports), and include the EXACT ROBUST EXECUTION LOGGING block from the meta prompt at the end (before final print).
-- For gpqa-like QA tasks: ensure proper JSON loading for questions (diamond_questions.json etc. with ids), per-question pipeline + client reasoning to choose ONLY A/B/C/D, and write answers as {"details": [{"question_id": id, "model_answer": letter}, ...]} to answers.json so evaluate.py picks it up (it looks for details or answers format). Fix any "I" or invalid letters.
+- For gpqa-like QA tasks: ensure proper JSON loading for questions (diamond_questions.json etc. with ids), per-question pipeline + client reasoning to choose ONLY A/B/C/D, and write answers as {{"details": [{{"question_id": id, "model_answer": letter}}, ...]}} to BOTH answers.json AND submission.json (duplicate the file) so evaluate.py ALWAYS picks the submission (it now prefers answers/submission over execution logs). Fix any "I" or invalid letters. Enforce strictly in client: output ONLY the letter.
 - If data shape is wrong (e.g. (870, 2) instead of full ~ (8693,14) for titanic-like), fix data loading to use full pd.read_csv for train.csv + test.csv, print full shapes, detect target generally.
 - Always keep the code GENERAL (no hardcodes to specific columns like 'Mars' or question formats).
 - Fix any accuracy faking: compute only on val split if possible.

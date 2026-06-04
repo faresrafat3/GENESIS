@@ -66,37 +66,73 @@ def find_submission_file(gen_dir: Path) -> Optional[Path]:
     """
     Find a submission JSON file in the generation directory.
 
-    Search order:
-    1. Check for results/ subdirectory and look for JSON files there
-    2. Look for common patterns in gen_dir itself (results*.json, submission*.json, etc.)
-    3. If only one JSON file exists, use that
+    Search order (GENERAL, prefers actual submission over logs):
+    1. Explicit preferred submission files (answers.json, submission.json) in gen_dir or results/
+    2. Check for results/ subdirectory and look for JSON files there (latest)
+    3. Look for common patterns in gen_dir itself (answers*.json, results*.json, submission*.json, output*.json)
+    4. If multiple JSONs, prefer ones with "details" or "answers" key; skip execution logs, constitutional, etc.
     """
     if not gen_dir.is_dir():
         return None
 
-    # First, check if there's a results/ subdirectory (created by reference agent)
+    preferred_names = ["answers.json", "submission.json", "answers_submission.json", "output.json"]
+    # Check preferred in gen_dir
+    for name in preferred_names:
+        p = gen_dir / name
+        if p.is_file():
+            return p
+    # Check preferred in results/
     results_dir = gen_dir / "results"
+    if results_dir.is_dir():
+        for name in preferred_names:
+            p = results_dir / name
+            if p.is_file():
+                return p
+
+    # First, check if there's a results/ subdirectory (created by reference agent)
     if results_dir.is_dir():
         json_files = list(results_dir.glob("*.json"))
         if json_files:
             # Return the most recently modified file from results/
             return max(json_files, key=lambda p: p.stat().st_mtime)
 
-    # Try common patterns in gen_dir itself
-    patterns = ["results*.json", "submission*.json", "output*.json"]
+    # Try common patterns in gen_dir itself (added answers*.json)
+    patterns = ["answers*.json", "results*.json", "submission*.json", "output*.json"]
     for pattern in patterns:
         matches = list(gen_dir.glob(pattern))
         if matches:
             # Return the most recently modified file
             return max(matches, key=lambda p: p.stat().st_mtime)
 
-    # If no pattern matches, look for any JSON file
-    json_files = list(gen_dir.glob("*.json"))
-    if len(json_files) == 1:
-        return json_files[0]
-    elif len(json_files) > 1:
-        # Return the most recently modified
-        return max(json_files, key=lambda p: p.stat().st_mtime)
+    # If no pattern matches, look for any JSON file, but filter out logs/execution/constitutional etc.
+    all_json = list(gen_dir.glob("*.json"))
+    if not all_json:
+        return None
+
+    # Filter out non-submission files (execution logs, reports, prompts, etc.)
+    def is_submission_file(p):
+        name = p.name.lower()
+        if any(x in name for x in ["execution", "log", "constitutional", "evolutionary", "context", "prompt", "report", "metadata"]):
+            return False
+        # Also check content quickly if possible (prefer files with details/answers keys)
+        try:
+            with open(p, encoding="utf-8") as f:
+                data = json.load(f)
+            if isinstance(data, dict) and ("details" in data or "answers" in data or any(k.isdigit() for k in data.keys())):
+                return True
+        except Exception:
+            pass
+        return True  # fallback include if can't load
+
+    candidates = [p for p in all_json if is_submission_file(p)]
+    if not candidates:
+        candidates = all_json  # fallback to all if filter removed everything
+
+    if len(candidates) == 1:
+        return candidates[0]
+    elif len(candidates) > 1:
+        # Return the most recently modified among candidates
+        return max(candidates, key=lambda p: p.stat().st_mtime)
 
     return None
 
