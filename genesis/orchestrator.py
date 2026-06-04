@@ -270,6 +270,155 @@ def run_evaluation(gen_directory, task_dir, venv_dir):
         return {"status": "error", "reason": str(e), "traceback": traceback.format_exc()}
 
 
+def evolutionary_discovery_engine(
+    current_agent_code: str,
+    task_text: str,
+    pipeline_evaluator: callable = None,
+    population_size: int = 8,
+    generations: int = 2,
+    diversity_weight: float = 0.3,
+) -> dict:
+    """
+    AlphaEvolve / FunSearch-style Evolutionary Discovery Engine (skeleton).
+
+    Generates a population of agent variants, evaluates them using the GENESIS pipeline
+    as strict evaluator (performance + robustness + cost proxy), selects with diversity + lineage.
+
+    This is the core integration from GENESIS_DeepMind_AlphaEvolve_FunSearch_Theft_AR.md (Task 6).
+    Currently a high-quality skeleton: LLM can be used later for mutation/crossover.
+    Ties directly to Bridge task (uses run_minimal_pipeline as substrate).
+
+    Args:
+        current_agent_code: Base target_agent.py code to evolve from.
+        task_text: The task description.
+        pipeline_evaluator: Optional callable that runs the pipeline for fitness.
+        population_size: Number of variants per generation.
+        generations: Evolutionary generations.
+        diversity_weight: Weight for diversity in selection (vs pure performance).
+
+    Returns:
+        dict with best_variant, population, lineage, metrics.
+    """
+    logger.info(f"  🧬 Starting Evolutionary Discovery Engine (population={population_size}, gens={generations})")
+
+    if pipeline_evaluator is None:
+        # Default: use the imported minimal_run as evaluator (real harness)
+        try:
+            from virtual_genesis.runtime.pipeline.minimal_run import run_minimal_pipeline
+
+            def default_evaluator(code: str, task: str) -> dict:
+                # In real use, this would exec the code or run the agent and call pipeline
+                # For skeleton: simulate fitness using pipeline if available, else mock
+                try:
+                    # Placeholder: in full impl, write temp agent, run it, then call pipeline on traces
+                    # For now, use a simple proxy (in production replace with full eval + pipeline)
+                    fitness = 0.85 + (hash(code) % 100) / 1000.0  # mock for skeleton
+                    cost = len(code) / 10000.0
+                    robustness = 0.9
+                    return {
+                        "fitness": fitness,
+                        "cost": cost,
+                        "robustness": robustness,
+                        "diversity_score": 0.5,
+                        "details": "skeleton_eval (replace with real pipeline + agent exec)",
+                    }
+                except Exception as e:
+                    return {"fitness": 0.1, "error": str(e)}
+
+            pipeline_evaluator = default_evaluator
+        except ImportError:
+            pipeline_evaluator = lambda c, t: {"fitness": 0.5, "note": "pipeline not available in skeleton"}
+
+    population = []
+    lineage = []  # Track parent -> child for evolution
+
+    # Seed population: base + simple mutations (in full: LLM generate variants)
+    base = current_agent_code
+    for i in range(population_size):
+        if i == 0:
+            variant = base
+            parent = "seed"
+        else:
+            # Simple mutation skeleton (replace with LLM mutation/crossover from theft)
+            mutation = f"# Evo variant {i}: added robustness comment + minor edit\n"
+            variant = mutation + base[:500] + "\n# [evolved section]\n" + base[500:1000] + base[1000:]
+            parent = "seed" if i < 3 else f"variant_{i-1}"
+
+        eval_result = pipeline_evaluator(variant, task_text)
+        fitness = eval_result.get("fitness", 0.5)
+        cost = eval_result.get("cost", 1.0)
+        robustness = eval_result.get("robustness", 0.8)
+
+        # Multi-objective score (performance + robustness - cost + diversity bonus later)
+        score = fitness * 0.6 + robustness * 0.3 - cost * 0.1
+
+        population.append(
+            {
+                "id": f"variant_{i}",
+                "code": variant[:2000] + "..." if len(variant) > 2000 else variant,
+                "fitness": fitness,
+                "cost": cost,
+                "robustness": robustness,
+                "score": score,
+                "parent": parent,
+                "eval_details": eval_result,
+            }
+        )
+        lineage.append({"child": f"variant_{i}", "parent": parent, "score": score})
+
+    # Evolve for generations (selection + mutation skeleton)
+    for evo_gen in range(generations):
+        logger.info(f"    Evo gen {evo_gen+1}/{generations}...")
+        # Sort by score
+        population.sort(key=lambda x: x["score"], reverse=True)
+        # Keep top half + diversity injection (simple for skeleton)
+        elites = population[: population_size // 2]
+        # Diversity: pick some lower ones if diversity_weight high
+        diverse = sorted(population, key=lambda x: x.get("diversity_score", 0), reverse=True)[: population_size // 4]
+        population = elites + diverse
+        # Pad with new mutations (skeleton)
+        while len(population) < population_size:
+            idx = len(population)
+            mutation = f"# Evo-mutated in gen {evo_gen+1}\n"
+            new_var = mutation + population[0]["code"][:800]
+            eval_result = pipeline_evaluator(new_var, task_text)
+            new_score = eval_result.get("fitness", 0.5) * 0.7 + 0.2
+            population.append(
+                {
+                    "id": f"variant_{idx}_g{evo_gen+1}",
+                    "code": new_var[:1500],
+                    "fitness": eval_result.get("fitness", 0.5),
+                    "score": new_score,
+                    "parent": population[0]["id"],
+                    "eval_details": eval_result,
+                }
+            )
+
+        # Re-score with diversity bonus (simplified)
+        for p in population:
+            p["final_score"] = p["score"] + (diversity_weight * p.get("diversity_score", 0.4))
+
+    # Final selection
+    population.sort(key=lambda x: x.get("final_score", x["score"]), reverse=True)
+    best = population[0]
+
+    logger.info(f"  ✓ Evolutionary Discovery complete. Best fitness: {best['fitness']:.3f}, score: {best.get('final_score', best['score']):.3f}")
+    logger.info(f"    Selected variant: {best['id']} (parent lineage tracked)")
+
+    return {
+        "best_variant": best,
+        "population": population,
+        "lineage": lineage,
+        "metrics": {
+            "avg_fitness": sum(p["fitness"] for p in population) / len(population),
+            "best_fitness": best["fitness"],
+            "diversity": len(set(p["parent"] for p in population)),
+        },
+        "note": "Skeleton implementation from AlphaEvolve theft. Full version will use LLM for true mutation/crossover + real pipeline calls + GRASP gating.",
+    }
+
+
+
 def _print_welcome():
     banner = rf"""
      _______. __       ___
@@ -295,6 +444,11 @@ def main():
     parser = argparse.ArgumentParser(description="Run the orchestrator for agent evolution")
     parser.add_argument("--max_gen", type=int, default=3, help="Maximum number of generations to run (default: 3)")
     parser.add_argument("--run_id", type=int, default=1, help="Run ID for this experiment (default: 1)")
+    parser.add_argument(
+        "--use_evolutionary_discovery",
+        action="store_true",
+        help="Enable AlphaEvolve-style evolutionary search over agent variants (population + strict evaluator + diversity + lineage). Ties to GENESIS_DeepMind_AlphaEvolve_FunSearch_Theft_AR.md Task 6.",
+    )
     task_group = parser.add_mutually_exclusive_group(required=True)
     task_group.add_argument(
         "--task",
@@ -356,6 +510,8 @@ def main():
     logger.info(f"  - Agent backend: {backend}")
     logger.info(f"  - Meta-agent model: {meta_model}")
     logger.info(f"  - Task-agent model: {task_model}")
+    use_evo = getattr(args, "use_evolutionary_discovery", False)
+    logger.info(f"  - Evolutionary Discovery (AlphaEvolve-style): {'ENABLED' if use_evo else 'disabled'}")
 
     # ========================
     # SECTION 1: Load Files from Task Directory
@@ -693,6 +849,31 @@ STOP after writing. NO FILE READING.
                 else "Single",
             },
         )
+
+        # ========================
+        # SECTION 5a.3: AlphaEvolve-style Evolutionary Discovery (if enabled)
+        # ========================
+        if use_evo:
+            logger.info("  🧬 Running evolutionary discovery on this generation's agent (AlphaEvolve skeleton)...")
+            try:
+                with open(target_agent_path, encoding="utf-8") as f:
+                    agent_code = f.read()
+                evo_result = evolutionary_discovery_engine(
+                    current_agent_code=agent_code,
+                    task_text=TASK if 'TASK' in dir() else "current task",
+                    population_size=6,  # smaller for skeleton
+                    generations=1,
+                )
+                # Save the evo results for the run
+                evo_path = os.path.join(current_gen_directory, "evolutionary_discovery.json")
+                with open(evo_path, "w", encoding="utf-8") as f:
+                    json.dump(evo_result, f, indent=2, default=str)
+                logger.info(f"  ✓ Evolutionary results saved to {evo_path}")
+                logger.info(f"    Best evo variant fitness: {evo_result['best_variant']['fitness']:.3f}")
+                # In full impl: replace or augment the target_agent with the best evo variant
+                # For skeleton: just log and record (next step: actually write improved code)
+            except Exception as e:
+                logger.warning(f"  ⚠ Evolutionary discovery failed: {e}")
 
         # ========================
         # SECTION 5b: Run Feedback Agent (if not the last generation)
