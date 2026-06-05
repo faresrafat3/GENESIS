@@ -706,6 +706,9 @@ from virtual_genesis.runtime.economy_control.ledger import InMemoryLedgerStore
 from virtual_genesis.core.objects.memory import MemoryUnit
 
 # 🔑 RECOMMENDED: Use genesis.llm_helpers for battle-tested LLM utilities
+# CRITICAL: extract_response_text() returns a TUPLE (text, meta), not just text!
+# Always unpack:  text, meta = extract_response_text(resp)
+# Then:           letter = extract_letter(text)
 # (extract_response_text, extract_letter, build_mcq_prompt, etc.)
 # Tested against 16+ real-world response formats; proven to lift GPQA from 30% to 75%.
 try:
@@ -857,6 +860,7 @@ where X is one of A, B, C, or D. Nothing after that line.'''
 
 - **🔑 CRITICAL: Handle empty content from reasoning models.**
   When max_tokens runs out during reasoning, `response.choices[0].message.content == ''`.
+  **CRITICAL: When using the imported genesis.llm_helpers.extract_response_text(), it returns a TUPLE (text, meta). Always unpack: `text, meta = extract_response_text(resp)`. The inline version below returns just a string.**
   Always check `message.reasoning` or `message.reasoning_details` as fallback:
   ```python
   def extract_response_text(resp):
@@ -918,7 +922,8 @@ where X is one of A, B, C, or D. Nothing after that line.'''
           max_tokens=256, temperature=0.0,
           extra_body={{'reasoning': {{'effort': 'low'}}}},  # disable heavy reasoning for follow-up
       )
-      pred = extract_letter(extract_response_text(resp2))
+      fu_text, _ = extract_response_text(resp2)
+      pred = extract_letter(fu_text)
   ```
 
 - Collect answers as a list of dicts in this EXACT format for compatibility with evaluate.py:
