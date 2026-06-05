@@ -548,8 +548,14 @@ def main():
         "--ablation_mode",
         type=str,
         default="none",
-        choices=["none", "no_pipeline"],
-        help="Research ablation mode. 'no_pipeline' disables or neutralizes cognitive pipeline leverage while preserving the rest of the GENESIS scaffold.",
+        choices=["none", "no_pipeline", "narrow_feedback", "no_pipeline+narrow_feedback"],
+        help=(
+            "Research ablation mode. "
+            "'no_pipeline' disables cognitive pipeline leverage on answer generation. "
+            "'narrow_feedback' restricts the feedback agent to ONLY fix wrong-answer questions "
+            "without broad refactoring. "
+            "'no_pipeline+narrow_feedback' combines both (A7-style)."
+        ),
     )
     args = parser.parse_args()
 
@@ -686,7 +692,11 @@ def main():
     # SECTION 3: Define Prompts
     # ========================
 
-    if ablation_mode == "no_pipeline":
+    # Decompose ablation_mode into individual flags so they can be combined.
+    no_pipeline_active = ablation_mode in ("no_pipeline", "no_pipeline+narrow_feedback")
+    narrow_feedback_active = ablation_mode in ("narrow_feedback", "no_pipeline+narrow_feedback")
+
+    if no_pipeline_active:
         ablation_instruction = """
 
 **EXPERIMENTAL ABLATION MODE: NO_PIPELINE**
@@ -1026,12 +1036,33 @@ Note: The meta-agent will fill in the task-specific parts intelligently. Make th
 )
 
 
-    if ablation_mode == "no_pipeline":
-        ablation_feedback_instruction = """
-- **ABLATION MODE: NO_PIPELINE** — Preserve the ablation. Do NOT re-introduce cognitive pipeline leverage into answer generation. You may keep compatibility scaffolding and logging, but answers must be produced without using tier/theory/blackboard/verification signals.
-"""
-    else:
-        ablation_feedback_instruction = ""
+    ablation_feedback_parts = []
+    if no_pipeline_active:
+        ablation_feedback_parts.append(
+            "- **ABLATION MODE: NO_PIPELINE** — Preserve the ablation. Do NOT re-introduce "
+            "cognitive pipeline leverage into answer generation. You may keep compatibility "
+            "scaffolding and logging, but answers must be produced without using "
+            "tier/theory/blackboard/verification signals."
+        )
+    if narrow_feedback_active:
+        ablation_feedback_parts.append(
+            "- **ABLATION MODE: NARROW_FEEDBACK (A7)** — This is the most important constraint. "
+            "You are FORBIDDEN from doing broad refactoring, renaming, reorganizing, "
+            "or stylistic changes to the agent code. "
+            "Your ONLY allowed changes are:\n"
+            "  1. Targeted fixes that address the SPECIFIC wrong-answer questions reported below.\n"
+            "  2. Minimal additions to the prompt or system message that demonstrably help on those wrong questions.\n"
+            "  3. Bug fixes that prevent crashes or invalid answers (only if such bugs are present).\n"
+            "  You are FORBIDDEN from:\n"
+            "  1. Changing the architecture or control flow.\n"
+            "  2. Renaming variables, reorganizing imports, or restructuring functions.\n"
+            "  3. Adding new features, abstractions, helpers, or optimizations.\n"
+            "  4. Touching code paths that are NOT directly related to the wrong-answer questions.\n"
+            "  This is a controlled research ablation to isolate whether feedback drift comes from "
+            "over-broad rewriting. Keep the diff as small as possible. If you cannot find a targeted "
+            "fix, output the SAME code as before, byte-for-byte."
+        )
+    ablation_feedback_instruction = "\n".join(ablation_feedback_parts)
 
     FEEDBACK_AGENT_PROMPT = """Fix target_agent.py based on execution report. JUST WRITE CODE, NO EXPLORATION.
 

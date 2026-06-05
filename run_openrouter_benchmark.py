@@ -61,8 +61,11 @@ def main():
     parser.add_argument("--use_evolutionary_discovery", action="store_true",
                         help="Enable AlphaEvolve evolutionary engine")
     parser.add_argument("--ablation_mode", type=str, default="none",
-                        choices=["none", "no_pipeline"],
-                        help="Research ablation mode. 'no_pipeline' disables/neutralizes cognitive pipeline leverage while keeping the GENESIS scaffold.")
+                        choices=["none", "no_pipeline", "narrow_feedback", "no_pipeline+narrow_feedback"],
+                        help=("Research ablation mode. "
+                              "'no_pipeline' disables pipeline leverage. "
+                              "'narrow_feedback' restricts feedback agent to minimal targeted fixes only. "
+                              "'no_pipeline+narrow_feedback' combines both (A7 setup)."))
     # NEW: explicit model selection (defaults preserve old behavior)
     parser.add_argument("--meta_model", type=str, default="openai/gpt-oss-120b:free",
                         help=f"Meta-agent model id. Shortcuts: {list(RECOMMENDED_MODELS.keys())}")

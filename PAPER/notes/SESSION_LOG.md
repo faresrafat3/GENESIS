@@ -161,3 +161,50 @@
 - ⏭ A4 / A7 feedback-focused ablation
 - ⏭ Cross-model same-subset comparison (Gemini / GPT-5 / Gemma)
 - ⏭ Decide whether constitutional pressure or feedback scope comes next
+
+---
+
+## Session 5 — 2026-06-05 (A7 infrastructure: narrow_feedback ablation)
+
+**الحالة:** السيشن السابقة (Session 4) علقت بعد ما رفعت `78430fc`. هذه السيشن استلمت من نفس النقطة وكملت بدون تكرار.
+
+### ما تم
+
+**A7 infrastructure wired:**
+- إضافة `narrow_feedback` كـ `--ablation_mode` choice جديد في:
+  - `genesis/orchestrator.py`
+  - `run_openrouter_benchmark.py`
+- إضافة `no_pipeline+narrow_feedback` كـ choice مركّب (A7b).
+- تفكيك `ablation_mode` إلى flags مستقلة: `no_pipeline_active`, `narrow_feedback_active`.
+- كتابة instruction block صريحة جداً للـ feedback agent تحظر:
+  - broad refactoring
+  - renaming / reorganizing
+  - new features or abstractions
+  - touching code paths غير الأسئلة الغلط
+  وتسمح فقط بـ:
+  - targeted fixes for the specific wrong-answer questions
+  - minimal prompt additions
+  - bug fixes that prevent crashes/invalid answers
+  - outputting identical code إذا لم يوجد fix مستهدف.
+
+**Paper updates:**
+- إنشاء `PAPER/tables/tab15_a7_design.md`:
+  - 3 تجارب مخططة (A7a, A7b, A7c)
+  - CLI كاملة قابلة للتشغيل
+  - hypotheses مسجلة مسبقاً (pre-registered)
+  - decision rule صريح
+- تحديث `HANDOFF.md` ليعكس حالة Session 5.
+- تحديث `TODO_HIGH.md` بـ A7 priorities.
+
+### ما لم يتم (مقصود)
+
+- **لم يتم تشغيل A7 فعلياً** في هذه السيشن. السبب:
+  - free tier quota محدود
+  - الـ sandbox هنا مش الـ machine بتاع فارس
+  - الأنسب يشغّلها فارس عنده بالـ CLI الموثقة في Table 15
+- لذلك السيشن دي infrastructure-only — أعدّت المشروع للخطوة التالية بدون استهلاك أي API calls.
+
+### الـ Commit (بعد الـ push)
+
+- `(pending)`: A7 infrastructure + Table 15 + HANDOFF Session 5 update
+
