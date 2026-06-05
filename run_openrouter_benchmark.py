@@ -53,7 +53,9 @@ RECOMMENDED_MODELS = {
 def main():
     parser = argparse.ArgumentParser(description="Run GENESIS benchmark on OpenRouter + AlphaEvolve")
     parser.add_argument("--task", type=str, default="spaceship-titanic",
-                        help="Bundled task (spaceship-titanic, gpqa, lawbench, longcot-chess) or 'swe_bench'")
+                        help="Bundled task (spaceship-titanic, gpqa, lawbench, longcot-chess) or 'swe_bench'. Ignored if --task_dir is provided.")
+    parser.add_argument("--task_dir", type=str, default=None,
+                        help="External task directory (recommended for quick subsets like tasks/gpqa_subset_20)")
     parser.add_argument("--max_gen", type=int, default=3)
     parser.add_argument("--run_id", type=int, default=1)
     parser.add_argument("--use_evolutionary_discovery", action="store_true",
@@ -88,17 +90,20 @@ def main():
 
     cmd = [
         sys.executable, "-m", "genesis.orchestrator",
-        "--task", args.task,
         "--max_gen", str(args.max_gen),
         "--run_id", str(args.run_id),
         "--backend", "openai",
         "--meta_model", meta_model,
         "--task_model", task_model,
     ]
+    if args.task_dir:
+        cmd += ["--task_dir", args.task_dir]
+    else:
+        cmd += ["--task", args.task]
     if args.use_evolutionary_discovery:
         cmd.append("--use_evolutionary_discovery")
 
-    if args.task == "swe_bench":
+    if (not args.task_dir) and args.task == "swe_bench":
         print("\n=== SERIOUS BENCHMARK MODE: SWE-bench (for paper/project level) ===")
         print("SWE-bench is the standard for agentic software engineering: real GitHub issues, edit code to fix bugs and pass tests.")
         print("To run properly:")
@@ -113,6 +118,7 @@ def main():
 
     print("Running GENESIS benchmark on OpenRouter...")
     print("Command:", " ".join(cmd))
+    print(f"Task source: {args.task_dir if args.task_dir else args.task}")
     print(f"Meta model: {meta_model}")
     print(f"Task model: {task_model}")
     if args.use_evolutionary_discovery:

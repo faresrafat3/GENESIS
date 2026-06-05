@@ -13,13 +13,21 @@
 - ✅ 11 OpenRouter keys + 5 Gemini keys working
 - ✅ **Bug #6 discovered & fixed:** extract_response_text tuple unpacking
 
-## 🔴 الـ Critical Experiment — RUNNING NOW
+## 🔴 الـ Critical Experiment — RE-SCOPED TO USEFUL 20Q SUBSET
 
-**Run 55:** GENESIS post-fix on gpt-oss-120b, GPQA Diamond 198 questions
-- Gen 1: 18/198 questions processed, 0 errors
-- Meta-agent wrote correct target_agent.py (14,644 bytes, tuple unpacking OK)
-- Target agent: pipeline tier_2, multi-case JSON keys, max_tokens=16384
-- Estimated completion: ~2 hours
+**Run 55 على 198 سؤال تم إيقافه** لأنه يضيع وقت/Quota على free tier.
+
+**المسار الحالي الصحيح:**
+- استخدم `tasks/gpqa_subset_20`
+- شغّل GENESIS post-fix على **20 سؤال فقط**
+- قارن مباشرة مع **pure baseline = 75.00% على نفس الـ subset**
+- دليل التشغيل: `QUICK_RUN_20Q_GUIDE_AR.md`
+
+**لماذا ده أهم؟**
+- أسرع بكتير
+- نفس معيار المقارنة العلمي
+- مناسب للـ debugging والـ paper iteration
+- يمنع "العطلة" اللي حصلت مع 198 سؤال
 
 ## 📊 الأرقام الحرجة
 - Pure baseline: 75.00% (n=20)

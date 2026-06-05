@@ -1,12 +1,12 @@
 # 🔴 TODO — أولويات حرجة
 
-1. **[CRITICAL EXPERIMENT]** تشغيل GENESIS post-fix (run_54)
-   - النموذج: `openai/gpt-oss-120b:free`
-   - المهمة: GPQA Diamond 20-question
-   - الإعداد: `max_gen=2`, `--use_evolutionary_discovery`
-   - الهدف: معرفة هل GENESIS > 75% pure baseline
-   - المانع: OpenRouter daily quota exhausted
-   - الحل: انتظار UTC midnight أو استخدام GitHub Models gpt-5
+1. **[CRITICAL EXPERIMENT]** تشغيل GENESIS post-fix على **subset 20 سؤال**
+  - النموذج: `openai/gpt-oss-120b:free`
+  - المهمة: `tasks/gpqa_subset_20`
+  - الإعداد: `max_gen=2`, `--use_evolutionary_discovery`
+  - الهدف: معرفة هل GENESIS > 75% pure baseline
+  - المانع السابق (198 سؤال = بطء وعطلة) تم حله بإنشاء subset سريع
+  - التشغيل: راجع `QUICK_RUN_20Q_GUIDE_AR.md`
 
 2. **[PAPER]** إكمال PAPER.md بعد نتيجة run_54
    - كتابة Abstract
