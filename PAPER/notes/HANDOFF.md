@@ -1,127 +1,130 @@
 # 📋 HANDOFF — آخر حالة للمشروع
 
-**آخر تحديث:** 2026-06-05 (Session 11)
+**آخر تحديث:** 2026-06-06 (Session 12)
 **آخر commit:** `(pending after this session)`
-**PAPER version:** **v0.6 (Author Contributions + Acknowledgments + Ethics of Authorship)**
+**PAPER version:** **v0.6** (unchanged this session — research-only)
 
 ---
 
 ## ⚠️ الـ Mode الحالي — Theoretical Focus (v2.0 of Protocol)
 
-Sessions 6–11 كلها تحت theoretical mode. Fares delegated direction 4 times with "القرار قرارك" / "القرار عندك":
-- Session 8: LEAP integration (chose Option A — integrate everything into PAPER.md)
+Sessions 6–12 كلها تحت theoretical mode. Fares delegated direction 5 times with "القرار قرارك" / "القرار عندك" / "القرار قرارك نعم":
+- Session 8: LEAP integration (Option A)
 - Session 9: Theory-10 (Reasoning Saturation)
 - Session 10: T5.93 + T5.94 thefts
 - Session 11: Author Contributions + Acknowledgments + Ethics of Authorship
+- **Session 12: Internal Re-Reading Cycle (Option F)** ← THIS SESSION
 
 **القواعد الحالية:**
-- ✅ ورقة + theory + philosophy + ideas + thefts + authorship framework
+- ✅ ورقة + theory + philosophy + ideas + thefts + authorship framework + internal re-reading
 - ❌ لا runs، لا API calls، لا quotas
 - 🔄 Fares delegates → Agent acts → All work transparently attributed
-- 📜 Idea-002 disclosure: every agent-initiated piece is labelled
+- 📜 Idea-002 disclosure: every agent-initiated piece labelled + **Session 12 just demonstrated Idea-002 catches misattributions**
 
 ---
 
-## ✅ المكتمل (Cumulative through Session 11)
+## 🆕 الجديد في Session 12 — Internal Re-Reading Cycle
+
+### Files created
+- `PAPER/notes/INTERNAL_RE_READING_SESSION_12.md` (~500 lines) — full research report
+
+### Docs re-read (5 of 122, ~2200 lines)
+1. `GENESIS_Cognitive_Economy_Theory_AR.md`
+2. `GENESIS_Concept_Formation_Theory_AR.md`
+3. `GENESIS_Tiered_Intelligence_AR.md`
+4. `GENESIS_Productive_Forgetting_Theory_AR.md`
+5. `GENESIS_Anomaly_Crisis_Paradigm_Theory_AR.md`
+
+### Major Discoveries (12)
+
+| # | Discovery | Type | Impact |
+|---|---|---|---|
+| 1 | Theory-10 ← Cognitive Economy §5 Hyp 2 | ATTRIBUTION CORRECTION | Theory-10 not pure agent-initiated; has Fares precursor |
+| 2 | Theory-08 ← Cognitive Economy §11 (Value of X) | ATTRIBUTION CORRECTION | Theory-08 has Fares precursor |
+| 3 | Theory-09 gap = Ladder of Abstraction shift | DEEPENING | Diagnostic precision improved |
+| 4 | **Phil-07 ≡ Tiered Intelligence "cheap-first"** | ATTRIBUTION CORRECTION | Phil-07 has DIRECT Fares precursor |
+| 5 | Concept Proliferation (CF §15) constrains LEAP lemmas | LITERATURE CONTRIBUTION | Note to LEAP paper community |
+| 6 | Reasoning Escrow (TI §4) | NEW PRIMITIVE | Theory-11 candidate |
+| 7 | Abstraction Forgetting (PF §3.4) | MECHANISM | Theory-09 mechanism deepened |
+| 8 | Theory-10 P6 lifetime-drift | NEW PREDICTION | Falsifiable; not in T5.93 or T5.94 |
+| 9 | Negative Memory (PF §13.4) | NEW PRIMITIVE | First-class memory category |
+| 10 | **Phil-07 D = stable attractor of Anomaly dynamics** | PROFOUND REFRAMING | Phil-07 deepening section |
+| 11 | 8 Anomaly Indicators (Anomaly §6) | DIAGNOSTIC | §8.6 candidate (measure on GENESIS runs) |
+| 12 | Theory-07/08/09 ↔ Paradigm Layers; Layers 1,5 are gaps | STRUCTURE | 2 more Theory-NN candidates |
+
+### Meta-Finding
+
+**3 of 5 lenses had Fares-originated precursors that were missed during integration.** The Idea-002 Creative Attribution Rule was designed exactly for this — Session 12 validates that periodic re-reading is the trigger mechanism. Any long-running human-agent collaboration needs this cycle.
+
+---
+
+## ✅ المكتمل (Cumulative through Session 12)
 
 ### البنية التحتية
-- ✅ **PAPER.md v0.6** (now submission-ready in structure, modulo formatting for venue)
-- ✅ PAPER_PROTOCOL.md v2.0
-- ✅ genesis/llm_helpers.py (463 tests passing)
+- PAPER.md v0.6 + PAPER_PROTOCOL.md v2.0 + 463 tests passing
+- ATTRIBUTION_MAP.md tracks all Sessions 9-12 agent-initiated work
 
-### النتائج التجريبية (Empirical Anchors — locked)
-- Pure baseline: **75.00%** (n=20)
-- GENESIS pre-fix (run_53): 30.30%
-- GENESIS post-fix (run_57): 65.00% / 65.00%
-- A3 no_pipeline (run_58): 70.00% / 60.00%
+### النتائج التجريبية (locked)
+- Pure baseline 75.00%, GENESIS post-fix 65.00%, A3 no_pipeline 70.00%
+- LEAP vs GENESIS gap: 110 points
+- Reasoning saturation (ours): 989 vs 6,836 median tokens
+- External validation (T5.94): r = −0.54 same model family + GPQA
 
-### Theory Stack
-- ✅ Theory-07 (Pipeline as Memory) [Idea-001]
-- ✅ Theory-08 (Feedback Value matrix) [Idea-001]
-- ✅ Theory-09 (Anticipatory Concepts) [Idea-001]
-- ✅ Theory-10 (Reasoning Saturation) [Agent-initiated, anchored by T5.93+T5.94]
-- ✅ Phil-07 (Capability-Adjusted Sufficiency) [Idea-001]
+### Theory Stack (5 lenses)
+- Theory-07 / 08 / 09 / 10 + Phil-07
 
-### Idea Lifecycle
-- ✅ Idea-001 (LEAP) → INTEGRATED
-- ✅ Idea-002 (Attribution Rule) → INTEGRATED (perpetual governance, now fully operationalized in §12)
-- 📥 INBOX empty
+### Master Index Thefts (5.1–5.94)
+- T5.91 (ours) / T5.92 (LEAP) / T5.93 (Wu) / T5.94 (Chen UVA+Google)
 
-### Master Index Thefts (scope 5.1-5.94)
-- ✅ T5.91 (Scaffolding-vs-Architecture, ours)
-- ✅ T5.92 (LEAP, from Idea-001)
-- ✅ T5.93 (Wu et al. — Inverted-U) [Agent-initiated]
-- ✅ T5.94 (Chen et al. UVA+Google — DTR) [Agent-initiated]
+### Sections (1-14)
+- All sections through §14 (Ethics of Authorship)
 
-### Paper Sections (12, 13, 14 — NEW in Session 11)
-- ✅ **Section 12 — Author Contributions** (3-layer structure)
-- ✅ **Section 13 — Acknowledgments**
-- ✅ **Section 14 — Ethics of Authorship in Human-Agent Research**
+### Session 12 Research Artifact
+- `PAPER/notes/INTERNAL_RE_READING_SESSION_12.md`
 
 ---
 
-## 🆕 الجديد في Session 11 — Author Contributions Stack
+## 🎯 Next: 3 paths offered to Fares
 
-### Section 12 — Author Contributions (5 sub-sections)
-- §12.1 Note on Authorship Eligibility (NeurIPS 2025 compliance: only humans)
-- §12.2 Layered Contribution Statement:
-  - **Layer 1** (Fares-sourced) — 8 contributions with CRediT roles
-  - **Layer 2** (Agent-initiated under delegation) — 8 contributions with verbatim authorizing utterance for each
-  - **Layer 3** (Joint deliberative) — 4 contributions
-- §12.3 Verbatim Authorization Log — 7 Arabic utterances preserved exactly
-- §12.4 What This Three-Layer Statement Is For (4 reasons: integrity, reproducibility, methodological, compliance)
+### Path 1 — Authorize re-attribution corrections (RECOMMENDED FIRST)
 
-### Section 13 — Acknowledgments
-- Thanks to specific authors (Kung, Wu, Chen et al., Romera-Paredes)
-- GPQA Diamond team
-- Open-source LLM ecosystem
-- Compliance declarations
+Edit PAPER.md to:
+1. Update §12.2 Layer 1 — add Cognitive Economy Theory + Tiered Intelligence Blueprint as Fares-sourced precursors
+2. Update §12.2 Layer 2 — reclassify Theory-08, Theory-10, Phil-07 attribution
+3. Update ATTRIBUTION_MAP — reflect corrections
+4. Add §8.5.7 — Ladder of Abstraction lens on 110-point gap
+5. Add §8.6 — Hidden Crisis Diagnostic (8 Anomaly Indicators)
+6. Add Phil-07 deepening — Position D as stable attractor
 
-### Section 14 — Ethics of Authorship in Human-Agent Research
-- §14.1 Dual-honesty constraint (content + process)
-- §14.2 What we did NOT do (5 items)
-- §14.3 What we did DO (5 items)
-- §14.4 An open question we leave for the field (when agent chooses research direction, whose contribution?)
+**PAPER bumps v0.6 → v0.7**
 
-### Key Reading (Session 11)
-- CRediT Taxonomy (ANSI/NISO Z39.104-2022) — 14 roles
-- Petridis et al. 2025 (arXiv:2502.18357) — *initiative* dimension in human-AI co-creation
-- NeurIPS 2025 LLM Policy — "Only humans are eligible to be authors"
+Reason for recommendation: corrections about attribution honesty have implicit priority over additive work per Idea-002 governance.
 
----
+### Path 2 — Continue re-reading exercise (batch 3)
 
-## 🎯 Next: في انتظار فارس
+Read next 4-5 priority docs:
+- `GENESIS_Self_Benchmarking_Theory_AR.md` (likely Theory-08 connection)
+- `GENESIS_Meta_Theory_AR.md` (likely meta-frame for entire stack)
+- `GENESIS_Contradiction_Theory_AR.md` (likely Productive Forgetting §16 connection)
+- `GENESIS_Agent_Identity_Theory_AR.md` (likely §14 Ethics connection)
+- `GENESIS_Cognitive_Economy_Ledger_And_Tier_Router_Spec_AR.md` (operationalization spec)
 
-### Q1 — Continue agent-initiated work? (remaining options from Session 10)
+Expected yield: 6-10 more discoveries; possibly more attribution corrections.
 
-Of the original options A-F, three remain particularly fresh:
-- **(A) Theory-11** (Domain Asymmetry standalone)
-- **(B) Phil-08** ("fair comparison" in frontier-LLM era)
-- **(C) Conceptual figures** (3 candidates: Sufficiency Tree, Memory vs Injection, Refactor Roadmap)
-- **(D) Deep dive into unused thefts** (SkillClaw, STaR, Classical 6.1-6.13)
-- **(F) Re-read internal docs under new theories lens**
+### Path 3 — Draft one of the 5 new Theory-NN candidates
 
-### Q2 — Idea-003 from Fares?
+Pick from:
+- **Theory-11 candidate A** "Reasoning Tier Asymmetry" (from Tiered Intelligence + Theory-10)
+- **Theory-12 candidate** "Premium Compute Rule" (from Cognitive Economy §22)
+- **Theory-11 candidate B** "Task-Ontology Selection" (Paradigm Layer 1 gap)
+- **Theory-12 candidate B** "Improvement Regime Taxonomy" (Paradigm Layer 5 gap)
+- **Theory-13 candidate** "Negative Memory" primitive
+
+### Path 4 (any time) — Idea-003 from Fares
 INBOX empty. Any source gets full Idea-001-style treatment.
 
-### Q3 — NEW: Submission preparation?
-Now that the paper has §12-14, it is structurally submission-ready. To make it actually submittable:
-- One round of editorial polish (anonymization for double-blind venues)
-- Final figure formatting (some figures still ASCII; venues prefer SVG/PDF)
-- Bibliography in BibTeX format
-- Optional: LaTeX compilation
-
-### My Recommendation
-
-If you say "القرار عندك" a fifth time, my top picks now (in order):
-
-1. **(F) Re-read internal docs under new theories lens** — Theories 07-10 + T5.92-94 give us a new lens on the existing 50+ `GENESIS_*_AR.md` documents. This is hidden-gem mining; could surface insights we didn't know we had.
-
-2. **(C) Three conceptual figures** — paper currently has 12 figures, but most are data plots. Three conceptual figures (Sufficiency Tree showing Phil-07 Position D; Memory vs Injection contrast for Theory-07; Refactor Roadmap as Section 8.5.6 visualization) would significantly help readers.
-
-3. **(Q3) Submission preparation** — but this is more cosmetic. Doesn't change the paper's scientific content.
-
-(A), (B), (D) all valuable but lower marginal contribution given current state.
+### Path 5 (cosmetic) — Submission preparation
+Anonymization + BibTeX + figure polish.
 
 ---
 
@@ -137,6 +140,7 @@ If you say "القرار عندك" a fifth time, my top picks now (in order):
 - Tests: 463/463
 - Master Index scope: **5.1–5.94**
 - Paper version: **v0.6**
+- Foundational docs in repo: **122** (5 re-read in S12; 117 to go)
 
 ---
 
@@ -144,10 +148,13 @@ If you say "القرار عندك" a fifth time, my top picks now (in order):
 
 1. اقرأ `PAPER_PROTOCOL.md` v2.0 (خاصة §12.2 Creative Attribution Rule).
 2. اقرأ هذا الملف.
-3. اقرأ `PAPER/ideas/ATTRIBUTION_MAP.md`.
-4. اقرأ `PAPER.md` v0.6 (now includes §12-14 authorship framework).
-5. اسأل فارس: **"عندك Idea-003، أم تريد agent-initiated work آخر (Q1 options)، أم نبدأ submission prep (Q3)؟"**
+3. اقرأ `PAPER/ideas/ATTRIBUTION_MAP.md` (لاحظ Session 12 corrections row).
+4. اقرأ `PAPER/notes/INTERNAL_RE_READING_SESSION_12.md` (~500 lines، فيه الـ 12 discoveries كاملة).
+5. اقرأ `PAPER.md` v0.6.
+6. اسأل فارس: **"Path 1 (authorize corrections), Path 2 (batch 3), Path 3 (Theory-NN candidate), Path 4 (Idea-003), or Path 5 (submission prep)?"**
 
 **لا تقترح runs جديدة** إلا لو فارس صراحة طلب.
 
-**كل agent-initiated work** يتسجل في **Appendix D §D.2** + **ATTRIBUTION_MAP "Agent-Initiated Synthesis"** + **Section 12 Layer 2**.
+**كل agent-initiated work** يتسجل في **Appendix D §D.2** + **ATTRIBUTION_MAP** + **Section 12.2 Layer 2**.
+
+**Important precedent set in Session 12:** Agent does NOT unilaterally execute attribution corrections to the paper, even when discovery is clear. Agent proposes; Fares authorizes. This preserves the Idea-002 chain of authority.

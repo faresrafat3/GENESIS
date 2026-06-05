@@ -94,6 +94,24 @@
 
 > **Disclosure principle (Idea-002):** Even Fares-authorized agent work is attributed transparently. When Fares says "القرار عندك" the agent is empowered to act, but the resulting work is labeled as **agent-initiated** (not Fares-authored) so the final paper can honor the actual division of intellectual labor.
 
+### Session 12 agent-initiated work (Internal Re-Reading Cycle)
+
+| Work | Trigger | Output | Status |
+|---|---|---|---|
+| **Internal Re-Reading Session 12** | Session 12 Fares delegation ("القرار قرارك") | `PAPER/notes/INTERNAL_RE_READING_SESSION_12.md` (~500 lines): 5 foundational docs re-read under lens of Theories 07-10 + Phil-07; **12 major discoveries** including 3 attribution corrections (Theory-08, Theory-10, Phil-07 have Fares-originated precursors); 9 paper-level proposals pending Fares review; meta-finding: option (F) validates as highest-leverage HANDOFF strategy. | ✅ Research artifact complete; paper edits pending Fares decision |
+
+**Key re-attribution discoveries (Session 12):**
+
+| Lens | Originally attributed to | Session 12 reveals Fares-originated precursor in |
+|---|---|---|
+| Theory-08 (Feedback Value Matrix) | Idea-001 (LEAP integration, Session 7) | `GENESIS_Cognitive_Economy_Theory_AR.md` §11 (Value of X framework) |
+| Theory-10 (Reasoning Saturation) | Agent-initiated Session 9, anchored by T5.93/T5.94 | `GENESIS_Cognitive_Economy_Theory_AR.md` §5 Hypothesis 2 ("knowing when not to think more") |
+| Phil-07 (Capability-Adjusted Sufficiency) | Idea-001 (LEAP integration, Session 7) | `GENESIS_Tiered_Intelligence_AR.md` final paragraph ("cheap-first, premium-on-demand") + `GENESIS_Anomaly_Crisis_Paradigm_Theory_AR.md` dynamic equilibrium framing |
+
+These re-attributions will be applied to PAPER.md if/when Fares authorizes (Path 1 in Session 12 doc §11).
+
+---
+
 ### Session 9, 10, 11 agent-initiated work
 
 | Item | Triggering context | Paper impact | Status |
@@ -116,6 +134,7 @@
 | T5.93 | Wu et al. — Inverted-U + scaling laws | Agent-initiated (Session 10, Fares-authorized) | MAJOR | 3 (Cycle 8 theft memo + Master Index entry + Theory-10 promotion to "primary theoretical backbone" + PAPER §7.3.2/Appendix B/D updates) |
 | T5.94 | Chen et al. — DTR + Think@n (UVA + Google) | Agent-initiated (Session 10, Fares-authorized) | MAJOR | 3 (Cycle 8 theft memo + Master Index entry + Theory-10 promotion to "closest external precedent" + PAPER §7.3.2/Appendix B/D updates) |
 | Sections 12–14 | Author Contributions + Acknowledgments + Ethics of Authorship | Agent-initiated (Session 11, Fares-authorized) | META-CORE | 3 sections (~250 lines) + ATTRIBUTION_MAP row + Petridis et al. 2025 + CRediT integration. Makes the paper submission-ready under NeurIPS 2025 LLM-disclosure policy. |
+| Re-Reading S12 | Internal foundational docs re-reading under Theories 07-10 + Phil-07 lens | Agent-initiated (Session 12, Fares-authorized) | META-CORE | `INTERNAL_RE_READING_SESSION_12.md` (~500 lines): 5 docs read, 12 discoveries, **3 attribution corrections proposed for Theory-08/10 + Phil-07**, 9 new pending paper-level proposals. Validates option (F) as highest-leverage HANDOFF strategy. Triggers Idea-002 governance cycle (correction > addition priority). |
 
 ---
 

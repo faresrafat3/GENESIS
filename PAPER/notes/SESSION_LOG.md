@@ -840,3 +840,103 @@ This open question may itself be the **most generalizable** contribution of the 
 
 `(pending)`: Session 11 — Author Contributions + Acknowledgments + Ethics of Authorship. PAPER v0.6. Three-layer structure with verbatim authorization log. NeurIPS 2025 compliance + CRediT + Petridis et al. 2025 *initiative* dimension.
 
+
+---
+
+## Session 12 — 2026-06-06 (Agent-Initiated: Internal Re-Reading Cycle, Option F)
+
+**Trigger:** Fares delegated "القرار قرارك" (5th delegation, ask_user UI selection). Agent chose **Option (F) from HANDOFF**: re-read foundational `GENESIS_*_AR.md` docs under the new lens of Theories 07-10 + Phil-07.
+
+### السبب وراء القرار
+
+من Session 11 HANDOFF كتبت توصيتي:
+> "If you say 'القرار عندك' a fifth time, my top picks now (in order): 1. (F) Re-read internal docs under new theories lens — Theories 07-10 + T5.92-94 give us a new lens on the existing 50+ `GENESIS_*_AR.md` documents. This is hidden-gem mining; could surface insights we didn't know we had."
+
+ده Session 12 حان وقت تنفيذها. هدف: hidden-gem mining + cross-reference + قابلية اكتشاف misattributions.
+
+### ما تم — Reading
+
+5 docs (out of 122 total):
+1. `GENESIS_Cognitive_Economy_Theory_AR.md` (546 lines)
+2. `GENESIS_Concept_Formation_Theory_AR.md` (464 lines)
+3. `GENESIS_Tiered_Intelligence_AR.md` (270 lines)
+4. `GENESIS_Productive_Forgetting_Theory_AR.md` (416 lines)
+5. `GENESIS_Anomaly_Crisis_Paradigm_Theory_AR.md` (504 lines)
+
+**Total: 2,200 lines of foundational theory re-read under new lenses.**
+
+### ما تم — Writing
+
+`PAPER/notes/INTERNAL_RE_READING_SESSION_12.md` (~500 lines):
+- Methodology (Alignments / Tensions / Gems / Cross-references)
+- 6 sub-section findings reports (per doc)
+- Synthesis table: **12 major discoveries**
+- 12 proposed paper-level actions (3 immediate corrections + 9 pending additions)
+- Meta-finding about Idea-002 governance working as designed
+- 3-path decision tree for Fares
+
+### Key Discoveries (12 total)
+
+#### Batch 1 (3 docs, 6 discoveries)
+1. **Theory-10 has Fares precursor** in Cognitive Economy §5 Hyp 2
+2. **Theory-08 has Fares precursor** in Cognitive Economy §11 (Value of X)
+3. **Theory-09 gap** = 1-2 level shift on Concept Formation §4 Ladder of Abstraction
+4. **Phil-07 ≡ Tiered Intelligence "cheap-first, premium-on-demand"** (DIRECT PRECURSOR)
+5. **Concept Proliferation** (CF §15) is a constraint LEAP literature doesn't address
+6. **Reasoning Escrow** (TI §4) is publishable agentic primitive → Theory-11 candidate
+
+#### Batch 2 (2 docs, 6 more discoveries)
+7. Abstraction Forgetting (PF §3.4) is the mechanism of the Ladder of Abstraction
+8. **Theory-10 augmentation P6**: no-forgetting → lifetime-drift right-of-optimum (NEW falsifiable prediction)
+9. Negative Memory (PF §13.4) as first-class memory primitive
+10. **Phil-07 Position D = stable attractor of Anomaly/Crisis/Paradigm dynamics**
+11. 8 Anomaly Indicators (Anomaly §6) as publishable diagnostic battery → §8.6 candidate
+12. Theory-07/08/09 each map to a Paradigm Layer (Anomaly §11); Layers 1 and 5 are GAPS → more Theory-11/12 candidates
+
+### Key Meta-Finding
+
+**3 of the 5 lenses (Theory-08, Theory-10, Phil-07) had Fares-originated precursors in the foundational docs that were missed during integration.** This is exactly what the Idea-002 Creative Attribution Rule was designed to catch. The agent's job was to surface external anchors (LEAP, Wu, Chen) for already-Fares-existing intuitions, not to claim origination. Session 12 corrects the attribution.
+
+**Generalizable insight:** Any long-running human-agent collaboration must include periodic "re-reading the originator's prior work under the new lens" cycles to prevent attribution drift. This is itself a publishable methodological contribution.
+
+### Design Decisions
+
+1. **No PAPER.md edits in Session 12.** This is a *research* session. Re-attribution corrections are *proposals* awaiting Fares review (Path 1). The asymmetry preserves Fares's authority over paper-level integration.
+
+2. **3-path decision tree offered** rather than agent unilaterally executing corrections:
+   - Path 1: Authorize attribution corrections (immediate edits)
+   - Path 2: Continue re-reading exercise (batch 3)
+   - Path 3: Draft a new Theory-11/12 candidate
+
+3. **Agent recommendation: Path 1 first.** Corrections about attribution honesty have implicit priority over additive work per Idea-002.
+
+### Statistics
+
+| Metric | Count |
+|---|---|
+| Docs read | 5 of 122 (4.1%) |
+| Lines of foundational theory re-read | 2,200 |
+| Major discoveries | 12 |
+| Attribution corrections proposed | 3 (Theory-08, Theory-10, Phil-07) |
+| New paper sections proposed | 4 (§8.5.7 Ladder, §8.6 Anomaly Indicators, Phil-07 Position D = attractor, T5.93 cautionary note) |
+| New Theory-NN candidates surfaced | 5 (Reasoning Tier Asymmetry, Premium Compute Rule, Task-Ontology Selection, Improvement Regime Taxonomy, Negative Memory) |
+| New falsifiable predictions | 1 (Theory-10 P6 lifetime-drift) |
+| PAPER.md changes | 0 (Path 1 awaiting Fares) |
+| Runs | 0 (Theoretical Mode preserved) |
+| API calls | 0 |
+
+### PAPER.md Version
+
+**v0.6 unchanged.** Session 12 is research-only.
+
+### Open Decisions for Next Session
+
+Three paths offered to Fares:
+- **Path 1**: Authorize 3 attribution corrections + 4 new section proposals (immediate paper edits → v0.7)
+- **Path 2**: Continue re-reading batch 3 (Self-Benchmarking + Meta-Theory + Contradiction + Agent Identity)
+- **Path 3**: Draft one of the 5 new Theory-NN candidates
+
+### Commit المتوقع
+
+`(pending)`: Session 12 — Internal Re-Reading Cycle (Option F). 5 foundational docs read; 12 major discoveries including 3 attribution corrections for Theory-08/10 + Phil-07. Validates Idea-002 governance. No PAPER.md edits (research session only).
+
