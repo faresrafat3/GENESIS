@@ -88,8 +88,12 @@ def main():
         print("ERROR: Set OPENAI_API_KEY to your OpenRouter key (sk-or-...)")
         sys.exit(1)
 
+    repo_root = Path(__file__).resolve().parent
+    preferred_python = repo_root / ".venv" / "bin" / "python"
+    python_exec = str(preferred_python) if preferred_python.exists() else sys.executable
+
     cmd = [
-        sys.executable, "-m", "genesis.orchestrator",
+        python_exec, "-m", "genesis.orchestrator",
         "--max_gen", str(args.max_gen),
         "--run_id", str(args.run_id),
         "--backend", "openai",
@@ -118,6 +122,7 @@ def main():
 
     print("Running GENESIS benchmark on OpenRouter...")
     print("Command:", " ".join(cmd))
+    print(f"Python executable: {python_exec}")
     print(f"Task source: {args.task_dir if args.task_dir else args.task}")
     print(f"Meta model: {meta_model}")
     print(f"Task model: {task_model}")

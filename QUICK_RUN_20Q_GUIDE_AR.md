@@ -35,6 +35,9 @@ cd ~/GENESIS
 export OPENAI_BASE_URL="https://openrouter.ai/api/v1"
 export OPENAI_API_KEY="<your_openrouter_key>"
 
+# مهم: شغّل من داخل .venv لو موجود
+# source .venv/bin/activate
+
 python run_openrouter_benchmark.py \
   --task_dir tasks/gpqa_subset_20 \
   --max_gen 2 \
@@ -43,6 +46,8 @@ python run_openrouter_benchmark.py \
   --meta_model openai/gpt-oss-120b:free \
   --task_model openai/gpt-oss-120b:free
 ```
+
+> ملاحظة: `run_openrouter_benchmark.py` دلوقتي **يفضّل تلقائياً** `./.venv/bin/python` لو موجود، عشان يتفادى مشكلة `ModuleNotFoundError: openai` في بعض البيئات.
 
 ## ماذا نقيس؟
 
