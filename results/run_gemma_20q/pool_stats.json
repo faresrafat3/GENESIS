@@ -1,0 +1,138 @@
+{
+  "saved_at": "2026-06-05T01:03:25.913250",
+  "base_url": "https://openrouter.ai/api/v1",
+  "stats": {
+    "ahmed": {
+      "key_id": "ahmed",
+      "requests": 18,
+      "successes": 1,
+      "failures": 17,
+      "rate_limited_at": 1780621390.4686065,
+      "permanently_failed": false,
+      "last_error": "Error code: 429 - {'error': {'message': 'Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '50', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1780704000000'}, 'provider_name': None}}",
+      "failure_codes": {
+        "429": 17
+      }
+    },
+    "faresrafatfares": {
+      "key_id": "faresrafatfares",
+      "requests": 16,
+      "successes": 0,
+      "failures": 16,
+      "rate_limited_at": 1780621405.913186,
+      "permanently_failed": false,
+      "last_error": "Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations', 'provider_name",
+      "failure_codes": {
+        "429": 16
+      }
+    },
+    "faresrafat434": {
+      "key_id": "faresrafat434",
+      "requests": 17,
+      "successes": 1,
+      "failures": 16,
+      "rate_limited_at": 1780621392.753447,
+      "permanently_failed": false,
+      "last_error": "Error code: 429 - {'error': {'message': 'Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '50', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1780704000000'}, 'provider_name': None}}",
+      "failure_codes": {
+        "429": 16
+      }
+    },
+    "faresrafat435": {
+      "key_id": "faresrafat435",
+      "requests": 16,
+      "successes": 0,
+      "failures": 16,
+      "rate_limited_at": 1780621375.3920133,
+      "permanently_failed": false,
+      "last_error": "Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations', 'provider_name",
+      "failure_codes": {
+        "429": 16
+      }
+    },
+    "faresrafat436": {
+      "key_id": "faresrafat436",
+      "requests": 16,
+      "successes": 0,
+      "failures": 16,
+      "rate_limited_at": 1780621395.1569579,
+      "permanently_failed": false,
+      "last_error": "Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations', 'provider_name",
+      "failure_codes": {
+        "429": 16
+      }
+    },
+    "faresrafat437": {
+      "key_id": "faresrafat437",
+      "requests": 16,
+      "successes": 0,
+      "failures": 16,
+      "rate_limited_at": 1780621378.4928627,
+      "permanently_failed": false,
+      "last_error": "Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations', 'provider_name",
+      "failure_codes": {
+        "429": 16
+      }
+    },
+    "faresrafat818": {
+      "key_id": "faresrafat818",
+      "requests": 16,
+      "successes": 1,
+      "failures": 15,
+      "rate_limited_at": 1780621397.5526485,
+      "permanently_failed": false,
+      "last_error": "Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations', 'provider_name",
+      "failure_codes": {
+        "429": 15
+      }
+    },
+    "faresrafat433": {
+      "key_id": "faresrafat433",
+      "requests": 17,
+      "successes": 1,
+      "failures": 16,
+      "rate_limited_at": 1780621381.059833,
+      "permanently_failed": false,
+      "last_error": "Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations', 'provider_name",
+      "failure_codes": {
+        "429": 16
+      }
+    },
+    "farmfares1": {
+      "key_id": "farmfares1",
+      "requests": 16,
+      "successes": 0,
+      "failures": 16,
+      "rate_limited_at": 1780621400.9753633,
+      "permanently_failed": false,
+      "last_error": "Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations', 'provider_name",
+      "failure_codes": {
+        "429": 16
+      }
+    },
+    "farmfares2": {
+      "key_id": "farmfares2",
+      "requests": 16,
+      "successes": 0,
+      "failures": 16,
+      "rate_limited_at": 1780621388.0644438,
+      "permanently_failed": false,
+      "last_error": "Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations', 'provider_name",
+      "failure_codes": {
+        "429": 16
+      }
+    },
+    "farmfares3": {
+      "key_id": "farmfares3",
+      "requests": 16,
+      "successes": 0,
+      "failures": 16,
+      "rate_limited_at": 1780621403.477488,
+      "permanently_failed": false,
+      "last_error": "Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations', 'provider_name",
+      "failure_codes": {
+        "429": 16
+      }
+    }
+  }
+}

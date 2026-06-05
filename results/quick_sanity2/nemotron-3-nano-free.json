@@ -1,0 +1,102 @@
+{
+  "summary": {
+    "model_id": "nvidia/nemotron-3-nano-30b-a3b:free",
+    "reasoning_effort": "high",
+    "max_tokens": 8192,
+    "temperature": 0.0,
+    "total": 3,
+    "correct": 2,
+    "incorrect": 0,
+    "invalid": 1,
+    "recovered_via_followup": 0,
+    "accuracy_percent": 66.66666666666666,
+    "per_domain": {
+      "Physics": {
+        "total": 2,
+        "correct": 2,
+        "accuracy_percent": 100.0
+      },
+      "Chemistry": {
+        "total": 1,
+        "correct": 0,
+        "accuracy_percent": 0.0
+      }
+    },
+    "elapsed_seconds": 76.14,
+    "timestamp": "2026-06-04T23:01:23.998679"
+  },
+  "details": [
+    {
+      "question_id": 1,
+      "domain": "Physics",
+      "subdomain": "Physics (general)",
+      "correct_answer_letter": "A",
+      "predicted_letter": "A",
+      "round1_pred": "A",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 4569,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 328,
+        "reasoning_chars": 4227,
+        "usage": {
+          "prompt_tokens": 314,
+          "completion_tokens": 1527,
+          "total_tokens": 1841,
+          "reasoning_tokens": 1114
+        }
+      },
+      "response_excerpt": "The natural linewidth ofa state with lifetime τ is roughly ΔE ≈ ħ/τ.  \nFor τ = 10⁻⁹ s, ΔE₁ ≈ 6.6 × 10⁻⁷ eV.  \nFor τ = 10⁻⁸ s, ΔE₂ ≈ 6.6 × 10⁻⁸ eV.  \n\nTo resolve two levels, their energy separation must exceed the larger linewidth, i.e., be > ~10⁻⁶ eV. Among the given choices, only 10⁻⁴ eV satisfies this requirement.\n\nANSWER: A\n\n[REASONING]\nWe need to parse the question: Two quantum states with ene...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 2,
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "correct_answer_letter": "A",
+      "predicted_letter": "",
+      "round1_pred": "",
+      "used_followup": true,
+      "is_correct": false,
+      "response_chars": 29872,
+      "round1_meta": {
+        "finish_reason": "length",
+        "content_chars": 0,
+        "reasoning_chars": 29872,
+        "usage": {
+          "prompt_tokens": 315,
+          "completion_tokens": 8192,
+          "total_tokens": 8507,
+          "reasoning_tokens": 7602
+        }
+      },
+      "response_excerpt": "We need to parse the synthetic sequence.\n\nFirst, trans-cinnamaldehyde is treated with methylmagnesium bromide, forming product 1.\n\nThen product 1 is treated with pyridinium chlorochromate (PCC), forming product 2.\n\nThen \"3 was treated with (dimethyl(oxo)-l6-sulfaneylidene)methane in DMSO at elevated temperature, forming product 3.\" Wait: It says \"3 was treated with ... forming product 3.\" Actually...",
+      "followup_excerpt": "We need to answer the multiple-choice question: \"how many carbon atoms are there in product 3?\" Options: A) 11, B) 14, C) 12, D) 10.\n\nWe need to determine the number of carbons in product 3 after the "
+    },
+    {
+      "question_id": 3,
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "correct_answer_letter": "B",
+      "predicted_letter": "B",
+      "round1_pred": "B",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 1529,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 8,
+        "reasoning_chars": 1507,
+        "usage": {
+          "prompt_tokens": 332,
+          "completion_tokens": 753,
+          "total_tokens": 1085,
+          "reasoning_tokens": 420
+        }
+      },
+      "response_excerpt": "ANSWER:B\n\n[REASONING]\nWe need to compute expectation value of operator O = 10 σ_z + 5 σ_x for a spin-1/2 particle in state |ψ> = 0.5 |↑> + sqrt(3)/2 |↓>. Note that |↑> and |↓> are eigenstates of σ_z with eigenvalues +1 and -1 respectively. Also σ_x has matrix representation that flips spin: σ_x|↑> = |↓>, σ_x|↓> = |↑>. So expectation value <ψ| (10 σ_z + 5 σ_x) |ψ> = 10 <ψ|σ_z|ψ> + 5 <ψ|σ_x|ψ>.\n\nWe ...",
+      "followup_excerpt": null
+    }
+  ]
+}

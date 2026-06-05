@@ -1,0 +1,515 @@
+{
+  "summary": {
+    "model_id": "openai/gpt-oss-120b:free",
+    "reasoning_effort": "high",
+    "max_tokens": 16384,
+    "temperature": 0.0,
+    "total": 20,
+    "correct": 15,
+    "incorrect": 5,
+    "invalid": 0,
+    "recovered_via_followup": 3,
+    "accuracy_percent": 75.0,
+    "per_domain": {
+      "Physics": {
+        "total": 11,
+        "correct": 9,
+        "accuracy_percent": 81.81818181818183
+      },
+      "Chemistry": {
+        "total": 6,
+        "correct": 4,
+        "accuracy_percent": 66.66666666666666
+      },
+      "Biology": {
+        "total": 3,
+        "correct": 2,
+        "accuracy_percent": 66.66666666666666
+      }
+    },
+    "elapsed_seconds": 2155.17,
+    "timestamp": "2026-06-05T02:09:34.970395"
+  },
+  "details": [
+    {
+      "question_id": 1,
+      "domain": "Physics",
+      "subdomain": "Physics (general)",
+      "correct_answer_letter": "A",
+      "predicted_letter": "A",
+      "round1_pred": "A",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 4230,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 840,
+        "reasoning_chars": 3376,
+        "usage": {
+          "prompt_tokens": 352,
+          "completion_tokens": 1431,
+          "total_tokens": 1783,
+          "reasoning_tokens": 923
+        }
+      },
+      "response_excerpt": "The natural linewidth (energy uncertainty) of a state is set by its lifetime through the energy‑time uncertainty relation  \n\n\\[\n\\Delta E \\,\\Delta t \\gtrsim \\frac{\\hbar}{2}\\;\\;\\Longrightarrow\\;\\;\\Delta E \\approx \\frac{\\hbar}{\\tau}.\n\\]\n\nFor the two states:\n\n* τ₁ = 10⁻⁹ s → ΔE₁ ≈ ħ/10⁻⁹ s ≈ 6.6 × 10⁻⁷ eV.  \n* τ₂ = 10⁻⁸ s → ΔE₂ ≈ ħ/10⁻⁸ s ≈ 6.6 × 10⁻⁸ eV.\n\nThe broader line (larger ΔE) comes from the s...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 2,
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "correct_answer_letter": "A",
+      "predicted_letter": "C",
+      "round1_pred": "C",
+      "used_followup": false,
+      "is_correct": false,
+      "response_chars": 26917,
+      "round1_meta": {
+        "finish_reason": "length",
+        "content_chars": 0,
+        "reasoning_chars": 26917,
+        "usage": {
+          "prompt_tokens": 361,
+          "completion_tokens": 8192,
+          "total_tokens": 8553,
+          "reasoning_tokens": 6836
+        }
+      },
+      "response_excerpt": "We need to parse the problem. It describes a synthetic sequence:\n\n- Starting material: trans-cinnamaldehyde. That's an aromatic aldehyde: trans-CH=CH-CHO attached to phenyl. The structure: phenyl-CH=CH-CHO (trans). So it's a 3-carbon chain attached to phenyl: phenyl-CH=CH-CHO. The carbonyl carbon is the aldehyde carbon.\n\n- Reaction 1: trans-cinnamaldehyde treated with methylmagnesium bromide (a Gr...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 3,
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "correct_answer_letter": "B",
+      "predicted_letter": "B",
+      "round1_pred": "B",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 1973,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 569,
+        "reasoning_chars": 1390,
+        "usage": {
+          "prompt_tokens": 386,
+          "completion_tokens": 817,
+          "total_tokens": 1203,
+          "reasoning_tokens": 389
+        }
+      },
+      "response_excerpt": "The expectation value is  \n\n\\[\n\\langle O\\rangle = 10\\langle\\sigma_z\\rangle + 5\\langle\\sigma_x\\rangle .\n\\]\n\nFor the state \\(|\\psi\\rangle = 0.5|\\uparrow\\rangle + \\frac{\\sqrt3}{2}|\\downarrow\\rangle\\),\n\n\\[\n\\langle\\sigma_z\\rangle = |0.5|^2 - \\Big|\\frac{\\sqrt3}{2}\\Big|^2 = 0.25 - 0.75 = -0.5,\n\\]\n\n\\[\n\\langle\\sigma_x\\rangle = 2\\operatorname{Re}\\!\\left(0.5\\cdot\\frac{\\sqrt3}{2}\\right) = 2\\cdot\\frac{\\sqrt3}{...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 4,
+      "domain": "Physics",
+      "subdomain": "Electromagnetism and Photonics",
+      "correct_answer_letter": "C",
+      "predicted_letter": "C",
+      "round1_pred": "C",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 3247,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 9,
+        "reasoning_chars": 3224,
+        "usage": {
+          "prompt_tokens": 364,
+          "completion_tokens": 906,
+          "total_tokens": 1270,
+          "reasoning_tokens": 890
+        }
+      },
+      "response_excerpt": "ANSWER: C\n\n[REASONING]\nWe need to parse the question: \"In a parallel universe where a magnet can have an isolated North or South pole, Maxwell’s equations look different. But, specifically, which of those equations are different?\" So we need to identify which Maxwell equations would be modified if magnetic monopoles exist (isolated north or south poles). In our universe, Maxwell's equations are:\n\n...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 5,
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "correct_answer_letter": "B",
+      "predicted_letter": "B",
+      "round1_pred": "B",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 3854,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 9,
+        "reasoning_chars": 3831,
+        "usage": {
+          "prompt_tokens": 591,
+          "completion_tokens": 1220,
+          "total_tokens": 1811,
+          "reasoning_tokens": 989
+        }
+      },
+      "response_excerpt": "ANSWER: B\n\n[REASONING]\nWe need to parse the problem. The problem: \"Calculate the eigenvector of a quantum mechanical operator $\\vec{P}$ for a muon along an arbitrary direction $\\vec{n}$ lying in the x-z plane corresponding to the eigenvalue $+\\hbar/2$. Given the $X-$component, $P_x$ of the operator $P$ as $\\hbar/2$ times a 2 by 2 square matrix having elements in the first row as $(0 1)$, and that ...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 6,
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "correct_answer_letter": "B",
+      "predicted_letter": "B",
+      "round1_pred": "B",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 3337,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 9,
+        "reasoning_chars": 3314,
+        "usage": {
+          "prompt_tokens": 410,
+          "completion_tokens": 1596,
+          "total_tokens": 2006,
+          "reasoning_tokens": 906
+        }
+      },
+      "response_excerpt": "ANSWER: B\n\n[REASONING]\nWe need to parse the problem: A quantum mechanical particle of mass m moves in two dimensions in the following potential, as a function of (r,θ): V(r,θ) = 1/2 k r^2 + (3/2) k r^2 cos^2(θ). Find the energy spectrum.\n\nWe have a 2D potential that is anisotropic: V = (1/2) k r^2 + (3/2) k r^2 cos^2 θ. Let's rewrite: V = (1/2) k r^2 [1 + 3 cos^2 θ] = (1/2) k r^2 (1 + 3 cos^2 θ). ...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 7,
+      "domain": "Physics",
+      "subdomain": "High-energy particle physics",
+      "correct_answer_letter": "C",
+      "predicted_letter": "A",
+      "round1_pred": "A",
+      "used_followup": false,
+      "is_correct": false,
+      "response_chars": 5620,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 892,
+        "reasoning_chars": 4714,
+        "usage": {
+          "prompt_tokens": 401,
+          "completion_tokens": 2056,
+          "total_tokens": 2457,
+          "reasoning_tokens": 1255
+        }
+      },
+      "response_excerpt": "The pair‑production threshold for two photons is obtained from the invariant\n\n\\[\ns = 2E_{\\gamma}\\, \\varepsilon (1-\\cos\\theta) \\ge (2m_ec^2)^2 .\n\\]\n\nFor a head‑on collision \\(\\theta=\\pi\\) so \\((1-\\cos\\theta)=2\\) and the condition reduces to  \n\n\\[\nE_{\\gamma}\\,\\varepsilon \\ge m_e^2c^4 .\n\\]\n\nWith the electron rest energy \\(m_ec^2 = 511\\;\\text{keV}=5.11\\times10^{5}\\,\\text{eV}\\),\n\n\\[\nm_e^2c^4 = (5.11\\ti...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 8,
+      "domain": "Biology",
+      "subdomain": "Genetics",
+      "correct_answer_letter": "D",
+      "predicted_letter": "D",
+      "round1_pred": "D",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 30448,
+      "round1_meta": {
+        "finish_reason": "length",
+        "content_chars": 0,
+        "reasoning_chars": 30448,
+        "usage": {
+          "prompt_tokens": 670,
+          "completion_tokens": 8192,
+          "total_tokens": 8862,
+          "reasoning_tokens": 7834
+        }
+      },
+      "response_excerpt": "We need to parse the problem. We have a high-throughput experiment on white lupine to find genes contributing to resistance to anthracnose. Three candidate genes G1, G2, G3 unknown function. Knock-out mutants: g1, g2, g3 (single knockouts). Double mutants: g1g2, g1g3, g2g3. At least one of these genes is a transcription factor acting upstream of other gene(s). We test mutants for resistance to ant...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 9,
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "correct_answer_letter": "C",
+      "predicted_letter": "C",
+      "round1_pred": "C",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 31490,
+      "round1_meta": {
+        "finish_reason": "length",
+        "content_chars": 0,
+        "reasoning_chars": 31490,
+        "usage": {
+          "prompt_tokens": 462,
+          "completion_tokens": 8192,
+          "total_tokens": 8654,
+          "reasoning_tokens": 8012
+        }
+      },
+      "response_excerpt": "We need to determine which of the given molecules has C3h symmetry. C3h point group: It has a C3 principal axis and a horizontal mirror plane (σh) perpendicular to the C3 axis. The group C3h is isomorphic to S3 (improper rotation of order 3). It contains a C3 axis and a σh plane. The group includes a C3 axis, a σh plane, and S3 improper rotations (C3 followed by reflection). The group has no C2 ax...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 10,
+      "domain": "Physics",
+      "subdomain": "Astrophysics",
+      "correct_answer_letter": "D",
+      "predicted_letter": "D",
+      "round1_pred": "D",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 3342,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 9,
+        "reasoning_chars": 3319,
+        "usage": {
+          "prompt_tokens": 359,
+          "completion_tokens": 1005,
+          "total_tokens": 1364,
+          "reasoning_tokens": 859
+        }
+      },
+      "response_excerpt": "ANSWER: D\n\n[REASONING]\nWe need to parse the question: \"Among the following exoplanets, which one has the highest density?\" Options are given as a, b, c, d (the planets). Then answer choices are A) d, B) b, C) a, D) c. So we need to determine which planet among the four described has the highest density.\n\nWe have four planet descriptions:\n\na) An Earth-mass and Earth-radius planet. So mass = M_E, ra...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 11,
+      "domain": "Biology",
+      "subdomain": "Molecular Biology",
+      "correct_answer_letter": "A",
+      "predicted_letter": "C",
+      "round1_pred": "",
+      "used_followup": true,
+      "is_correct": false,
+      "response_chars": 34840,
+      "round1_meta": {
+        "finish_reason": "length",
+        "content_chars": 0,
+        "reasoning_chars": 34840,
+        "usage": {
+          "prompt_tokens": 595,
+          "completion_tokens": 8192,
+          "total_tokens": 8787,
+          "reasoning_tokens": 8849
+        }
+      },
+      "response_excerpt": "We need to find which statement is NOT correct (i.e., the \"except\" statement). So we need to identify the false statement among A, B, C, D.\n\nWe need to examine each statement about molecular biology of SARS-CoV-2.\n\nFirst, recall known facts:\n\n- SARS-CoV-2 is a positive-sense single-stranded RNA virus, ~30 kb genome. It encodes ORF1a and ORF1b polyproteins (pp1a and pp1ab) via ribosomal frameshifti...",
+      "followup_excerpt": "ANSWER: C"
+    },
+    {
+      "question_id": 12,
+      "domain": "Physics",
+      "subdomain": "High-energy particle physics",
+      "correct_answer_letter": "B",
+      "predicted_letter": "B",
+      "round1_pred": "B",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 4123,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 9,
+        "reasoning_chars": 4100,
+        "usage": {
+          "prompt_tokens": 374,
+          "completion_tokens": 1740,
+          "total_tokens": 2114,
+          "reasoning_tokens": 1090
+        }
+      },
+      "response_excerpt": "ANSWER: B\n\n[REASONING]\nWe need to parse the problem: \"Find KE of product particles in, Pi(+) = mu(+) + nu here Pi(+) is stationary. Rest mass of Pi(+) & mu(+) is 139.6 MeV & 105.7 MeV respectively.\"\n\nInterpretation: A positive pion at rest decays into a positive muon and a neutrino (presumably muon neutrino). The pion is stationary (i.e., at rest). The rest masses: m_pi = 139.6 MeV/c^2, m_mu = 105...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 13,
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "correct_answer_letter": "B",
+      "predicted_letter": "B",
+      "round1_pred": "B",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 30176,
+      "round1_meta": {
+        "finish_reason": "length",
+        "content_chars": 0,
+        "reasoning_chars": 30176,
+        "usage": {
+          "prompt_tokens": 544,
+          "completion_tokens": 8192,
+          "total_tokens": 8736,
+          "reasoning_tokens": 7597
+        }
+      },
+      "response_excerpt": "We need to parse the problem. The starting material is (R)-(+)-Limonene, a monoterpene with a cyclohexene ring bearing an isopropenyl group (CH2=C(CH3)-) at C4 (or C1?), and a methyl group at C1? Let's recall the structure of limonene: It's a monocyclic monoterpene with a cyclohexene ring, a double bond at C1-C2 (or C2-C3?), and an isopropenyl substituent at C4. Actually, the IUPAC name: 1-methyl-...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 14,
+      "domain": "Biology",
+      "subdomain": "Molecular Biology",
+      "correct_answer_letter": "A",
+      "predicted_letter": "A",
+      "round1_pred": "A",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 21829,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 9,
+        "reasoning_chars": 21806,
+        "usage": {
+          "prompt_tokens": 359,
+          "completion_tokens": 4585,
+          "total_tokens": 4944,
+          "reasoning_tokens": 5520
+        }
+      },
+      "response_excerpt": "ANSWER: A\n\n[REASONING]\nWe need to parse the question. It's about ChIP-seq on a PFA-fixed sample with an antibody to the IKAROS transcription factor in human B cells, followed by next-gen sequencing and standard QC, alignment, peak-calling steps. The ChIP peaks disappeared when PFA+DSG fixation was used. Where are we most likely to find such disappearing peaks?\n\nWe need to understand the effect of ...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 15,
+      "domain": "Physics",
+      "subdomain": "Physics (general)",
+      "correct_answer_letter": "C",
+      "predicted_letter": "C",
+      "round1_pred": "C",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 3144,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 9,
+        "reasoning_chars": 3121,
+        "usage": {
+          "prompt_tokens": 512,
+          "completion_tokens": 1026,
+          "total_tokens": 1538,
+          "reasoning_tokens": 814
+        }
+      },
+      "response_excerpt": "ANSWER: C\n\n[REASONING]\nWe need to parse the problem: Researchers have two Earth-like planets (Planet_1 and Planet_2) discovered via radial velocity (RV). They have known minimum masses (M sin i) and orbital periods. Both have same masses (presumably same actual mass? Actually we only know minimum masses, but they are Earth-like). The orbital period of Planet_1 is three times shorter than that of P...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 16,
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "correct_answer_letter": "C",
+      "predicted_letter": "A",
+      "round1_pred": "",
+      "used_followup": true,
+      "is_correct": false,
+      "response_chars": 29170,
+      "round1_meta": {
+        "finish_reason": "length",
+        "content_chars": 0,
+        "reasoning_chars": 29170,
+        "usage": {
+          "prompt_tokens": 432,
+          "completion_tokens": 8192,
+          "total_tokens": 8624,
+          "reasoning_tokens": 7412
+        }
+      },
+      "response_excerpt": "We need to determine how many of the listed compounds will exhibit optical activity (i.e., be chiral, not superimposable on its mirror image, lacking internal plane of symmetry or inversion center). The list includes 7 compounds. We need to count those that are chiral (optically active). The answer options are 4,5,3,2.\n\nWe need to examine each compound's structure and stereochemistry.\n\nList:\n\n1. (...",
+      "followup_excerpt": "ANSWER: A"
+    },
+    {
+      "question_id": 17,
+      "domain": "Chemistry",
+      "subdomain": "Chemistry (general)",
+      "correct_answer_letter": "D",
+      "predicted_letter": "D",
+      "round1_pred": "D",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 4482,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 9,
+        "reasoning_chars": 4459,
+        "usage": {
+          "prompt_tokens": 362,
+          "completion_tokens": 1774,
+          "total_tokens": 2136,
+          "reasoning_tokens": 1155
+        }
+      },
+      "response_excerpt": "ANSWER: D\n\n[REASONING]\nWe need to parse the problem: \"What is the concentration of calcium ions in a solution containing 0.02 M stoichiometric Ca-EDTA complex (we assume that the pH is ideal, T = 25 °C). KCa-EDTA = 5x10^10.\"\n\nWe have a solution containing Ca-EDTA complex at 0.02 M. The complex is stoichiometric, meaning that the complex is CaY2-? Actually EDTA is a hexadentate ligand that forms a ...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 18,
+      "domain": "Physics",
+      "subdomain": "Physics (general)",
+      "correct_answer_letter": "C",
+      "predicted_letter": "B",
+      "round1_pred": "B",
+      "used_followup": false,
+      "is_correct": false,
+      "response_chars": 4481,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 9,
+        "reasoning_chars": 4458,
+        "usage": {
+          "prompt_tokens": 445,
+          "completion_tokens": 1817,
+          "total_tokens": 2262,
+          "reasoning_tokens": 1166
+        }
+      },
+      "response_excerpt": "ANSWER: B\n\n[REASONING]\nWe need to parse the problem. Two stars: Star_1 and Star_2. Masses given but likely irrelevant. They have elemental abundances determined via LTE and EW method. Provided abundances: [Si/Fe]_1 = 0.3 dex, [Mg/Si]_2 = 0.3 dex, [Fe/H]_1 = 0 dex, and [Mg/H]_2 = 0 dex.\n\nWe have solar photospheric composition: 12 + log10(nFe/nH) = 7.5 and 12 + log10(nMg/nH) = 7.\n\nWe need to calcula...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 19,
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "correct_answer_letter": "D",
+      "predicted_letter": "D",
+      "round1_pred": "",
+      "used_followup": true,
+      "is_correct": true,
+      "response_chars": 28168,
+      "round1_meta": {
+        "finish_reason": "length",
+        "content_chars": 0,
+        "reasoning_chars": 28168,
+        "usage": {
+          "prompt_tokens": 746,
+          "completion_tokens": 8192,
+          "total_tokens": 8938,
+          "reasoning_tokens": 7219
+        }
+      },
+      "response_excerpt": "We need to parse the problem. The question: \"The Michael reaction is a chemical process in organic chemistry where a nucleophile adds to a molecule containing a specific carbon-carbon double bond (C=C) adjacent to a carbonyl group (C=O). This reaction forms a new carbon-carbon bond, resulting in the addition of the nucleophile to the molecule. It's widely used for building complex organic compound...",
+      "followup_excerpt": "ANSWER: D\n\n[REASONING]\nWe need to pick correct option. Based on reasoning, A should be with 1- not 3-, B should be with diester product? Options B and D have A with 1-. For B, option D product matches"
+    },
+    {
+      "question_id": 20,
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "correct_answer_letter": "C",
+      "predicted_letter": "C",
+      "round1_pred": "C",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 3208,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 9,
+        "reasoning_chars": 3185,
+        "usage": {
+          "prompt_tokens": 409,
+          "completion_tokens": 690,
+          "total_tokens": 1099,
+          "reasoning_tokens": 821
+        }
+      },
+      "response_excerpt": "ANSWER: C\n\n[REASONING]\nWe need to parse the question: \"A common approximation made in many-body nuclear calculations of some interaction (for example an electroweak interaction) is to suppose that nucleons in a nucleus behave in the same way as free nucleons. Which of the following four assumptions jointly imply this 'impulse' approximation?\n\n1. The interaction current only interacts with individu...",
+      "followup_excerpt": null
+    }
+  ]
+}

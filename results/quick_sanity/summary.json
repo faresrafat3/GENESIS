@@ -1,0 +1,127 @@
+{
+  "task": "gpqa",
+  "questions_evaluated": 3,
+  "models_evaluated": 1,
+  "timestamp": "2026-06-04T22:59:29.430447",
+  "rankings": [
+    {
+      "model": "nemotron-3-nano-free",
+      "openrouter_id": "nvidia/nemotron-3-nano-30b-a3b:free",
+      "official_gpqa_diamond": null,
+      "our_accuracy_percent": 66.67,
+      "gap_vs_official": null,
+      "correct": 2,
+      "invalid": 1,
+      "recovered": 0,
+      "total": 3,
+      "elapsed_seconds": 125.31,
+      "rate_qps": 0.024
+    }
+  ],
+  "pool_stats": {
+    "total_keys": 11,
+    "available_now": 11,
+    "permanently_failed": 0,
+    "per_key": {
+      "ahmed": {
+        "requests": 1,
+        "successes": 0,
+        "failures": 1,
+        "success_rate": 0.0,
+        "available": true,
+        "rate_limited_seconds_ago": 123,
+        "last_error": "Error code: 429 - {'error': {'message': 'Rate limit exceeded: free-models-per-da"
+      },
+      "faresrafatfares": {
+        "requests": 0,
+        "successes": 0,
+        "failures": 0,
+        "success_rate": 0.0,
+        "available": true,
+        "rate_limited_seconds_ago": null,
+        "last_error": ""
+      },
+      "faresrafat434": {
+        "requests": 1,
+        "successes": 1,
+        "failures": 0,
+        "success_rate": 1.0,
+        "available": true,
+        "rate_limited_seconds_ago": null,
+        "last_error": ""
+      },
+      "faresrafat435": {
+        "requests": 1,
+        "successes": 1,
+        "failures": 0,
+        "success_rate": 1.0,
+        "available": true,
+        "rate_limited_seconds_ago": null,
+        "last_error": ""
+      },
+      "faresrafat436": {
+        "requests": 1,
+        "successes": 1,
+        "failures": 0,
+        "success_rate": 1.0,
+        "available": true,
+        "rate_limited_seconds_ago": null,
+        "last_error": ""
+      },
+      "faresrafat437": {
+        "requests": 1,
+        "successes": 1,
+        "failures": 0,
+        "success_rate": 1.0,
+        "available": true,
+        "rate_limited_seconds_ago": null,
+        "last_error": ""
+      },
+      "faresrafat818": {
+        "requests": 0,
+        "successes": 0,
+        "failures": 0,
+        "success_rate": 0.0,
+        "available": true,
+        "rate_limited_seconds_ago": null,
+        "last_error": ""
+      },
+      "faresrafat433": {
+        "requests": 0,
+        "successes": 0,
+        "failures": 0,
+        "success_rate": 0.0,
+        "available": true,
+        "rate_limited_seconds_ago": null,
+        "last_error": ""
+      },
+      "farmfares1": {
+        "requests": 0,
+        "successes": 0,
+        "failures": 0,
+        "success_rate": 0.0,
+        "available": true,
+        "rate_limited_seconds_ago": null,
+        "last_error": ""
+      },
+      "farmfares2": {
+        "requests": 0,
+        "successes": 0,
+        "failures": 0,
+        "success_rate": 0.0,
+        "available": true,
+        "rate_limited_seconds_ago": null,
+        "last_error": ""
+      },
+      "farmfares3": {
+        "requests": 0,
+        "successes": 0,
+        "failures": 0,
+        "success_rate": 0.0,
+        "available": true,
+        "rate_limited_seconds_ago": null,
+        "last_error": ""
+      }
+    }
+  }
+}

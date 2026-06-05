@@ -1,0 +1,118 @@
+{
+  "saved_at": "2026-06-04T23:01:23.998340",
+  "base_url": "https://openrouter.ai/api/v1",
+  "stats": {
+    "ahmed": {
+      "key_id": "ahmed",
+      "requests": 1,
+      "successes": 0,
+      "failures": 1,
+      "rate_limited_at": 1780614010.4368289,
+      "permanently_failed": false,
+      "last_error": "Error code: 429 - {'error': {'message': 'Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '50', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1780617600000'}, 'provider_name': None}}",
+      "failure_codes": {
+        "429": 1
+      }
+    },
+    "faresrafatfares": {
+      "key_id": "faresrafatfares",
+      "requests": 0,
+      "successes": 0,
+      "failures": 0,
+      "rate_limited_at": null,
+      "permanently_failed": false,
+      "last_error": "",
+      "failure_codes": {}
+    },
+    "faresrafat434": {
+      "key_id": "faresrafat434",
+      "requests": 1,
+      "successes": 1,
+      "failures": 0,
+      "rate_limited_at": null,
+      "permanently_failed": false,
+      "last_error": "",
+      "failure_codes": {}
+    },
+    "faresrafat435": {
+      "key_id": "faresrafat435",
+      "requests": 1,
+      "successes": 1,
+      "failures": 0,
+      "rate_limited_at": null,
+      "permanently_failed": false,
+      "last_error": "",
+      "failure_codes": {}
+    },
+    "faresrafat436": {
+      "key_id": "faresrafat436",
+      "requests": 1,
+      "successes": 1,
+      "failures": 0,
+      "rate_limited_at": null,
+      "permanently_failed": false,
+      "last_error": "",
+      "failure_codes": {}
+    },
+    "faresrafat437": {
+      "key_id": "faresrafat437",
+      "requests": 1,
+      "successes": 1,
+      "failures": 0,
+      "rate_limited_at": null,
+      "permanently_failed": false,
+      "last_error": "",
+      "failure_codes": {}
+    },
+    "faresrafat818": {
+      "key_id": "faresrafat818",
+      "requests": 0,
+      "successes": 0,
+      "failures": 0,
+      "rate_limited_at": null,
+      "permanently_failed": false,
+      "last_error": "",
+      "failure_codes": {}
+    },
+    "faresrafat433": {
+      "key_id": "faresrafat433",
+      "requests": 0,
+      "successes": 0,
+      "failures": 0,
+      "rate_limited_at": null,
+      "permanently_failed": false,
+      "last_error": "",
+      "failure_codes": {}
+    },
+    "farmfares1": {
+      "key_id": "farmfares1",
+      "requests": 0,
+      "successes": 0,
+      "failures": 0,
+      "rate_limited_at": null,
+      "permanently_failed": false,
+      "last_error": "",
+      "failure_codes": {}
+    },
+    "farmfares2": {
+      "key_id": "farmfares2",
+      "requests": 0,
+      "successes": 0,
+      "failures": 0,
+      "rate_limited_at": null,
+      "permanently_failed": false,
+      "last_error": "",
+      "failure_codes": {}
+    },
+    "farmfares3": {
+      "key_id": "farmfares3",
+      "requests": 0,
+      "successes": 0,
+      "failures": 0,
+      "rate_limited_at": null,
+      "permanently_failed": false,
+      "last_error": "",
+      "failure_codes": {}
+    }
+  }
+}

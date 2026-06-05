@@ -1,0 +1,102 @@
+{
+  "summary": {
+    "model_id": "nvidia/nemotron-3-nano-30b-a3b:free",
+    "reasoning_effort": "high",
+    "max_tokens": 16384,
+    "temperature": 0.0,
+    "total": 3,
+    "correct": 2,
+    "incorrect": 0,
+    "invalid": 1,
+    "recovered_via_followup": 0,
+    "accuracy_percent": 66.66666666666666,
+    "per_domain": {
+      "Physics": {
+        "total": 2,
+        "correct": 2,
+        "accuracy_percent": 100.0
+      },
+      "Chemistry": {
+        "total": 1,
+        "correct": 0,
+        "accuracy_percent": 0.0
+      }
+    },
+    "elapsed_seconds": 125.31,
+    "timestamp": "2026-06-04T22:59:29.430112"
+  },
+  "details": [
+    {
+      "question_id": 1,
+      "domain": "Physics",
+      "subdomain": "Physics (general)",
+      "correct_answer_letter": "A",
+      "predicted_letter": "A",
+      "round1_pred": "A",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 6796,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 847,
+        "reasoning_chars": 5935,
+        "usage": {
+          "prompt_tokens": 314,
+          "completion_tokens": 2259,
+          "total_tokens": 2573,
+          "reasoning_tokens": 1568
+        }
+      },
+      "response_excerpt": "The natural linewidthof a quantum state is set by the energy–time uncertainty principle  \n\n\\[\n\\Delta E \\approx \\frac{\\hbar}{\\tau}.\n\\]\n\nFor the two states:\n\n* State 1: \\(\\tau_1 = 10^{-9}\\,\\text{s}\\) → \\(\\Delta E_1 \\approx \\frac{6.58\\times10^{-16}\\,\\text{eV·s}}{10^{-9}\\,\\text{s}} \\approx 6.6\\times10^{-7}\\,\\text{eV}\\).\n* State 2: \\(\\tau_2 = 10^{-8}\\,\\text{s}\\) → \\(\\Delta E_2 \\approx 6.6\\times10^{-8}\\...",
+      "followup_excerpt": null
+    },
+    {
+      "question_id": 2,
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "correct_answer_letter": "A",
+      "predicted_letter": "",
+      "round1_pred": "",
+      "used_followup": true,
+      "is_correct": false,
+      "response_chars": 63528,
+      "round1_meta": {
+        "finish_reason": "length",
+        "content_chars": 0,
+        "reasoning_chars": 63528,
+        "usage": {
+          "prompt_tokens": 315,
+          "completion_tokens": 16384,
+          "total_tokens": 16699,
+          "reasoning_tokens": 16266
+        }
+      },
+      "response_excerpt": "We need to parse the synthetic sequence.\n\nWe start with trans-cinnamaldehyde. That's an aldehyde with a phenyl group attached to a propenal: trans-3-phenyl-2-propenal? Actually trans-cinnamaldehyde is trans-3-phenyl-2-propenal, formula C9H8O? Let's recall: cinnamaldehyde is C6H5-CH=CH-CHO. That's 9 carbons (C6 phenyl + 2 in the chain + 1 carbonyl carbon = 9). Yes, trans-cinnamaldehyde has 9 carbon...",
+      "followup_excerpt": "We need to answer the multiple-choice question: how many carbon atoms are there in product 3?"
+    },
+    {
+      "question_id": 3,
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "correct_answer_letter": "B",
+      "predicted_letter": "B",
+      "round1_pred": "B",
+      "used_followup": false,
+      "is_correct": true,
+      "response_chars": 2569,
+      "round1_meta": {
+        "finish_reason": "stop",
+        "content_chars": 726,
+        "reasoning_chars": 1829,
+        "usage": {
+          "prompt_tokens": 332,
+          "completion_tokens": 1181,
+          "total_tokens": 1513,
+          "reasoning_tokens": 540
+        }
+      },
+      "response_excerpt": "The state is\\(|\\psi\\rangle = 0.5|\\uparrow\\rangle + \\frac{\\sqrt3}{2}|\\downarrow\\rangle\\) with components \\([0.5,\\; \\sqrt3/2]\\).  - \\(\\langle\\sigma_z\\rangle = |0.5|^2(1) + \\left|\\frac{\\sqrt3}{2}\\right|^2(-1) = 0.25 - 0.75 = -0.5\\).  \n  Hence \\(10\\langle\\sigma_z\\rangle = -5\\).\n\n- \\(\\langle\\sigma_x\\rangle = \\begin{bmatrix}0.5 & \\frac{\\sqrt3}{2}\\end{bmatrix}\n   \\begin{bmatrix}0 & 1 \\\\ 1 & 0\\end{bmatrix...",
+      "followup_excerpt": null
+    }
+  ]
+}

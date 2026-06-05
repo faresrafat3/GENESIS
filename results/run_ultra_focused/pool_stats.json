@@ -1,0 +1,138 @@
+{
+  "saved_at": "2026-06-05T01:30:37.334606",
+  "base_url": "https://openrouter.ai/api/v1",
+  "stats": {
+    "ahmed": {
+      "key_id": "ahmed",
+      "requests": 13,
+      "successes": 0,
+      "failures": 13,
+      "rate_limited_at": 1780623015.26453,
+      "permanently_failed": false,
+      "last_error": "Error code: 429 - {'error': {'message': 'Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '50', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1780704000000'}, 'provider_name': None}}",
+      "failure_codes": {
+        "429": 13
+      }
+    },
+    "faresrafatfares": {
+      "key_id": "faresrafatfares",
+      "requests": 11,
+      "successes": 0,
+      "failures": 11,
+      "rate_limited_at": 1780623030.6265695,
+      "permanently_failed": false,
+      "last_error": "Error code: 429 - {'error': {'message': 'Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '50', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1780704000000'}, 'provider_name': None}}",
+      "failure_codes": {
+        "429": 11
+      }
+    },
+    "faresrafat434": {
+      "key_id": "faresrafat434",
+      "requests": 13,
+      "successes": 0,
+      "failures": 13,
+      "rate_limited_at": 1780623017.8826647,
+      "permanently_failed": false,
+      "last_error": "Error code: 429 - {'error': {'message': 'Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '50', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1780704000000'}, 'provider_name': None}}",
+      "failure_codes": {
+        "429": 13
+      }
+    },
+    "faresrafat435": {
+      "key_id": "faresrafat435",
+      "requests": 11,
+      "successes": 1,
+      "failures": 10,
+      "rate_limited_at": 1780623032.8776057,
+      "permanently_failed": false,
+      "last_error": "Error code: 429 - {'error': {'message': 'Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '50', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1780704000000'}, 'provider_name': None}}",
+      "failure_codes": {
+        "429": 10
+      }
+    },
+    "faresrafat436": {
+      "key_id": "faresrafat436",
+      "requests": 13,
+      "successes": 0,
+      "failures": 13,
+      "rate_limited_at": 1780623020.1094491,
+      "permanently_failed": false,
+      "last_error": "Error code: 429 - {'error': {'message': 'Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '50', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1780704000000'}, 'provider_name': None}}",
+      "failure_codes": {
+        "429": 13
+      }
+    },
+    "faresrafat437": {
+      "key_id": "faresrafat437",
+      "requests": 11,
+      "successes": 1,
+      "failures": 10,
+      "rate_limited_at": 1780623035.2459292,
+      "permanently_failed": false,
+      "last_error": "Error code: 429 - {'error': {'message': 'Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '50', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1780704000000'}, 'provider_name': None}}",
+      "failure_codes": {
+        "429": 10
+      }
+    },
+    "faresrafat818": {
+      "key_id": "faresrafat818",
+      "requests": 14,
+      "successes": 3,
+      "failures": 11,
+      "rate_limited_at": 1780623022.4167583,
+      "permanently_failed": false,
+      "last_error": "Error code: 429 - {'error': {'message': 'Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '50', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1780704000000'}, 'provider_name': None}}",
+      "failure_codes": {
+        "429": 11
+      }
+    },
+    "faresrafat433": {
+      "key_id": "faresrafat433",
+      "requests": 13,
+      "successes": 0,
+      "failures": 13,
+      "rate_limited_at": 1780623037.3345182,
+      "permanently_failed": false,
+      "last_error": "Error code: 429 - {'error': {'message': 'Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '50', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1780704000000'}, 'provider_name': None}}",
+      "failure_codes": {
+        "429": 13
+      }
+    },
+    "farmfares1": {
+      "key_id": "farmfares1",
+      "requests": 11,
+      "successes": 1,
+      "failures": 10,
+      "rate_limited_at": 1780623024.5954573,
+      "permanently_failed": false,
+      "last_error": "Error code: 429 - {'error': {'message': 'Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '50', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1780704000000'}, 'provider_name': None}}",
+      "failure_codes": {
+        "429": 10
+      }
+    },
+    "farmfares2": {
+      "key_id": "farmfares2",
+      "requests": 13,
+      "successes": 1,
+      "failures": 12,
+      "rate_limited_at": 1780623012.879631,
+      "permanently_failed": false,
+      "last_error": "Error code: 429 - {'error': {'message': 'Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '50', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1780704000000'}, 'provider_name': None}}",
+      "failure_codes": {
+        "429": 12
+      }
+    },
+    "farmfares3": {
+      "key_id": "farmfares3",
+      "requests": 11,
+      "successes": 0,
+      "failures": 11,
+      "rate_limited_at": 1780623027.586356,
+      "permanently_failed": false,
+      "last_error": "Error code: 429 - {'error': {'message': 'Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '50', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1780704000000'}, 'provider_name': None}}",
+      "failure_codes": {
+        "429": 11
+      }
+    }
+  }
+}

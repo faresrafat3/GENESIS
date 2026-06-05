@@ -58,6 +58,16 @@ except ImportError:
 
 
 # أنماط أخطاء معروفة من OpenRouter / OpenAI / Together
+# Daily-exhaust patterns: عند ظهور أي من دول، الـ key بايلت لباقي اليوم
+# (لا فائدة من cooldown 60s؛ نحطه في daily_exhausted_until = end of day UTC)
+DAILY_EXHAUST_PATTERNS = [
+    "free-models-per-day",
+    "per-day",
+    "daily limit",
+    "daily quota",
+    "tokens per day",
+    "requests per day",
+]
 RATE_LIMIT_PATTERNS = [
     "rate limit",
     "rate_limit",
@@ -91,7 +101,8 @@ class KeyStats:
     requests: int = 0
     successes: int = 0
     failures: int = 0
-    rate_limited_at: Optional[float] = None  # timestamp
+    rate_limited_at: Optional[float] = None  # timestamp (short cooldown)
+    daily_exhausted_until: Optional[float] = None  # timestamp بنهاية اليوم UTC
     permanently_failed: bool = False
     last_error: str = ""
     failure_codes: dict[str, int] = field(default_factory=dict)
@@ -103,9 +114,13 @@ class KeyStats:
         """هل المفتاح ده متاح للاستخدام دلوقتي؟"""
         if self.permanently_failed:
             return False
+        now = time.time()
+        # daily exhaust له أولوية
+        if self.daily_exhausted_until and now < self.daily_exhausted_until:
+            return False
         if self.rate_limited_at is None:
             return True
-        return (time.time() - self.rate_limited_at) > cooldown_seconds
+        return (now - self.rate_limited_at) > cooldown_seconds
 
 
 class APIKeyPool:
@@ -274,16 +289,40 @@ class APIKeyPool:
             self._cursor = (self._cursor + 1) % n
             if self._stats[kid].is_available(self.rate_limit_cooldown):
                 return kid
-        # كل المفاتيح إما ميتة أو في cooldown
-        candidates = [
-            (s.rate_limited_at or float("inf"), kid)
-            for kid, s in self._stats.items()
-            if not s.permanently_failed
+        # كل المفاتيح إما ميتة أو في cooldown أو daily-exhausted
+        non_perm = [
+            (kid, s) for kid, s in self._stats.items() if not s.permanently_failed
         ]
-        if not candidates:
+        if not non_perm:
             raise RuntimeError("All keys permanently failed (auth errors). Check key validity.")
-        candidates.sort()
-        kid = candidates[0][1]
+
+        # تحقق: هل كل المفاتيح في daily-exhausted؟ لو أيوة، fail fast.
+        all_daily_exhausted = all(
+            s.daily_exhausted_until and time.time() < s.daily_exhausted_until
+            for _, s in non_perm
+        )
+        if all_daily_exhausted:
+            now = time.time()
+            min_wait = min(s.daily_exhausted_until - now for _, s in non_perm)
+            hours = min_wait / 3600
+            raise RuntimeError(
+                f"All {len(non_perm)} keys are DAILY-EXHAUSTED. "
+                f"Earliest reset: {hours:.1f}h from now (UTC midnight). "
+                f"Options: (1) wait until reset, (2) add credits to one account "
+                f"on https://openrouter.ai to unlock 1000 req/day."
+            )
+
+        # في مفاتيح يا rate-limited (cooldown قصير) — استنى الأقرب
+        rl_candidates = [
+            (s.rate_limited_at or float("inf"), kid)
+            for kid, s in non_perm
+            if s.rate_limited_at and not (s.daily_exhausted_until and time.time() < s.daily_exhausted_until)
+        ]
+        if not rl_candidates:
+            # ما فيش rate-limited متاحة — كلها داخل في daily exhaust بس واحدة وحاولنا
+            raise RuntimeError("No usable keys available — all either dead or daily-exhausted.")
+        rl_candidates.sort()
+        kid = rl_candidates[0][1]
         wait = max(0, self.rate_limit_cooldown - (time.time() - (self._stats[kid].rate_limited_at or 0)))
         print(f"  ⏳ All keys cooling down. Waiting {wait:.1f}s for {kid}...")
         time.sleep(wait + 0.1)
@@ -304,6 +343,18 @@ class APIKeyPool:
         if any(p in msg for p in PERMANENT_FAILURE_PATTERNS):
             stats.permanently_failed = True
             print(f"  ❌ Key {kid} marked DEAD: {str(exc)[:120]}")
+        elif any(p in msg for p in DAILY_EXHAUST_PATTERNS):
+            # المفتاح خلص حصته اليومية — عزله لباقي اليوم UTC
+            import datetime as _dt
+            tomorrow = _dt.datetime.utcnow().replace(
+                hour=0, minute=0, second=0, microsecond=0
+            ) + _dt.timedelta(days=1)
+            stats.daily_exhausted_until = tomorrow.timestamp()
+            hours_left = (stats.daily_exhausted_until - time.time()) / 3600
+            print(f"  🚫 Key {kid} DAILY-EXHAUSTED until UTC midnight "
+                  f"(~{hours_left:.1f}h). Not retrying.")
+            # روح للمفتاح التالي
+            self._cursor = (self._cursor + 1) % len(self._order)
         elif any(p in msg for p in RATE_LIMIT_PATTERNS):
             stats.rate_limited_at = time.time()
             print(f"  ⚠️  Key {kid} rate-limited (cooldown {self.rate_limit_cooldown}s): {str(exc)[:80]}")
@@ -512,6 +563,10 @@ if __name__ == "__main__":
     p.add_argument("--keys_file", default=None)
     p.add_argument("--test_call", action="store_true",
                    help="Make a small test API call to verify keys work")
+    p.add_argument("--check_quotas", action="store_true",
+                   help="Probe EACH key individually with tiny call to see who is exhausted")
+    p.add_argument("--probe_model", default="openai/gpt-oss-120b:free",
+                   help="Model to use for quota probing")
     args = p.parse_args()
     pool = get_default_pool(keys_file=args.keys_file)
     pool.print_summary()
@@ -520,7 +575,7 @@ if __name__ == "__main__":
         try:
             result = pool.call_with_retry(
                 lambda c: c.chat.completions.create(
-                    model="openai/gpt-oss-120b:free",
+                    model=args.probe_model,
                     messages=[{"role": "user", "content": "Reply with just: OK"}],
                     max_tokens=5,
                     temperature=0.0,
@@ -530,4 +585,36 @@ if __name__ == "__main__":
             print(f"  ✓ Response: {result.choices[0].message.content!r}")
         except Exception as e:
             print(f"  ✗ Test call failed: {e}")
+        pool.print_summary()
+    if args.check_quotas:
+        # Probe each key individually
+        print(f"\n=== Probing each key with model={args.probe_model} ===")
+        for kid in list(pool._keys.keys()):
+            client = pool.get_client(key_id=kid)
+            try:
+                resp = client.chat.completions.create(
+                    model=args.probe_model,
+                    messages=[{"role": "user", "content": "Hi"}],
+                    max_tokens=2,
+                    temperature=0.0,
+                )
+                content = resp.choices[0].message.content or "(empty)"
+                print(f"  ✓ {kid:25s} OK: {content[:30]!r}")
+                pool._stats[kid].requests += 1
+                pool._stats[kid].successes += 1
+            except Exception as e:
+                msg = str(e)[:100]
+                if "per-day" in str(e).lower() or "daily" in str(e).lower():
+                    status = "🚫 DAILY-EXHAUSTED"
+                elif "rate" in str(e).lower() or "429" in str(e):
+                    status = "⚠️  RATE-LIMITED"
+                elif "401" in str(e) or "auth" in str(e).lower():
+                    status = "❌ DEAD"
+                else:
+                    status = "✗ ERROR"
+                print(f"  {status} {kid:25s} {msg}")
+                pool._stats[kid].requests += 1
+                pool._classify_and_record_failure(kid, e)
+        pool._save_stats_if_needed()
+        print()
         pool.print_summary()

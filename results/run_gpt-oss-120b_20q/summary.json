@@ -1,0 +1,127 @@
+{
+  "task": "gpqa",
+  "questions_evaluated": 20,
+  "models_evaluated": 1,
+  "timestamp": "2026-06-05T02:09:34.971068",
+  "rankings": [
+    {
+      "model": "gpt-oss-120b-free",
+      "openrouter_id": "openai/gpt-oss-120b:free",
+      "official_gpqa_diamond": 80.1,
+      "our_accuracy_percent": 75.0,
+      "gap_vs_official": -5.1,
+      "correct": 15,
+      "invalid": 0,
+      "recovered": 3,
+      "total": 20,
+      "elapsed_seconds": 2155.17,
+      "rate_qps": 0.009
+    }
+  ],
+  "pool_stats": {
+    "total_keys": 11,
+    "available_now": 11,
+    "permanently_failed": 0,
+    "per_key": {
+      "ahmed": {
+        "requests": 3,
+        "successes": 3,
+        "failures": 0,
+        "success_rate": 1.0,
+        "available": true,
+        "rate_limited_seconds_ago": null,
+        "last_error": ""
+      },
+      "faresrafatfares": {
+        "requests": 2,
+        "successes": 2,
+        "failures": 0,
+        "success_rate": 1.0,
+        "available": true,
+        "rate_limited_seconds_ago": null,
+        "last_error": ""
+      },
+      "faresrafat434": {
+        "requests": 2,
+        "successes": 2,
+        "failures": 0,
+        "success_rate": 1.0,
+        "available": true,
+        "rate_limited_seconds_ago": null,
+        "last_error": ""
+      },
+      "faresrafat435": {
+        "requests": 2,
+        "successes": 2,
+        "failures": 0,
+        "success_rate": 1.0,
+        "available": true,
+        "rate_limited_seconds_ago": null,
+        "last_error": ""
+      },
+      "faresrafat436": {
+        "requests": 2,
+        "successes": 2,
+        "failures": 0,
+        "success_rate": 1.0,
+        "available": true,
+        "rate_limited_seconds_ago": null,
+        "last_error": ""
+      },
+      "faresrafat437": {
+        "requests": 2,
+        "successes": 2,
+        "failures": 0,
+        "success_rate": 1.0,
+        "available": true,
+        "rate_limited_seconds_ago": null,
+        "last_error": ""
+      },
+      "faresrafat818": {
+        "requests": 2,
+        "successes": 2,
+        "failures": 0,
+        "success_rate": 1.0,
+        "available": true,
+        "rate_limited_seconds_ago": null,
+        "last_error": ""
+      },
+      "faresrafat433": {
+        "requests": 2,
+        "successes": 2,
+        "failures": 0,
+        "success_rate": 1.0,
+        "available": true,
+        "rate_limited_seconds_ago": null,
+        "last_error": ""
+      },
+      "farmfares1": {
+        "requests": 2,
+        "successes": 2,
+        "failures": 0,
+        "success_rate": 1.0,
+        "available": true,
+        "rate_limited_seconds_ago": null,
+        "last_error": ""
+      },
+      "farmfares2": {
+        "requests": 2,
+        "successes": 2,
+        "failures": 0,
+        "success_rate": 1.0,
+        "available": true,
+        "rate_limited_seconds_ago": null,
+        "last_error": ""
+      },
+      "farmfares3": {
+        "requests": 2,
+        "successes": 2,
+        "failures": 0,
+        "success_rate": 1.0,
+        "available": true,
+        "rate_limited_seconds_ago": null,
+        "last_error": ""
+      }
+    }
+  }
+}
