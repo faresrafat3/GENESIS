@@ -159,6 +159,32 @@ $$N_{opt}(M, T) = \frac{T \cdot Z}{M \cdot (Z+1)}, \quad Z = W_{-1}\left(-\frac{
 
 التوقع (من Google paper): same/better accuracy + ~50% compute reduction.
 
+### P6: Lifetime Right-Drift Due to Non-Forgetting (NEW — Session 12)
+
+**Source:** Cross-synthesis of `GENESIS_Productive_Forgetting_Theory_AR.md` §17 ("retrieval consumes tokens, attention, latency") with `GENESIS_Cognitive_Economy_Theory_AR.md` §5 Hypothesis 2 (Theory-10's core thesis); discovered Session 12.
+
+**Prediction (falsifiable):**
+
+> Systems that operate without an explicit productive-forgetting policy will systematically drift **right-of-optimum** on the reasoning-length axis over their lifetime, because non-forgotten context monotonically grows even when no individual task increases its length budget.
+
+**Why this is novel relative to T5.93 and T5.94:**
+
+- Wu et al. 2025 (T5.93) study *within-task* length-vs-accuracy. The inverted-U is measured per-question.
+- Chen et al. 2026 (T5.94) study *within-response* deep-vs-long thinking via DTR. Also per-question.
+- **Neither addresses across-task lifetime drift.** P6 predicts that even a system with locally-optimal per-question length will drift right-of-optimum if it accumulates retrieved context (memory, prior episodes, prior verifier judgments) without abstraction forgetting (per Productive Forgetting Theory §3.4 / §9).
+
+**Operationalizable test:**
+
+1. Fix a model + benchmark + per-question max_tokens.
+2. Variant A (Control): no memory; each question is independent.
+3. Variant B: memory accumulates raw episodes across questions (no forgetting).
+4. Variant C: memory accumulates but with abstraction forgetting (episodes → concepts; episodes quieted once absorbed).
+5. **Prediction P6:** Variant B's effective per-question reasoning length grows over time and its accuracy degrades on later questions, even though Variant A and C stay flat.
+
+If P6 holds, it identifies a *third* mechanism of saturation (lifetime drift) distinct from the two studied in the literature (per-task length excess and per-response length-vs-depth confusion). This would be a genuine novel claim attributable to the GENESIS project (with Fares as conceptual originator via Productive Forgetting Theory + Cognitive Economy Theory; agent as cross-synthesis formalizer in Session 12).
+
+**Status:** Prediction stated. Not yet tested. Listed in Future Work for execution if/when the project resumes operational runs.
+
 ## 6. الـ Empirical Checks الموجودة
 
 | Check | المصدر | يدعم Theory-10؟ |

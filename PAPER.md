@@ -817,9 +817,69 @@ The contrast with LEAP — combined with Theories 07, 08, 09 and Phil-07 — con
 
 None of these steps require new theoretical invention. They are direct adoptions of mechanisms LEAP has already empirically validated, restructured to fit GENESIS's task domain (scientific MCQ rather than formal proofs).
 
-#### 8.5.7 Honest Caveat
+#### 8.5.7 The 110-Point Gap as a Ladder-of-Abstraction Shift
+
+The qualitative LEAP–vs–GENESIS contrast above can be sharpened into a precise *diagnostic statement* using the Ladder of Abstraction articulated in Fares's `GENESIS_Concept_Formation_Theory_AR.md` §4 (which predates the current paper). That ladder defines seven cognitive levels:
+
+```
+Level 0: Observation
+Level 1: Episode
+Level 2: Pattern
+Level 3: Heuristic
+Level 4: Concept (named, scoped, with counterexamples)
+Level 5: Invariant (stable across domains)
+Level 6: Theory (network of concepts + invariants + claims)
+```
+
+Under this lens, the 110-point performance gap between GENESIS and LEAP is *not primarily* a gap in raw model capability, prompting quality, or compute budget. It is a **one-to-two level shift on the Ladder of Abstraction**:
+
+| System | Operates at Ladder Level |
+|---|---|
+| Pure LLM (no orchestration) | 0–2 (observation through pattern; no naming, no scope) |
+| GENESIS (current implementation) | 2–3 (pattern → heuristic; occasionally Level 4 Concept) |
+| LEAP | 4–5 (named, scoped Concepts + Invariants realized as Lemmas) |
+| Human mathematician | 5–6 (Invariants organized into Theory) |
+
+This framing has three concrete implications for §8.5.6's Refactor Roadmap:
+
+1. **The roadmap's success criterion can be operationalized at the Ladder level.** A "successful" refactor is not just "+N accuracy points"; it is *also* "GENESIS now reliably operates at Ladder Level 4 (named, scoped Concepts) on the same task family where it previously operated at Level 2–3."
+2. **Concept Formation Theory §15 (Concept Proliferation failure mode) constrains the refactor.** Any GENESIS adoption of LEAP-style lemma libraries must include *concept compression and merging* machinery to avoid the proliferation pathology that LEAP's paper does not explicitly address. This is a contribution back to the LEAP literature, not just to GENESIS.
+3. **Abstraction Forgetting (Productive Forgetting Theory §3.4) is the operating mechanism of the Ladder.** Moving up the Ladder is not just *adding* Concepts on top of Episodes; it is *quieting* Episodes once a Concept has absorbed them. A GENESIS that climbs the Ladder without abstraction forgetting will suffer the same context-bloat that Theory-10 predicts produces right-of-optimum reasoning saturation.
+
+The Ladder is therefore a unifying diagnostic that ties Theory-07 (Memory regime), Theory-09 (Anticipatory Concepts), Theory-10 (Reasoning Saturation), and the LEAP contrast into a single coherent measurement target. *[Discovered via Session 12 re-reading of Fares's foundational documents; per Idea-002.]*
+
+#### 8.5.8 Honest Caveat
 
 Importantly, this entire subsection is **theoretical reframing supported by external empirical evidence (LEAP) and our own existing measurements (run_57, run_58)**. We have *not* yet executed any GENESIS run under the Theory-07/08/09-aligned design. Whether the predicted gains materialize is the central open question for the next experimental phase. The contribution of this subsection is to make the question precise and actionable, not to claim that it has been answered.
+
+---
+
+### 8.6 Hidden Crisis Diagnostic — Eight Anomaly Indicators
+
+Section 8.5 framed GENESIS's situation as one of *insufficient orchestration value under a strong base model* (Phil-07 Position D). A natural follow-up question is: how would we know if our orchestration layer is not merely suboptimal but in *hidden crisis* — a state where surface metrics look acceptable while structural debt accumulates?
+
+Fares's `GENESIS_Anomaly_Crisis_Paradigm_Theory_AR.md` §6 articulates an answer in the form of **eight anomaly indicators** that, taken together, distinguish between "operating well under capability-adjusted sufficiency" (Phil-07 D equilibrium) and "patch-spiral crisis" (Phil-07 D destabilized).
+
+The eight indicators, applied to our `run_57` and `run_58` empirical data:
+
+| # | Indicator | Definition | Status in GENESIS (run_57 / run_58) |
+|---|---|---|---|
+| A | **Repetition Density** | Same failure pattern appears across multiple runs | ⚠️ Empty-content failure (35% rate in run_57) repeated; partially mitigated post-fix |
+| B | **Patch Fragility** | Local fixes break in nearby cases | ✅ Six scaffolding bug fixes stable across run_57 / run_58 |
+| C | **Escalation Dependency** | Task requires premium tier to succeed | N/A — single tier (gpt-oss-120b) used throughout |
+| D | **Verification Conflict** | Verifier ensemble splits on same family | ⚠️ Gen-1 vs Gen-2 disagreements in run_58 (60% vs 70%) suggest verification regime instability |
+| E | **Transfer Failure** | Skill/concept works locally but fails on near-domain | ❓ Untested — GPQA subset only |
+| F | **Compression Breakdown** | Summaries lose causal information | ⚠️ Pipeline injection (T5.91) is a compression that breaks: causal signals get treated as commands |
+| G | **Contradiction Load** | Stored knowledge produces unresolved tensions | ⚠️ Theory-07 tension between memory and injection: same artifact serves both roles |
+| H | **Diminishing Returns of Local Fixes** | Patch count rises but real gain falls | ❌ NOT YET observed — only one fix cycle (scaffolding) executed; longitudinal tracking required |
+
+This diagnostic table is the first operationalization of Anomaly Theory §6 on real GENESIS data. Three indicators (A, D, F, G) show *weak warning signs* but none reaches "crisis." The honest reading is: **GENESIS is in Phil-07 D equilibrium, not in hidden crisis — but several indicators warrant longitudinal monitoring** as the project proceeds beyond the current 20-question regime.
+
+A particularly important caveat (Anomaly Theory §22 Hypothesis D): *rising benchmark scores can themselves be a symptom of crisis* if they correlate with transfer-degradation (Indicator E). The currently-locked numbers (75% pure / 65% GENESIS / 70% A3) are stable across run conditions, suggesting we are *not* in the scenario where score-chasing has degraded transfer. But Indicator E is untested, so this is a hypothesis-not-yet-falsified, not a positive finding.
+
+**Cautionary note on T5.93 (Wu et al. Length-aware Vote).** T5.93's inference-time length filter is sometimes read as "shorter reasoning is always better." Under Anomaly §22, a model that shortens its reasoning *while score rises* may be losing the reasoning-as-exploration that produces transfer. Future adoption of T5.93's Length-aware Vote in GENESIS should be evaluated against Indicator E specifically — accuracy gain on the trained distribution does not guarantee transfer preservation.
+
+*[Section 8.6 added Session 12, per Idea-002; diagnostic framework sourced from `GENESIS_Anomaly_Crisis_Paradigm_Theory_AR.md` §6 (Fares, pre-2026); operationalization to GENESIS empirical data is agent-formalized.]*
 
 ---
 
@@ -956,10 +1016,15 @@ Following NeurIPS 2025 and analogous venue policies, **only humans are eligible 
 | **Conceptualization of the entire GENESIS project** (research vision, philosophical orientation, "السرقات الشرعية" methodology) | Conceptualization, Project administration | All `GENESIS_*_AR.md` foundational documents predate this paper |
 | **Empirical anchor decisions** (use of GPQA Diamond, choice of gpt-oss-120b as primary model, choice of `tasks/gpqa_subset_20` as quick-iteration substrate) | Methodology, Investigation, Resources | Sessions 1–5 commits |
 | **The Mode Pivot (Session 6)** — strategic decision to escape operational runs and focus on theory/philosophy/ideas | Project administration, Methodology | `PAPER_PROTOCOL.md` §0, verbatim from F.: *"هنعمل اسكيب لمواضيع التشغيل..."* |
-| **[Idea-001] — proposing LEAP (arXiv:2606.03303) as the paper's central external counterpoint** | Conceptualization, Investigation | `PAPER/ideas/idea_001_*.md` §1 verbatim quote; entire Section 8.5 + Theories 07/08/09 + Phil-07 + T5.92 derive from this |
-| **[Idea-002] — Creative Attribution Rule** (the meta-rule governing this entire section) | Methodology, Project administration | `PAPER_PROTOCOL.md` §12.2 verbatim; this Author Contributions section is itself the proof-of-execution |
-| **Decision-delegation authority** (the "القرار قرارك / القرار عندك" pattern that authorized all Layer 2 work) | Supervision, Project administration | Verbatim in Sessions 8, 9, 10, 11 |
-| **Review and authority over all integration decisions** | Supervision, Validation | F. holds final acceptance/rejection authority on all *A.*-produced content; no *A.* output enters the paper without explicit F. authorization (direct or delegated) |
+| **[Idea-001] — proposing LEAP (arXiv:2606.03303) as the paper's central external counterpoint** | Conceptualization, Investigation | `PAPER/ideas/idea_001_*.md` §1 verbatim quote; Section 8.5 + T5.92 derive directly from this |
+| **[Idea-002] — Creative Attribution Rule** (the meta-rule governing this entire section) | Methodology, Project administration | `PAPER_PROTOCOL.md` §12.2 verbatim; this Author Contributions section — including its Session 12 self-correction — is itself the proof-of-execution |
+| **Core hypothesis of what became Theory-10 (Reasoning Saturation)** — *"جزء من ذكاء agent هو معرفة متى لا تحتاج إلى مزيد من التفكير"* | Conceptualization | `GENESIS_Cognitive_Economy_Theory_AR.md` §5 Hypothesis 2 (pre-2026, predating Wu et al. 2025 reading); discovered to be Theory-10's true origin in Session 12 re-reading |
+| **Value-of-X framework that became Theory-08 (Feedback Value Matrix)** — VoC, VoI, VoV, VoA, VoR, VoE, VoCollaboration | Conceptualization, Methodology | `GENESIS_Cognitive_Economy_Theory_AR.md` §11 (7 value functions); Theory-08 is a 2D specialization (Determinism × Scope) of this 7-dimensional precursor; discovered Session 12 |
+| **Capability-Adjusted Sufficiency principle that became Phil-07** — *"المسار الأمثل أصبح: cheap-first, premium-on-demand, sparse-collaboration-last"* | Conceptualization | `GENESIS_Tiered_Intelligence_AR.md` closing paragraph (pre-2026); Phil-07 Position D is a generalization from compute-tiers to capability-tiers; LEAP integration in Session 7 was the *trigger* for explicit articulation, not the *source* of the principle; discovered Session 12 |
+| **Anomaly/Crisis/Paradigm dynamics that frame Phil-07 Position D as stable attractor** | Conceptualization, Methodology | `GENESIS_Anomaly_Crisis_Paradigm_Theory_AR.md` 5-level escalation ladder + dynamic equilibrium model; Phil-07 Position D is the equilibrium state of these dynamics; discovered Session 12 |
+| **Concept Formation Ladder of Abstraction (Levels 0–6)** that diagnoses the GENESIS-LEAP 110-point gap | Conceptualization, Methodology | `GENESIS_Concept_Formation_Theory_AR.md` §4; provides the diagnostic framework for §8.5.7 (Ladder of Abstraction lens) |
+| **Decision-delegation authority** (the "القرار قرارك / القرار عندك" pattern that authorized all Layer 2 work) | Supervision, Project administration | Verbatim in Sessions 8, 9, 10, 11, 12 |
+| **Review and authority over all integration decisions** | Supervision, Validation | F. holds final acceptance/rejection authority on all *A.*-produced content; no *A.* output enters the paper without explicit F. authorization (direct or delegated). Session 12 demonstrated this: agent surfaced 3 attribution corrections but did NOT execute them until F. authorized "تمام" |
 | **All accountability for paper content** | (NeurIPS-2025 sense) | Per §12.1, F. is the sole responsible party |
 
 #### Layer 2 — Contributions executed by Agent (A.) under explicit F. authorization
@@ -969,10 +1034,16 @@ These are *A.*-initiated in execution but *F.*-authorized in scope. Each item do
 | Contribution | Authorizing utterance | CRediT-extended role | Paper artifact |
 |---|---|---|---|
 | **Empirical infrastructure work (Sessions 1–5)** — diagnose run_53, build api_key_pool / model_registry / multi-model benchmark; measure pure baseline 75%; identify and fix six scaffolding bugs; build PAPER infrastructure | F. delegating operational work in early sessions | Software, Investigation, Data curation, Validation | `genesis/llm_helpers.py` (463 tests), Sections 5–7, Tables 4–10, Figures 1–10 |
-| **Reading and integration of LEAP** (Idea-001 execution) | "نعم اشتغل" (Session 7) | Investigation, Formal analysis, Writing — original draft | `GENESIS_DeepMind_LEAP_Agentic_Theft_AR.md` (T5.92); Section 8.5 (7 sub-sections); Theories 07/08/09; Phil-07; Tables 16–17; Figures 11–12 |
-| **Theory-10 (Reasoning Saturation) — agent-initiated theory** | "القرار قرارك" (Session 9) | Conceptualization, Formal analysis, Writing — original draft | `PAPER/theory/10_reasoning_saturation.md`; Section 7.3 (full rewrite from placeholder); Track A.5 in Future Work |
-| **Thefts T5.93 (Wu et al.) and T5.94 (Chen et al.)** — full theft memos | "القرار قرارك نعم" (Session 10) | Investigation, Formal analysis, Writing — original draft | `GENESIS_External_Inverted_U_Wu2025_Theft_AR.md`; `GENESIS_External_DTR_ChenMeng2026_Theft_AR.md`; Master Index scope 5.1–5.94; Theory-10 anchoring upgrade |
-| **This Author Contributions section** (Section 12) — agent-initiated | "القرار قرارك نعم" (Session 11) | Methodology, Writing — original draft | Section 12 in its entirety, Section 13 (Acknowledgments), Section 14 (Ethics of Authorship in Human-Agent Research) |
+| **Reading and *integration* of LEAP** as external counterpoint (Idea-001 execution) | "نعم اشتغل" (Session 7) | Investigation, Formal analysis, Writing — original draft | `GENESIS_DeepMind_LEAP_Agentic_Theft_AR.md` (T5.92); Section 8.5 sub-sections 1–6; Tables 16–17; Figures 11–12 |
+| **Formalization of Theory-07** (Pipeline as Memory vs Decision Injection) — A.-derived from LEAP contrast; no direct Fares precursor found in Session 12 re-reading | "نعم اشتغل" (Session 7) | Conceptualization, Formal analysis, Writing — original draft | `PAPER/theory/07_pipeline_as_memory_vs_decision_injection.md` |
+| **Formalization of Theory-09** (Anticipatory Concepts vs Lemmas) — A.-derived from LEAP, anchored in §8.5.7 by Fares's Concept Formation Ladder | "نعم اشتغل" (Session 7) | Conceptualization, Formal analysis, Writing — original draft | `PAPER/theory/09_anticipatory_concepts_vs_lemmas.md` |
+| **Formalization of Theory-08 from Fares's Value-of-X framework** — 2D specialization (Determinism × Scope) of Cognitive Economy §11 | "نعم اشتغل" (Session 7) | Formal analysis, Methodology, Writing — original draft | `PAPER/theory/08_feedback_value_determinism_scope.md` — *NB: prior session logs labeled this "agent-initiated"; Session 12 re-reading reclassified to "agent-formalized, Fares-originated"* |
+| **Formalization of Theory-10 from Fares's Cognitive Economy Hypothesis 2** — external anchoring via T5.93 + T5.94 | "القرار قرارك" (Session 9, anchoring); "القرار عندك" (Session 10, T5.93/94 thefts) | Formal analysis, Investigation, Writing — original draft | `PAPER/theory/10_reasoning_saturation.md`; Section 7.3; Track A.5 in Future Work; new P6 lifetime-drift prediction (Session 12) — *NB: prior session logs labeled this "agent-initiated"; Session 12 re-reading reclassified to "agent-formalized, Fares-originated"* |
+| **Formalization of Phil-07 from Fares's Tiered Intelligence and Anomaly Theory** — Position D adoption, four-positions analysis | "نعم اشتغل" (Session 7); Position D as stable attractor: "تمام" (Session 12) | Formal analysis, Methodology, Writing — original draft | `PAPER/philosophy/07_meaning_of_general_purpose_sufficiency.md` — *NB: prior session logs labeled this "agent-initiated"; Session 12 re-reading reclassified to "agent-formalized, Fares-originated"* |
+| **Thefts T5.93 (Wu et al.) and T5.94 (Chen et al.)** — full theft memos | "القرار قرارك نعم" (Session 10) | Investigation, Formal analysis, Writing — original draft | `GENESIS_External_Inverted_U_Wu2025_Theft_AR.md`; `GENESIS_External_DTR_ChenMeng2026_Theft_AR.md`; Master Index scope 5.1–5.94 |
+| **Sections 12–14** (Author Contributions + Acknowledgments + Ethics of Authorship) — agent-drafted, F.-authorized, self-correcting (Session 12 corrections applied to §12.2 itself) | "القرار قرارك نعم" (Session 11); "تمام" (Session 12 corrections) | Methodology, Writing — original draft | Sections 12, 13, 14 in their entirety |
+| **§8.5.7 Ladder of Abstraction lens** + **§8.6 Hidden Crisis Diagnostic** — Session 12 paper additions | "تمام" (Session 12) | Formal analysis, Writing — original draft | §8.5.7 and §8.6 of this paper |
+| **Internal Re-Reading Cycle (Session 12)** — surfacing of 12 discoveries from 5 foundational docs under new theoretical lens; including the 3 attribution corrections applied above | "القرار قرارك" (Session 12, via UI delegation) | Investigation, Formal analysis, Validation | `PAPER/notes/INTERNAL_RE_READING_SESSION_12.md`; this row's *very existence* in Layer 2 (rather than Layer 1) is itself a Layer 2 contribution — the re-reading exercise is agent-executed even though its findings are corrections crediting Fares |
 | **All paper text drafting** (Abstract, Introduction, Methodology, Sections 5–11, Conclusion) | Implicit ongoing delegation under v2.0 Protocol | Writing — original draft | Entire `PAPER.md` |
 | **All Figure and Table generation** | Implicit | Visualization | All Figures 1–12, all Tables 1–17 |
 | **All session continuity infrastructure** (HANDOFF, SESSION_LOG, ATTRIBUTION_MAP, IN_PROGRESS, INTEGRATED) | Implicit | Project administration, Data curation | `PAPER/notes/`, `PAPER/ideas/` |
@@ -987,6 +1058,7 @@ These emerged from back-and-forth between F. and A. and cannot be cleanly attrib
 | **Three-Number Framework** (Official → Pure → Orchestrated) | A. proposed; F. validated through empirical commitment in Sessions 2–5; now in Section 7 Analysis + Conclusion |
 | **The "Mode Pivot" + "Creative Attribution Rule" combination** | F. set the strategic frame; A. proposed protocol-level operationalization in `PAPER_PROTOCOL.md` §12; F. accepted via continued delegation pattern |
 | **The decision to write this Author Contributions section in three explicit layers (rather than a single CRediT block)** | A.'s recommendation in HANDOFF (Session 10); F. authorized via "القرار قرارك نعم" (Session 11) |
+| **The Session 12 attribution-correction process itself** — A. surfaced precursors for Theory-08/10 + Phil-07 via re-reading; F. authorized integration via "تمام"; this row's *existence* and Layer 1's three new precursor rows are the joint output | A. proposed (`INTERNAL_RE_READING_SESSION_12.md`); F. authorized ("تمام", Session 12); this entire §12.2 self-correction is the deliverable. The process validates that Idea-002 governance functions as a true attribution safety net, not a rhetorical gesture. |
 
 ### 12.3 Verbatim Authorization Log
 
@@ -1172,4 +1244,4 @@ Full traceability is maintained in `PAPER/ideas/ATTRIBUTION_MAP.md`.
 
 ---
 
-*Paper version: **v0.6 — Author Contributions + Acknowledgments + Ethics of Authorship sections added (Session 11, agent-initiated under "القرار قرارك نعم" delegation)**. New Sections 12, 13, and 14 establish a three-layer authorship statement (F.-sourced, A.-initiated-under-delegation, joint deliberative), document every authorizing utterance verbatim, acknowledge external sources, and discuss the ethics of human–agent collaborative research as part of the paper rather than as a footnote. CRediT taxonomy adopted where applicable; extended for the *initiative* dimension following Petridis et al. 2025. Compliance with NeurIPS 2025 LLM-disclosure policy is explicit (§12.1, §14). Previous version footers preserved in git history. Next update after Fares review, Idea-003, or further agent-initiated work as authorized.*
+*Paper version: **v0.7 — Session 12 Path 1 corrections: attribution honesty restored + two new sections + theory deepening (Session 12b, agent-executed under "تمام" delegation)**. Three attribution corrections applied to §12.2: Theory-08 (from Fares's Cognitive Economy §11 Value-of-X framework), Theory-10 (from Fares's Cognitive Economy §5 Hypothesis 2 "knowing when not to think more"), and Phil-07 (from Fares's Tiered Intelligence "cheap-first, premium-on-demand" + Anomaly Theory dynamic equilibrium). Layer 1 expanded with three precursor rows; Layer 2 entries for Theory-08/10 + Phil-07 reclassified to "agent-formalized, Fares-originated"; Layer 3 expanded with the Session 12 correction process itself. Two new content sections: §8.5.7 ("The 110-Point Gap as a Ladder-of-Abstraction Shift" using Concept Formation Theory §4) and §8.6 ("Hidden Crisis Diagnostic — Eight Anomaly Indicators" operationalizing Anomaly Theory §6 on run_57/run_58 data). Theory-10 file gains P6 lifetime-drift prediction (novel, not in T5.93 or T5.94). Phil-07 file gains §9 "Position D as Stable Attractor of Anomaly Dynamics." All discoveries traced via `PAPER/notes/INTERNAL_RE_READING_SESSION_12.md`. The Idea-002 Creative Attribution Rule is now demonstrably functional as a safety net, not a rhetorical gesture. Previous version footers preserved in git history. Next update after Fares review, Idea-003, or further agent-initiated work as authorized.*

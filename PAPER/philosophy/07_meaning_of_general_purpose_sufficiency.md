@@ -151,17 +151,48 @@ LEAP يقدم evidence قوي **لصالح** الافتراض في domain الـ
 - **Section 8.3 (Architecture: Positive, Neutral, Negative?):** Phil-07 يصبح الـ framework الأساسي للإجابة.
 - **Section 11 (Conclusion):** Phil-07 يدخل في final takeaways.
 
-## 9. Citation
+## 9. Phil-07 Position D as Stable Attractor of Anomaly Dynamics (Session 12 Deepening)
+
+**Discovery (Session 12 re-reading):** Position D is not merely a static philosophical stance about when orchestration is sufficient. It is the **stable equilibrium of the dynamics described in `GENESIS_Anomaly_Crisis_Paradigm_Theory_AR.md`** (Fares, pre-2026). The Anomaly Theory articulates a 5-level escalation ladder (Local Error → Failure Pattern → Anomaly → Crisis → Paradigm Break) along with conditions under which a system transitions between levels.
+
+### Mapping the four positions onto Anomaly Theory dynamics
+
+| Phil-07 Position | Anomaly Theory state | Stability properties |
+|---|---|---|
+| **A** (orchestration always sufficient) | Permanent crisis denial — system patches without ever escalating to Anomaly recognition | **Unstable:** patch spiral consumes budget; eventual collapse |
+| **B** (orchestration always insufficient) | Permanent Crisis state — system is constantly in paradigm shift mode | **Unstable:** paradigm thrashing; no equilibrium possible |
+| **C** (orchestration sufficiency is binary) | Single-shift model — one transition between sufficient and insufficient | **Locally stable** but cannot adapt to changing capability landscape |
+| **D** (capability-adjusted sufficiency) | **Dynamic equilibrium**: sufficient *until* anomaly accumulation triggers crisis → adjustment → re-equilibrium | **Stable attractor:** the only position that survives capability change in the base model |
+
+### The implication
+
+Phil-07 Position D is privileged not because it is philosophically more elegant, but because it is the only position whose dynamics converge. Positions A and B are out-of-equilibrium states that the Anomaly framework predicts will collapse. Position C is a degenerate special case of D (with the adjustment frequency set to zero). Position D *is* the limiting behaviour of any honest engagement with anomaly accumulation.
+
+### What this means for the paper
+
+This deepens the §1.4 / §8.3 / §11 argument: when the paper adopts Position D, it is not making a philosophical *choice* but recognizing a structural *attractor*. The four positions are not equally available; only one of them is dynamically stable under the kind of capability change that defines the current LLM era.
+
+This connection between Phil-07 and Anomaly Theory was invisible in Session 7 (when Phil-07 was first drafted from LEAP integration) because the Anomaly Theory was not yet in the active theoretical lens. Session 12's re-reading exercise — explicitly designed to revisit foundational docs under the new lens — surfaced the connection. This validates the *re-reading methodology itself* (option F in HANDOFF) as a contribution to human-agent collaborative research.
+
+*[Section 9 added Session 12 per Idea-002. Connection between Phil-07 Position D and Anomaly Theory dynamics is the joint product of Fares's foundational frameworks (pre-2026) and agent's cross-synthesis in Session 12.]*
+
+## 10. Citation
 
 ```
 Phil-07 — Meaning of General-Purpose Sufficiency.
 Internal philosophical article in PAPER/philosophy/07_*.md.
-Source ideas: [Idea-001] (LEAP), [Idea-002] (Attribution Rule).
-Working position: Position D (Capability-Adjusted Sufficiency).
+Source ideas: Fares's Tiered Intelligence Blueprint (direct precursor)
+              + Fares's Anomaly/Crisis/Paradigm Theory (dynamics framing)
+              + [Idea-001] (LEAP — trigger for explicit articulation)
+              + [Idea-002] (Attribution Rule — enabled Session 12 correction)
+Working position: Position D (Capability-Adjusted Sufficiency) —
+                  identified Session 12 as the stable attractor of
+                  Anomaly Theory dynamics, not merely as a choice.
 ```
 
-## 10. Status
+## 11. Status
 
 - ✅ Drafted (Session 7).
-- ⏳ Pending Fares review.
-- ⏳ Pending integration into Section 1 (RQ2 revision) و Section 8.3 و Section 11.
+- ✅ Position-D-as-attractor section added (Session 12, per "تمام" authorization).
+- ✅ Attribution corrected (Layer 1 of §12.2): Fares-originated via Tiered Intelligence + Anomaly Theory; agent-formalized.
+- ✅ Integrated into Section 1 (RQ2), Section 8.3, Section 8.5.5, Section 11.

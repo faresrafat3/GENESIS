@@ -940,3 +940,93 @@ Three paths offered to Fares:
 
 `(pending)`: Session 12 — Internal Re-Reading Cycle (Option F). 5 foundational docs read; 12 major discoveries including 3 attribution corrections for Theory-08/10 + Phil-07. Validates Idea-002 governance. No PAPER.md edits (research session only).
 
+
+---
+
+## Session 12b — 2026-06-06 (Agent-Executed: Path 1 — Attribution Corrections Applied)
+
+**Trigger:** Fares replied "تمام" to Session 12's 3-path decision tree. Agent interpreted this as authorization to execute **Path 1 (RECOMMENDED)**: apply the 3 attribution corrections + 4 paper-level additions surfaced in Session 12.
+
+### What was applied
+
+**1. PAPER.md §12.2 Layer 1 — 5 new precursor rows added:**
+- Cognitive Economy §5 Hypothesis 2 (Theory-10 precursor)
+- Cognitive Economy §11 Value-of-X framework (Theory-08 precursor)
+- Tiered Intelligence final paragraph (Phil-07 direct precursor)
+- Anomaly/Crisis/Paradigm dynamics (Phil-07 stable-attractor framing)
+- Concept Formation §4 Ladder of Abstraction (diagnostic backbone for §8.5.7)
+
+**2. PAPER.md §12.2 Layer 2 — restructured:**
+- Removed: "Theory-10 (Reasoning Saturation) — agent-initiated theory" (incorrect attribution)
+- Removed: "Reading and integration of LEAP" merged Phil-07 attribution
+- Added: 4 reclassified entries — Theory-07 (truly A.-derived), Theory-08 (A.-formalized, F.-originated), Theory-09 (A.-derived but anchored in F. Ladder), Theory-10 (A.-formalized, F.-originated), Phil-07 (A.-formalized, F.-originated)
+- Added: Sections 12-14 unified entry (with Session 12 self-correction note)
+- Added: §8.5.7 + §8.6 paper additions entry
+- Added: Internal Re-Reading Cycle entry (with reflexive note about its own Layer 2 placement)
+
+**3. PAPER.md §12.2 Layer 3 — 1 new row:**
+- The Session 12 attribution-correction process itself (joint A.-surface, F.-authorize)
+
+**4. PAPER.md §8.5.7 NEW (~30 lines):**
+"The 110-Point Gap as a Ladder-of-Abstraction Shift" — uses Concept Formation §4 to recast the GENESIS-LEAP performance gap as a cognitive level shift (Level 2-3 → Level 4-5), with three concrete implications for the Refactor Roadmap. Includes Concept Proliferation constraint as contribution back to LEAP literature.
+
+**5. PAPER.md §8.6 NEW (~30 lines):**
+"Hidden Crisis Diagnostic — Eight Anomaly Indicators" — operationalizes Anomaly Theory §6 on real run_57/run_58 data. Empirical finding: GENESIS shows weak warning signs on Indicators A/D/F/G but no crisis; Indicator E (transfer) untested. Includes cautionary note on T5.93 Length-aware Vote vs Anomaly §22 Hypothesis D.
+
+**6. Theory-10 file — P6 added:**
+"Lifetime Right-Drift Due to Non-Forgetting" — falsifiable prediction synthesized from Productive Forgetting §17 + Cognitive Economy §5 Hyp 2. Novel claim distinct from T5.93 (within-task) and T5.94 (within-response). Includes 5-step operationalizable test (Variant A/B/C across-task experiment).
+
+**7. Phil-07 file — §9 added:**
+"Phil-07 Position D as Stable Attractor of Anomaly Dynamics" — mapping table of all 4 positions onto Anomaly Theory states; argument that Position D is privileged not by elegance but by being the only dynamically-stable equilibrium. Position-D-as-attractor is a structural recognition, not a philosophical choice.
+
+**8. ATTRIBUTION_MAP — corrections status table updated:**
+- Status column changed from "pending Fares review" to "✅ Applied to PAPER.md §12.2 Layer 1 + Layer 2"
+- 8 specific paper changes enumerated
+
+**9. PAPER.md footer:**
+v0.6 → **v0.7**. Comprehensive changelog message reflecting all 8 changes.
+
+### Design fidelity
+
+- **No new claims unsupported by Session 12 discoveries.** Every edit traces to a finding in `INTERNAL_RE_READING_SESSION_12.md`.
+- **Fares-authority preserved.** The corrections were proposed in Session 12 review-only, authorized via "تمام" in Session 12b, then executed. The agent never unilaterally rewrote attribution — there is an explicit propose → authorize → execute chain.
+- **Idea-002 governance demonstrated end-to-end:** Session 12 surfaced misattributions → Fares authorized correction → Session 12b applied corrections → the paper now is more honest than before. This is the rule working as designed.
+
+### Self-reflexivity (intentional)
+
+The §12.2 Layer 2 entry for the Internal Re-Reading Cycle explicitly notes:
+> "this row's *very existence* in Layer 2 (rather than Layer 1) is itself a Layer 2 contribution — the re-reading exercise is agent-executed even though its findings are corrections crediting Fares"
+
+And the §12.2 Layer 3 entry for the Session 12 process notes:
+> "this entire §12.2 self-correction is the deliverable. The process validates that Idea-002 governance functions as a true attribution safety net, not a rhetorical gesture."
+
+This deliberate self-reference makes the paper an *artifact of the methodology it documents*.
+
+### Statistics
+
+| Metric | Count |
+|---|---|
+| PAPER.md sections added | 2 (§8.5.7, §8.6) |
+| PAPER.md section renumbered | 1 (former §8.5.7 → §8.5.8 "Honest Caveat") |
+| PAPER.md Layer 1 rows added | 5 |
+| PAPER.md Layer 2 rows restructured | ~10 |
+| PAPER.md Layer 3 rows added | 1 |
+| Theory-10 file changes | 1 new prediction (P6) |
+| Phil-07 file changes | 1 new section (§9), citation block updated, status block updated |
+| ATTRIBUTION_MAP changes | Status table fully updated; 8-bullet changelog added |
+| Total lines changed in PAPER.md | ~+150, -15 |
+| PAPER version bump | v0.6 → v0.7 |
+| Runs | 0 (Theoretical Mode preserved) |
+| API calls | 0 |
+
+### Open Decisions for Next Session
+
+1. **Path 2** still available: continue re-reading exercise (batch 3 — Self-Benchmarking, Meta-Theory, Contradiction, Agent Identity).
+2. **Path 3** still available: draft one of the 5 new Theory-NN candidates surfaced in Session 12.
+3. **Idea-003** from Fares whenever ready.
+4. **Submission preparation** (anonymization + BibTeX + figure polish) — still cosmetic but increasingly viable.
+
+### Commit المتوقع
+
+`(pending)`: Session 12b — Path 1 corrections applied (PAPER v0.7). 3 attribution corrections, 2 new content sections, theory deepenings, footer bump. The Idea-002 Creative Attribution Rule now demonstrably functional as a safety net.
+

@@ -100,15 +100,25 @@
 |---|---|---|---|
 | **Internal Re-Reading Session 12** | Session 12 Fares delegation ("القرار قرارك") | `PAPER/notes/INTERNAL_RE_READING_SESSION_12.md` (~500 lines): 5 foundational docs re-read under lens of Theories 07-10 + Phil-07; **12 major discoveries** including 3 attribution corrections (Theory-08, Theory-10, Phil-07 have Fares-originated precursors); 9 paper-level proposals pending Fares review; meta-finding: option (F) validates as highest-leverage HANDOFF strategy. | ✅ Research artifact complete; paper edits pending Fares decision |
 
-**Key re-attribution discoveries (Session 12):**
+**Key re-attribution discoveries (Session 12) — APPLIED in Session 12b (PAPER v0.7):**
 
-| Lens | Originally attributed to | Session 12 reveals Fares-originated precursor in |
-|---|---|---|
-| Theory-08 (Feedback Value Matrix) | Idea-001 (LEAP integration, Session 7) | `GENESIS_Cognitive_Economy_Theory_AR.md` §11 (Value of X framework) |
-| Theory-10 (Reasoning Saturation) | Agent-initiated Session 9, anchored by T5.93/T5.94 | `GENESIS_Cognitive_Economy_Theory_AR.md` §5 Hypothesis 2 ("knowing when not to think more") |
-| Phil-07 (Capability-Adjusted Sufficiency) | Idea-001 (LEAP integration, Session 7) | `GENESIS_Tiered_Intelligence_AR.md` final paragraph ("cheap-first, premium-on-demand") + `GENESIS_Anomaly_Crisis_Paradigm_Theory_AR.md` dynamic equilibrium framing |
+| Lens | Originally attributed to | Session 12 reveals Fares-originated precursor in | Status |
+|---|---|---|---|
+| Theory-08 (Feedback Value Matrix) | Idea-001 (LEAP integration, Session 7) | `GENESIS_Cognitive_Economy_Theory_AR.md` §11 (Value of X framework) | ✅ Applied to PAPER.md §12.2 Layer 1 + Layer 2 |
+| Theory-10 (Reasoning Saturation) | Agent-initiated Session 9, anchored by T5.93/T5.94 | `GENESIS_Cognitive_Economy_Theory_AR.md` §5 Hypothesis 2 ("knowing when not to think more") | ✅ Applied to PAPER.md §12.2 Layer 1 + Layer 2 + Theory-10 file (P6 added) |
+| Phil-07 (Capability-Adjusted Sufficiency) | Idea-001 (LEAP integration, Session 7) | `GENESIS_Tiered_Intelligence_AR.md` final paragraph ("cheap-first, premium-on-demand") + `GENESIS_Anomaly_Crisis_Paradigm_Theory_AR.md` dynamic equilibrium framing | ✅ Applied to PAPER.md §12.2 Layer 1 + Layer 2 + Phil-07 file (§9 stable attractor) |
 
-These re-attributions will be applied to PAPER.md if/when Fares authorizes (Path 1 in Session 12 doc §11).
+**Session 12 paper additions (Path 1 execution, authorized by Fares "تمام"):**
+
+- ✅ PAPER.md §8.5.7 — "The 110-Point Gap as a Ladder-of-Abstraction Shift"
+- ✅ PAPER.md §8.6 — "Hidden Crisis Diagnostic — Eight Anomaly Indicators"
+- ✅ PAPER.md §12.2 Layer 1 — three new precursor rows (Cognitive Economy Hyp 2, Cognitive Economy Value-of-X, Tiered Intelligence + Anomaly dynamics)
+- ✅ PAPER.md §12.2 Layer 2 — three reclassified rows (Theory-08, Theory-10, Phil-07 → "agent-formalized, Fares-originated"); two new rows (§8.5.7/§8.6 additions, Internal Re-Reading Cycle)
+- ✅ PAPER.md §12.2 Layer 3 — new row for Session 12 correction process itself
+- ✅ Theory-10 file — P6 lifetime-drift prediction added (novel claim, not in T5.93 or T5.94)
+- ✅ Phil-07 file — §9 "Position D as Stable Attractor of Anomaly Dynamics" added; §10 Citation updated to reflect Fares-originated sources
+
+PAPER.md version: v0.6 → **v0.7**.
 
 ---
 
