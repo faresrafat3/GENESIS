@@ -1,7 +1,7 @@
 # 🧬 GENESIS: Measuring the Impact of LLM Orchestration Architecture on Graduate-Level Scientific Reasoning
 
-**Paper Status:** Draft v0.8.2 — §15 sharpened (dependency chain, Four Tests, zero-concept caveat)
-**Last Updated:** 2026-06-06 (Session 14 — agent-executed under "القرار قرارك" delegation)  
+**Paper Status:** Draft v0.9 — Theory-13 (Negative Memory) integrated as fifth internal theory
+**Last Updated:** 2026-06-06 (Session 14 — agent-executed under "تمام" delegation)  
 **Authors:** Fares Rafat (sole author per NeurIPS 2025 policy; see §12.1)  
 **Agent contributions:** Documented transparently per §12.2 (three-layer structure: Layer 1 Fares-sourced, Layer 2 agent-formalized under F. delegation, Layer 3 joint deliberative). Agent is NOT a co-author.  
 **Target Venue:** arXiv / ML conference (ICLR/NeurIPS workshop initially)  
@@ -22,11 +22,11 @@ We further execute the first targeted ablation (**A3: no cognitive pipeline leve
 
 Our key findings include: (1) a **counter-intuitive reasoning saturation effect** where questions consuming more reasoning tokens were less likely to be answered correctly (median 6,836 tokens for incorrect vs 989 for correct); (2) strong **domain asymmetry** with Physics questions being dramatically easier (10/11 classified as Easy across models) than Chemistry Organic (5/6 classified as Hard); (3) the "empty content" phenomenon where 35% of reasoning model responses return zero visible tokens, requiring extraction from internal reasoning traces; (4) an **architecture-overhead gap** in which GENESIS, despite producing zero invalid answers and clean execution, underperforms the pure baseline primarily on Chemistry and Biology; and (5) initial ablation evidence that removing pipeline leverage improves Generation 1 from **65% to 70%**.
 
-Finally, we situate these results against the **LEAP** framework [Kung et al. 2026; T5.92; sourced via Idea-001], which on the same class of base model demonstrates a **+100-point** architecture impact (Putnam 2025: 0% → 100%). The 110-point gap between LEAP's +100 and GENESIS's −10 cannot be explained by base model strength, scaffolding bugs, or benchmark difficulty alone — it is structural. To explain it, we develop four internal theories: **[Theory-07]** *Pipeline as Memory vs Pipeline as Decision Injection*; **[Theory-08]** *Feedback Value = f(Determinism, Scope)*; **[Theory-09]** *Anticipatory Concepts vs Anticipatory Lemmas*; and **[Theory-10]** *Reasoning Saturation: The Inverted-U of Internal Reasoning* — the last of which converts our counter-intuitive empirical observation (Discovery #1) into a falsifiable theory anchored by six independent external papers (Wu et al. 2025; UVA-Google 2026; Chen et al. 2024b; Su et al. 2025; OptimalThinkingBench; "When More Thinking Hurts"). Together with **[Phil-07]** *Capability-Adjusted Sufficiency*, these theories reframe our research question from "does the architecture add value?" to the more precise **"under what structural conditions does an orchestration architecture add measurable value?"**. We argue that GENESIS currently violates three conditions (memory rather than injection; narrow deterministic feedback rather than broad stochastic refactor; bounded reasoning rather than saturating reasoning), which makes the residual −10 gap a specified engineering target rather than a mysterious deficit.
+Finally, we situate these results against the **LEAP** framework [Kung et al. 2026; T5.92; sourced via Idea-001], which on the same class of base model demonstrates a **+100-point** architecture impact (Putnam 2025: 0% → 100%). The 110-point gap between LEAP's +100 and GENESIS's −10 cannot be explained by base model strength, scaffolding bugs, or benchmark difficulty alone — it is structural. To explain it, we develop five internal theories: **[Theory-07]** *Pipeline as Memory vs Pipeline as Decision Injection*; **[Theory-08]** *Feedback Value = f(Determinism, Scope)*; **[Theory-09]** *Anticipatory Concepts vs Anticipatory Lemmas*; **[Theory-10]** *Reasoning Saturation: The Inverted-U of Internal Reasoning* — the last of which converts our counter-intuitive empirical observation (Discovery #1) into a falsifiable theory anchored by six independent external papers; and **[Theory-13]** *Negative Memory as Epistemic Safety Net* — which provides the mechanism by which a system avoids repeating known errors. Together with **[Phil-07]** *Capability-Adjusted Sufficiency*, these theories reframe our research question from "does the architecture add value?" to the more precise **"under what structural conditions does an orchestration architecture add measurable value?"**. We argue that GENESIS currently violates three conditions (memory rather than injection; narrow deterministic feedback rather than broad stochastic refactor; bounded reasoning rather than saturating reasoning), which makes the residual −10 gap a specified engineering target rather than a mysterious deficit.
 
-These results suggest that GENESIS has successfully crossed the "scaffolding catastrophe" stage, but has not yet crossed the "architecture adds value" threshold. The next research phase is therefore not basic bug-fixing, but **structural redesign along principles validated externally by LEAP and theorized internally in Theories 07/08/09**: identifying which architectural components help, which are neutral, and which currently dilute model performance.
+These results suggest that GENESIS has successfully crossed the "scaffolding catastrophe" stage, but has not yet crossed the "architecture adds value" threshold. The next research phase is therefore not basic bug-fixing, but **structural redesign along principles validated externally by LEAP and theorized internally in Theories 07/08/09/13**: identifying which architectural components help, which are neutral, and which currently dilute model performance.
 
-**Keywords:** LLM orchestration, reasoning benchmarks, GPQA Diamond, evolutionary search, agentic architectures, scaffolding errors, pipeline-as-memory, feedback drift, anticipatory abstraction, Tiered Externalized Recursive Intelligence, epistemic artifacts
+**Keywords:** LLM orchestration, reasoning benchmarks, GPQA Diamond, evolutionary search, agentic architectures, scaffolding errors, pipeline-as-memory, feedback drift, anticipatory abstraction, Tiered Externalized Recursive Intelligence, epistemic artifacts, negative memory
 
 ---
 
@@ -119,6 +119,7 @@ This paper primarily addresses RQ1 (Sections 5.3–5.4, 7.1), provides initial e
 6. **First targeted ablation result (A3):** Disabling pipeline leverage raises Generation 1 from **65.00%** to **70.00%**, providing the first direct evidence that the cognitive pipeline in its current usage contributes harmful overhead/noise on GPQA-20.
 
 7. **Theory-10 (Reasoning Saturation):** We promote our counter-intuitive empirical observation (median reasoning tokens: 989 for correct vs 6,836 for incorrect) to a full theory anchored by **six independent external papers** including a UVA-Google study (arXiv:2602.13517) that reports a length-vs-accuracy correlation of **r = −0.54** on the *same model family and same benchmark family* we tested. Theory-10 interacts non-trivially with Theory-07 to produce a joint, falsifiable prediction: GENESIS empty-content rate should exceed pure-baseline empty-content rate on identical questions (Section 7.3).
+8. **Theory-13 (Negative Memory as Epistemic Safety Net):** We formalize the principle that intelligent systems must maintain not only *what works* but *what fails*. Negative Memory — compressed, trigger-gated, identity-aware storage of anti-patterns and failure modes — provides the mechanism by which a system avoids repeating known errors (Section 7.4). Theory-13 connects to Theory-10 (enabling early termination of known-bad reasoning paths) and Theory-07 (pipeline modifications that hurt performance are Negative Memory candidates).
 
 ---
 
@@ -610,6 +611,27 @@ Our current `max_tokens=16384` may itself be *too high* for gpt-oss-120b on GPQA
 
 This has implications for RQ3 (instant vs thinking) — bounded reasoning with forced answer extraction may outperform unbounded reasoning for certain question types, especially in the over-saturating regime.
 
+### 7.3.1 Theory-13: Negative Memory as Epistemic Safety Net
+
+The four preceding theories explain *why* GENESIS underperforms. Theory-13 addresses the complementary question: *how does a system avoid repeating known failures?*
+
+**Negative Memory** is a dedicated epistemic layer that stores compressed representations of *what not to do* — anti-patterns, failed approaches, misleading shortcuts, brittle skills, and harmful retrieval combinations — indexed by failure mode, context, and retrieval trigger. It differs from ordinary failure logging in three ways: (1) entries are *compressed anti-patterns*, not raw traces; (2) retrieval is *trigger-gated* by risk flags or context similarity, not continuously active; (3) catastrophic failures have higher resistance to forgetting, even when higher-order abstractions would normally absorb them.
+
+Theory-13 rests on four axioms (formalized in `PAPER/theory/13_negative_memory.md`):
+
+1. **Failure Compression Axiom:** Raw failure episodes must be compressed into anti-patterns before storage; raw traces produce noise, not safety.
+2. **Trigger-Gated Retrieval Axiom:** Negative Memory is retrieved only when specific trigger conditions are met; continuous activation produces hesitation without safety.
+3. **Abstraction Dominance Override Axiom:** Even when a higher-order concept absorbs a failure's information content, catastrophic failure entries must not be fully archived.
+4. **Negative Transfer Prediction Axiom:** A system with rich Negative Memory should exhibit reduced negative transfer to near-domain tasks.
+
+**Empirical anchors from our data:** The five scaffolding bugs (run_53 = 30.30%) are Negative Memory entries: "case-mismatch extraction produces random accuracy." The A3 ablation result (+5 points without pipeline) identifies a pipeline anti-pattern: "broad stochastic feedback degrades accuracy under strong base model." The 35% empty content rate and reasoning saturation ratio (989 vs 6,836 tokens) are Negative Memory entries: "unbounded reasoning on GPQA-style questions produces empty output and is anti-productive when the base model already knows the answer."
+
+**Connection to Theory-10:** Theory-10 predicts that more reasoning does not always help. Negative Memory provides the mechanism for *knowing when to stop*: if the current reasoning path matches a stored anti-pattern, the system can terminate early rather than continuing into known failure territory.
+
+**Connection to Theory-07:** Pipeline modifications that hurt performance (as demonstrated by the A3 ablation) are prime Negative Memory candidates. A system with Negative Memory would tag these modifications as "harmful under conditions X" rather than discarding the information entirely.
+
+Five testable predictions follow (see `PAPER/theory/13_negative_memory.md` §6), including: systems with Negative Memory recover faster from failure families; Negative Memory density increases as systems mature from Stage 2 to Stage 3 on the TERI ladder (§15.4); and systems without Negative Memory exhibit higher recurrence of identical failures.
+
 ### 7.4 Infrastructure Error Detection
 
 Our diagnosis workflow provides a template for detecting scaffolding errors in any LLM orchestration system:
@@ -915,6 +937,8 @@ The capability-adjusted sufficiency hypothesis predicts the gap should narrow wi
 **A.5 [Theory-10] Reasoning-length calibration + DTR-style early termination.**
 Drop `max_tokens` from 16,384 to a swept range {2K, 4K, 8K} on GPQA-20 to locate the inverted-U sweet spot for gpt-oss-120b. Then implement a DTR-inspired proxy (using only API-accessible signals such as token-level perplexity or semantic stability) to terminate low-quality reasoning early. Replicates the UVA-Google "Think@n" result on our infrastructure: same-or-better accuracy at ~50% compute. Tests Theory-10 predictions P1, P2, P5 jointly.
 
+**A.8 [Theory-13] Negative Memory implementation.** Implement a dedicated Negative Memory store that catalogs the 5 scaffolding bugs, A3 anti-pattern, empty-content failure mode, and reasoning saturation signature as compressed anti-patterns with trigger conditions. When a new run encounters context matching a stored anti-pattern, the system should flag it rather than silently repeating the failure. This is the cheapest Theory-13 test: no new runs needed, only post-hoc annotation of existing run data against anti-pattern entries. Tests Theory-13 predictions P1 and P5.
+
 ### Track B — Empirical Anchoring (Medium Priority)
 
 **B.1 Cross-model pure baselines.** Confirm pure baselines for Gemma 4 31B (84.3% official), Gemini Flash, and GPT-5 to enable apples-to-apples architecture impact comparisons.
@@ -976,15 +1000,16 @@ We also document three broader empirical findings that we believe extend beyond 
 - **Domain asymmetry:** Physics is much easier than Chemistry Organic, meaning aggregate GPQA scores can hide structurally important domain effects.
 - **Infrastructure sensitivity:** response parsing, token budgeting, and field normalization are first-order determinants of measured performance in reasoning-capable models.
 
-Furthermore, Sections 7.3 and 8.5 develop four internal theories and one philosophical reframing — three anchored by the empirical contrast with LEAP [T5.92; Idea-001] and one (Theory-10) anchored by both our own measurements and six independent external papers on reasoning saturation. Together they convert the residual −10 gap into a specified engineering target:
+Furthermore, Sections 7.3, 7.3.1 and 8.5 develop five internal theories and one philosophical reframing — three anchored by the empirical contrast with LEAP [T5.92; Idea-001], one (Theory-10) anchored by both our own measurements and six independent external papers on reasoning saturation, and one (Theory-13) formalizing the epistemic safety net of Negative Memory. Together they convert the residual −10 gap into a specified engineering target:
 
 - **[Theory-07] Pipeline as Memory vs Pipeline as Decision Injection.** The same architectural element (a "pipeline") can be net-positive when designed as queryable memory (LEAP DAG) or net-negative when designed as signal injection (GENESIS current). Prop 3 predicts that decision injection scales inversely with base model strength — strong models are actively harmed by injected signals.
 - **[Theory-08] Feedback Value = f(Determinism, Scope).** Stochastic LLM-as-judge feedback with broad rewrite scope (GENESIS current, bottom-right quadrant) compounds drift over generations. Deterministic verifier feedback with narrow scope (LEAP, top-left quadrant) compounds monotonic improvements. The run_58 Gen 2 regression from 70% to 60% is the predicted consequence of being in the wrong quadrant.
 - **[Theory-09] Anticipatory Concepts vs Anticipatory Lemmas.** Proactive abstraction is a general architectural principle. LEAP's anticipatory lemma planning contributed +10 to +17 points; the same principle, applied to GENESIS's Concept Engine, is predicted to disproportionately improve our weakest domain (Chemistry Organic).
 - **[Theory-10] Reasoning Saturation (The Inverted-U).** Our counter-intuitive empirical finding (Discovery #1) is not an anomaly — it is the predicted manifestation of an inverted-U structure between reasoning length and accuracy. Six external papers (Wu et al. 2025, UVA-Google 2026, Chen et al. 2024b, Su et al. 2025, OptimalThinkingBench, "When More Thinking Hurts") converge on the same conclusion across the same model family and benchmark family we tested. Theory-10 interacts with Theory-07 through Prop 4: decision injection burns reasoning budget on signal-parsing, pushing the model into the overthinking regime faster. Falsifiable joint prediction: GENESIS empty-content rate should exceed pure-baseline empty-content rate on identical questions.
 - **[Phil-07] Position D — Capability-Adjusted Sufficiency.** "General-purpose model + agentic scaffolding = enough" is true *under specifiable conditions*: sufficient base capability, memory-style pipeline, narrow deterministic feedback, and reasoning length matched to task–capability optimum. RQ2 is consequently reframed from a binary question to a structural one.
+- **[Theory-13] Negative Memory as Epistemic Safety Net.** An intelligent system must maintain not only what works but what fails. Negative Memory — compressed, trigger-gated, identity-aware storage of anti-patterns — provides the mechanism by which the system avoids repeating known errors. Theory-13 connects to Theory-10 (enabling early termination of known-bad reasoning paths) and Theory-07 (pipeline modifications that hurt performance are Negative Memory candidates).
 
-Therefore, the next phase of this research is not blind ablation but **principled structural redesign**: refactor the pipeline as memory + verifier (Theory-07), migrate feedback from bottom-right to top-left quadrant (Theory-08), activate anticipatory mode in the Concept Engine (Theory-09), calibrate reasoning length and add DTR-style early termination (Theory-10, Track A.5), and re-test on stronger base models when available (Phil-07 Prop 3). The infrastructure for the feedback step (`narrow_feedback` ablation mode) is already wired in `genesis/orchestrator.py`; the reasoning-calibration step requires only a `max_tokens` sweep, which is the cheapest single experiment in our entire roadmap.
+Therefore, the next phase of this research is not blind ablation but **principled structural redesign**: refactor the pipeline as memory + verifier (Theory-07), migrate feedback from bottom-right to top-left quadrant (Theory-08), activate anticipatory mode in the Concept Engine (Theory-09), calibrate reasoning length and add DTR-style early termination (Theory-10, Track A.5), implement Negative Memory for known failure modes (Theory-13, Track A.8), and re-test on stronger base models when available (Phil-07 Prop 3). The infrastructure for the feedback step (`narrow_feedback` ablation mode) is already wired in `genesis/orchestrator.py`; the reasoning-calibration step requires only a `max_tokens` sweep, which is the cheapest single experiment in our entire roadmap.
 
 In short, this work delivers:
 
@@ -992,13 +1017,13 @@ In short, this work delivers:
 - a repaired orchestration stack,
 - a first completed architecture comparison,
 - a contrast against the strongest external counterexample (LEAP),
-- four new internal theories with testable predictions (one of them — Theory-10 — externally validated by six independent papers),
+- five new internal theories with testable predictions (one of them — Theory-10 — externally validated by six independent papers; one — Theory-13 — formalizing failure memory),
 - a philosophical reframing of the research question itself,
 - and a fully specified — rather than open-ended — research agenda.
 
 The paper's current claim is intentionally modest but precise:
 
-> **GENESIS has successfully recovered from catastrophic scaffolding failure. On GPQA-20 it still underperforms the pure baseline by 10 points in its current form. The contrast with LEAP and the resulting Theories 07/08/09 + Phil-07 indicate that this residual gap is not a fundamental limit of orchestration architectures — it is a consequence of specific design properties (decision injection, broad stochastic feedback, reactive-only concept proposal) that are now identified and addressable.**
+> **GENESIS has successfully recovered from catastrophic scaffolding failure. On GPQA-20 it still underperforms the pure baseline by 10 points in its current form. The contrast with LEAP and the resulting Theories 07/08/09/13 + Phil-07 indicate that this residual gap is not a fundamental limit of orchestration architectures — it is a consequence of specific design properties (decision injection, broad stochastic feedback, reactive-only concept proposal, absence of failure memory) that are now identified and addressable.**
 
 That is not the end of the project — it is the point where the project becomes scientifically honest *and* structurally directed.
 
@@ -1193,7 +1218,7 @@ TERI rests on eight pillars. The paper's current theoretical stack (Theories 07�
 | # | Pillar | Status in this paper | Primary artifact |
 |---|--------|---------------------|------------------|
 | 1 | **Concept Formation** | ✅ Covered | Theory-09 (§8.5.4); §8.5.7 (Ladder of Abstraction) |
-| 2 | **Productive Forgetting** | ✅ Covered | Theory-10 P6 (lifetime-drift prediction); §8.5.7 implication 3 |
+| 2 | **Productive Forgetting** | ✅ Covered | Theory-10 P6 (lifetime-drift prediction); Theory-13 (Negative Memory); §8.5.7 implication 3 |
 | 3 | **Contradiction Management** | ❌ **Absent** | Not yet in paper; foundational doc: `GENESIS_Contradiction_Theory_AR.md` |
 | 4 | **Anomaly/Crisis/Paradigm** | ✅ Covered | §8.6 (Hidden Crisis Diagnostic); Phil-07 §9 (stable-attractor framing) |
 | 5 | **Cognitive Economy** | ✅ Covered | Theory-08 (Feedback Value Matrix); §12.2 Layer 1 (Cognitive Economy §11) |
@@ -1260,10 +1285,11 @@ The proper unit of cognitive growth in TERI is the **epistemic artifact** — an
 | 9 | Idea-001 (LEAP as counterpoint) | Fares-sourced Idea | ✓ | ✓ | ✓ | ✓ | ✓ | §8.5 |
 | 10 | Idea-002 (Creative Attribution Rule) | Fares-sourced Idea | ✓ | ✓ | ✓ | ✓ | ✓ | §12.2 |
 | 11 | This paper (PAPER.md) | Meta-artifact | ✓ | ✓ | ✓ | ✓ | ✓ | Full |
+| 12 | Theory-13 (Negative Memory as Epistemic Safety Net) | Internal Theory | ✓ | ✓ | ✓ | ✓ | ✓ | §7.3.1 |
 
 **Columns:** M = Memory value, D = Decision value, R = Reuse value, E = Explanatory value, T = Test value. All 11 artifacts score positively on all 5 dimensions per Meta-Theory §9 criteria.
 
-**11 epistemic artifacts have been produced.** None of the paper's quantitative tables counted this metric before Table 18. The TERI framework predicts that a system's cognitive growth should be measured by the rate, quality, and diversity of epistemic artifacts produced — not only by accuracy on a single benchmark.
+**12 epistemic artifacts have been produced.** None of the paper's quantitative tables counted this metric before Table 18. The TERI framework predicts that a system's cognitive growth should be measured by the rate, quality, and diversity of epistemic artifacts produced — not only by accuracy on a single benchmark.
 
 ### 15.6 What This Frame Reveals
 
@@ -1354,6 +1380,7 @@ The 20 questions used in our experiments are Q1-Q20 from the GPQA Diamond benchm
 | Theory-08 | Feedback Value = f(Determinism, Scope) | `PAPER/theory/08_*.md` | 2×2 quadrant model; explains run_58 Gen 2 regression |
 | Theory-09 | Anticipatory Concepts vs Anticipatory Lemmas | `PAPER/theory/09_*.md` | Generalizes LEAP anticipatory lemmas to GENESIS Concept Engine |
 | Theory-10 | Reasoning Saturation (Inverted-U) | `PAPER/theory/10_*.md` | Externally validated by 6 papers; interacts with Theory-07 via Prop 4 |
+| Theory-13 | Negative Memory as Epistemic Safety Net | `PAPER/theory/13_*.md` | Failure memory mechanism; connects to Theory-10 (early termination) and Theory-07 (anti-patterns) |
 | Phil-07 | Meaning of General-Purpose Sufficiency | `PAPER/philosophy/07_*.md` | Position D: Capability-Adjusted Sufficiency; reframes RQ2 |
 
 ## Appendix D: Idea Attribution (per [Idea-002] Creative Attribution Rule)
@@ -1380,4 +1407,4 @@ Full traceability is maintained in `PAPER/ideas/ATTRIBUTION_MAP.md`.
 
 ---
 
-*Paper version: **v0.8.2 — Session 14: §15 sharpened with dependency chain note (§15.2), Four Tests quality criterion for Stage 4 (§15.4), and zero-concept honest caveat (§8.5.8). All from foundational docs re-read in batch 4. Previous: v0.8.1 (§14 Ethics + Agent Identity Theory). v0.8 (§15 TERI Frame). Previous version footers preserved in git history.***
+*Paper version: **v0.9 — Session 14: Theory-13 (Negative Memory as Epistemic Safety Net) integrated as fifth internal theory. §7.3.1 added. Abstract, §1.5, §11, §15.2, Table 18 (11→12 artifacts), Appendix C, §10 Track A.8 updated. Previous: v0.8.2 (§15 sharpened). v0.8.1 (§14 Ethics). v0.8 (§15 TERI Frame). Previous version footers preserved in git history.***
