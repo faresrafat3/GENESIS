@@ -1,6 +1,6 @@
 # 📜 MASTER_TIMELINE — Full Chronological Story (Sessions 1 through 13)
 
-**Last updated:** 2026-06-06 (after Session 14 — §15 Theoretical Frame)
+**Last updated:** 2026-06-06 (after Session 14 — §15 TERI Frame + §14 Ethics update)
 **Companion docs:** `PROJECT_README.md` (overview) · `CONTRIBUTION_LEDGER.md` (attribution) · `PAPER/notes/SESSION_LOG.md` (raw verbose log) · `PAPER.md` §12.3 (verbatim Arabic utterances)
 
 This is the **canonical narrative** of how the paper came to exist. If you want to understand any single decision, find the session below where it was made.

@@ -1,9 +1,9 @@
 # 🗺️ PROJECT_README — Master Entry Point
 
-**Last updated:** 2026-06-06 (after Session 14 — §15 Theoretical Frame)
+**Last updated:** 2026-06-06 (after Session 14 — §15 TERI Frame + §14 Ethics update)
 **Project owner:** Fares Rafat (F.) — sole author per NeurIPS 2025 policy
 **Project repo:** https://github.com/faresrafat3/GENESIS
-**Current paper version:** **v0.8** (`PAPER.md`) — §15 TERI Frame added
+**Current paper version:** **v0.8.1** (`PAPER.md`) — §15 TERI Frame + §14 Ethics updated
 **Current mode:** Theoretical Mode (v2.0 of `PAPER_PROTOCOL.md`)
 **Last consistency audit:** Session 13.6 — see `AUDIT_REPORT_S13.6.md` for full findings; 3 critical issues fixed in PAPER.md, 11 documentation issues fixed in master docs
 

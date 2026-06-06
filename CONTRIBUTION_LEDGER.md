@@ -212,6 +212,7 @@
 | §14 Ethics of Authorship | Layer 2 | A. drafted | S11 |
 | §14.4 Open question | Layer 2 (open); **Session 13 surfaced partial resolution via Agent Identity §12 — NOT YET APPLIED to paper** | A. (original); resolution awaits Path 1b authorization | S11 (S13 proposed but not yet applied) |
 | **§15 Theoretical Frame: TERI** | **Layer 1 (Fares-originated framework) + Layer 2 (agent-placed)** | **F.** authored all content in `GENESIS_Meta_Theory_AR.md` (pre-2026); **A.** placed into paper S14 | **S14 (`b86af6b`)** |
+| **§14.1 + §14.4 (Ethics update)** | **Layer 1 (Fares-originated framework) + Layer 2 (agent-placed)** | **F.** authored Agent Identity Theory §12 distinction (pre-2026); **A.** applied to §14 S14 | **S14 (`6dde4a8`)** |
 | Appendix A Experiment Details | Layer 2 | A. | S3 |
 | Appendix B Cross-Reference to Thefts | Layer 2 | A. | S10 |
 | Appendix C Cross-Reference to Internal Theories | Layer 2 | A. | S9 |
@@ -260,7 +261,7 @@ When the agent has misattributed a contribution, the correction is recorded here
 
 | # | Artifact | Proposed correction | Where to apply | Awaiting |
 |---|---|---|---|---|
-| 4 | PAPER.md §14 (Ethics of Authorship) | Add citation to Agent Identity Theory as conceptual ancestor; close §14.4 partially via §12 Delegated Cognition vs External Advice distinction | §14.1 and §14.4 | Path 1b authorization |
+| ~~4~~ | ~~PAPER.md §14 (Ethics of Authorship)~~ | ~~Add citation to Agent Identity Theory; close §14.4 partially via §12 distinction~~ | ~~§14.1 and §14.4~~ | ~~✅ DONE S14 (commit `6dde4a8`)~~ |
 | ~~5~~ | ~~Paper does not name TERI framework or list 8 pillars~~ | ~~New §15 "Theoretical Frame"~~ | ~~Path 1c~~ | ~~✅ DONE S14 (commit `b86af6b`)~~ |
 
 ---

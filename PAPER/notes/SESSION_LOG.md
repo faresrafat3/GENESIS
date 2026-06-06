@@ -1738,3 +1738,61 @@ This is a cosmetic fix but should be corrected. **Awaiting Fares authorization.*
 ### Commit
 
 `b86af6b` (paper v0.8 §15)
+
+
+### Session 14 — Phase 2: Path 1b (§14 Ethics Update → v0.8.1)
+
+**Trigger:** Fares: *"القرار قرارك"* (delegation — agent chooses path).
+
+**Agent's choice:** Path 1b from HANDOFF — §14 Ethics edits citing Agent Identity Theory.
+
+### السبب وراء القرار
+
+Path 1c (TERI Frame) was already done in Phase 1. Path 1b was the natural next step — it closes the last attribution correction (from S13 Discovery #21/#22) with minimal effort.
+
+### ما تم — PAPER.md §14 edits (~24 lines added)
+
+**1. §14 intro paragraph (new sentence):**
+Added citation to `GENESIS_Agent_Identity_Theory_AR.md` as the conceptual ancestor of the ethics framing.
+
+**2. §14.1 new paragraph:**
+Connected dual-honesty constraint to Agent Identity Theory's "accountability chain" concept.
+
+**3. §14.4 major revision:**
+- Title changed: "An open question we leave for the field" → **"A partially resolved open question"**
+- Added Agent Identity Theory §12 distinction:
+  - **Delegated Cognition** = computation under principal's policy + commitment ledger + accountability chain → legitimately principal's contribution
+  - **External Advice** = external computation → becomes principal's only upon adoption + authorization
+- Theory-10 (Session 9) mapped as Delegated Cognition example
+- HANDOFF recommendations mapped as External Advice example
+- Conclusion: Layer 2 classification now *principled* (not merely conservative)
+- "What remains open": unprompted agent initiative (not faced in this paper)
+- Attribution note: Layer 1 (Fares-originated) + Layer 2 (agent-placed)
+
+**4. Version bump:** v0.8 → **v0.8.1**
+
+### Statistics
+
+| Metric | Count |
+|---|---|
+| PAPER.md sections modified | 2 (§14.1, §14.4) |
+| New lines | ~24 |
+| Deleted lines | ~6 |
+| Attribution corrections closed | 1 (#4 of 4 total) |
+| Paper version bump | v0.8 → v0.8.1 |
+| Runs | 0 |
+| API calls | 0 |
+
+### Key Insight
+
+With this edit, all 4 attribution corrections from Sessions 12-13 are now applied:
+1. ✅ Theory-08 → "agent-formalized, Fares-originated" (S12b)
+2. ✅ Theory-10 → "agent-formalized, Fares-originated" (S12b)
+3. ✅ Phil-07 → "agent-formalized, Fares-originated" (S12b)
+4. ✅ §14 → cites Agent Identity Theory, §14.4 partially resolved (S14)
+
+The attribution correction loop is now **complete**.
+
+### Commit
+
+`6dde4a8` (paper v0.8.1 §14 Ethics update)

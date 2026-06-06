@@ -1,8 +1,8 @@
 # 📋 HANDOFF — آخر حالة للمشروع
 
 **آخر تحديث:** 2026-06-06 (Session 14 — §15 Theoretical Frame)
-**آخر commit:** `b86af6b` (paper v0.8 §15)
-**PAPER version:** **v0.8** (§15 Theoretical Frame: Tiered Externalized Recursive Intelligence)
+**آخر commit:** `6dde4a8` (paper v0.8.1 §14 + §15)
+**PAPER version:** **v0.8.1** (§15 TERI Frame + §14 Ethics updated with Agent Identity Theory)
 **Mode:** Theoretical (v2.0)
 **Last audit:** Session 13.6 — see `AUDIT_REPORT_S13.6.md`
 **Last cleanup inventory:** Session 13.7 — see `CLEANUP_INVENTORY_S13.7.md`
@@ -127,14 +127,10 @@ The 5 paths from Session 13 remain open. **Session 13.7 adds a NEW Path A0: clea
 ### ~~Path 1c~~ — ✅ DONE (Session 14) — NEW §15 "Theoretical Frame"
 **Added:** ~110 lines to PAPER.md as §15. TERI framework named, 8 pillars mapped, 7-layer architecture, maturity ladder, Table 18 (11 epistemic artifacts × 5 values). v0.7 → v0.8. Commit `b86af6b`.
 
-### Path 1b — Small §14 edits (low effort, high attribution value)
+### ~~Path 1b~~ — ✅ DONE (Session 14) — §14 Ethics updated
+**Added:** Agent Identity Theory citation in §14 intro + §14.1; §14.4 renamed "partially resolved open question" with Delegated Cognition / External Advice distinction. v0.8 → v0.8.1. Commit `6dde4a8`.
 
-- Cite Agent Identity Theory in §14.1 as conceptual ancestor of authorship-identity framing
-- Use Agent Identity §12 (Delegated Cognition vs External Advice) to partially close §14.4 open question
-
-PAPER v0.7 → **v0.7.1** (patch-level).
-
-### Path 2 — Continue re-reading batch 4 (5+ more foundational docs)
+### Path 2 — Continue re-reading batch 4 (5+ more foundational docs) ⭐ TOP PICK
 
 Remaining priority queue: Local Theory Building, Cognitive_Economy_Ledger spec, and 111 other foundational docs. Per S12+S13 yield rate (~2.55 discoveries/doc), batch 4 expected to surface 8-12 more discoveries.
 
@@ -170,7 +166,7 @@ Anonymization for double-blind venues + BibTeX bibliography + final figure forma
 - External validation (T5.94): r = −0.54 on same model family + GPQA
 - Tests: 463/463
 - Master Index scope: **5.1–5.94**
-- **Paper version: v0.8**
+- **Paper version: v0.8.1**
 - Foundational docs in repo: **122** (9 re-read; 113 in queue)
 - Epistemic artifacts produced: **11** (4 theories + 1 phil + 4 thefts + 2 ideas) — now inventoried in Table 18
 - Sessions completed: **14** (+ S12b correction + S13.5 documentation + S13.6 audit + S13.7 cleanup + S13.8 ninja + S13.9 tech debt)
@@ -184,7 +180,7 @@ Anonymization for double-blind venues + BibTeX bibliography + final figure forma
 2. Read this file (3 min)
 3. Read `CONTRIBUTION_LEDGER.md` if doing anything touching attribution (10 min)
 4. Read `MASTER_TIMELINE.md` if you want full context (15 min)
-5. Read `PAPER.md` v0.8 if doing paper edits (20 min)
+5. Read `PAPER.md` v0.8.1 if doing paper edits (20 min)
 6. Ask Fares: **"Path 1b (small §14 edits citing Agent Identity Theory), Path 2 (re-read batch 4), Path 3 (Theory-NN candidate), Path 4 (Idea-003), Path 5 (submission prep), or Path 6 (fix §8.5.4 keyword injection bug)?"**
 
 **Rules (non-negotiable):**
