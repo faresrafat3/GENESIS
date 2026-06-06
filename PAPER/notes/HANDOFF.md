@@ -87,7 +87,7 @@ These 8 docs replace the need to read 13+ session logs to get oriented. **`AGENT
 ### Research artifacts (PAPER/notes/)
 - `INTERNAL_RE_READING_SESSION_12.md` — 12 discoveries (5 docs)
 - `INTERNAL_RE_READING_SESSION_13.md` — 11 discoveries (4 docs)
-- **Cumulative S12+S13: 23 discoveries from 9 of 122 foundational docs**
+- **Cumulative S12+S13+S14: 37 discoveries from 14 of 122 foundational docs**
 
 ### Empirical anchors (LOCKED, do not change without new run + authorization)
 - Pure baseline 75.00% / GENESIS post-fix 65.00% / A3 no_pipeline 70.00%
