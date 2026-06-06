@@ -1146,3 +1146,112 @@ Four paths (refined from Session 12b):
 
 `(pending)`: Session 13 — Re-reading batch 3 (Path 2). 4 docs read; 11 discoveries; profound resolution of §14.4 open question via Agent Identity Theory §12. Cumulative 23 discoveries from 9 docs. No PAPER.md edits (research session by design).
 
+
+---
+
+## Session 13.5 — 2026-06-06 (Agent-Executed: Documentation Pass)
+
+**Trigger (verbatim, preserved in CONTRIBUTION_LEDGER §6 row 9):**
+> *"قبله اللي حليته وكل ده خليه واضح او اذكرها او اعمل اعاده توثيق عشان اللي هيشتغل علي المشروع بعد كده يبقي واضح ومفيش مغلطات او اي مشاكل فاهمين"*
+
+**Agent interpretation:** documentation hardening pass. Make the whole project navigable for any future reader (Fares returning later, future agents in fresh sessions, external reviewers, future maintainers). Goal: no one should have to read 13 session logs to get oriented.
+
+### Why this session is named "13.5" not "14"
+
+It is a *documentation pass*, not a new research session or paper edit. It consolidates existing work into navigable form. Same naming convention as Session 12b (which applied S12's proposed corrections — it was execution of S12, not a new research direction).
+
+### What was created (3 NEW master docs at repo root)
+
+#### 1. `PROJECT_README.md`
+Master entry point. ~250 lines. Contains:
+- Two-layer project structure (Layer A pre-paper prototype / Layer B current paper)
+- The single most important rule: no PAPER.md edits without Fares authorization
+- "Where to start reading" tailored to 4 reader roles (Fares / new agent / researcher / maintainer)
+- Complete file map of repo
+- Live vs Deferred vs Locked status tables
+- Two governance rules (Mode Pivot + Creative Attribution Rule)
+- Delegation pattern (the "القرار قرارك" chain)
+- Excluded-from-agent-work files
+- Security/credentials rules
+- Quick-answer lookup table
+
+#### 2. `MASTER_TIMELINE.md`
+Canonical chronological story. ~350 lines. Contains:
+- 6 Phases: Empirical Foundation (S1-5), Mode Pivot (S6), Theoretical Stack (S7-10), Author Contributions (S11), Internal Re-Reading + Correction (S12/12b/13), Documentation Pass (S13.5)
+- Per-session entries with trigger / done / commit
+- Quick reference table: all 13+ sessions in one row each
+- Key empirical numbers and when they were locked
+- Open questions catalog
+- Template for extending the timeline in future sessions
+
+#### 3. `CONTRIBUTION_LEDGER.md`
+Single source of truth for attribution. ~450 lines. Contains:
+- Three-layer reference and important nuance about misclassification
+- §1 Theories table (4 theories with full provenance)
+- §2 Philosophy table (Phil-07)
+- §3 Ideas table (Idea-001, Idea-002)
+- §4 Thefts table (T5.91-94)
+- §5 PAPER.md sections provenance per section
+- §6 Verbatim authorization utterances chain (9 utterances)
+- §7 Attribution corrections to date (3 applied + 1 pending)
+- §8 How to use this ledger
+- §9 Consistency check (last performed S13.5; all green)
+
+### What was updated (3 existing files)
+
+#### 1. `PAPER/notes/HANDOFF.md` (this file's neighbor)
+Refactored to point to new master docs first. Replaced "5 paths" preamble with explicit "master entry points" guidance. Workflow for next session updated to read the 3 master docs first.
+
+#### 2. `PAPER/notes/SESSION_LOG.md` (this file)
+This entry added for Session 13.5.
+
+#### 3. `PAPER/ideas/ATTRIBUTION_MAP.md`
+Session 13.5 row added. Reference to CONTRIBUTION_LEDGER as canonical source.
+
+### Key design choices
+
+1. **Three master docs, not one.** A single mega-document would be too long. Three specialized docs (overview / timeline / attribution) each have a clear purpose and clear audience.
+
+2. **Conflict resolution rules documented.** If the docs diverge in future, explicit rules say which wins for which type of question (HANDOFF §"Session 13.5 single most important consequence").
+
+3. **Consistency check in CONTRIBUTION_LEDGER §9.** Future agents can re-run this check to verify nothing has drifted. Currently all green.
+
+4. **PROJECT_README at repo root, not in PAPER/.** It is the entry point for the *whole project* (including the pre-paper Layer A), not just the paper. Sits alongside the original README.md (which is preserved for Layer A context).
+
+5. **No PAPER.md edits.** Maintains the propose→authorize→execute chain. Documentation is meta-work that doesn't require Fares authorization in the same way (it doesn't change scientific claims), but it also doesn't pre-empt any of the 5 open paths offered at end of S13.
+
+### Self-reflexivity (intentional)
+
+CONTRIBUTION_LEDGER §6 row 9 records the very utterance that triggered this session, with this commit referenced as the deliverable. The documentation pass is itself documented in the documentation it produces. This is consistent with the meta-honesty principle articulated in PAPER.md §14.1.
+
+### Statistics
+
+| Metric | Count |
+|---|---|
+| New master docs at repo root | 3 (PROJECT_README, MASTER_TIMELINE, CONTRIBUTION_LEDGER) |
+| Existing files updated | 3 (HANDOFF, SESSION_LOG, ATTRIBUTION_MAP) |
+| Total new lines of documentation | ~1050 |
+| PAPER.md changes | 0 (documentation pass only) |
+| New scientific claims | 0 |
+| Attribution corrections | 0 (just made existing ones more visible) |
+| Consistency checks performed | 1 (CONTRIBUTION_LEDGER §9, all green) |
+| Runs | 0 |
+| API calls | 0 |
+
+### PAPER.md Version
+
+**v0.7 unchanged.** Session 13.5 is documentation only.
+
+### Open Decisions (preserved from S13 HANDOFF, now with better navigation)
+
+Same 5 paths offered:
+- **Path 1c (RECOMMENDED)**: NEW §15 "Theoretical Frame" → v0.8
+- **Path 1b**: Small §14 edits → v0.7.1
+- **Path 2**: Re-read batch 4
+- **Path 3**: Draft new Theory-NN candidate
+- **Path 4**: Idea-003
+
+### Commit المتوقع
+
+`(pending)`: Session 13.5 — Documentation pass. 3 new master docs (PROJECT_README, MASTER_TIMELINE, CONTRIBUTION_LEDGER). 3 updated docs (HANDOFF, SESSION_LOG, ATTRIBUTION_MAP). No PAPER.md changes. Goal: any future reader can navigate this project without reading 13 session logs.
+

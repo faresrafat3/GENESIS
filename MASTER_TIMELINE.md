@@ -1,0 +1,315 @@
+# 📜 MASTER_TIMELINE — Full Chronological Story (Sessions 1 through 13)
+
+**Last updated:** 2026-06-06 (after Session 13)
+**Companion docs:** `PROJECT_README.md` (overview) · `CONTRIBUTION_LEDGER.md` (attribution) · `PAPER/notes/SESSION_LOG.md` (raw verbose log) · `PAPER.md` §12.3 (verbatim Arabic utterances)
+
+This is the **canonical narrative** of how the paper came to exist. If you want to understand any single decision, find the session below where it was made.
+
+---
+
+## Phase 1 — Empirical Foundation (Sessions 1–5)
+
+**Mode:** Operational
+**Goal:** Measure honestly, fix bugs, build infrastructure.
+**No `Idea-NNN` or `Theory-NN` work yet — those start in Phase 2.**
+
+### Session 1 (~Jun 4, 2026) — Initial diagnosis
+**Trigger:** Fares: *"ايه رايك في مشروعي ده علي جيت هاب"* + push token + repo link.
+**Done:**
+- Surveyed the existing GENESIS prototype (Layer A — concept-formation + cognitive-economy experiments on synthetic `prototype_v3b_curriculum`).
+- Identified that the public benchmark results (`run_53` on GPQA Diamond) showed **30.30%**, far below the model card's 80.1% — strong evidence of scaffolding bugs, not capability gap.
+**Commits:** `64bb755` (Nemotron 3 Ultra docs), `6c840c6` (multi-model infrastructure with key pool).
+**Output:** First diagnosis report.
+
+### Session 2 (~Jun 4, 2026) — Smoke test + infrastructure
+**Trigger:** Fares: *"بقولك ايه تعرف نجرب عندك انت كده كده عندك كل اللي مطلوب والموضوع سهل غالبا"*
+**Done:**
+- Built `tools/api_key_pool.py`, `tools/providers.py` (9 free providers documented), `tools/model_registry.py` (13 models), `tools/run_multi_model_benchmark.py`.
+- Wired empty-content handling with reasoning fallback + pool rotation.
+- Discovered 5 critical issues in smoke test (35% invalid response rate).
+**Commits:** `6d06449`, `91cd9ea`, `a609c90` (pure baseline **75%** result), `6240094`, `3a16a87` (port smoke_test_v2 lessons), `3cbe48b` (comprehensive baseline report).
+**Locked numbers established:** Pure baseline = **75.00%** (n=20).
+
+### Session 3 (~Jun 4–5, 2026) — Critical bug fix + paper infrastructure
+**Trigger:** Fares: *"هنكمل شغل السيشن هنا عشان السيشن علقت كمل علي السيشن ده"*
+**Done:**
+- Discovered **Bug #6**: `extract_response_text` returns `(text, meta)` tuple but orchestrator code treated it as string → `'tuple' object has no attribute 'strip'`.
+- Fixed orchestrator prompt.
+- Built `PAPER.md` v0.1 + `PAPER_PROTOCOL.md` v1.0 + HANDOFF system.
+- Added 8 paper figures + per-question table + aggregated data.
+**Commits:** `c62835f` (Bug #6 fix), `3b91946` (Session-3 HANDOFF run_55 in progress), `8b018ce` (8 figures), `db68f47` (PAPER infrastructure v1).
+
+### Session 4 (~Jun 5, 2026) — Wait/halt instruction
+**Trigger:** Fares: *"وقف يعم العمليه اللي مطوله دي ملهاش لازمه خلينا في المفيد وبلاش اللي هيعمل لينا عطله زي كده"*
+**Done:**
+- Halted long-running 198-question benchmark.
+- Added `tasks/gpqa_subset_20` for fast iteration.
+- Added `--task_dir` runner flag.
+**Commits:** `a5e6d6b`, `8bbdb93`.
+
+### Session 5 (~Jun 5, 2026) — First post-fix comparison + ablations wired
+**Trigger:** Continued operational session (no new strategic utterance from Fares yet).
+**Done:**
+- Ran post-fix GENESIS on 20-question subset → **65.00%** (Gen1 & Gen2). Commit `b905901`.
+- Question-by-question delta map (`6dd35c2`).
+- Ablation matrix + decision tree (`7d1d5d0`).
+- Wired A3 `no_pipeline` ablation → **run_58 Gen1 = 70.00%, Gen2 = 60.00%** (`78430fc`).
+- Added A7a `narrow_feedback`, A7b combined modes — wired but not executed (`f0c2956`).
+
+**End of Phase 1.** Empirical anchors all locked: 75 / 65 / 70.
+
+---
+
+## Phase 2 — The Mode Pivot (Session 6) — pivotal turning point
+
+### Session 6 (~Jun 5, 2026) — Mode Pivot + Idea-001 arrival
+**Trigger (verbatim, preserved in PAPER.md §12.3):**
+> *"هنعمل اسكيب لمواضيع التشغيل، احنا هنضبطها على الورقة وفلسفياً ونظرياً المشروع بالكامل بالأفكار اللي لسه هتجي."*
+
+**Plus immediately after:**
+> *"Link – arxiv. org/abs/2606.03303 Title: 'LEAP: Supercharging LLMs for Formal Mathematics with Agentic Frameworks'"*
+
+**Done:**
+- Bumped `PAPER_PROTOCOL.md` to **v2.0** with §0 Mode Pivot section explicitly forbidding new runs unless Fares requests.
+- Created `PAPER/ideas/` infrastructure: README + INBOX + IN_PROGRESS + INTEGRATED + ATTRIBUTION_MAP.
+- Created `idea_001_leap_agentic_framework_for_formal_math.md` capturing Fares's paper share verbatim.
+- Read LEAP paper deeply (Kung et al., Google Cloud AI + DeepMind, arXiv:2606.03303).
+
+**Commits:** `5d99357` (Protocol v2.0), `930634b` (Idea-001 reception).
+
+**Why this session is THE pivot:** Every session from here onward operates under Theoretical Mode. No new runs have been executed since.
+
+---
+
+## Phase 3 — The Theoretical Stack Builds (Sessions 7–10)
+
+### Session 7 (~Jun 5, 2026) — Idea-002 + LEAP integration deep stack
+**Trigger:** Fares (verbatim, preserved):
+> *"تمام خلي بالك اضافه السرقه الشرعيه القويه دي كفكره مني فلو عندك حاجات زي كده ابداعيه باي شكل اعملها تمام ونعم اشتغل"*
+
+This is **Idea-002 (Creative Attribution Rule)** — the meta-rule that governs everything afterward.
+
+**Done:**
+- Created `idea_002_creative_attribution_rule.md`.
+- Added §12.2 (Creative Attribution Rule) to `PAPER_PROTOCOL.md`.
+- Created `GENESIS_DeepMind_LEAP_Agentic_Theft_AR.md` (T5.92, 10 sections).
+- Created Theory-07 (Pipeline as Memory vs Decision Injection).
+- Created Theory-08 (Feedback Value = f(Determinism, Scope)) — *⚠️ ORIGINALLY mis-attributed as agent-derived from LEAP. Session 12 found Fares precursor in Cognitive Economy §11 Value-of-X. Session 12b corrected.*
+- Created Theory-09 (Anticipatory Concepts vs Lemmas).
+- Created Phil-07 (Capability-Adjusted Sufficiency) — *⚠️ ORIGINALLY mis-attributed as Idea-001 derived. Session 12 found Fares precursor in Tiered Intelligence Blueprint + Anomaly Theory. Session 12b corrected.*
+
+**Commit:** `4f7bf52`.
+
+### Session 8 (~Jun 5, 2026) — LEAP integration into paper
+**Trigger:** Fares: *"جميل القرار قرارك"* (delegation #1)
+**Agent's choice from options offered:** Option A — integrate LEAP into PAPER.md fully.
+
+**Done:** Wrote PAPER.md §8.5 with 7 sub-sections (LEAP context, mechanism, GENESIS contrast, Theories 07/08/09 applied, Phil-07 Position D adopted, Refactor Roadmap, Honest Caveat). Added Tables 16–17, Figures 11–12.
+
+**Commit:** `acf9a09` (paper v0.3).
+
+### Session 9 (~Jun 5–6, 2026) — Theory-10 agent-initiated
+**Trigger:** Fares: *"القرار عندك"* (delegation #2)
+**Agent's choice:** Draft Theory-10 (Reasoning Saturation, Inverted-U) — *⚠️ ORIGINALLY framed as pure agent-initiated. Session 12 found Fares precursor in Cognitive Economy §5 Hypothesis 2 ("knowing when not to think more"). Session 12b corrected to "agent-formalized, Fares-originated."*
+
+**Done:** Created `PAPER/theory/10_reasoning_saturation.md` (14 sections, 4 axioms, 5 predictions, Prop 4 joint Theory-07×Theory-10 prediction). Expanded §7.3 from placeholder to full theory. Added Track A.5 to Future Work.
+
+**Commit:** `4bf2773` (paper v0.4).
+
+### Session 10 (~Jun 6, 2026) — T5.93 + T5.94 thefts
+**Trigger:** Fares: *"القرار عندك"* (delegation #3)
+**Agent's choice:** Anchor Theory-10 with full theft memos for the two external papers.
+
+**Done:**
+- `GENESIS_External_Inverted_U_Wu2025_Theft_AR.md` (T5.93) — Wu et al., Peking + MIT + TUM. Inverted-U formal proof + Lambert W closed-form: `N_opt(M,T) = T·Z / [M(Z+1)]`. Length-aware Vote.
+- `GENESIS_External_DTR_ChenMeng2026_Theft_AR.md` (T5.94) — Chen et al., **UVA + Google** (Wei-Lin Chen, Liqian Peng, Tian Tan, Chao Zhao, Blake JianHang Chen, Ziqian Lin, Alec Go, Yu Meng). DTR via JSD on intermediate hidden layers. Tested **GPT-OSS, DeepSeek-R1, Qwen3** on AIME 24/25, HMMT 25, **GPQA-Diamond** ← exact same model family + benchmark. r = −0.54 length-vs-accuracy. Think@n. GPT-OSS-120B AIME 25 → 92.7% → 94.7% with ~50% less compute.
+- Master Index expanded scope 5.1–5.92 → **5.1–5.94**.
+- PAPER.md §7.3.2 table + Appendix B + D updated.
+
+**Commit:** `d0c0adf` (paper v0.5).
+
+---
+
+## Phase 4 — Author Contributions & Ethics (Session 11)
+
+### Session 11 (~Jun 6, 2026) — Sections 12-14 added
+**Trigger:** Fares: *"القرار قرارك نعم"* (delegation #4)
+**Agent's choice:** Author Contributions section (option E from HANDOFF) — meta-honesty layer.
+
+**Done:** Added 3 new top-level sections to PAPER.md (~250 lines total):
+- **§12 Author Contributions** with three-layer structure (Layer 1 Fares-sourced, Layer 2 Agent-initiated-under-delegation, Layer 3 Joint deliberative), §12.3 Verbatim Authorization Log, §12.4 What this is for.
+- **§13 Acknowledgments** — Kung et al., Wu et al., Chen et al. (UVA + Google), Romera-Paredes et al.
+- **§14 Ethics of Authorship in Human-Agent Research** — dual-honesty constraint, what we did NOT do, what we DID do, §14.4 open question (left unresolved).
+
+External frameworks integrated: CRediT taxonomy (ANSI/NISO Z39.104-2022), Petridis et al. 2025 (arXiv:2502.18357) on *initiative* dimension, NeurIPS 2025 LLM Policy ("only humans are eligible to be authors").
+
+**Commit:** `62e5c10` (paper v0.6).
+
+---
+
+## Phase 5 — Internal Re-Reading + Attribution Correction (Sessions 12, 12b, 13) — THE BIG SELF-CORRECTION
+
+### Session 12 (~Jun 6, 2026) — Re-reading begins, 12 discoveries
+**Trigger:** Fares delegated via UI question: *"القرار قرارك — انت اختار"* (delegation #5)
+**Agent's choice:** Option F from HANDOFF — re-read foundational `GENESIS_*_AR.md` docs under the lens of Theories 07-10 + Phil-07.
+
+**Done:** Read 5 docs (~2,200 lines):
+1. `GENESIS_Cognitive_Economy_Theory_AR.md`
+2. `GENESIS_Concept_Formation_Theory_AR.md`
+3. `GENESIS_Tiered_Intelligence_AR.md`
+4. `GENESIS_Productive_Forgetting_Theory_AR.md`
+5. `GENESIS_Anomaly_Crisis_Paradigm_Theory_AR.md`
+
+**12 major discoveries** documented in `PAPER/notes/INTERNAL_RE_READING_SESSION_12.md`.
+
+**The big finding:** **3 of 5 theory/philosophy artifacts had been MIS-ATTRIBUTED** as agent-initiated when they had Fares-originated precursors:
+- **Theory-10** ← Cognitive Economy §5 Hypothesis 2 ("knowing when not to think more")
+- **Theory-08** ← Cognitive Economy §11 Value-of-X framework
+- **Phil-07** ← Tiered Intelligence final paragraph ("cheap-first, premium-on-demand") + Anomaly Theory dynamic equilibrium
+
+**Design decision:** Agent did NOT execute corrections. Agent proposed; awaited Fares authorization. This established the precedent that the propose→authorize→execute chain is mandatory for attribution changes.
+
+**Commit:** `da35af4` (research artifact only; PAPER.md unchanged).
+
+### Session 12b (~Jun 6, 2026) — Path 1 corrections APPLIED to paper
+**Trigger:** Fares: *"تمام"* (delegation #6) — interpreted as authorization for Path 1 (agent's top recommendation).
+
+**Done in PAPER.md:**
+- §12.2 Layer 1: 5 new precursor rows added.
+- §12.2 Layer 2: 3 entries reclassified (Theory-08, Theory-10, Phil-07 → "agent-formalized, Fares-originated"); 2 new rows.
+- §12.2 Layer 3: 1 new row for Session 12 correction process itself.
+- **§8.5.7 NEW**: "The 110-Point Gap as a Ladder-of-Abstraction Shift" (~30 lines, uses Concept Formation §4).
+- **§8.5.8**: former §8.5.7 "Honest Caveat" renumbered.
+- **§8.6 NEW**: "Hidden Crisis Diagnostic — Eight Anomaly Indicators" (~30 lines, operationalizes Anomaly Theory §6 on run_57/run_58 data).
+- Theory-10 file: **P6 prediction added** — "Lifetime Right-Drift Due to Non-Forgetting" (novel, not in T5.93 or T5.94).
+- Phil-07 file: **§9 added** — "Position D as Stable Attractor of Anomaly Dynamics" (4-row mapping table).
+- ATTRIBUTION_MAP: status changed from "pending" to "✅ Applied"; 8-bullet enumeration of paper changes.
+- Footer: **v0.6 → v0.7**.
+
+**Why this session was named "12b" not "13":** It is the *execution* of Session 12's *proposals*, not a new research session. Same Fares utterance ("تمام") authorized the conversion.
+
+**Commit:** `43868ee` (paper v0.7).
+
+### Session 13 (~Jun 6, 2026) — Re-reading batch 3, 11 more discoveries
+**Trigger:** Fares: *"تمام"* (delegation #7) — interpreted as authorization for Path 2 (agent's top recommendation in S12b HANDOFF: continue re-reading).
+
+**Done:** Read 4 more docs (~1,912 lines):
+6. `GENESIS_Self_Benchmarking_Theory_AR.md`
+7. **`GENESIS_Meta_Theory_AR.md`** ← biggest single discovery
+8. `GENESIS_Contradiction_Theory_AR.md`
+9. `GENESIS_Agent_Identity_Theory_AR.md`
+
+**11 major discoveries** documented in `PAPER/notes/INTERNAL_RE_READING_SESSION_13.md`.
+
+**Cumulative S12 + S13: 23 discoveries from 9 of 122 docs.**
+
+**The 3 biggest findings:**
+1. **Discovery #15** — Paper operates within an 8-pillar framework (Tiered Externalized Recursive Intelligence) of which **4 pillars are absent** (Contradiction Management, Local Theory Building, Self-Benchmarking, Agent Identity). The project even has a theoretical name not yet in the paper.
+2. **Discovery #22** — §14.4 "open question" is **already resolved by Fares's own Agent Identity Theory §12** distinction between Delegated Cognition (legitimately self) and External Advice (not self until adoption).
+3. **Discovery #18** — Project has produced **11 epistemic artifacts** (4 theories + 1 phil + 4 thefts + 2 ideas); paper's quantitative tables count zero.
+
+**Design decision (same as S12):** Agent did NOT execute. Proposed 5 paths for Fares; awaiting authorization.
+
+**Commit:** `3fdb31e` (research artifact only; PAPER.md unchanged).
+
+---
+
+## Phase 6 — Documentation Pass (current — Session 13.5 / Session 14)
+
+### Session 13.5 (this commit, ~Jun 6, 2026) — Documentation hardening
+**Trigger:** Fares: *"قبله اللي حليته وكل ده خليه واضح او اذكرها او اعمل اعاده توثيق عشان اللي هيشتغل علي المشروع بعد كده يبقي واضح ومفيش مغلطات او اي مشاكل فاهمين"*
+
+**Done:** Created/updated 3 master documentation files to make the entire project navigable:
+- `PROJECT_README.md` — master entry point with file map, rules, where to start by role
+- `MASTER_TIMELINE.md` (this file) — canonical chronological narrative
+- `CONTRIBUTION_LEDGER.md` — single source of truth for attribution per artifact
+- Updated `PAPER/notes/HANDOFF.md` to reflect documentation pass
+- Updated `PAPER/ideas/ATTRIBUTION_MAP.md` for consistency
+- Updated `PAPER/notes/SESSION_LOG.md` for consistency
+
+**No PAPER.md changes.** Documentation pass only.
+
+---
+
+## Quick reference table — every session in one row
+
+| Session | Date | Trigger (Fares utterance) | Mode | Output | Commit |
+|---|---|---|---|---|---|
+| 1 | ~Jun 4 | First repo share | Operational | Diagnosis report | `64bb755`, `6c840c6` |
+| 2 | ~Jun 4 | "تعرف نجرب عندك" | Operational | Pure baseline **75%**; infrastructure | `a609c90`, `3cbe48b` |
+| 3 | ~Jun 4-5 | "كمل علي السيشن ده" | Operational | Bug #6 fix; PAPER v0.1; 8 figures | `c62835f`, `db68f47` |
+| 4 | ~Jun 5 | "وقف يعم العمليه" | Operational | 20-q subset; halt long runs | `a5e6d6b` |
+| 5 | ~Jun 5 | (continued) | Operational | run_57 = 65%; run_58 A3 = 70%; ablations wired | `b905901`, `78430fc` |
+| **6** | **~Jun 5** | **Mode Pivot + Idea-001 (LEAP link)** | **PIVOT** | **PAPER_PROTOCOL v2.0; Idea-001 file; ideas/ infrastructure** | `5d99357`, `930634b` |
+| 7 | ~Jun 5 | Idea-002 creation | Theoretical | T5.92 LEAP theft; Theory-07/08/09; Phil-07; Idea-002 rule | `4f7bf52` |
+| 8 | ~Jun 5 | "جميل القرار قرارك" | Theoretical | PAPER §8.5 LEAP integration; Tables 16-17; Figures 11-12 | `acf9a09` (v0.3) |
+| 9 | ~Jun 5-6 | "القرار عندك" | Theoretical | Theory-10 (P1-P5); §7.3 rewrite; Track A.5 | `4bf2773` (v0.4) |
+| 10 | ~Jun 6 | "القرار عندك" | Theoretical | T5.93 (Wu) + T5.94 (Chen UVA+Google) thefts; Master Index 5.1-5.94 | `d0c0adf` (v0.5) |
+| 11 | ~Jun 6 | "القرار قرارك نعم" | Theoretical | PAPER §§12-14 Author Contributions + Acknowledgments + Ethics | `62e5c10` (v0.6) |
+| **12** | **~Jun 6** | **"القرار قرارك" (UI)** | **Theoretical** | **Re-Reading batch 1+2: 5 docs, 12 discoveries, 3 attribution corrections PROPOSED** | `da35af4` |
+| **12b** | **~Jun 6** | **"تمام" (auth Path 1)** | **Theoretical** | **3 corrections APPLIED + §8.5.7 + §8.6 + Theory-10 P6 + Phil-07 §9** | `43868ee` (v0.7) |
+| **13** | **~Jun 6** | **"تمام" (auth Path 2)** | **Theoretical** | **Re-Reading batch 3: 4 docs, 11 discoveries, §14.4 partially resolved, 4-pillar gap surfaced** | `3fdb31e` |
+| 13.5 | ~Jun 6 | "قبله اللي حليته وكل ده خليه واضح" | Documentation | This file + PROJECT_README + CONTRIBUTION_LEDGER | *(this commit)* |
+
+---
+
+## Key empirical numbers — when they were locked
+
+| Number | Locked in Session | Source |
+|---|---|---|
+| Pure baseline 75.00% | Session 2 | run_57 measurement on n=20 |
+| GENESIS pre-fix 30.30% | Session 1 | run_53 on n=198 (buggy) |
+| GENESIS post-fix 65.00% | Session 5 | run_57 |
+| A3 no_pipeline 70.00% (Gen1) | Session 5 | run_58 |
+| Six scaffolding bugs catalogued | Sessions 1-3 | bugs 1-5 in S1-2; bug 6 in S3 |
+| LEAP 110-point gap | Session 7 | T5.92 + own data |
+| T5.94 r=-0.54 same-model GPQA | Session 10 | Chen et al. 2026 |
+| Theory-10 P6 lifetime-drift prediction | Session 12b | Cross-synthesis Productive Forgetting + Cognitive Economy |
+| 11 epistemic artifacts produced | Session 13 | counted per Meta-Theory §9 unit |
+
+---
+
+## Open questions (as of end of Session 13)
+
+These are *deliberately* unresolved and noted in the paper:
+
+1. **§14.4 (paper):** "When an agent is delegated the choice of what to research next, whose contribution is the result?"
+   - *Working position:* Conservative (Layer 2).
+   - *Session 13 finding:* Resolvable via Agent Identity Theory §12 (Delegated Cognition vs External Advice) — partial resolution proposed but **not yet applied to paper** (awaiting Fares authorization for Path 1b).
+
+2. **§8.5.8 (paper, Honest Caveat):** Whether the Refactor Roadmap predictions materialize. *Untested.*
+
+3. **§8.6 (paper):** Indicator E (Transfer Failure) is untested — claim that GENESIS is in Phil-07 D equilibrium is a hypothesis-not-yet-falsified, not a positive finding.
+
+4. **Theory-10 P6 (theory file):** Lifetime right-drift prediction is stated but not tested. 5-step Variant A/B/C test designed.
+
+5. **Hidden Crisis Diagnostic Indicators D + G:** Discovery #19 (Session 13) revealed these are not independent. Paper §8.6 currently presents 8 indicators as if independent. Correction proposed in Path 1c-equivalent edits.
+
+---
+
+## How to extend this timeline
+
+When Session 14 (or later) happens, append a new section here following the template:
+
+```markdown
+### Session N (~date) — short title
+**Trigger:** Fares: "verbatim utterance"
+**Agent's choice:** [option selected from previous HANDOFF]
+**Done:**
+- bullet list of concrete outputs
+**Commit:** `hash` (paper vX.Y if version bumped)
+```
+
+Then update the "Quick reference table" with one new row.
+
+---
+
+## Why this timeline exists
+
+Reviewers, future Fares, future agents, and anyone trying to extend this work need to know:
+- Which decisions were Fares-driven vs agent-initiated
+- Why the attribution in §12.2 looks the way it does (it was wrong; Session 12 caught it; Session 12b fixed it)
+- Why certain things are deferred (Mode Pivot from Session 6)
+- Why session numbering has "12b" (corrections, not new research)
+
+`PAPER/notes/SESSION_LOG.md` has the verbose raw log. This document is the curated narrative. Both should be kept in sync; if they diverge, `MASTER_TIMELINE.md` is the canonical version because it has been reviewed for consistency.

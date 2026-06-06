@@ -94,6 +94,16 @@
 
 > **Disclosure principle (Idea-002):** Even Fares-authorized agent work is attributed transparently. When Fares says "القرار عندك" the agent is empowered to act, but the resulting work is labeled as **agent-initiated** (not Fares-authored) so the final paper can honor the actual division of intellectual labor.
 
+### Session 13.5 agent-executed work (Documentation Pass)
+
+| Work | Trigger | Output | Status |
+|---|---|---|---|
+| **Documentation Hardening** | Session 13.5 Fares: "قبله اللي حليته وكل ده خليه واضح او اذكرها او اعمل اعاده توثيق عشان اللي هيشتغل علي المشروع بعد كده يبقي واضح ومفيش مغلطات او اي مشاكل فاهمين" | **3 new master docs at repo root**: `PROJECT_README.md` (master entry point, ~250 lines), `MASTER_TIMELINE.md` (canonical chronological narrative, ~350 lines), `CONTRIBUTION_LEDGER.md` (single source of truth for attribution, ~450 lines). 3 existing docs refreshed (HANDOFF, SESSION_LOG, this ATTRIBUTION_MAP). No PAPER.md changes (documentation pass only). | ✅ Complete |
+
+> **⚠️ IMPORTANT for future agents/maintainers:** This ATTRIBUTION_MAP and **`CONTRIBUTION_LEDGER.md` (at repo root)** must stay consistent. CONTRIBUTION_LEDGER is the *canonical* source — it has finer granularity, per-artifact provenance, verbatim authorization utterances, and a §9 consistency check. ATTRIBUTION_MAP is the *operational* tracker — it records what was done per session in addition to the static per-artifact picture. If they ever diverge, **CONTRIBUTION_LEDGER wins on attribution questions** (per the resolution rules documented in HANDOFF.md §"Session 13.5 single most important consequence").
+
+---
+
 ### Session 13 agent-initiated work (Internal Re-Reading Cycle batch 3)
 
 | Work | Trigger | Output | Status |

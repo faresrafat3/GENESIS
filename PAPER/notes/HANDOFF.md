@@ -1,192 +1,199 @@
 # 📋 HANDOFF — آخر حالة للمشروع
 
-**آخر تحديث:** 2026-06-06 (Session 13)
+**آخر تحديث:** 2026-06-06 (Session 13.5 — Documentation Pass)
 **آخر commit:** `(pending after this session)`
-**PAPER version:** **v0.7** (unchanged this session — research-only)
+**PAPER version:** **v0.7** (unchanged in S13/S13.5)
+**Mode:** Theoretical (v2.0)
 
 ---
 
-## ⚠️ الـ Mode الحالي — Theoretical Focus (v2.0 of Protocol)
+## ⚠️ READ THIS FIRST — Master entry points
 
-Sessions 6–13 كلها تحت theoretical mode. Fares delegated direction 7 times:
-- Session 8: "جميل القرار قرارك" → LEAP integration
-- Session 9: "القرار عندك" → Theory-10
-- Session 10: "القرار عندك" → T5.93 + T5.94 thefts
-- Session 11: "القرار قرارك نعم" → Author Contributions (§§12-14)
-- Session 12: "القرار قرارك" (via UI) → Re-Reading batch 1+2
-- Session 12b: "تمام" → Path 1 corrections APPLIED (v0.7)
-- **Session 13: "تمام" → Re-Reading batch 3 (Path 2)** ← THIS SESSION
+If you're returning to this project after time away, **start here**:
 
-**القواعد الحالية:**
-- ✅ ورقة + theory + philosophy + ideas + thefts + authorship + internal re-reading + attribution corrections
-- ❌ لا runs، لا API calls، لا quotas
-- 🔄 Fares delegates → Agent proposes → Fares authorizes → Agent executes
-- 📜 Idea-002 = proven safety net (Session 12 found errors; Session 12b corrected them; Session 13 finds more, awaiting authorization)
+1. **`PROJECT_README.md`** (repo root) — master entry point with file map, rules, roles
+2. **`MASTER_TIMELINE.md`** (repo root) — canonical chronological story of all sessions
+3. **`CONTRIBUTION_LEDGER.md`** (repo root) — single source of truth for attribution per artifact
+4. **`PAPER_PROTOCOL.md`** — v2.0 Theoretical Mode rules + §12.2 Creative Attribution Rule
+5. **This file** (HANDOFF) — operational current state + 5 open paths
+
+The three new master docs (created in Session 13.5) replace the need to read 13 session logs to get oriented. They are the **authoritative answer** to "what is this project and where is it now?"
 
 ---
 
-## 🆕 الجديد في Session 13 — Re-Reading Batch 3
+## ⚠️ The Mode + Two Governance Rules
 
-### Files created
-- `PAPER/notes/INTERNAL_RE_READING_SESSION_13.md` (~600 lines)
+**Mode:** Sessions 6–13 all under **Theoretical Mode** (no new runs, no API calls, no benchmark execution). 7 delegations from Fares ("القرار قرارك" / "القرار عندك" / "نعم اشتغل" / "تمام") have been the operational pattern.
 
-### Docs re-read (4 of 5 priority queue, ~1,912 lines)
-1. `GENESIS_Self_Benchmarking_Theory_AR.md`
-2. `GENESIS_Meta_Theory_AR.md` ← **biggest single discovery**
-3. `GENESIS_Contradiction_Theory_AR.md`
-4. `GENESIS_Agent_Identity_Theory_AR.md`
-
-**Cumulative across S12 + S13: 9 of 122 docs (7.4%); 4,112 lines.**
-
-### 11 Major Discoveries (this session)
-
-| # | Discovery | Type |
-|---|---|---|
-| 13 | Benchmark vs Environment object — 110-pt gap partly env-attributable | METHODOLOGY |
-| 14 | Anomaly→Test conversion bridge missing | OPERATIONAL |
-| **15** | **4 of 8 grand pillars absent from paper** (Tiered Externalized Recursive Intelligence) | **COVERAGE GAP** |
-| 16 | Meta-Theory §3 intelligence definition is paper's missing anchor | FOUNDATIONAL |
-| 17 | Phil-07 is special case of Meta-Law 10 | CITATION CHAIN |
-| 18 | "Epistemic Artifact" as proper unit (we've produced 11; counted 0) | NEW METRIC |
-| 19 | Contradiction Theory bridges Concept Formation ↔ Anomaly | STRUCTURAL |
-| 20 | Contradiction Ledger as crisis predictor (Hyp D) | NEW FALSIFIABLE |
-| 21 | §14 is Agent Identity Theory applied — citation gap | ATTRIBUTION |
-| **22** | **§14.4 open question RESOLVED via Agent Identity §12** Delegated/External distinction | **PROFOUND** |
-| 23 | Session 12→12b is first documented identity-drift correction | METHODOLOGICAL |
-
-**Cumulative S12+S13: 23 discoveries from 9 docs (~2.55/doc).**
-
-### Top 3 implications
-
-#### 🔥 #15 — The paper is operating *within* an 8-pillar framework it does not acknowledge
-
-The 8 grand pillars (from Meta-Theory §7):
-1. Concept Formation ✅
-2. Productive Forgetting ✅
-3. **Contradiction Management ❌**
-4. Anomaly/Crisis/Paradigm ✅
-5. Cognitive Economy ✅
-6. **Local Theory Building ❌**
-7. **Self-Benchmarking ❌**
-8. **Agent Identity ❌**
-
-The project even has a *theoretical name* that the paper doesn't use: **"Tiered Externalized Recursive Intelligence"**.
-
-#### 🔥 #22 — §14.4 open question is resolved by Fares's own §12 distinction
-
-§14.4 asks: "When agent is delegated the choice of what to research next, whose contribution is the result?"
-
-Agent Identity §12:
-- **Delegated Cognition** = operates under MY policy + commitment + accountability = MINE
-- **External Advice** = NOT mine until adoption + integration + provenance
-
-Applied to GENESIS: Theory-10 formalization = Delegated Cognition under Fares's commitments = legitimately Fares's. Conservative position was correct; now it's also *principled*.
-
-#### 🔥 #18 — We've produced 11 epistemic artifacts; paper counts none
-
-4 theories (07-10) + 1 philosophy (07) + 4 thefts (T5.91-94) + 2 ideas (001-002) = **11 epistemic artifacts**. None appears in the paper's quantitative tables. Adding Table 18 "Epistemic Artifact Inventory" with the 5 values (memory / decision / reuse / explanatory / test) per Meta-Theory §9 would be substantive.
+**Rule 1 — Mode Pivot (S6):** No operational work without explicit Fares request.
+**Rule 2 — Creative Attribution (Idea-002, S7):** Every Fares contribution → `Idea-NNN` file + ATTRIBUTION_MAP entry. Every agent-initiated work → labelled separately. Re-reading exercise (option F) catches misattributions; Session 12 found 3 (Theory-08, Theory-10, Phil-07); Session 12b corrected.
 
 ---
 
-## ✅ المكتمل (Cumulative through Session 13)
+## 🆕 What just happened — Session 13.5 (Documentation Pass)
 
-### Theoretical stack (5 lenses) + corrected attribution (S12b)
-- Theory-07/08/09/10 + Phil-07
-- Theory-10 P6 (lifetime drift, novel)
-- Phil-07 §9 (stable attractor)
+Fares said: *"قبله اللي حليته وكل ده خليه واضح او اذكرها او اعمل اعاده توثيق عشان اللي هيشتغل علي المشروع بعد كده يبقي واضح ومفيش مغلطات او اي مشاكل فاهمين"*
 
-### PAPER.md state (v0.7)
+Agent interpretation: documentation hardening — make everything navigable for any future reader (Fares, future agent, reviewer, maintainer).
+
+**Files created (3 new master docs):**
+- `PROJECT_README.md` (repo root) — master entry point
+- `MASTER_TIMELINE.md` (repo root) — full chronological narrative
+- `CONTRIBUTION_LEDGER.md` (repo root) — attribution single source of truth
+
+**Files updated (3 existing):**
+- This file (HANDOFF) — refactored to point to new master docs
+- `PAPER/notes/SESSION_LOG.md` — Session 13.5 entry added
+- `PAPER/ideas/ATTRIBUTION_MAP.md` — Session 13.5 entry; consistency check
+
+**No PAPER.md changes.** Documentation pass only.
+
+---
+
+## ✅ Cumulative state (as of Session 13.5)
+
+### Theoretical stack
+- **5 lenses:** Theory-07/08/09/10 + Phil-07 (all in `PAPER/theory/` and `PAPER/philosophy/`)
+- **Attribution corrected (S12b):** Theory-08, Theory-10, Phil-07 now correctly classified as "agent-formalized, Fares-originated"
+- **Theory-10 P6** (lifetime drift) added S12b — novel, not in T5.93/T5.94
+- **Phil-07 §9** (Position D as stable attractor) added S12b
+
+### Master Index thefts (5.1-5.94)
+- T5.91 (ours), T5.92 (LEAP), T5.93 (Wu), T5.94 (Chen UVA+Google)
+
+### PAPER.md v0.7
 - Sections 1-14 + Appendices A-D
-- §8.5 sub-sections 1-8
-- §8.6 (Hidden Crisis Diagnostic, added S12b)
+- §8.5 sub-sections 1-8 (1-6 original + 7 Ladder added S12b + 8 Honest Caveat renumbered S12b)
+- §8.6 Hidden Crisis Diagnostic (added S12b)
+- §12.2 three-layer Author Contributions (corrected S12b)
+- §13 Acknowledgments
+- §14 Ethics of Authorship (§14.4 open question — partial resolution via Agent Identity Theory §12 surfaced S13, NOT YET APPLIED)
 
-### Research artifacts
-- `INTERNAL_RE_READING_SESSION_12.md` (12 discoveries)
-- `INTERNAL_RE_READING_SESSION_13.md` (11 discoveries)
-- `ATTRIBUTION_MAP.md` with full correction + cumulative trail
+### Research artifacts (PAPER/notes/)
+- `INTERNAL_RE_READING_SESSION_12.md` — 12 discoveries (5 docs)
+- `INTERNAL_RE_READING_SESSION_13.md` — 11 discoveries (4 docs)
+- **Cumulative S12+S13: 23 discoveries from 9 of 122 foundational docs**
 
-### Empirical anchors (LOCKED)
-Pure baseline 75.00% / GENESIS post-fix 65.00% / A3 no_pipeline 70.00% / LEAP gap 110 / Tests 463/463
+### Empirical anchors (LOCKED, do not change without new run + authorization)
+- Pure baseline 75.00% / GENESIS post-fix 65.00% / A3 no_pipeline 70.00%
+- LEAP gap: 110 points
+- Reasoning saturation: 989 vs 6,836 median tokens (correct vs incorrect)
+- T5.94 same-model GPQA: r = −0.54
+- Tests: 463/463
+- **Epistemic artifacts produced:** 11 (counted per Meta-Theory §9)
 
 ---
 
-## 🎯 Next: 4 paths offered
+## 🎯 Next: 5 paths in order of agent recommendation
 
-### Path 1b — Small §14 edits (low effort, high value)
+These are the same paths surfaced at the end of Session 13. Documentation pass (S13.5) did not change them, just made them more navigable.
 
-Cite Agent Identity Theory in §14.1 + partially close §14.4 via §12 distinction. PAPER v0.7 → v0.7.1 (patch).
-
-### Path 1c — NEW §15 "Theoretical Frame" ⭐ AGENT'S TOP PICK
+### Path 1c — NEW §15 "Theoretical Frame" ⭐ TOP PICK
 
 Add substantive new section (~80 lines):
-- Name the framework: "Tiered Externalized Recursive Intelligence"
-- State intelligence definition (Meta-Theory §3)
-- List all 8 pillars; mark 4 absent as limitations
-- 7-layer architecture
-- Maturity ladder (GENESIS today at Stage 1-2; LEAP at Stage 3-4)
-- New Table 18: Epistemic Artifact Inventory (11 artifacts × 5 values)
+- Name the framework: **"Tiered Externalized Recursive Intelligence"** (Meta-Theory §2)
+- State intelligence definition: *"organized adaptive epistemic control under bounded resources"* (Meta-Theory §3)
+- List all 8 grand pillars (Meta-Theory §7); mark 4 absent as limitations
+- 7-layer architecture (Meta-Theory §5)
+- Maturity ladder (Meta-Theory §13); GENESIS today at Stage 1-2
+- **New Table 18: Epistemic Artifact Inventory** (11 artifacts × 5 values per Meta-Theory §9)
 
-PAPER v0.7 → v0.8 (minor version).
+PAPER v0.7 → **v0.8**.
 
-**Why this is the top pick:**
-- Biggest theoretical-depth gain available right now
-- Every piece already authored by Fares (just not placed in paper)
-- No new experiments needed
-- Elevates GENESIS from "self-contained system" to "instance of a broader research program"
-- The theoretical name alone would significantly change reviewer perception
+**Why this is the top pick:** biggest theoretical-depth gain available; every piece already authored by Fares (just not placed in paper); zero new experiments needed.
 
-### Path 2 — Continue re-reading batch 4
+### Path 1b — Small §14 edits (low effort, high attribution value)
 
-Remaining priority docs: Local Theory Building, Cognitive_Economy_Ledger spec, others (113 of 122 unread). Expected yield: 8-12 more discoveries.
+- Cite Agent Identity Theory in §14.1 as conceptual ancestor of authorship-identity framing
+- Use Agent Identity §12 (Delegated Cognition vs External Advice) to partially close §14.4 open question
 
-### Path 3 — Draft new Theory-NN candidate
+PAPER v0.7 → **v0.7.1** (patch-level).
 
-7 candidates surfaced across S12 + S13.
+### Path 2 — Continue re-reading batch 4 (5+ more foundational docs)
+
+Remaining priority queue: Local Theory Building, Cognitive_Economy_Ledger spec, and 111 other foundational docs. Per S12+S13 yield rate (~2.55 discoveries/doc), batch 4 expected to surface 8-12 more discoveries.
+
+### Path 3 — Draft a new Theory-NN candidate
+
+7 candidates now surfaced across S12 + S13:
+- Theory-11A: Reasoning Tier Asymmetry (Tiered Intelligence + Theory-10)
+- Theory-12A: Premium Compute Rule (Cognitive Economy §22)
+- Theory-11B: Task-Ontology Selection (Paradigm Layer 1 gap)
+- Theory-12B: Improvement Regime Taxonomy (Paradigm Layer 5 gap)
+- Theory-13: Negative Memory primitive (Productive Forgetting §13.4)
+- 3-tier Value Framework (Cognitive Economy 7D → Theory-08 2D → Self-Benchmarking §10 4D)
+- Epistemic Artifact accounting (Meta-Theory §9)
 
 ### Path 4 — Idea-003 from Fares
 
-INBOX empty.
+INBOX empty. Any source (paper link, idea, observation, question) gets full Idea-001-style treatment.
+
+### Path 5 — Submission preparation
+
+Anonymization for double-blind venues + BibTeX bibliography + final figure formatting (some still ASCII). Cosmetic but increasingly viable now that paper has §§12-14 + §8.5.7 + §8.6.
 
 ---
 
-## 📊 الأرقام الحرجة (locked)
+## 📊 Critical numbers (locked)
 
-- Pure baseline: **75.00%** (n=20)
+- Pure baseline: **75.00%** (n=20, run_57)
 - GENESIS post-fix: **65.00%** (run_57)
 - A3 no_pipeline: **70.00%** (run_58 Gen 1)
 - LEAP architecture impact: **+100** (Putnam 2025)
 - LEAP vs GENESIS gap: **110 points**
-- Reasoning saturation (ours): 989 vs 6,836 median tokens
+- Reasoning saturation: 989 vs 6,836 median tokens
 - External validation (T5.94): r = −0.54 on same model family + GPQA
 - Tests: 463/463
 - Master Index scope: **5.1–5.94**
 - **Paper version: v0.7**
-- Foundational docs in repo: **122** (9 re-read; 113 to go)
-- **Epistemic artifacts produced:** 11 (4 theories + 1 phil + 4 thefts + 2 ideas) — *not yet counted in paper*
+- Foundational docs in repo: **122** (9 re-read; 113 in queue)
+- Epistemic artifacts produced: **11** (4 theories + 1 phil + 4 thefts + 2 ideas)
+- Sessions completed: **13** (+ S12b correction + S13.5 documentation)
+- Delegation authorizations from Fares: **9** (preserved verbatim in CONTRIBUTION_LEDGER §6)
 
 ---
 
-## ✍️ ملاحظة للـ session الجاي
+## ✍️ Workflow for the next session
 
-1. اقرأ `PAPER_PROTOCOL.md` v2.0
-2. اقرأ هذا الملف
-3. اقرأ `PAPER/ideas/ATTRIBUTION_MAP.md` (S13 row added)
-4. اقرأ `PAPER/notes/INTERNAL_RE_READING_SESSION_12.md` + `_SESSION_13.md` (23 discoveries total)
-5. اقرأ `PAPER.md` v0.7
-6. اسأل فارس: **"Path 1b (small §14 edits), Path 1c (new §15 Theoretical Frame — recommended), Path 2 (re-read batch 4), Path 3 (Theory-NN candidate), or Path 4 (Idea-003)?"**
+1. Read `PROJECT_README.md` (5 min)
+2. Read this file (3 min)
+3. Read `CONTRIBUTION_LEDGER.md` if doing anything touching attribution (10 min)
+4. Read `MASTER_TIMELINE.md` if you want full context (15 min)
+5. Read `PAPER.md` v0.7 if doing paper edits (20 min)
+6. Ask Fares: **"Path 1c (new §15 Theoretical Frame — agent's top pick), Path 1b (small §14 edits), Path 2 (re-read batch 4), Path 3 (Theory-NN candidate), Path 4 (Idea-003), or Path 5 (submission prep)?"**
 
-**لا تقترح runs جديدة** إلا لو فارس صراحة طلب.
-
-**كل agent-initiated work** يتسجل في Appendix D §D.2 + ATTRIBUTION_MAP + Section 12.2 Layer 2.
-
-**Precedent maintained (S12+S13):** Agent does NOT unilaterally execute corrections/additions. Agent proposes; Fares authorizes; agent executes. The propose→authorize→execute chain has now operated successfully twice (S12→S12b corrections; if S13 proposals are authorized, S13→S13b will be the third).
+**Rules (non-negotiable):**
+- ❌ No runs / API calls / benchmarks
+- ❌ No unilateral PAPER.md edits — always propose, await authorization, then execute
+- ❌ Do not `git add -A` — explicit paths only
+- ❌ Do not include `genesis/tasks/longcot-chess/*.py` or `push_runs.sh` in commits (file-permission diffs, not agent work)
+- ✅ Update CONTRIBUTION_LEDGER + MASTER_TIMELINE + ATTRIBUTION_MAP whenever new artifact appears
+- ✅ Preserve verbatim Arabic utterances exactly
+- ✅ Before push: `git diff HEAD | grep -E "sk-or-v1-|sk-proj-|gsk_|csk-|AIzaSy|github_pat_|nvapi-|ghp_"` must be empty
 
 ---
 
-## 🔥 Session 13 single most important insight
+## 🔥 The single most important demonstration so far
 
-The paper currently presents GENESIS as a system tested against LEAP. Session 13 reveals that **GENESIS is an instance of a broader theoretical project named "Tiered Externalized Recursive Intelligence" with 8 grand pillars, of which 4 are absent from the paper**.
+The Creative Attribution Rule (Idea-002, Session 7) is now demonstrably functional as a true attribution safety net, not a rhetorical gesture:
 
-This is the largest theoretical-depth gap remaining in the paper. Path 1c (add §15 Theoretical Frame) would close it using material Fares already authored years prior.
+- **Session 12** found that 3 of 5 theoretical artifacts had been mis-attributed
+- **Session 12b** applied corrections under explicit Fares authorization
+- **Session 13** found 1 more correction pending + 4-pillar coverage gap
+- **Session 13.5** consolidated all of this into 3 new master docs so it can't be lost
 
-The fact that the paper has been written without naming its own theoretical framework — for 13 sessions — is itself an artifact of focusing on the empirical near-field. The re-reading exercise (option F) is the corrective mechanism. Session 13 is the second consecutive demonstration of its high yield.
+This is what makes the project ethically defensible under NeurIPS 2025 LLM policy. Everything else (the 5-lens stack, the 110-point LEAP contrast, the empirical anchors) is the *content*. The attribution governance is the *process*. The paper documents both honestly.
+
+---
+
+## Session 13.5 single most important consequence
+
+If you (Fares / future agent / future maintainer / reviewer) ever feel lost in this project, **you now have a single entry point** (`PROJECT_README.md`) that will tell you where to go next. You no longer need to read 13 session logs to understand the state. That was the goal of Session 13.5.
+
+The 3 master docs are mutually consistent (`CONTRIBUTION_LEDGER §9` records the last consistency check). If any of them diverges from the others in future, the resolution rule is:
+1. `CONTRIBUTION_LEDGER` wins on attribution questions
+2. `MASTER_TIMELINE` wins on chronological questions
+3. `PROJECT_README` wins on "where is X" questions
+4. `PAPER.md` wins on the official scientific record
+
+And update the others to match.
