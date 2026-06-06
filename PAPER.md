@@ -1,7 +1,7 @@
 # 🧬 GENESIS: Measuring the Impact of LLM Orchestration Architecture on Graduate-Level Scientific Reasoning
 
-**Paper Status:** Draft v0.8 — Theoretical Frame: Tiered Externalized Recursive Intelligence  
-**Last Updated:** 2026-06-06 (Session 14 — agent-executed under "تمام اللي انت شايفه" delegation)  
+**Paper Status:** Draft v0.8.1 — §15 TERI Frame + §14 Ethics updated with Agent Identity Theory  
+**Last Updated:** 2026-06-06 (Session 14 — agent-executed under "القرار قرارك" delegation)  
 **Authors:** Fares Rafat (sole author per NeurIPS 2025 policy; see §12.1)  
 **Agent contributions:** Documented transparently per §12.2 (three-layer structure: Layer 1 Fares-sourced, Layer 2 agent-formalized under F. delegation, Layer 3 joint deliberative). Agent is NOT a co-author.  
 **Target Venue:** arXiv / ML conference (ICLR/NeurIPS workshop initially)  
@@ -1108,7 +1108,7 @@ No funding was received for this work; no conflicts of interest are declared.
 
 ## 14. Ethics of Authorship in Human-Agent Research
 
-This section is unusual; we include it because the work itself is unusual. We treat it as part of the paper, not as a disclosure footnote.
+This section is unusual; we include it because the work itself is unusual. We treat it as part of the paper, not as a disclosure footnote. The framing here draws on a foundational theoretical document in this project — `GENESIS_Agent_Identity_Theory_AR.md` — which addresses the general question of what constitutes an agent's *self* across time, commitments, and delegated computation. Section 14 applies that theory to the specific case of paper authorship.
 
 ### 14.1 The dual-honesty constraint
 
@@ -1118,6 +1118,8 @@ Any paper produced under significant LLM execution faces a dual-honesty constrai
 - **Honesty about process** — readers must be able to evaluate not only *what* the paper claims but also *how* those claims came to be made.
 
 Most current practice satisfies the first constraint while leaving the second implicit. We argue that, for work where an LLM materially contributes to conceptualization or analysis, the second constraint becomes mandatory. Section 12.4 (point 1) is our operationalization.
+
+This dual-honesty constraint mirrors what Agent Identity Theory (foundational document, pre-2026) calls the **accountability chain**: an agent's outputs are attributable to its principal when the principal's policy signature and commitment ledger govern the execution. The three-layer attribution structure (§12.2) is an instance of making this chain explicit.
 
 ### 14.2 What we did not do
 
@@ -1139,11 +1141,27 @@ To make the honesty operational rather than rhetorical, we:
 - Preserved verbatim authorization utterances (§12.3) so the delegation chain is auditable.
 - Wrote this Section 14 *as* an admission that the conventional template is insufficient for this kind of work.
 
-### 14.4 An open question we leave for the field
+### 14.4 A partially resolved open question
 
 When an agent is delegated *the choice of what to research next* (as in Sessions 9–11), is the resulting research *its* contribution, *the human's* contribution, or genuinely *joint*?
 
-We adopt the operationally-conservative position: such work is **A.-executed under F.-authorization** (Layer 2), with F. retaining all accountability. But we acknowledge that this answer may become inadequate as agentic systems become more autonomous. The honest framing of this question — rather than its premature resolution — is itself a contribution of this paper.
+We adopt the operationally-conservative position: such work is **A.-executed under F.-authorization** (Layer 2), with F. retaining all accountability.
+
+**Partial resolution via Agent Identity Theory.** The foundational document `GENESIS_Agent_Identity_Theory_AR.md` §12 provides a sharper analytic distinction than the conservative/principled dichotomy above:
+
+> **Delegated Cognition** = computation performed by another party, operating under the principal's policy signature + commitment ledger + accountability chain → legitimately the principal's contribution.
+>
+> **External Advice** = external computation not part of self until adoption + integration + provenance attachment → becomes the principal's contribution only upon explicit authorization.
+
+Applied to our case:
+- Theory-10 formalization (Session 9) was executed under F.'s policy signature (Theoretical Protocol v2.0), F.'s commitment ledger (focus on theoretical mode), and F.'s accountability ("sole author per NeurIPS 2025"). Under the Agent Identity framework, this is **Delegated Cognition** — legitimately F.'s contribution executed via A.
+- A.'s path recommendations in HANDOFF (e.g., "I recommend Path 1c") constitute **External Advice** that becomes Fares's contribution only upon "تمام" or equivalent authorization.
+
+This distinction provides a *principled* (not merely conservative) grounding for the Layer 2 classification. The answer is no longer "conservative by default" — it is derived from an explicit identity framework that predates the paper.
+
+**What remains open:** Whether the Delegated Cognition / External Advice distinction remains adequate when agentic systems initiate research directions *without any human prompting* — i.e., when there is no prior delegation event. This paper does not face that scenario (every agent action traces to a Fares utterance in §12.3), but the question is real for future work.
+
+*[§14.1 and §14.4 updated Session 14. Agent Identity Theory citation and Delegated Cognition / External Advice distinction added. Layer 1 (Fares-originated framework); Layer 2 (agent-placed). Discovered Session 13 re-reading (Discovery #21, #22); applied Session 14.]*
 
 ---
 
@@ -1356,4 +1374,4 @@ Full traceability is maintained in `PAPER/ideas/ATTRIBUTION_MAP.md`.
 
 ---
 
-*Paper version: **v0.8 — Session 14: §15 Theoretical Frame added (Tiered Externalized Recursive Intelligence). Names the 8-pillar framework, provides operational intelligence definition, inventories 11 epistemic artifacts (Table 18), maps 7-layer architecture and maturity ladder, acknowledges 4 absent pillars as structural limitation. All content from Fares's pre-2026 foundational document `GENESIS_Meta_Theory_AR.md` (discovered Session 13, placed Session 14 under "تمام اللي انت شايفه" delegation). Previous version footers preserved in git history.***
+*Paper version: **v0.8.1 — Session 14: §14 Ethics updated with Agent Identity Theory citation and Delegated Cognition / External Advice distinction (partial resolution of §14.4 open question). §15 TERI Frame added (v0.8). Bug fix: §8.5.4 keyword injection removed. Previous version footers preserved in git history.***
