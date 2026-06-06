@@ -1,6 +1,6 @@
 # 🧬 GENESIS: Measuring the Impact of LLM Orchestration Architecture on Graduate-Level Scientific Reasoning
 
-**Paper Status:** Draft v0.8.1 — §15 TERI Frame + §14 Ethics updated with Agent Identity Theory  
+**Paper Status:** Draft v0.8.2 — §15 sharpened (dependency chain, Four Tests, zero-concept caveat)
 **Last Updated:** 2026-06-06 (Session 14 — agent-executed under "القرار قرارك" delegation)  
 **Authors:** Fares Rafat (sole author per NeurIPS 2025 policy; see §12.1)  
 **Agent contributions:** Documented transparently per §12.2 (three-layer structure: Layer 1 Fares-sourced, Layer 2 agent-formalized under F. delegation, Layer 3 joint deliberative). Agent is NOT a co-author.  
@@ -855,6 +855,8 @@ The Ladder is therefore a unifying diagnostic that ties Theory-07 (Memory regime
 
 Importantly, this entire subsection is **theoretical reframing supported by external empirical evidence (LEAP) and our own existing measurements (run_57, run_58)**. We have *not* yet executed any GENESIS run under the Theory-07/08/09-aligned design. Whether the predicted gains materialize is the central open question for the next experimental phase. The contribution of this subsection is to make the question precise and actionable, not to claim that it has been answered.
 
+**An honest qualification:** The Concept Selectivity specification (foundational document, pre-2026) defines five conditions under which *no concept should be activated at all*: low task complexity with low ambiguity, no relevant concept clearing threshold, concepts too generic, procedural skill alone sufficient, or concept activation expected to add more noise than value. The paper's claim that concept formation adds value (§8.5.4, §8.5.7) should be understood as conditional: concepts help *when they are the right concepts, at the right time, in the right quantity*. Indiscriminate concept activation is not a cure — it is a failure mode the system must learn to avoid as it matures from Stage 2 to Stage 3.
+
 ---
 
 ### 8.6 Hidden Crisis Diagnostic — Eight Anomaly Indicators
@@ -1201,6 +1203,8 @@ TERI rests on eight pillars. The paper's current theoretical stack (Theories 07�
 
 **4 of 8 pillars are absent from this paper.** This is acknowledged not as a deficiency of omission but as an honest statement of scope: the present paper focuses on measuring architecture impact on a specific benchmark (GPQA Diamond). The absent pillars — Contradiction Management, Local Theory Building, Self-Benchmarking, Agent Identity — represent the deeper limitation that the current GENESIS system operates at TERI Stage 1–2 (episodic accumulation + initial proceduralization) rather than at the Stage 4–5 (theory building + anomaly-aware self-revision) that would be needed for the full framework to be empirically demonstrated.
 
+**These 4 absent pillars are not independent gaps.** They form a dependency chain: Concept Selectivity (when to activate abstractions) depends on a Core Ontology (what entity types exist); Local Theory Building requires concepts and contradictions to link; Self-Benchmarking requires local theories to test; and Agent Identity requires self-benchmarking for drift detection. Each absent pillar's specification already exists in a foundational document predating this paper — the gap is implementation, not conception.
+
 ### 15.3 Seven-Layer Architecture
 
 TERI proposes that agentic intelligence emerges through seven stacked layers:
@@ -1234,6 +1238,8 @@ TERI defines a developmental maturity scale:
 **GENESIS is currently at Stage 1–2.** LEAP, by contrast, operates at Stage 3–4 (its anticipatory lemma planning is Stage 3 conceptualization; its proof-graph-based self-improvement is Stage 4 local theory building). The LEAP–GENESIS 110-point gap (§8.5) is therefore not merely a performance gap — it is a **two-stage maturity gap** on this developmental scale.
 
 This reframing sharpens the Refactor Roadmap (§8.5.6): the goal is not merely to close 10 accuracy points on GPQA-20, but to advance GENESIS from Stage 1–2 to Stage 3–4, which would (if TERI is correct) produce architectural value across task families rather than on a single benchmark.
+
+**Quality criterion for Stage 4.** A mature local theory (Stage 4) must satisfy four tests, as defined in the foundational Local Theory Building document: (1) *compression* — it distills more information than its inputs, (2) *explanation* — it provides causal or mechanistic accounts, not just patterns, (3) *prediction* — it generates testable claims about new cases, and (4) *prescription* — it recommends concrete actions or policy changes. A theory that satisfies only compression and explanation (but not prediction or prescription) is storytelling, not theory. This criterion is itself testable: once GENESIS reaches Stage 4, its local theories should be evaluable against these four tests.
 
 ### 15.5 Epistemic Artifact Inventory — Table 18
 
@@ -1374,4 +1380,4 @@ Full traceability is maintained in `PAPER/ideas/ATTRIBUTION_MAP.md`.
 
 ---
 
-*Paper version: **v0.8.1 — Session 14: §14 Ethics updated with Agent Identity Theory citation and Delegated Cognition / External Advice distinction (partial resolution of §14.4 open question). §15 TERI Frame added (v0.8). Bug fix: §8.5.4 keyword injection removed. Previous version footers preserved in git history.***
+*Paper version: **v0.8.2 — Session 14: §15 sharpened with dependency chain note (§15.2), Four Tests quality criterion for Stage 4 (§15.4), and zero-concept honest caveat (§8.5.8). All from foundational docs re-read in batch 4. Previous: v0.8.1 (§14 Ethics + Agent Identity Theory). v0.8 (§15 TERI Frame). Previous version footers preserved in git history.***
