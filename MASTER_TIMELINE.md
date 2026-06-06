@@ -1,6 +1,6 @@
 # 📜 MASTER_TIMELINE — Full Chronological Story (Sessions 1 through 13)
 
-**Last updated:** 2026-06-06 (after Session 13.6 Consistency Audit)
+**Last updated:** 2026-06-06 (after Session 13.7 Cleanup Inventory + Agent Operating Manual)
 **Companion docs:** `PROJECT_README.md` (overview) · `CONTRIBUTION_LEDGER.md` (attribution) · `PAPER/notes/SESSION_LOG.md` (raw verbose log) · `PAPER.md` §12.3 (verbatim Arabic utterances)
 
 This is the **canonical narrative** of how the paper came to exist. If you want to understand any single decision, find the session below where it was made.
@@ -231,7 +231,32 @@ External frameworks integrated: CRediT taxonomy (ANSI/NISO Z39.104-2022), Petrid
 
 **Commit:** `89dd99c`.
 
-### Session 13.6 (this commit, ~Jun 6, 2026) — Consistency Audit Pass
+### Session 13.7 (this commit, ~Jun 6, 2026) — Cleanup Inventory + Agent Operating Manual
+**Trigger:** Fares: *"عايزك تحصي ليا ايه الحاجات القديمه يعني اللي موجوده وملهاش لازمه بس لازم تبقي دقيق وتلف المشروع كامله وتقراءه كامله وتفهمه كامل عشان تلقط حاجه زي كده عشان تقولي هي ايه وتخلي قرار الحذف او التنظيف او الدمج او غيره من الموقف المناسب باختياري لان في عك ولغبطه ملهاش لازمه وكثيره منها الصعب ملاحظته وبياثر علي اداء اي ai بيساعدني في المشروع زيك فلازم تضبط ليا الدنيا وبرضو شفت كل اللي صلحته ده اعملي حاجه عشان ال agent اللي تيجي تشتغل عليه ثاني في اي وقت تكمل او توسع او اجي بفكره جديده متقلش من المشروع يحافظ علي الجوده و القوه والاداء علي المشروع وميعملش غلطات وكده"*
+
+**Agent's choice:** TWO deliverables: (1) Cleanup inventory of old/redundant files; (2) Agent Operating Manual to prevent future agents from making same mistakes.
+
+**Done:**
+- Read entire project: 211 .md files + 200 .py files + 109 .json files inventoried
+- Discovered **104 of 122 (85%) `GENESIS_*_AR.md` foundational docs are UNREFERENCED** in paper-era master docs
+- Categorized into 22 sections by purpose
+- Identified **major decisions**:
+  - 96 MB in `virtual_genesis/eval/results/` (15 JSON files, 2 are 24+ MB each)
+  - `test_pioneer.py` — DEAD CODE (depends on `.pioneer_key` that doesn't exist)
+  - 7 old "theft wave" files SUPERSEDED by MASTER_INDEX
+  - 4 "Current_*" files that are NOT current (dated May 2026, pre-paper)
+  - 6 Layer A old paper drafts at root risking confusion with PAPER.md
+  - ~90 Layer A docs total (prototype evidence, selectivity cycles, smoke tests, etc.)
+- Created `CLEANUP_INVENTORY_S13.7.md` (~650 lines) with every item categorized, sized, and recommended action (🟢 KEEP / 🟡 ARCHIVE / 🟠 MERGE / 🔴 DELETE / ⚪ UNCERTAIN)
+- Created `AGENT_OPERATING_MANUAL.md` (~700 lines) — 17 sections covering: project summary, 8 non-negotiable rules, delegation pattern recognition, two-layer structure, epistemic artifact properties, locked numbers, governance rules, Idea-NNN flow, how to extend paper safely, how to handle ambiguity, how to handle conflicts, session checklists, common mistakes from real history, when to STOP and ask, "do no harm" principle, quick reference card, pending items
+
+**No PAPER.md changes; no Layer A file modifications.** Inventory + manual only. All cleanup actions await Fares decision (Policy A/B/C/D or per-section).
+
+**Commit:** *(this commit)*.
+
+---
+
+### Session 13.6 (~Jun 6, 2026) — Consistency Audit Pass
 **Trigger:** Fares: *"وبرضو غير التوثيق عايز اخلي الامور كلها واضحه ومضبوطه وصحيحه وملائمه بالنسبه لايه الكلام ده بالنسبه للمشروع كامل"*
 
 **Agent's choice:** Systematic 6-dimension audit + execute fixes for everything broken. Justification for combined audit+execution: critical issues (C1, C2) were active misrepresentations in PAPER.md header that would have caused NeurIPS desk-reject if shared. Delay would violate §14 dual-honesty principle.
@@ -281,7 +306,8 @@ External frameworks integrated: CRediT taxonomy (ANSI/NISO Z39.104-2022), Petrid
 | **12b** | **~Jun 6** | **"تمام" (auth Path 1)** | **Theoretical** | **3 corrections APPLIED + §8.5.7 + §8.6 + Theory-10 P6 + Phil-07 §9** | `43868ee` (v0.7) |
 | **13** | **~Jun 6** | **"تمام" (auth Path 2)** | **Theoretical** | **Re-Reading batch 3: 4 docs, 11 discoveries, §14.4 partially resolved, 4-pillar gap surfaced** | `3fdb31e` |
 | 13.5 | ~Jun 6 | "قبله اللي حليته وكل ده خليه واضح" | Documentation | PROJECT_README + MASTER_TIMELINE + CONTRIBUTION_LEDGER | `89dd99c` |
-| 13.6 | ~Jun 6 | "وبرضو غير التوثيق عايز اخلي الامور كلها واضحه ومضبوطه" | Audit | AUDIT_REPORT_S13.6 + 3 critical PAPER.md fixes (header, authors, table count) + 7 medium fixes; CONTRIBUTION_LEDGER §9 from 10→18 checks | *(this commit)* |
+| 13.6 | ~Jun 6 | "وبرضو غير التوثيق عايز اخلي الامور كلها واضحه ومضبوطه" | Audit | AUDIT_REPORT_S13.6 + 3 critical PAPER.md fixes (header, authors, table count) + 7 medium fixes; CONTRIBUTION_LEDGER §9 from 10→18 checks | `eb58198` |
+| 13.7 | ~Jun 6 | "عايزك تحصي ليا ايه الحاجات القديمه ... وبرضو شفت كل اللي صلحته ده اعملي حاجه عشان ال agent اللي تيجي تشتغل عليه ثاني" | Cleanup+Manual | CLEANUP_INVENTORY_S13.7 (104/122 unreferenced docs, 22 sections, 96 MB virtual_genesis decision flagged) + AGENT_OPERATING_MANUAL (17 sections, 8 non-negotiable rules, 6 common mistakes from real history) | *(this commit)* |
 
 ---
 

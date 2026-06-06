@@ -1,6 +1,6 @@
 # 🗺️ PROJECT_README — Master Entry Point
 
-**Last updated:** 2026-06-06 (after Session 13.5 documentation pass + Session 13.6 audit pass)
+**Last updated:** 2026-06-06 (after Session 13.7 Cleanup Inventory + Agent Operating Manual)
 **Project owner:** Fares Rafat (F.) — sole author per NeurIPS 2025 policy
 **Project repo:** https://github.com/faresrafat3/GENESIS
 **Current paper version:** **v0.7** (`PAPER.md`)
@@ -93,9 +93,11 @@ GENESIS/                                       # repo root
 │ ─── 📚 MASTER NAVIGATION DOCS (read these first) ────────────────
 │
 ├── PROJECT_README.md                          # ⭐ THIS FILE — master entry point for paper era
-├── MASTER_TIMELINE.md                         # ⭐ Full chronological story Sessions 1 → 13.6
+├── AGENT_OPERATING_MANUAL.md                  # ⭐ NEW S13.7 — how to work on this project safely (REQUIRED for new agents)
+├── MASTER_TIMELINE.md                         # ⭐ Full chronological story Sessions 1 → 13.7
 ├── CONTRIBUTION_LEDGER.md                     # ⭐ Single source of truth for attribution
-├── AUDIT_REPORT_S13.6.md                      # Last consistency audit findings (Session 13.6)
+├── AUDIT_REPORT_S13.6.md                      # Consistency audit findings (Session 13.6)
+├── CLEANUP_INVENTORY_S13.7.md                 # ⭐ NEW S13.7 — inventory of old/redundant files awaiting Fares decision
 │
 │ ─── 📄 PAPER ARTIFACTS ──────────────────────────────────────────
 │
@@ -282,7 +284,7 @@ The repo contains **two distinct project layers** that should not be confused:
 | T5.94 length-vs-accuracy correlation | r = −0.54 | Chen et al. on GPT-OSS + GPQA |
 | Tests passing | 463/463 | local |
 | Master Index theft scope | 5.1–5.94 | `GENESIS_Legitimate_Thefts_MASTER_INDEX_AR.md` |
-| Sessions completed | 1 through 13.6 (13 numbered + 12b + 13.5 + 13.6) | this README + MASTER_TIMELINE |
+| Sessions completed | 1 through 13.7 (13 numbered + 12b + 13.5 + 13.6 + 13.7) | this README + MASTER_TIMELINE |
 | Epistemic artifacts produced | **11** (4 theories + 1 philosophy + 4 thefts + 2 ideas) | computed S13 |
 | Foundational docs in repo | **122** (9 re-read since S12; 113 remaining in queue) | `ls GENESIS_*.md` |
 

@@ -1,10 +1,11 @@
 # 📋 HANDOFF — آخر حالة للمشروع
 
-**آخر تحديث:** 2026-06-06 (Session 13.6 — Consistency Audit Pass)
+**آخر تحديث:** 2026-06-06 (Session 13.7 — Cleanup Inventory + Agent Operating Manual)
 **آخر commit:** `(pending after this session)`
-**PAPER version:** **v0.7** (header v0.2→v0.7 fixed in S13.6 audit; content unchanged)
+**PAPER version:** **v0.7** (unchanged)
 **Mode:** Theoretical (v2.0)
-**Last audit:** Session 13.6 — see `AUDIT_REPORT_S13.6.md` for full report (14 issues found, 11 fixed, 1 false alarm, 2 deferred)
+**Last audit:** Session 13.6 — see `AUDIT_REPORT_S13.6.md`
+**Last cleanup inventory:** Session 13.7 — see `CLEANUP_INVENTORY_S13.7.md`
 
 ---
 
@@ -13,13 +14,15 @@
 If you're returning to this project after time away, **start here**:
 
 1. **`PROJECT_README.md`** (repo root) — master entry point with file map, rules, roles
-2. **`MASTER_TIMELINE.md`** (repo root) — canonical chronological story of all sessions
-3. **`CONTRIBUTION_LEDGER.md`** (repo root) — single source of truth for attribution per artifact
-4. **`AUDIT_REPORT_S13.6.md`** (repo root) — last consistency audit (essential context)
-5. **`PAPER_PROTOCOL.md`** — v2.0 Theoretical Mode rules + §12.2 Creative Attribution Rule
-6. **This file** (HANDOFF) — operational current state + 5 open paths
+2. **`AGENT_OPERATING_MANUAL.md`** (repo root) — ⭐ NEW S13.7 — how to work on this project without damaging it
+3. **`MASTER_TIMELINE.md`** (repo root) — canonical chronological story of all sessions
+4. **`CONTRIBUTION_LEDGER.md`** (repo root) — single source of truth for attribution per artifact
+5. **`AUDIT_REPORT_S13.6.md`** (repo root) — last consistency audit findings
+6. **`CLEANUP_INVENTORY_S13.7.md`** (repo root) — ⭐ NEW S13.7 — inventory of old/redundant files awaiting Fares decision
+7. **`PAPER_PROTOCOL.md`** — v2.0 Theoretical Mode rules + §12.2 Creative Attribution Rule
+8. **This file** (HANDOFF) — operational current state + open paths
 
-The four master docs (3 created in Session 13.5 + audit report in S13.6) replace the need to read 13+ session logs to get oriented. They are the **authoritative answer** to "what is this project and where is it now?"
+These 8 docs replace the need to read 13+ session logs to get oriented. **`AGENT_OPERATING_MANUAL.md` (added S13.7) is the must-read for any new agent.**
 
 ---
 
@@ -86,9 +89,30 @@ Agent interpretation: documentation hardening — make everything navigable for 
 
 ---
 
-## 🎯 Next: 5 paths in order of agent recommendation
+## 🎯 Next: paths in order of agent recommendation
 
-These are the same paths surfaced at the end of Session 13. Documentation pass (S13.5) did not change them, just made them more navigable.
+The 5 paths from Session 13 remain open. **Session 13.7 adds a NEW Path A0: cleanup decisions.**
+
+### Path A0 — NEW (S13.7) — Cleanup decisions on Layer A docs
+
+`CLEANUP_INVENTORY_S13.7.md` inventories ~95 Layer A files awaiting Fares decision. Choose:
+- **Policy A:** "نفّذ كل الـ recommendations" (execute all 🟡 ARCHIVE + 🔴 DELETE actions)
+- **Policy B:** "نفّذ ARCHIVE فقط، ما تحذفش حاجة" (archive only, never delete)
+- **Policy C:** "ابدأ بالـ critical فقط" (just `test_pioneer.py` delete + `virtual_genesis/eval/results/` archive — saves 96 MB immediately)
+- **Policy D:** "خلي كل حاجة زي ما هي" (keep all; inventory was reference only)
+- **Per-section:** Specify action per section (1-21)
+
+**Estimated work:**
+- Policy A: ~30 min of file moves + archive READMEs
+- Policy B: similar (just no deletes)
+- Policy C: ~10 min (smallest scope, biggest disk savings)
+- Policy D: 0 min
+
+**Agent recommendation:** **Policy B** (archive everything, delete nothing). Git history preserves anyway; archive folder makes the working tree navigable; no permanent loss.
+
+---
+
+### Original 5 paths (from Session 13, still open):
 
 ### Path 1c — NEW §15 "Theoretical Frame" ⭐ TOP PICK
 

@@ -94,6 +94,13 @@
 
 > **Disclosure principle (Idea-002):** Even Fares-authorized agent work is attributed transparently. When Fares says "القرار عندك" the agent is empowered to act, but the resulting work is labeled as **agent-initiated** (not Fares-authored) so the final paper can honor the actual division of intellectual labor.
 
+### Session 13.7 agent-executed work (Cleanup Inventory + Agent Operating Manual)
+
+| Work | Trigger | Output | Status |
+|---|---|---|---|
+| **Cleanup Inventory of Layer A docs** | Session 13.7 Fares: "عايزك تحصي ليا ايه الحاجات القديمه يعني اللي موجوده وملهاش لازمه بس لازم تبقي دقيق وتلف المشروع كامله وتقراءه كامله وتفهمه كامل" | `CLEANUP_INVENTORY_S13.7.md` (~650 lines): 22-section categorization of all 211 .md + 96 MB directory. **Headline finding: 104 of 122 (85%) `GENESIS_*_AR.md` foundational docs are unreferenced in paper-era master docs.** Includes Section 13 critical decision on `virtual_genesis/` 96 MB directory. Each section has 🟢 KEEP / 🟡 ARCHIVE / 🟠 MERGE / 🔴 DELETE / ⚪ UNCERTAIN recommendation. Awaits Fares Policy A/B/C/D or per-section decision. | ✅ Inventory complete; cleanup actions pending Fares |
+| **Agent Operating Manual** | Same trigger (compound request): "وبرضو شفت كل اللي صلحته ده اعملي حاجه عشان ال agent اللي تيجي تشتغل عليه ثاني في اي وقت تكمل او توسع او اجي بفكره جديده متقلش من المشروع يحافظ علي الجوده و القوه والاداء علي المشروع وميعملش غلطات وكده" | `AGENT_OPERATING_MANUAL.md` (~700 lines, 17 sections): (i) 60-sec project summary; (ii) 8 non-negotiable rules; (iii) delegation pattern recognition with utterance→action table; (iv) two-layer structure explanation; (v) 5 epistemic artifact properties checklist; (vi) locked numbers table; (vii) 3 governance rules summarized; (viii) Idea-NNN flow step-by-step; (ix) paper extension safety protocol; (x) ambiguity handling; (xi) doc conflict resolution rules; (xii) session start/middle/end checklists; (xiii) 6 common mistakes from real history with lessons; (xiv) when to STOP and ask; (xv) "do no harm" baseline principle; (xvi) printable quick reference card; (xvii) current pending items. **This manual is permanent — read by every future agent in every new session.** | ✅ Manual created and ready for future use |
+
 ### Session 13.6 agent-executed work (Consistency Audit Pass)
 
 | Work | Trigger | Output | Status |

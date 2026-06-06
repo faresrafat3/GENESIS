@@ -1,6 +1,6 @@
 # 📒 CONTRIBUTION_LEDGER — Single Source of Truth for Attribution
 
-**Last updated:** 2026-06-06 (after Session 13.5 documentation pass)
+**Last updated:** 2026-06-06 (after Session 13.7 Cleanup Inventory + Agent Operating Manual)
 **Companion docs:** `PROJECT_README.md` · `MASTER_TIMELINE.md` · `PAPER.md` §12.2 · `PAPER/ideas/ATTRIBUTION_MAP.md`
 **Governing rule:** Idea-002 Creative Attribution Rule (PAPER_PROTOCOL §12.2)
 
@@ -234,7 +234,9 @@ Every Layer-2 contribution traces back to one of these utterances by F. (preserv
 | 6 | S12 | *"القرار قرارك"* (UI delegation) | Re-reading batch 1+2 (research only) | da35af4 |
 | 7 | S12b | *"تمام"* | Apply Path 1 corrections (real PAPER.md edits) | 43868ee |
 | 8 | S13 | *"تمام"* | Re-reading batch 3 (research only) | 3fdb31e |
-| 9 | S13.5 | *"قبله اللي حليته وكل ده خليه واضح او اذكرها او اعمل اعاده توثيق عشان اللي هيشتغل علي المشروع بعد كده يبقي واضح ومفيش مغلطات او اي مشاكل فاهمين"* | Documentation pass: this ledger + PROJECT_README + MASTER_TIMELINE | *(this commit)* |
+| 9 | S13.5 | *"قبله اللي حليته وكل ده خليه واضح او اذكرها او اعمل اعاده توثيق عشان اللي هيشتغل علي المشروع بعد كده يبقي واضح ومفيش مغلطات او اي مشاكل فاهمين"* | Documentation pass: this ledger + PROJECT_README + MASTER_TIMELINE | `89dd99c` |
+| 10 | S13.6 | (implicit continuation of #9; agent identified critical research-integrity issues C1+C2 in PAPER.md header and fixed under §14 dual-honesty principle) | Consistency audit: 14 issues found, 11 fixed; AUDIT_REPORT_S13.6.md; §9 checks 10→18 | `eb58198` |
+| 11 | S13.7 | *"عايزك تحصي ليا ايه الحاجات القديمه ... عشان ال agent اللي تيجي تشتغل عليه ثاني في اي وقت تكمل او توسع او اجي بفكره جديده متقلش من المشروع يحافظ علي الجوده و القوه والاداء علي المشروع وميعملش غلطات"* | (1) Cleanup inventory of ~95 Layer A files awaiting Fares decision (CLEANUP_INVENTORY_S13.7.md); (2) Agent Operating Manual for future agents (AGENT_OPERATING_MANUAL.md) | *(this commit)* |
 
 **The chain is auditable.** Every PAPER.md edit and every theoretical artifact can be traced through this table to an explicit Fares utterance.
 

@@ -1373,3 +1373,148 @@ Same 5 paths:
 
 `(pending)`: Session 13.6 — Consistency Audit Pass. 14 issues found (3 critical: PAPER.md header/authors/table count); 11 fixed; AUDIT_REPORT_S13.6.md created; CONTRIBUTION_LEDGER §9 expanded to 18 checks. Critical fixes essential before any external sharing. PAPER content unchanged.
 
+
+---
+
+## Session 13.7 — 2026-06-06 (Agent-Executed: Cleanup Inventory + Agent Operating Manual)
+
+**Trigger (verbatim, preserved in CONTRIBUTION_LEDGER §6 row 11):**
+> *"عايزك تحصي ليا ايه الحاجات القديمه يعني اللي موجوده وملهاش لازمه بس لازم تبقي دقيق وتلف المشروع كامله وتقراءه كامله وتفهمه كامل عشان تلقط حاجه زي كده عشان تقولي هي ايه وتخلي قرار الحذف او التنظيف او الدمج او غيره من الموقف المناسب باختياري لان في عك ولغبطه ملهاش لازمه وكثيره منها الصعب ملاحظته وبياثر علي اداء اي ai بيساعدني في المشروع زيك فلازم تضبط ليا الدنيا وبرضو شفت كل اللي صلحته ده اعملي حاجه عشان ال agent اللي تيجي تشتغل عليه ثاني في اي وقت تكمل او توسع او اجي بفكره جديده متقلش من المشروع يحافظ علي الجوده و القوه والاداء علي المشروع وميعملش غلطات وكده"*
+
+**Translation:** Two compound requests: (1) Inventory the old/redundant stuff with precise categorization so I can decide delete/cleanup/merge per item; (2) After everything you've fixed, create something for future agents so when they come to continue/extend/receive new ideas, the project quality, strength, performance are preserved and they don't make mistakes.
+
+**Agent interpretation:** Two deliverables in one session: cleanup inventory + agent operating manual.
+
+### Why "Session 13.7" not "Session 14"
+
+Continuation of S13.5/S13.6 documentation+audit spirit. Same "تمام" → multi-task pattern. 13.7 is the third doc-quality pass after 13.5 (creation) and 13.6 (audit).
+
+### Deliverable 1: CLEANUP_INVENTORY_S13.7.md (~650 lines)
+
+**Scope of analysis:**
+- 211 .md files (all read at least at title/header level; 9 priority docs already deep-read in S12-S13)
+- 200 .py files (sampled, structures inventoried)
+- 109 .json files (sizes inventoried)
+- 96 MB `virtual_genesis/eval/results/` flagged
+- 134 root-level .md files cross-referenced against paper-era master docs
+
+**Key finding:**
+> **104 of 122 (85%) `GENESIS_*_AR.md` foundational docs are UNREFERENCED in paper-era master docs.**
+>
+> They are NOT necessarily junk — but every one needs a deliberate decision from Fares.
+
+**22 sections categorize all candidates:**
+
+| Section | Category | Files | Recommended action |
+|---|---|---|---|
+| 1 | Prototype Evidence V2-V5 | 7 | 🟡 ARCHIVE |
+| 2 | Selectivity/Ablation cycle | 8 | 🟡 ARCHIVE |
+| 3 | Smoke Test / Evaluation iterations | 10 | 🟡 ARCHIVE |
+| 4 | Layer A "Cycle" progressions | 6 | 🟡 ARCHIVE |
+| 5 | Misleading "Current_*" snapshots | 4 | 🟡 ARCHIVE + RENAME (remove "Current") |
+| 6 | Old theft wave files | 7 | 🟠 MERGE-VERIFY then ARCHIVE |
+| 7 | Layer A old paper drafts | 6 | 🟡 ARCHIVE WITH STRONG LABELING |
+| 8 | First/Build/Implementation/Milestone | 7 | 🟡 ARCHIVE |
+| 9 | "Minimal" starter docs | 4 | 🟡 ARCHIVE |
+| 10 | Layer A architecture/spec | 8 | ⚪ UNCERTAIN (depends on virtual_genesis fate) |
+| 11 | Theory/Local-Theory building | 5 | 🟢 KEEP (priority re-read queue) |
+| 12 | Implementation memos for subsystems | 12 | ⚪ UNCERTAIN (depends on virtual_genesis fate) |
+| **13** | **`virtual_genesis/` directory 96 MB** | — | **⚪ FARES DECISION (4 options A/B/C/D)** |
+| 14 | Strategic Plan duplicates | 2 | 🟡 ARCHIVE BOTH |
+| 15 | `test_pioneer.py` dead code | 1 | 🔴 DELETE (or 🟡 archive) |
+| 16 | Task Framing memos | 3 | 🟡 ARCHIVE |
+| 17 | Infrastructure mixed bag | 5 | 🟢 KEEP some, 🟡 archive 2 |
+| 18 | "Internal Regime Lock" misleading | 3 | 🟢 KEEP + update Layer A READMEs |
+| 19 | `results/` directory mixed | — | ⚪ UNCERTAIN — needs inspection |
+| 20 | `runs/run_53/` | 1 | 🟢 KEEP (primary empirical artifact) |
+| 21 | Setup/Quick-Run docs | 3 | 🟢 KEEP some, 🟡 archive 1 |
+| 22 | Paper-era master docs | 10 | 🟢 KEEP ALL |
+
+**Plus 25 (KEEP): paper-era code + 18 referenced foundational docs.**
+
+### Deliverable 2: AGENT_OPERATING_MANUAL.md (~700 lines)
+
+17 sections designed so any future agent (in any session, fresh or returning) can read it once and operate at full quality without making known mistakes:
+
+1. 60-second project summary
+2. 8 non-negotiable rules (read-before-write, propose-don't-execute, theoretical-mode-default, attribution-sacred, preserve-verbatim, never-`git add -A`, security-scan, doc-chain-update)
+3. Delegation pattern recognition (8 utterance types → required action)
+4. Two-layer project structure (Layer A pre-paper / Layer B current)
+5. 5 epistemic artifact properties (Meta-Theory §9 checklist)
+6. Locked numbers table (15 immutable values)
+7. 3 governance rules (Mode Pivot + Attribution + Doc Honesty)
+8. Idea-NNN flow (7-step protocol)
+9. How to extend or expand the paper (pre-flight + during + post-flight checklists)
+10. How to handle ambiguity (Option A ask / Option B conservative-with-documentation)
+11. How to handle conflicts between docs (resolution rules)
+12. Session start/middle/end checklists
+13. **6 common mistakes from real history** with lessons:
+    - Misattributed agent-initiated when F. had precursor (Theories 08/10, Phil-07; caught S12)
+    - PAPER.md header out of sync with footer (caught S13.6)
+    - Authors line claimed agent co-authorship (caught S13.6)
+    - PROJECT_README file map incomplete (caught S13.6)
+    - `git add -A` includes longcot-chess permissions
+    - "Current" in filenames without dates (caught S13.7)
+14. When to STOP and ask (7 trigger scenarios)
+15. "Do no harm" baseline principle (compared against commit `eb58198`)
+16. Printable quick reference card
+17. What's pending right now (current open paths)
+
+**This manual is permanent. Every future agent reads it in every new session.**
+
+### Key Design Choices
+
+1. **Inventory ≠ execution.** Cleanup inventory only RECOMMENDS actions. Fares decides. Agent does not touch any file in the cleanup until explicit authorization.
+
+2. **Manual targets the next agent, not Fares.** Written in English (with Arabic verbatim utterances preserved) because future agents may be different model families (Claude, GPT, Gemini, Grok, Qwen, Kimi). English is the lingua franca. But preserves the Egyptian Arabic delegation style.
+
+3. **6 real mistakes documented as case studies.** Each one happened. Each one took time to catch. The manual makes them visible so they're not repeated.
+
+4. **Manual provides explicit "STOP and ask" triggers.** Past sessions sometimes erred on the side of action when they should have paused. The manual makes the pause points explicit.
+
+5. **Quick reference card included.** For agents that won't read 700 lines, the boxed reference card at §15 gives the minimum survival kit.
+
+### Statistics
+
+| Metric | Count |
+|---|---|
+| Files inventoried | 211 .md + 200 .py + 109 .json |
+| Project size analyzed | ~99 MB |
+| Foundational docs categorized | 122 (104 unreferenced) |
+| Cleanup recommendations | 22 sections × multiple recommendations |
+| Layer A files candidates for archive | ~95 |
+| Layer A files candidates for merge | 7 (theft waves) |
+| Layer A files candidates for delete | 1 (test_pioneer.py) |
+| New master docs created | 2 (CLEANUP_INVENTORY + AGENT_OPERATING_MANUAL) |
+| Manual sections | 17 |
+| Manual non-negotiable rules | 8 |
+| Manual documented mistakes | 6 |
+| Existing docs updated | 4 (HANDOFF, SESSION_LOG, ATTRIBUTION_MAP, MASTER_TIMELINE, CONTRIBUTION_LEDGER) |
+| PAPER scientific content changes | 0 |
+| Runs | 0 |
+| API calls | 0 |
+
+### PAPER.md Version
+
+**v0.7 unchanged.** Session 13.7 is meta-work only.
+
+### Open Decisions for Next Session
+
+**NEW: Cleanup Policy decision**
+- Policy A: execute all 🟡 ARCHIVE + 🔴 DELETE recommendations
+- Policy B: archive everything, delete nothing (AGENT RECOMMENDATION)
+- Policy C: critical only (test_pioneer + virtual_genesis/eval/results — saves ~96 MB)
+- Policy D: keep all (inventory was reference only)
+- Per-section: specific actions per section 1-21
+
+**Plus all 5 original paths from S13:**
+- Path 1c (TOP PICK): NEW §15 Theoretical Frame → v0.8
+- Path 1b: §14 edits citing Agent Identity Theory → v0.7.1
+- Path 2: Re-read batch 4
+- Path 3: Draft Theory-NN candidate
+- Path 4: Idea-003
+
+### Commit المتوقع
+
+`(pending)`: Session 13.7 — Cleanup Inventory + Agent Operating Manual. CLEANUP_INVENTORY_S13.7 (22 sections inventorying 95% of foundational docs); AGENT_OPERATING_MANUAL (17 sections, 8 rules, 6 mistake case studies). No PAPER changes; no Layer A file modifications. Master docs updated for consistency.
+
