@@ -30,4 +30,5 @@ results/multi_*/pool_stats.json
 
 # Scratch files
 scratch_test_litellm.py
-run_expanded_eval.sh
+run_expanded_eval.shruns/run_54/**
+runs/run_54/

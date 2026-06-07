@@ -557,6 +557,16 @@ def main():
             "'no_pipeline+narrow_feedback' combines both (A7-style)."
         ),
     )
+    parser.add_argument(
+        "--use_regime_detection",
+        action="store_true",
+        help=(
+            "Enable regime transition detection (H8 Self-Benchmarking). "
+            "After each generation, checks for saturation, degradation, and blind spots. "
+            "If 2-of-3 signals fire, a regime transition is recommended. "
+            "Reports saved to gen_X/regime_transition_report.json."
+        ),
+    )
     args = parser.parse_args()
 
     max_gen = args.max_gen
@@ -590,7 +600,9 @@ def main():
     logger.info(f"  - Task-agent model: {task_model}")
     logger.info(f"  - Ablation mode: {ablation_mode}")
     use_evo = getattr(args, "use_evolutionary_discovery", False)
+    use_regime = getattr(args, "use_regime_detection", False)
     logger.info(f"  - Evolutionary Discovery (AlphaEvolve-style): {'ENABLED' if use_evo else 'disabled'}")
+    logger.info(f"  - Regime Transition Detection (H8): {'ENABLED' if use_regime else 'disabled'}")
 
     # ========================
     # SECTION 1: Load Files from Task Directory
@@ -1333,6 +1345,56 @@ STOP after writing the file. NO FILE READING.
                 logger.warning(f"  ⚠ Evolutionary discovery failed: {e}")
 
         # ========================
+        # SECTION 5a.4: Regime Transition Detection (H8 Self-Benchmarking)
+        # ========================
+        regime_report = None
+        if use_regime:
+            logger.info("=" * 60)
+            logger.info("Running regime transition detection (H8)...")
+            try:
+                from virtual_genesis.eval.runners.regime_orchestrator_bridge import (
+                    run_regime_check,
+                )
+
+                regime_report = run_regime_check(
+                    RUN_DIRECTORY,
+                    current_gen,
+                    max_gen=max_gen,
+                )
+
+                if regime_report:
+                    decision = regime_report.get("regime_decision", {})
+                    verdict = decision.get("verdict", "unknown")
+                    active_count = decision.get("active_signal_count", 0)
+                    logger.info(f"  ✓ Regime check: {verdict} ({active_count}/3 signals active)")
+
+                    if regime_report.get("regime_transition_required"):
+                        logger.warning(f"  ⚡ REGIME TRANSITION RECOMMENDED (confidence: {decision.get('confidence', 0):.2f})")
+                        actions = decision.get("recommended_actions", [])
+                        for action in actions:
+                            logger.warning(f"    → {action}")
+                    else:
+                        logger.info(f"  ✓ No regime transition needed. Continuing iteration.")
+
+                    # Log accuracy history
+                    acc_hist = regime_report.get("accuracy_history", [])
+                    if acc_hist:
+                        logger.info(f"    Accuracy history: {[f'{a:.3f}' for a in acc_hist]}")
+
+                    # Log failure stats
+                    fstats = regime_report.get("failure_stats", {})
+                    if fstats:
+                        logger.info(f"    Negative Memory: {fstats.get('total_failures_extracted', 0)} failures, "
+                                    f"{fstats.get('recurring_failures', 0)} recurring")
+                else:
+                    logger.info("  → Insufficient data for regime check (first generation or no eval results)")
+
+            except Exception as e:
+                logger.warning(f"  ⚠ Regime transition detection failed: {e}")
+                logger.debug(traceback.format_exc())
+            logger.info("=" * 60)
+
+        # ========================
         # SECTION 5b: Run Feedback Agent (if not the last generation)
         # ========================
 
@@ -1527,6 +1589,32 @@ Improvement priority: {gap.improvement_priority:.2f}
             except Exception as e:
                 logger.debug(f"  SPIN analysis skipped: {e}")
 
+            # ========================
+            # Regime Transition Context (if detected)
+            # ========================
+            regime_section = ""
+            if regime_report and regime_report.get("regime_transition_required"):
+                decision = regime_report.get("regime_decision", {})
+                actions = decision.get("recommended_actions", [])
+                acc_hist = regime_report.get("accuracy_history", [])
+                regime_section = f"""
+**⚡ REGIME TRANSITION DETECTED (H8 Self-Benchmarking)**
+The system's internal diagnostics suggest the current approach has reached its ceiling.
+
+**Evidence**:
+- Accuracy history: {[f'{a:.3f}' for a in acc_hist]}
+- Active signals: {decision.get('active_signal_count', 0)}/3
+- Confidence: {decision.get('confidence', 0):.2f}
+
+**Recommended actions**:
+{chr(10).join(f'- {a}' for a in actions)}
+
+**What this means for your fix**:
+- Do NOT just patch the same approach — the diagnostics say iteration is no longer producing improvement.
+- Consider fundamentally different strategies: different prompt structures, different reasoning approaches, different answer extraction patterns.
+- Focus on the specific failure patterns identified in the diagnostics above.
+"""
+
             # Call feedback agent with full context
             feedback_agent_prompt_prepared = FEEDBACK_AGENT_PROMPT.format(
                 CURRENT_GEN=current_gen,
@@ -1534,7 +1622,7 @@ Improvement priority: {gap.improvement_priority:.2f}
                 TASK=TASK,
                 EXECUTION_STATUS=execution_status,
                 EXECUTION_SECTION=execution_section,
-                SPIN_SECTION=spin_section,
+                SPIN_SECTION=spin_section + regime_section,
                 IMPROVEMENT_DIR=next_gen_directory,
                 ablation_feedback_instruction=ablation_feedback_instruction,
             )
