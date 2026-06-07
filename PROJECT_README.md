@@ -1,9 +1,9 @@
 # 🗺️ PROJECT_README — Master Entry Point
 
-**Last updated:** 2026-06-07 (after Session 15 — v0.10 Theory-14 Anti-Antifragility)
+**Last updated:** 2026-06-07 (after Session 16 — v0.11 doc chain + Abstract + §8.5 + §15.2 alignment)
 **Project owner:** Fares Rafat (F.) — sole author per NeurIPS 2025 policy
 **Project repo:** https://github.com/faresrafat3/GENESIS
-**Current paper version:** **v0.10** (`PAPER.md`) — Theory-13 Negative Memory integrated as six internal theories (5 + 1 unifying)
+**Current paper version:** **v0.11** (`PAPER.md`) — §11 Conclusion rewritten around anti-antifragility; Theory-14 as unifying diagnostic
 **Current mode:** Theoretical Mode (v2.0 of `PAPER_PROTOCOL.md`)
 **Last consistency audit:** Session 13.6 — see `AUDIT_REPORT_S13.6.md` for full findings; 3 critical issues fixed in PAPER.md, 11 documentation issues fixed in master docs
 
@@ -257,9 +257,9 @@ The repo contains **two distinct project layers** that should not be confused:
 ### LIVE — actively under discussion
 | Item | Status |
 |---|---|
-| `PAPER.md` v0.9 | Latest version (S14: §15 TERI Frame + §14 Ethics + §15 sharpened + Theory-13 Negative Memory — six internal theories (5 + 1 unifying)) |
-| Re-reading exercise | Active; 14 of 122 docs read; 37 cumulative discoveries from S12-S14 |
-| Session 14 complete | 7 commits, 3 paper version bumps (v0.7→v0.8→v0.8.1→v0.8.2) |
+| `PAPER.md` v0.11 | Latest version (S15: Theory-14 Anti-Antifragility Diagnostic + §11 Conclusion rewritten. S16: Abstract + §8.5 + §15.2 aligned) |
+| Re-reading exercise | Active; 19 of 122 docs read; 50 cumulative discoveries from S12-S15 |
+| Session 15-16 complete | Theory-14 unified five theories; §11 rewritten; doc chain + paper alignment |
 
 ### DEFERRED — infrastructure ready, execution paused
 | Item | Status |
@@ -354,7 +354,7 @@ These files have appeared in `git status` as modified in past sessions but are N
 | "What is the project's theoretical name?" | PAPER.md §15 → **Tiered Externalized Recursive Intelligence** (placed S14, from `GENESIS_Meta_Theory_AR.md` §2) |
 | "What is intelligence in this framework?" | PAPER.md §15.1 → "organized adaptive epistemic control under bounded resources" |
 | "What are the 8 grand pillars?" | PAPER.md §15.2 |
-| "How many internal theories?" | 5: Theory-07, Theory-08, Theory-09, Theory-10, Theory-13 (Negative Memory, added v0.9) |
+| \"How many internal theories?\" | 5 internal + 1 unifying: Theory-07, Theory-08, Theory-09, Theory-10, Theory-13 (Negative Memory), **Theory-14** (Anti-Antifragility Diagnostic — unifying) |
 | "What did Fares say in Session N?" | `PAPER/notes/SESSION_LOG.md` + `PAPER.md` §12.3 |
 | "Why is Theory-10 attributed the way it is?" | `CONTRIBUTION_LEDGER.md` + `PAPER.md` §12.2 Layer 1+2 + `PAPER/notes/INTERNAL_RE_READING_SESSION_12.md` |
 | "What are the pending decisions?" | `PAPER/notes/HANDOFF.md` "Next" section |
@@ -371,6 +371,6 @@ That is intentional. The Creative Attribution Rule (Idea-002) makes it a researc
 
 If you're new and confused: read `MASTER_TIMELINE.md` first. The story makes sense when you see it in order.
 
-If you're Fares: welcome back. `PAPER/notes/HANDOFF.md` has the next 5 paths.
+If you're Fares: welcome back. `PAPER/notes/HANDOFF.md` has the next paths. Current top priority: §2 enrichment, submission prep, or end Theoretical Mode for experiments.
 
 If you're an agent: read this file, then `PAPER_PROTOCOL.md`, then `CONTRIBUTION_LEDGER.md`, then `PAPER/notes/HANDOFF.md`. Do nothing to the paper until you've read all four.

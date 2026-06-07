@@ -1944,3 +1944,42 @@ Theory-13 is the first theory in the stack that is *forward-looking*: it doesn't
 **Key insight:** The 110-point gap is not five problems — it's one condition with five symptoms. The gap between GENESIS and LEAP is the distance between AAS=1.0 and AAS=0.0.
 
 **Commit:** `e2e983f` (paper v0.10)
+
+### Session 15b — Phase 6d: §11 Conclusion Rewritten (v0.10→v0.11)
+
+**Trigger:** Continuation of Session 15 delegation. Agent chose to rewrite §11 as structured argument.
+
+**What was done:**
+
+1. **§11 Conclusion rewritten** (~5,000 chars replacing ~7,300 chars of accumulated observations):
+   - Structured as 5-part argument: Diagnosis → Contrast → Contribution → Prescription → Assessment
+   - Central claim: "The catastrophic failure was scaffolding. The remaining 10-point gap is anti-antifragility."
+   - AAS comparison table (GENESIS 1.0 vs LEAP 0.0) with component-level breakdown
+   - Theory-14 dependency chain: S5 (Failure Amnesia) has highest leverage
+   - Honest assessment framing: contribution is diagnostic instrument, not "system works"
+
+2. **Paper version bump:** v0.10 → **v0.11**
+
+**Commit:** `47efc0d` (paper v0.11)
+
+### Session 16 — Doc Chain v0.11 + Paper Alignment
+
+**Trigger:** Fares: *"تمام يلا ابدا"* (authorization to proceed with all pending items).
+
+**What was done:**
+
+1. **Rule 8 for v0.11** — All 6 master docs updated:
+   - HANDOFF.md: v0.10→v0.11, added S15+S16 info
+   - SESSION_LOG.md: This entry
+   - ATTRIBUTION_MAP.md: Theory-14 entry added
+   - MASTER_TIMELINE.md: Session 15-16 appended
+   - CONTRIBUTION_LEDGER.md: Theory-14 row + §11 rewrite + consistency checks updated
+   - PROJECT_README.md: Version refs updated
+
+2. **Abstract rewrite** — centered on anti-antifragility rather than listing five theories individually
+
+3. **§8.5 alignment** — LEAP contrast reframed around AAS scores
+
+4. **§15.2 refinement** — distinguish dormant pillars (Self-Benchmarking, Agent Identity) from unimplemented (Contradiction, Local Theory)
+
+5. **Theory-14 dependency chain** — added S5→S1/S2/S3/S4 to §7.3

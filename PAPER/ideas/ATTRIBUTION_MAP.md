@@ -111,6 +111,27 @@
 
 ---
 
+## Theory-14 — Anti-Antifragility Diagnostic (v0.10→v0.11)
+
+**Origin:** Agent-initiated unifying synthesis (Session 15), building on the five existing theories and the LEAP contrast. The anti-antifragility concept extends Taleb's triad, applied as a diagnostic instrument for orchestrated LLM systems.
+
+**Attribution:** Layer 2 (agent-formalized). The five component theories (T-07/08/09/10/13) each have Fares-originated precursors, but the unification as "anti-antifragility" with AAS scoring is agent-derived.
+
+**التأثير على الورقة:**
+
+| العنصر | الحالة | الوصف |
+|---|---|---|
+| **Theory-14 standalone file** | ✅ مُنفّذ | `PAPER/theory/14_anti_antifragility_diagnostic.md` (380+ lines) |
+| **§7.3 restructured** | ✅ مُنفّذ | Unifying Diagnosis section with AAS score table |
+| **§1.5 #9** | ✅ مُنفّذ | Contribution item for Theory-14 |
+| **§11 Conclusion rewritten** | ✅ مُنفّذ | Structured 5-part argument around anti-antifragility (v0.11) |
+| **Table 18** | ✅ مُحدّث | 12→13 epistemic artifacts |
+| **Appendix C** | ✅ مُحدّث | Theory-14 row added |
+
+**حجم التأثير:** **CORE** — unified the paper's theoretical contribution from five independent theories into a single diagnostic instrument with measurable score.
+
+---
+
 ## Agent-Initiated Synthesis (per [Idea-002] disclosure rule)
 
 > **Disclosure principle (Idea-002):** Even Fares-authorized agent work is attributed transparently. When Fares says "القرار عندك" the agent is empowered to act, but the resulting work is labeled as **agent-initiated** (not Fares-authored) so the final paper can honor the actual division of intellectual labor.
@@ -221,6 +242,7 @@ PAPER.md version: v0.6 → **v0.7**.
 | S14 §14 Ethics update | Path 1b: Cite Agent Identity Theory in §14 | Agent-executed (S14 "القرار قرارك") | **MAJOR** | PAPER v0.8→v0.8.1. §14 intro + §14.1 + §14.4 updated. Commit `6dde4a8`. |
 | S14 Re-reading batch 4 | Path 2: 5 foundational docs re-read | Agent-initiated (S14 "2 تمام") | **META-CORE** | 14 discoveries (GEMs 24-33, Discoveries 34-37). Cumulative: 37 from 14 of 122 docs. Commit `f1e79b3`. |
 | S14 Theory-13 integration | Path continuation: Theory-13 formalized + integrated into paper | Agent-executed (S14, continuation under existing delegation) | **CORE** | PAPER v0.8.2→v0.9: §7.3.1 NEW (Theory-13 Negative Memory), §1.5 #8, §11, §15.2, Table 18 (11→12 artifacts), Appendix C, Track A.8. All content from Fares's pre-2026 `GENESIS_Memory_OS_Spec_AR.md` §4.7 + `GENESIS_Productive_Forgetting_Theory_AR.md` §13.4 (discovered S14 batch 4, GEM 31). **Fifth internal theory — connects Theory-10 (early termination) and Theory-07 (anti-patterns).** |
+| S15 Theory-14 | Theory-14 Anti-Antifragility Diagnostic — unifying theory | Agent-initiated (S15, under existing delegation) | **CORE** | PAPER v0.9→v0.10→v0.11: §7.3 restructured, §1.5 #9, §11 rewritten, Table 18 (12→13), Appendix C. 380+ line theory file. AAS score (GENESIS 1.0 vs LEAP 0.0). **Unifies five theories as symptoms of one condition.** |
 
 ---
 

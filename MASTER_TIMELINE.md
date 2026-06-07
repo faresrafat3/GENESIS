@@ -1,6 +1,6 @@
-# 📜 MASTER_TIMELINE — Full Chronological Story (Sessions 1 through 14)
+# 📜 MASTER_TIMELINE — Full Chronological Story (Sessions 1 through 16)
 
-**Last updated:** 2026-06-07 (after Session 14 complete — §15 TERI + §14 Ethics + batch 4 + §15 sharpened + Theory-13 → v0.9)
+**Last updated:** 2026-06-07 (after Session 16 — Doc chain v0.11 + Abstract + §8.5 + §15.2 + dependency chain alignment)
 **Companion docs:** `PROJECT_README.md` (overview) · `CONTRIBUTION_LEDGER.md` (attribution) · `PAPER/notes/SESSION_LOG.md` (raw verbose log) · `PAPER.md` §12.3 (verbatim Arabic utterances)
 
 This is the **canonical narrative** of how the paper came to exist. If you want to understand any single decision, find the session below where it was made.
@@ -439,6 +439,33 @@ These are *deliberately* unresolved and noted in the paper:
 4. **Theory-10 P6 (theory file):** Lifetime right-drift prediction is stated but not tested. 5-step Variant A/B/C test designed.
 
 5. **Hidden Crisis Diagnostic Indicators D + G:** Discovery #19 (Session 13) revealed these are not independent. Paper §8.6 currently presents 8 indicators as if independent. Correction proposed in Path 1c-equivalent edits.
+
+---
+
+### Session 15 (2026-06-07) — Theory-14 Anti-Antifragility Diagnostic + §11 Rewrite
+
+**Trigger:** Fares: *"عايزين بقي ناخد خطوات كبيره محوريه ومفصليه"* → *"متبقاش سطحي كده"* (x2) → *"ماشي بس تعمق ومتبقاش سطحي وادقن العمل"*
+**Agent's choice:** Write Theory-14 as the unifying diagnostic, then rewrite §11 Conclusion.
+**Done:**
+- Phase 6c: Theory-14 standalone file (380+ lines) — anti-antifragility defined, 5 signatures mapped to theories, AAS score, 7 falsifiable predictions, dependency chain. v0.9→v0.10. Commit `e2e983f`.
+- Phase 6d: §11 Conclusion rewritten from accumulated observations to structured 5-part argument (Diagnosis → Contrast → Contribution → Prescription → Assessment). Central claim: "The catastrophic failure was scaffolding. The remaining 10-point gap is anti-antifragility." v0.10→v0.11. Commit `47efc0d`.
+- Re-reading batch 5: 5 docs, 13 discoveries (Discovery #38-50). Discovery #43 = two "absent" TERI pillars have full implementation code. Commit `edfec00`.
+- Doc chain for v0.10 (partial — HANDOFF, CONTRIBUTION_LEDGER, PROJECT_README updated but not SESSION_LOG or ATTRIBUTION_MAP).
+**Key insight:** The 110-point gap is not five problems — it is one condition (anti-antifragility) with five measurable signatures. AAS score operationalizes this as a diagnostic instrument for any orchestration framework.
+
+---
+
+### Session 16 (2026-06-07) — Doc Chain v0.11 + Paper Alignment
+
+**Trigger:** Fares: *"تمام يلا ابدا"* (authorization to proceed with all pending items).
+**Agent's choice:** Execute Rule 8 for v0.11, then align Abstract + §8.5 + §15.2 + dependency chain.
+**Done:**
+- Rule 8: All 6 master docs updated for v0.11 (HANDOFF, SESSION_LOG, ATTRIBUTION_MAP, MASTER_TIMELINE, CONTRIBUTION_LEDGER, PROJECT_README).
+- Abstract rewrite: centered on anti-antifragility rather than listing five theories individually.
+- §8.5 alignment: LEAP contrast reframed around AAS scores.
+- §15.2 refinement: distinguish dormant pillars (Self-Benchmarking H8, Agent Identity H9) from truly unimplemented (Contradiction Management, Local Theory Building).
+- Theory-14 dependency chain (S5→S1/S2/S3/S4) added to §7.3.
+**Key insight:** The paper's narrative arc is now coherent: scaffolding catastrophe → anti-antifragility diagnosis → AAS instrument → structural cure via 4 absent TERI pillars.
 
 ---
 

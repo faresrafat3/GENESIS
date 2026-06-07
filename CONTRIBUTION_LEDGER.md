@@ -1,6 +1,6 @@
 # 📒 CONTRIBUTION_LEDGER — Single Source of Truth for Attribution
 
-**Last updated:** 2026-06-07 (after Session 15 — v0.10 Theory-14 Anti-Antifragility)
+**Last updated:** 2026-06-07 (after Session 16 — v0.11 doc chain + paper alignment)
 **Companion docs:** `PROJECT_README.md` · `MASTER_TIMELINE.md` · `PAPER.md` §12.2 · `PAPER/ideas/ATTRIBUTION_MAP.md`
 **Governing rule:** Idea-002 Creative Attribution Rule (PAPER_PROTOCOL §12.2)
 
@@ -98,6 +98,21 @@
 | **Commit when authored** | `19f74f6` (standalone theory file) |
 | **Commit when integrated** | `78b5305` (paper v0.9 — Theory-13 integrated as fifth internal theory) |
 | **Theory connections** | Theory-10 (early termination of known-bad paths), Theory-07 (pipeline anti-patterns as Negative Memory candidates) |
+
+### Theory-14 — Anti-Antifragility Diagnostic (Unifying Theory)
+| Field | Value |
+|---|---|
+| **Layer** | **Layer 2** (agent-initiated unifying synthesis) |
+| **Originator (concept)** | **A.** (Session 15) — unified five existing theories as symptoms of a single condition (anti-antifragility); extends Taleb's fragility/robustness/antifragility triad with fourth state |
+| **Component theories** | T-07 (S3: Knowledge Non-Accumulation), T-08 (S2: Improvement Degradation), T-09 (S4: Reactive Blindness), T-10 (S1: Failure Amplification), T-13 (S5: Failure Amnesia) |
+| **Formalizer** | A. (Session 15) — wrote 380+ line theory file with 5 signatures, AAS score, 7 falsifiable predictions, dependency chain |
+| **Authorizer** | F. (continuation under existing delegation from S15) |
+| **Fares precursor in foundational docs?** | **Partial** — each component theory has Fares precursors, but the unification as "anti-antifragility" is agent-derived |
+| **File** | `PAPER/theory/14_anti_antifragility_diagnostic.md` (380+ lines) |
+| **Paper appearances** | §7.3 (Unifying Diagnosis), §1.5 #9, §11 (Conclusion rewritten), Table 18 (row 13), Appendix C, Keywords |
+| **Commit when authored** | `e2e983f` (paper v0.10) |
+| **Commit when conclusion rewritten** | `47efc0d` (paper v0.11) |
+| **Key contribution** | AAS diagnostic instrument: any orchestration framework can be scored AAS ∈ [0,1]; AAS > 0.4 predicts underperformance relative to baseline |
 
 ---
 
@@ -230,6 +245,8 @@
 | **§14.1 + §14.4 (Ethics update)** | **Layer 1 (Fares-originated framework) + Layer 2 (agent-placed)** | **F.** authored Agent Identity Theory §12 distinction (pre-2026); **A.** applied to §14 S14 | **S14 (`6dde4a8`)** |
 | **§15.2 + §15.4 + §8.5.8 (sharpened)** | **Layer 1 (Fares-originated) + Layer 2 (agent-placed)** | **F.** authored Local Theory Building §11, Concept Selectivity §8, Core Ontology §5 (pre-2026); **A.** placed into paper S14 | **S14 (`a06f077`)** |
 | **§7.3.1 + §1.5 #8 + §11 + §15.2 + Table 18 + Appendix C + Track A.8 (Theory-13)** | **Layer 1 (Fares-originated) + Layer 2 (agent-placed)** | **F.** authored Memory OS §4.7 + Productive Forgetting §13.4 (pre-2026); **A.** formalized as Theory-13 and integrated S14 Phase 5 | **S14 (`78b5305`)** |
+| **§7.3 (restructured) + §1.5 #9 + Table 18 row 13 + Appendix C Theory-14 (Theory-14)** | **Layer 2** (agent-initiated unifying synthesis) | **A.** unified five theories as anti-antifragility diagnostic with AAS score | **S15 (`e2e983f`)** |
+| **§11 Conclusion rewritten** | **Layer 2** | **A.** rewrote as 5-part structured argument around anti-antifragility | **S15 (`47efc0d`)** |
 | Appendix A Experiment Details | Layer 2 | A. | S3 |
 | Appendix B Cross-Reference to Thefts | Layer 2 | A. | S10 |
 | Appendix C Cross-Reference to Internal Theories | Layer 2 | A. | S9 |
@@ -311,22 +328,22 @@ Before adding any new artifact (Theory-11, Phil-08, T5.95, new paper section), a
 
 | Check | Result |
 |---|---|
-| Every Theory-NN in `PAPER/theory/` has a row in §1 | ✅ 5 rows (07/08/09/10/13), 5 files |
+| Every Theory-NN in `PAPER/theory/` has a row in §1 | ✅ 6 rows (07/08/09/10/13/**14**), 6 files |
 | Every Phil-NN in `PAPER/philosophy/` has a row in §2 | ✅ 1 row (07), 1 file |
 | Every Idea-NNN in `PAPER/ideas/` has a row in §3 | ✅ 2 rows (001/002), 2 files |
 | Every theft 5.91-5.94 has a row in §4 | ✅ 4 rows (91/92/93/94) |
 | §6 verbatim utterances match `PAPER.md` §12.3 | ✅ all 9 rows present (8 in §12.3 + 1 for S13.5) |
 | §7 corrections match `PAPER.md` §12.2 + ATTRIBUTION_MAP | ✅ 3 corrections applied, marked in both |
 | Pending corrections (§7) match `PAPER/notes/HANDOFF.md` paths | ✅ Path 1b + Path 1c noted |
-| PAPER.md version matches version footer | ✅ Both v0.9 |
+| PAPER.md version matches version footer | ✅ Both v0.11 |
 | Master Index scope 5.1-5.94 matches T5.NN entries | ✅ |
-| All 12 epistemic artifacts (Discovery #18, S13 + Theory-13 S14) accounted for | ✅ 5 theories + 1 phil + 4 thefts + 2 ideas = 12 |
+| All 13 epistemic artifacts (Discovery #18, S13 + Theory-13 S14 + Theory-14 S15) accounted for | ✅ 5 theories + 1 unifying + 1 phil + 4 thefts + 2 ideas = 13 |
 
 ### Additional 8 checks (added S13.6 after audit)
 
 | Check | Result |
 |---|---|
-| PAPER.md header version matches footer version | ✅ Both v0.9 (was v0.2 in header — fixed S13.6 C1) |
+| PAPER.md header version matches footer version | ✅ Both v0.11 (was v0.2 in header — fixed S13.6 C1; updated S15 to v0.11) |
 | PAPER.md authors line matches §12.1 (sole author F., not "Fares + Agent") | ✅ Fixed S13.6 C2 |
 | Figure/table claims in §12.2 match actual file counts (12 fig + 8 tab) | ✅ Fixed S13.6 C3 |
 | PROJECT_README file map covers every root directory | ✅ Fixed S13.6 C6 |
@@ -335,7 +352,7 @@ Before adding any new artifact (Theory-11, Phil-08, T5.95, new paper section), a
 | "Sessions completed" claim matches MASTER_TIMELINE entries | ✅ Fixed S13.6 C4 (now "1 through 13.6") |
 | Foundational docs in repo (122) match PROJECT_README claim | ✅ + 9 priority docs labeled (Fixed S13.6 C10+C11) |
 
-### Total: **18 consistency checks, all green as of Session 14 (v0.9)**
+### Total: **18 consistency checks, all green as of Session 16 (v0.11)**
 
 If any future consistency check fails, update both this ledger and the diverging document, and add a note to `MASTER_TIMELINE.md` about the discrepancy. Run a full audit (S13.6-style) before any version bump that touches PAPER.md, before any external sharing, or every ~5 sessions.
 
