@@ -1915,3 +1915,32 @@ Theory-13 is the first theory in the stack that is *forward-looking*: it doesn't
 ### Commit
 
 `78b5305` (paper v0.9 — Theory-13 integrated as fifth internal theory)
+
+### Session 15 — Phase 6c: Theory-14 Anti-Antifragility Diagnostic (v0.9→v0.10)
+
+**Trigger:** Fares: *"عايزين بقي ناخد خطوات كبيره محوريه ومفصليه"* → "متبقاش سطحي كده" (x2) → "ماشي بس تعمق ومتبقاش سطحي وادقن العمل" → agent chose to write Theory-14 as unifying diagnostic.
+
+**What was done:**
+
+1. **Theory-14 standalone file** (`PAPER/theory/14_anti_antifragility_diagnostic.md`, 380+ lines):
+   - §2: Anti-antifragility defined — worse than fragility: system gets worse through its own improvement mechanisms
+   - §3: Five signatures with empirical data from GENESIS, each contrasted with LEAP
+   - §4: Seven falsifiable predictions (P1-P7)
+   - §5: AAS diagnostic instrument
+   - §6: Why this is deeper than "five theories repackaged"
+   - §7: Dependency chain — S5 (Failure Amnesia) must be fixed first
+
+2. **PAPER.md §7.3 restructured:**
+   - New section "A Unifying Diagnosis: Anti-Antifragility [Theory-14]" before individual signatures
+   - Theory-10 → Signature 1: Failure Amplification
+   - Theory-13 → Signature 5: Failure Amnesia
+   - AAS score table (GENESIS 1.0 vs LEAP 0.0)
+   - §1.5 contribution #9 added
+   - Table 18: 12→13 artifacts
+   - Appendix C: Theory-14 row
+   - Keywords: anti-antifragility
+   - Version: v0.9 → **v0.10**
+
+**Key insight:** The 110-point gap is not five problems — it's one condition with five symptoms. The gap between GENESIS and LEAP is the distance between AAS=1.0 and AAS=0.0.
+
+**Commit:** `e2e983f` (paper v0.10)

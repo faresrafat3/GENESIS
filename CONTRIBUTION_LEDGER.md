@@ -1,6 +1,6 @@
 # 📒 CONTRIBUTION_LEDGER — Single Source of Truth for Attribution
 
-**Last updated:** 2026-06-07 (after Session 14 complete — v0.9 Theory-13)
+**Last updated:** 2026-06-07 (after Session 15 — v0.10 Theory-14 Anti-Antifragility)
 **Companion docs:** `PROJECT_README.md` · `MASTER_TIMELINE.md` · `PAPER.md` §12.2 · `PAPER/ideas/ATTRIBUTION_MAP.md`
 **Governing rule:** Idea-002 Creative Attribution Rule (PAPER_PROTOCOL §12.2)
 

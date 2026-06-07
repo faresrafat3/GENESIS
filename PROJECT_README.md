@@ -1,9 +1,9 @@
 # 🗺️ PROJECT_README — Master Entry Point
 
-**Last updated:** 2026-06-07 (after Session 14 complete — v0.9 Theory-13)
+**Last updated:** 2026-06-07 (after Session 15 — v0.10 Theory-14 Anti-Antifragility)
 **Project owner:** Fares Rafat (F.) — sole author per NeurIPS 2025 policy
 **Project repo:** https://github.com/faresrafat3/GENESIS
-**Current paper version:** **v0.9** (`PAPER.md`) — Theory-13 Negative Memory integrated as fifth internal theory
+**Current paper version:** **v0.10** (`PAPER.md`) — Theory-13 Negative Memory integrated as six internal theories (5 + 1 unifying)
 **Current mode:** Theoretical Mode (v2.0 of `PAPER_PROTOCOL.md`)
 **Last consistency audit:** Session 13.6 — see `AUDIT_REPORT_S13.6.md` for full findings; 3 critical issues fixed in PAPER.md, 11 documentation issues fixed in master docs
 
@@ -257,7 +257,7 @@ The repo contains **two distinct project layers** that should not be confused:
 ### LIVE — actively under discussion
 | Item | Status |
 |---|---|
-| `PAPER.md` v0.9 | Latest version (S14: §15 TERI Frame + §14 Ethics + §15 sharpened + Theory-13 Negative Memory — fifth internal theory) |
+| `PAPER.md` v0.9 | Latest version (S14: §15 TERI Frame + §14 Ethics + §15 sharpened + Theory-13 Negative Memory — six internal theories (5 + 1 unifying)) |
 | Re-reading exercise | Active; 14 of 122 docs read; 37 cumulative discoveries from S12-S14 |
 | Session 14 complete | 7 commits, 3 paper version bumps (v0.7→v0.8→v0.8.1→v0.8.2) |
 

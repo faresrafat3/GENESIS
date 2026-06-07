@@ -1,8 +1,8 @@
 # 📋 HANDOFF — آخر حالة للمشروع
 
-**آخر تحديث:** 2026-06-07 (Session 14 complete — §15 TERI + §14 Ethics + batch 4 re-reading + §15 sharpened + Theory-13 integration)
-**آخر commit:** `78b5305` (paper v0.9 — Theory-13 Negative Memory integrated as fifth internal theory)
-**PAPER version:** **v0.9** (Theory-13 integrated: §7.3.1, §1.5 #8, §11, §15.2, Table 18, Appendix C, Track A.8)
+**آخر تحديث:** 2026-06-07 (Session 15 — Theory-14 Anti-Antifragility Diagnostic + Re-reading batch 5 + Doc chain v0.10)
+**آخر commit:** `e2e983f` (paper v0.10 — Theory-14 Anti-Antifragility Diagnostic: five theories unified)
+**PAPER version:** **v0.10** (Theory-14: five theories unified as symptoms of anti-antifragility; AAS diagnostic; §7.3 restructured)
 **Mode:** Theoretical (v2.0)
 **Last audit:** Session 13.6 — see `AUDIT_REPORT_S13.6.md`
 **Last cleanup inventory:** Session 13.7 — see `CLEANUP_INVENTORY_S13.7.md`
@@ -59,32 +59,19 @@ These 8 docs replace the need to read 13+ session logs to get oriented. **`AGENT
 **Added:** Dependency chain (§15.2), Four Tests (§15.4), zero-concept caveat (§8.5.8).
 **Commit:** `a06f077`.
 
-### Phase 5 — Theory-13 Integration (v0.8.2→v0.9) ⭐ NEW
-**Trigger:** Continuation under existing session delegation. GEM 31 from batch 4 (Negative Memory as first-class layer from `GENESIS_Memory_OS_Spec_AR.md` §4.7 + `GENESIS_Productive_Forgetting_Theory_AR.md` §13.4).
+### Phase 6 — Theory-14 Integration (v0.8.2→v0.9→v0.10) ⭐ THE UNIFYING STEP
 
-**What was done:**
-1. **Theory-13 standalone file** created: `PAPER/theory/13_negative_memory.md` (165 lines) — 4 axioms, 5 testable predictions, 3 connections to existing theories.
-2. **Theory-13 integrated into PAPER.md** across 7 locations:
-   - **§7.3.1 NEW** — Full Theory-13 section (~20 lines): Negative Memory definition, 4 axioms, empirical anchors from our data, connections to Theory-10 and Theory-07, 5 testable predictions.
-   - **§1.5 #8 NEW** — Contribution item for Theory-13.
-   - **§11 Conclusion** — Theory-13 added to theory list and final paragraph.
-   - **§15.2 Pillars** — Productive Forgetting row updated to reference Theory-13.
-   - **Table 18** — Expanded from 11 → **12 epistemic artifacts** (added row 12: Theory-13).
-   - **Appendix C** — Theory-13 row added.
-   - **§10 Track A.8 NEW** — Future Work track for Negative Memory implementation.
-
-**Attribution:** Layer 1 (Fares-originated — Memory OS §4.7 + Productive Forgetting §13.4, pre-2026); Layer 2 (agent-formalized as theory).
-
-**Paper version:** v0.8.2 → **v0.9**. **Commit:** `78b5305`.
-
-**Bug from Phase 1:** Keywords accidentally injected into §8.5.4 Theory-09 sentence body — still pending fix.
+**Phase 5** (v0.8.2→v0.9): Theory-13 Negative Memory integrated. Commit `78b5305`.
+**Phase 6a:** Doc chain v0.9 update. Commit `86d8d45`.
+**Phase 6b:** Re-reading batch 5 (5 docs, 13 discoveries). Discovery #43 = two absent TERI pillars have implementation code. Commit `edfec00`.
+**Phase 6c:** Theory-14 Anti-Antifragility Diagnostic. Five theories unified as symptoms of one condition. AAS score. §7.3 restructured. Commit `e2e983f`.
 
 ---
 
 ## ✅ Cumulative state (as of Session 14)
 
 ### Theoretical stack
-- **5 internal theories + 1 philosophy:** Theory-07/08/09/10/**13** + Phil-07 + §15 TERI Frame (all in `PAPER/theory/`, `PAPER/philosophy/`, and PAPER.md §15)
+- **5 internal theories + 1 unifying theory + 1 philosophy:** Theory-07/08/09/10/**13** + **Theory-14** (Anti-Antifragility Diagnostic) + Phil-07 + §15 TERI Frame (all in `PAPER/theory/`, `PAPER/philosophy/`, and PAPER.md §15)
 - **Attribution corrected (S12b):** Theory-08, Theory-10, Phil-07 now correctly classified as "agent-formalized, Fares-originated"
 - **Theory-13 (S14 Phase 5):** Negative Memory as Epistemic Safety Net — fifth internal theory, connects to Theory-10 and Theory-07
 - **§15 TERI Frame (S14):** Names the 8-pillar framework, maturity ladder, 7-layer architecture, Table 18
@@ -193,11 +180,11 @@ Anonymization for double-blind venues + BibTeX bibliography + final figure forma
 - External validation (T5.94): r = −0.54 on same model family + GPQA
 - Tests: 663/663
 - Master Index scope: **5.1–5.94**
-- **Paper version: v0.9**
+- **Paper version: v0.10**
 - Foundational docs in repo: **122** (14 re-read; 108 in queue)
-- Epistemic artifacts produced: **12** (5 theories + 1 phil + 4 thefts + 2 ideas) — inventoried in Table 18
+- Epistemic artifacts produced: **12** (6 theories + 1 phil + 4 thefts + 2 ideas) — inventoried in Table 18
 - Sessions completed: **14** (+ S12b + S13.5 + S13.6 + S13.7 + S13.8 + S13.9 = 20 total sub-sessions)
-- Delegation authorizations from Fares: **17** (preserved verbatim in CONTRIBUTION_LEDGER §6)
+- Delegation authorizations from Fares: **18** (preserved verbatim in CONTRIBUTION_LEDGER §6)
 - Cumulative discoveries from re-reading: **37** (from 14 of 122 foundational docs)
 
 ---
