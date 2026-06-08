@@ -1,0 +1,8 @@
+{
+  "task": "micro_task_economy_research",
+  "model": "openai/gpt-oss-120b:free",
+  "timestamp": "2026-06-08T00:52:37.500859",
+  "report_file": "results/micro_task_report.md",
+  "report_length": 15434,
+  "turns": 3
+}
