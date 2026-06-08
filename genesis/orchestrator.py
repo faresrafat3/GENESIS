@@ -577,6 +577,26 @@ def main():
             "Adds evidence_log.json to each gen directory."
         ),
     )
+    parser.add_argument(
+        "--use_goal_spec",
+        action="store_true",
+        help=(
+            "Enable Goal Specification Layer (Section 0). "
+            "Stolen from MA-RAG+HTN+SAGE: decomposes task into ordered sub-goals "
+            "with search queries before Meta-Agent runs. "
+            "Saves goal_spec.json and injects goal hierarchy into Meta-Agent prompt."
+        ),
+    )
+    parser.add_argument(
+        "--local_filter",
+        type=str,
+        default="",
+        help=(
+            "Geographic/local filter for Goal Specification (e.g. 'Egypt'). "
+            "Applied AFTER global search — agents search globally first, "
+            "then check local availability. Default: '' (no filter)."
+        ),
+    )
     args = parser.parse_args()
 
     max_gen = args.max_gen
@@ -612,9 +632,13 @@ def main():
     use_evo = getattr(args, "use_evolutionary_discovery", False)
     use_regime = getattr(args, "use_regime_detection", False)
     use_web_search = getattr(args, "use_web_search", False)
+    use_goal_spec = getattr(args, "use_goal_spec", False)
+    local_filter = getattr(args, "local_filter", "")
     logger.info(f"  - Evolutionary Discovery (AlphaEvolve-style): {'ENABLED' if use_evo else 'disabled'}")
     logger.info(f"  - Regime Transition Detection (H8): {'ENABLED' if use_regime else 'disabled'}")
     logger.info(f"  - Web Search Tool (DeepResearcher+A-RAG): {'ENABLED' if use_web_search else 'disabled'}")
+    logger.info(f"  - Goal Specification (MA-RAG+HTN): {'ENABLED' if use_goal_spec else 'disabled'}"
+                + (f" [local_filter='{local_filter}']" if local_filter else ""))
 
     # ========================
     # SECTION 1: Load Files from Task Directory
@@ -711,6 +735,39 @@ def main():
         logger.info(f"  ✓ Research memory: {stats['total_experiments']} entries, {stats['success_rate']:.0%} success rate")
     except Exception as e:
         logger.info(f"  ⚠ Research memory unavailable: {e}")
+
+    # ========================
+    # SECTION 0: Goal Specification Layer (MA-RAG+HTN+SAGE theft)
+    # ========================
+    # Runs ONCE per run, before Meta-Agent.
+    # Decomposes task into ordered sub-goals + search plans.
+    # Injects goal hierarchy into Meta-Agent prompt.
+    goal_spec = None
+    goal_spec_section = ""
+    if use_goal_spec and TASK_MD:
+        logger.info("=" * 60)
+        logger.info("Running Goal Specification (Section 0 — MA-RAG+HTN)...")
+        try:
+            from genesis.goal_specification import run_goal_specification
+            from genesis.util import make_openai_client
+
+            _goal_llm = make_openai_client(backend=backend, model=meta_model)
+            goal_spec = run_goal_specification(
+                task_md=TASK_MD,
+                task_name=os.path.basename(task_dir),
+                run_dir=RUN_DIRECTORY,
+                llm_client=_goal_llm,
+                model=meta_model,
+                local_filter=local_filter,
+            )
+            goal_spec_section = goal_spec.to_prompt_section()
+            logger.info(f"  ✓ Goal spec: '{goal_spec.primary_goal[:70]}'")
+            logger.info(f"  ✓ Sub-goals: {len(goal_spec.sub_goals)} (scope: {goal_spec.scope})")
+            for sg in goal_spec.ordered_sub_goals:
+                logger.info(f"    [{sg.priority}] {sg.description[:60]}")
+        except Exception as e:
+            logger.warning(f"  ⚠ Goal specification failed: {e} — continuing without it")
+        logger.info("=" * 60)
 
     # ========================
     # SECTION 3: Define Prompts
@@ -1120,6 +1177,11 @@ Note: The meta-agent will fill in the task-specific parts intelligently. Make th
     META_AGENT_WORKING_DIRECTORY=META_AGENT_WORKING_DIRECTORY,
     ablation_instruction=ablation_instruction,
 )
+    # Inject Goal Spec section (Section 0) at the TOP of prompt — before everything
+    # Stolen from Enterprise Deep Research: goal hierarchy is the first context the agent sees
+    if goal_spec_section:
+        META_AGENT_PROMPT = goal_spec_section + "\n\n" + META_AGENT_PROMPT
+
     # Append web search snippet after format (it has no format placeholders)
     if use_web_search:
         META_AGENT_PROMPT = META_AGENT_PROMPT.rstrip() + "\n" + web_search_snippet
