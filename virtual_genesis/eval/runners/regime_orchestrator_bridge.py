@@ -44,6 +44,7 @@ def run_regime_check(
     saturation_epsilon: float = 0.01,
     trigger_threshold: int = 2,
     save_report: bool = True,
+    open_task_score: Optional[float] = None,
 ) -> Optional[Dict[str, Any]]:
     """Run regime transition check for the current generation.
 
@@ -58,6 +59,9 @@ def run_regime_check(
         saturation_epsilon: minimum delta to count as improvement
         trigger_threshold: how many of 3 signals to trigger transition
         save_report: whether to save JSON report to gen directory
+        open_task_score: optional score (0-100) from LLM-as-Judge
+            (Layer 2 Open Task Evaluator). If provided and no evaluate.py
+            score exists, this is used as the primary accuracy signal.
 
     Returns:
         Dict with regime transition info, or None if insufficient data.
@@ -66,6 +70,17 @@ def run_regime_check(
 
     # 1. Build accuracy history from all generations so far
     accuracy_history = build_accuracy_history(run_dir, max_gen=current_gen)
+
+    # 1b. Inject open_task_score as accuracy if no closed eval score found
+    #     (Layer 2 bridge: LLM-judge score → Regime Detector)
+    if open_task_score is not None:
+        normalized_score = open_task_score / 100.0  # 0-1
+        if not accuracy_history:
+            # First gen with open task — seed history
+            accuracy_history = [normalized_score]
+        elif accuracy_history[-1] == 0.0:
+            # Placeholder 0.0 — replace with real LLM score
+            accuracy_history[-1] = normalized_score
 
     # 2. Extract failures from all previous generations (Negative Memory)
     failures, failure_stats = extract_failures_across_generations(

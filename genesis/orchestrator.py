@@ -1322,11 +1322,46 @@ STOP after writing the file. NO FILE READING.
 
         # ========================
         # SECTION 5a.1: Run Evaluation (if evaluate.py exists)
+        #              + Open Task Evaluator (LLM-as-Judge, if no evaluate.py)
         # ========================
 
         logger.info("=" * 60)
         logger.info("Running evaluation (if available)...")
         run_evaluation(current_gen_directory, task_dir, venv_dir)
+
+        # ── Open Task Evaluator (Layer 2) ──────────────────────────────────
+        # Stolen: Rulers (schema-constrained) + InfoDeepSeek (IA@5) + G-Eval
+        # Runs when no evaluate.py exists — produces score for Regime Detector
+        open_task_score: float | None = None
+        evaluate_script_path = os.path.join(task_dir, "data/public/evaluate.py")
+        if not os.path.exists(evaluate_script_path):
+            evaluate_script_path = os.path.join(task_dir, "evaluate.py")
+        has_closed_eval = os.path.exists(evaluate_script_path)
+
+        if not has_closed_eval:
+            logger.info("  → No evaluate.py found — running Open Task Evaluator (LLM-as-Judge)")
+            try:
+                from genesis.open_task_evaluator import run_open_task_evaluation
+                open_task_result = run_open_task_evaluation(
+                    gen_dir=current_gen_directory,
+                    task_dir=task_dir,
+                    judge_model=meta_model,  # reuse meta model as judge
+                )
+                if not open_task_result.skipped:
+                    open_task_score = open_task_result.overall_score
+                    logger.info(f"  ✅ Open Task Eval: output={open_task_result.output_score:.1f} "
+                                f"evidence={open_task_result.evidence_score:.1f} "
+                                f"hallucination={open_task_result.hallucination_rate:.0%} "
+                                f"overall={open_task_result.overall_score:.1f}/100")
+                    if open_task_result.checklist:
+                        met = sum(1 for c in open_task_result.checklist if c.met)
+                        total = len(open_task_result.checklist)
+                        logger.info(f"  ✅ Rubric: {met}/{total} criteria met")
+                else:
+                    logger.info(f"  ⚠ Open Task Eval skipped: {open_task_result.skip_reason}")
+            except Exception as e:
+                logger.warning(f"  ⚠ Open Task Evaluator failed: {e}")
+
         logger.info("=" * 60)
 
         # ========================
@@ -1441,6 +1476,7 @@ STOP after writing the file. NO FILE READING.
                     RUN_DIRECTORY,
                     current_gen,
                     max_gen=max_gen,
+                    open_task_score=open_task_score,  # Layer 2: feed LLM-judge score
                 )
 
                 if regime_report:
