@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>GENESIS — Master Architecture Map</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#050810;color:#e2e8f0;font-family:'Segoe UI',Tahoma,Arial,sans-serif;padding:20px 14px 80px;line-height:1.6;font-size:14px}
+
+.hero{text-align:center;margin-bottom:32px;padding:28px;background:linear-gradient(135deg,#0a1628,#060e1e);border-radius:16px;border:1px solid #1a3a5f}
+.hero h1{font-size:1.9em;background:linear-gradient(90deg,#38bdf8,#818cf8,#f472b6,#34d399);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:3px;margin-bottom:6px}
+.hero p{color:#64748b;font-size:0.85em}
+.hero .stats{display:flex;gap:16px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+.stat{background:#0d1829;border:1px solid #1e3a5f;border-radius:8px;padding:8px 16px;text-align:center}
+.stat-n{font-size:1.3em;font-weight:900}
+.stat-l{font-size:0.65em;color:#64748b}
+
+/* PLANE containers */
+.plane{border-radius:14px;padding:18px;margin-bottom:20px;position:relative}
+.plane-label{position:absolute;top:-12px;right:20px;font-size:0.65em;font-weight:800;letter-spacing:2px;padding:2px 12px;border-radius:10px}
+.p0{background:#08100a;border:1px solid #1a3a1a}.p0 .plane-label{background:#1a3a1a;color:#4ade80}
+.p1{background:#080f1e;border:2px solid #1e40af}.p1 .plane-label{background:#1e40af;color:#93c5fd}
+.p2{background:#0f080f;border:1px solid #6d28d9}.p2 .plane-label{background:#6d28d9;color:#ddd6fe}
+.p3{background:#100a08;border:1px solid #92400e}.p3 .plane-label{background:#92400e;color:#fcd34d}
+
+/* ENGINE boxes */
+.engine-grid{display:grid;gap:10px}
+.eg-2{grid-template-columns:1fr 1fr}
+.eg-3{grid-template-columns:1fr 1fr 1fr}
+.eg-4{grid-template-columns:1fr 1fr 1fr 1fr}
+
+.eng{border-radius:10px;padding:12px 14px;border:1px solid}
+.eng-title{font-size:0.7em;font-weight:800;letter-spacing:1px;margin-bottom:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.eng-body{font-size:0.73em;line-height:1.8;color:#94a3b8}
+.eng-body li{list-style:none;display:flex;gap:5px;align-items:flex-start;margin-bottom:2px}
+.eng-body li span.t{flex:1;min-width:0}
+
+/* engine themes */
+.e-intent{background:#071510;border-color:#166534}.e-intent .eng-title{color:#4ade80}
+.e-ground{background:#070f18;border-color:#1e3a5f}.e-ground .eng-title{color:#38bdf8}
+.e-critic{background:#120a08;border-color:#92400e}.e-critic .eng-title{color:#fb923c}
+.e-cogn{background:#0f0820;border-color:#5b21b6}.e-cogn .eng-title{color:#a78bfa}
+.e-evol{background:#130d06;border-color:#78350f}.e-evol .eng-title{color:#f59e0b}
+.e-feed{background:#080e1a;border-color:#1d4ed8}.e-feed .eng-title{color:#60a5fa}
+.e-mem{background:#071215;border-color:#155e75}.e-mem .eng-title{color:#22d3ee}
+.e-safety{background:#140608;border-color:#991b1b}.e-safety .eng-title{color:#f87171}
+.e-telem{background:#0c0c0e;border-color:#374151}.e-telem .eng-title{color:#9ca3af}
+.e-skill{background:#0a0f10;border-color:#164e63}.e-skill .eng-title{color:#06b6d4}
+.e-meta{background:#100810;border-color:#6b21a8}.e-meta .eng-title{color:#d946ef}
+.e-arch{background:#0f0c08;border-color:#713f12}.e-arch .eng-title{color:#f97316}
+.e-miss{background:#140505;border-color:#7f1d1d;border-style:dashed}.e-miss .eng-title{color:#ef4444}
+
+/* dots */
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.ok{background:#22c55e}.part{background:#f59e0b}.miss{background:#ef4444}.new{background:#a78bfa}
+
+/* badges */
+.bd{display:inline-block;font-size:0.58em;padding:1px 7px;border-radius:6px;font-weight:800;white-space:nowrap;vertical-align:middle}
+.b-ok{background:#14532d;color:#86efac}
+.b-part{background:#78350f;color:#fcd34d}
+.b-miss{background:#7f1d1d;color:#fca5a5}
+.b-new{background:#4c1d95;color:#ddd6fe}
+.b-src{background:#0c2a4a;color:#7dd3fc}
+
+/* arrows */
+.arr-row{display:flex;align-items:center;justify-content:center;gap:6px;margin:8px 0;flex-wrap:wrap}
+.arr-box{background:#0d1829;border:1px solid #1e3a5f;border-radius:6px;padding:6px 12px;font-size:0.7em;text-align:center}
+.arr-box.new-box{border-color:#6d28d9;background:#0f0820}
+.arr-sep{color:#1e3a5f;font-size:1.2em}
+
+/* flow diagram */
+.flow-outer{background:#080f1e;border:1px solid #1e40af;border-radius:12px;padding:16px;margin-bottom:10px}
+.flow-title{color:#60a5fa;font-size:0.72em;font-weight:800;letter-spacing:1px;margin-bottom:12px}
+.flow-steps{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.fs{background:#0d1829;border:1px solid;border-radius:6px;padding:6px 10px;text-align:center;min-width:80px}
+.fs-ok{border-color:#1e40af}.fs-ok .fs-n{color:#93c5fd}
+.fs-new{border-color:#6d28d9;background:#0f0820}.fs-new .fs-n{color:#c4b5fd}
+.fs-n{font-size:0.68em;font-weight:700;display:block}
+.fs-l{font-size:0.6em;color:#64748b;display:block;margin-top:2px}
+.fs-sep{color:#1e3a5f;font-size:1.1em;flex-shrink:0}
+
+/* artifact table */
+.art-table{width:100%;border-collapse:collapse;font-size:0.7em;margin-top:8px}
+.art-table th{background:#0d1829;color:#60a5fa;padding:6px 8px;text-align:right;border-bottom:1px solid #1e3a5f;font-weight:700}
+.art-table td{padding:5px 8px;border-bottom:1px solid #0d1829;vertical-align:top}
+.art-table tr:hover td{background:#0a111e}
+
+/* section header */
+.sh{display:flex;align-items:center;gap:10px;margin:18px 0 10px}
+.sh::before,.sh::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,#1e3a5f)}
+.sh-lbl{font-size:0.65em;font-weight:800;letter-spacing:2px;color:#475569;white-space:nowrap;padding:3px 12px;border-radius:10px;border:1px solid #1e3a5f}
+
+/* LLM calls table */
+.llm-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+.llm-card{background:#080f1e;border:1px solid #1e3a5f;border-radius:8px;padding:10px 12px}
+.llm-title{color:#93c5fd;font-size:0.7em;font-weight:700;margin-bottom:6px}
+.llm-call{font-size:0.68em;color:#94a3b8;margin-bottom:3px;padding:3px 6px;background:#0d1829;border-radius:4px}
+.llm-call.new{border-right:2px solid #a78bfa}
+
+/* timeline */
+.timeline{display:flex;gap:0;margin-top:12px;overflow-x:auto}
+.tl-week{flex:1;min-width:100px;padding:8px;border-right:1px solid #1e3a5f;text-align:center}
+.tl-week:last-child{border-right:none}
+.tl-w{font-size:0.65em;color:#475569;font-weight:700;margin-bottom:6px}
+.tl-phase{font-size:0.7em;font-weight:800;padding:4px 6px;border-radius:6px;margin-bottom:4px}
+.tl-desc{font-size:0.62em;color:#64748b}
+.ph-a{background:#14532d;color:#86efac}
+.ph-b{background:#1e3a5f;color:#93c5fd}
+.ph-c{background:#4c1d95;color:#ddd6fe}
+.ph-d{background:#78350f;color:#fcd34d}
+.ph-e{background:#374151;color:#d1d5db}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>⚡ GENESIS Master Architecture</h1>
+  <p>Agentic Self-Development Loop · 4 Planes · 12 Engines · كل ملف في مكانه</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-n" style="color:#22c55e">38</div><div class="stat-l">مكوّن مبني ✅</div></div>
+    <div class="stat"><div class="stat-n" style="color:#f59e0b">7</div><div class="stat-l">جزئي ⚠️</div></div>
+    <div class="stat"><div class="stat-n" style="color:#ef4444">18</div><div class="stat-l">ناقص ❌</div></div>
+    <div class="stat"><div class="stat-n" style="color:#a78bfa">12</div><div class="stat-l">مطلوب جديد 🆕</div></div>
+    <div class="stat"><div class="stat-n" style="color:#38bdf8">937</div><div class="stat-l">tests passing</div></div>
+    <div class="stat"><div class="stat-n" style="color:#34d399">232</div><div class="stat-l">ملف Python</div></div>
+  </div>
+</div>
+
+<!-- ══════════ PLANE 0: INFRASTRUCTURE ══════════ -->
+<div class="plane p0">
+  <div class="plane-label">PLANE 0 — INFRASTRUCTURE · الأساس</div>
+  <div class="engine-grid eg-4">
+    <div class="eng e-mem">
+      <div class="eng-title">🔑 API & Models</div>
+      <div class="eng-body">
+        <li><span class="dot ok"></span><span class="t">tools/api_key_pool.py — 11 key rotation</span></li>
+        <li><span class="dot ok"></span><span class="t">tools/model_registry.py</span></li>
+        <li><span class="dot ok"></span><span class="t">tools/providers.py</span></li>
+        <li><span class="dot ok"></span><span class="t">genesis/util.py — make_openai_client()</span></li>
+      </div>
+    </div>
+    <div class="eng e-mem">
+      <div class="eng-title">💾 Persistence</div>
+      <div class="eng-body">
+        <li><span class="dot ok"></span><span class="t">sqlite_store.py — memory DB</span></li>
+        <li><span class="dot ok"></span><span class="t">sqlite_concept_registry.py</span></li>
+        <li><span class="dot ok"></span><span class="t">sqlite_theory_registry.py</span></li>
+        <li><span class="dot ok"></span><span class="t">sqlite_identity_store.py</span></li>
+        <li><span class="dot miss"></span><span class="t">skill_library.db <span class="bd b-new">Phase B</span></span></li>
+      </div>
+    </div>
+    <div class="eng e-telem">
+      <div class="eng-title">📡 Telemetry <span class="bd b-new">Phase A</span></div>
+      <div class="eng-body">
+        <li><span class="dot miss"></span><span class="t">genesis/telemetry.py — audit trail</span></li>
+        <li><span class="dot miss"></span><span class="t">RunTelemetry — immutable events</span></li>
+        <li><span class="dot miss"></span><span class="t">run_telemetry.json per run</span></li>
+        <li><span class="dot miss"></span><span class="t">replay capability</span></li>
+      </div>
+    </div>
+    <div class="eng e-safety">
+      <div class="eng-title">🛡️ Safety Monitor <span class="bd b-new">Phase A</span></div>
+      <div class="eng-body">
+        <li><span class="dot miss"></span><span class="t">genesis/safety_monitor.py</span></li>
+        <li><span class="dot miss"></span><span class="t">BudgetGuard (cost+time+calls)</span></li>
+        <li><span class="dot miss"></span><span class="t">HallucinationGuard (threshold)</span></li>
+        <li><span class="dot miss"></span><span class="t">EscalationPolicy (warn→halt)</span></li>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PLANE 1: OUTER LOOP ══════════ -->
+<div class="plane p1">
+  <div class="plane-label">PLANE 1 — OUTER LOOP · Orchestrator (genesis/orchestrator.py 1915 lines)</div>
+
+  <!-- Flow -->
+  <div class="flow-outer">
+    <div class="flow-title">🔁 Orchestrator Flow — يُشغَّل مرة لكل run، يتكرر max_gen مرة</div>
+    <div class="flow-steps">
+      <div class="fs fs-new"><span class="fs-n">SAFETY</span><span class="fs-l">budget check</span></div>
+      <div class="fs-sep">→</div>
+      <div class="fs fs-ok"><span class="fs-n">INTENT</span><span class="fs-l">Section 0</span></div>
+      <div class="fs-sep">→</div>
+      <div class="fs fs-ok"><span class="fs-n">LOAD</span><span class="fs-l">Section 1</span></div>
+      <div class="fs-sep">→</div>
+      <div class="fs fs-ok"><span class="fs-n">MEMORY</span><span class="fs-l">Section 2.5</span></div>
+      <div class="fs-sep">→</div>
+      <div class="fs fs-ok"><span class="fs-n">PROMPTS</span><span class="fs-l">Section 3</span></div>
+      <div class="fs-sep">→</div>
+      <div class="fs fs-ok"><span class="fs-n">META-AGENT</span><span class="fs-l">Section 4</span></div>
+      <div class="fs-sep">→</div>
+      <div style="background:#0a1520;border:1px solid #1e40af;border-radius:8px;padding:8px 10px;font-size:0.68em">
+        <div style="color:#60a5fa;font-weight:700;margin-bottom:6px">🔁 GEN LOOP ×N</div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap;align-items:center">
+          <div class="fs fs-ok"><span class="fs-n">5a RUN</span><span class="fs-l">target agent</span></div>
+          <div class="fs-sep">→</div>
+          <div class="fs fs-ok"><span class="fs-n">5a.1 CRITIC</span><span class="fs-l">eval+judge</span></div>
+          <div class="fs-sep">→</div>
+          <div class="fs fs-ok"><span class="fs-n">5a.2 CONST</span><span class="fs-l">rules check</span></div>
+          <div class="fs-sep">→</div>
+          <div class="fs fs-ok"><span class="fs-n">5a.2.5 COG</span><span class="fs-l">signals</span></div>
+          <div class="fs-sep">→</div>
+          <div class="fs fs-ok"><span class="fs-n">5a.3 EVO</span><span class="fs-l">AlphaEvolve</span></div>
+          <div class="fs-sep">→</div>
+          <div class="fs fs-ok"><span class="fs-n">5a.4 REGIME</span><span class="fs-l">3-signal</span></div>
+          <div class="fs-sep">→</div>
+          <div class="fs fs-new"><span class="fs-n">5a.5 META</span><span class="fs-l">optimizer</span></div>
+          <div class="fs-sep">→</div>
+          <div class="fs fs-ok"><span class="fs-n">5b FEED</span><span class="fs-l">next gen</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Engines in Outer Loop -->
+  <div class="engine-grid eg-3" style="margin-top:10px">
+
+    <div class="eng e-intent">
+      <div class="eng-title">🎯 INTENT ENGINE <span class="bd b-ok">✅ Section 0</span></div>
+      <div class="eng-body">
+        <li><span class="dot ok"></span><span class="t">genesis/goal_specification.py</span></li>
+        <li><span class="dot ok"></span><span class="t">LLM: goal decomposition (MA-RAG Planner)</span></li>
+        <li><span class="dot ok"></span><span class="t">مدخل: task.md + local_filter</span></li>
+        <li><span class="dot ok"></span><span class="t">مخرج: goal_spec.json</span></li>
+        <li><span class="dot ok"></span><span class="t">يُغذّي: META_AGENT_PROMPT</span></li>
+        <li><span class="dot miss"></span><span class="t">ينقصه: Skill Library integration <span class="bd b-new">Phase B</span></span></li>
+        <li style="margin-top:4px"><span class="bd b-src">MA-RAG 2505.20096</span> <span class="bd b-src">HTN</span> <span class="bd b-src">SAGE 2602.05975</span></li>
+      </div>
+    </div>
+
+    <div class="eng e-critic">
+      <div class="eng-title">⚖️ CRITIC ENGINE <span class="bd b-ok">✅ Section 5a.1-2</span></div>
+      <div class="eng-body">
+        <li><span class="dot ok"></span><span class="t">genesis/open_task_evaluator.py — LLM judge</span></li>
+        <li><span class="dot ok"></span><span class="t">genesis/constitutional_evaluator.py — rules</span></li>
+        <li><span class="dot ok"></span><span class="t">LLM: Rulers schema-constrained judge</span></li>
+        <li><span class="dot ok"></span><span class="t">مخرج: output_score, evidence_score, hallucination_rate</span></li>
+        <li><span class="dot ok"></span><span class="t">يُغذّي: Regime Detector + Feedback Agent</span></li>
+        <li><span class="dot miss"></span><span class="t">ينقصه: Skill extraction on success <span class="bd b-new">Phase B</span></span></li>
+        <li style="margin-top:4px"><span class="bd b-src">Rulers 2601.08654</span> <span class="bd b-src">InfoDeepSeek 2505.15872</span></li>
+      </div>
+    </div>
+
+    <div class="eng e-evol">
+      <div class="eng-title">🧬 EVOLUTION ENGINE <span class="bd b-ok">✅ Section 5a.3-4</span></div>
+      <div class="eng-body">
+        <li><span class="dot ok"></span><span class="t">evolutionary_discovery_engine() [inline]</span></li>
+        <li><span class="dot ok"></span><span class="t">regime_orchestrator_bridge.py</span></li>
+        <li><span class="dot ok"></span><span class="t">regime_transition_detector.py — 3 signals</span></li>
+        <li><span class="dot ok"></span><span class="t">conditions_runner.py — 6 profiles</span></li>
+        <li><span class="dot part"></span><span class="t">AlphaEvolve — skeleton فقط <span class="bd b-part">⚠️</span></span></li>
+        <li><span class="dot miss"></span><span class="t">GRASP gating <span class="bd b-new">Phase D</span></span></li>
+        <li><span class="dot miss"></span><span class="t">Architecture Search <span class="bd b-new">Phase D</span></span></li>
+        <li style="margin-top:4px"><span class="bd b-src">Wang&Buehler 2606.01444</span> <span class="bd b-src">AlphaEvolve</span></li>
+      </div>
+    </div>
+
+    <div class="eng e-feed">
+      <div class="eng-title">💬 FEEDBACK ENGINE <span class="bd b-ok">✅ Section 5b</span></div>
+      <div class="eng-body">
+        <li><span class="dot ok"></span><span class="t">genesis/spin_feedback.py — semantic gap</span></li>
+        <li><span class="dot ok"></span><span class="t">genesis/context_manager.py — context.md</span></li>
+        <li><span class="dot ok"></span><span class="t">LLM: Feedback Agent يكتب new agent</span></li>
+        <li><span class="dot ok"></span><span class="t">يستقبل: constitutional + regime + ladder + evidence</span></li>
+        <li><span class="dot miss"></span><span class="t">Meta-Optimizer section <span class="bd b-new">Phase C</span></span></li>
+        <li><span class="dot miss"></span><span class="t">Skill Library section <span class="bd b-new">Phase B</span></span></li>
+        <li style="margin-top:4px"><span class="bd b-src">SPIN DeepSeek</span> <span class="bd b-src">Constitutional Meta</span></li>
+      </div>
+    </div>
+
+    <div class="eng e-mem">
+      <div class="eng-title">🧠 MEMORY ENGINE <span class="bd b-ok">✅ Section 2.5</span></div>
+      <div class="eng-body">
+        <li><span class="dot ok"></span><span class="t">genesis/research_memory.py — text insights</span></li>
+        <li><span class="dot ok"></span><span class="t">SQLite — cross-run persistence</span></li>
+        <li><span class="dot ok"></span><span class="t">يُغذّي: META_AGENT_PROMPT insights</span></li>
+        <li><span class="dot miss"></span><span class="t">Skill Library — executable skills <span class="bd b-new">Phase B</span></span></li>
+        <li><span class="dot miss"></span><span class="t">MemEvolve — يُطوّر الذاكرة نفسها <span class="bd b-new">Phase B</span></span></li>
+        <li style="margin-top:4px"><span class="bd b-src">MemEvolve 2507.21046</span> <span class="bd b-src">DGM archive</span></li>
+      </div>
+    </div>
+
+    <div class="eng e-meta">
+      <div class="eng-title">🔮 META ENGINE <span class="bd b-new">❌ Phase C</span></div>
+      <div class="eng-body">
+        <li><span class="dot miss"></span><span class="t">genesis/meta_optimizer.py</span></li>
+        <li><span class="dot miss"></span><span class="t">LLM: trajectory analysis</span></li>
+        <li><span class="dot miss"></span><span class="t">GenerationTrajectory — score + signal history</span></li>
+        <li><span class="dot miss"></span><span class="t">WinningStrategy — extract winning pattern</span></li>
+        <li><span class="dot miss"></span><span class="t">يُغذّي: FEEDBACK_AGENT_PROMPT</span></li>
+        <li><span class="dot miss"></span><span class="t">يُحوّل: critic → optimizer</span></li>
+        <li style="margin-top:4px"><span class="bd b-src">DGM-Hyperagents</span> <span class="bd b-src">TextGrad</span> <span class="bd b-src">ScoreFlow</span></li>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════ PLANE 2: INNER LOOP ══════════ -->
+<div class="plane p2">
+  <div class="plane-label">PLANE 2 — INNER LOOP · Target Agent (auto-generated)</div>
+
+  <div class="engine-grid eg-3">
+
+    <div class="eng e-ground">
+      <div class="eng-title">🌐 GROUNDING ENGINE <span class="bd b-ok">✅ Tool for Agent</span></div>
+      <div class="eng-body">
+        <li><span class="dot ok"></span><span class="t">genesis/tools/web_search.py</span></li>
+        <li><span class="dot ok"></span><span class="t">web_search(query, mode) → SearchResult[]</span></li>
+        <li><span class="dot ok"></span><span class="t">mode: quick / deep / read</span></li>
+        <li><span class="dot ok"></span><span class="t">EvidenceLog — claim tracking</span></li>
+        <li><span class="dot ok"></span><span class="t">extract_keywords() — SAGE precision</span></li>
+        <li><span class="dot ok"></span><span class="t">مخرج: evidence_log.json</span></li>
+        <li><span class="dot ok"></span><span class="t">Serper API + Jina Reader</span></li>
+        <li style="margin-top:4px"><span class="bd b-src">DeepResearcher 2504.03160</span> <span class="bd b-src">A-RAG 2602.03442</span></li>
+      </div>
+    </div>
+
+    <div class="eng e-cogn">
+      <div class="eng-title">🔬 COGNITIVE ENGINE <span class="bd b-ok">✅ Virtual GENESIS Pipeline</span></div>
+      <div class="eng-body">
+        <li><span class="dot ok"></span><span class="t">run_minimal_pipeline() — always available</span></li>
+        <li><span class="dot ok"></span><span class="t">run_enhanced_pipeline() — full cognitive</span></li>
+        <li><span class="dot ok"></span><span class="t">Task Ingress → normalize + classify</span></li>
+        <li><span class="dot ok"></span><span class="t">Concept Engine → formation + selectivity</span></li>
+        <li><span class="dot ok"></span><span class="t">Economy Control → Tier Router (1/2/3)</span></li>
+        <li><span class="dot ok"></span><span class="t">Memory OS → retrieve + store + forget</span></li>
+        <li><span class="dot ok"></span><span class="t">Theory Runtime → build + apply</span></li>
+        <li><span class="dot ok"></span><span class="t">Anomaly Runtime → detect + leverage</span></li>
+        <li><span class="dot ok"></span><span class="t">Semantic Verifier → verify reasoning</span></li>
+        <li><span class="dot ok"></span><span class="t">Ladder Ascent → 0→4 levels</span></li>
+        <li><span class="dot ok"></span><span class="t">Value Computation → cognitive return</span></li>
+        <li><span class="dot ok"></span><span class="t">مخرج: enhanced_signals.json</span></li>
+        <li style="margin-top:4px"><span class="bd b-src">DeepMind LEAP</span> <span class="bd b-src">Aletheia</span> <span class="bd b-src">CoScientist</span></li>
+      </div>
+    </div>
+
+    <div class="eng e-skill">
+      <div class="eng-title">🎯 SKILL ENGINE <span class="bd b-new">❌ Phase B — Tool for Agent</span></div>
+      <div class="eng-body">
+        <li><span class="dot miss"></span><span class="t">genesis/skill_library.py</span></li>
+        <li><span class="dot miss"></span><span class="t">skill_retrieve(domain) — from DB</span></li>
+        <li><span class="dot miss"></span><span class="t">Skill: code_snippet + performance_score</span></li>
+        <li><span class="dot miss"></span><span class="t">يُستخدَم: في target agent مباشرة</span></li>
+        <li><span class="dot miss"></span><span class="t">skill_library.db — cross-run persistent</span></li>
+        <li><span class="dot miss"></span><span class="t">extract_skill_from_agent()</span></li>
+        <li><span class="dot miss"></span><span class="t">evolve_skill(skill, feedback)</span></li>
+        <li style="margin-top:4px"><span class="bd b-src">AgentSquare 2507.21046</span> <span class="bd b-src">DGM stepping stones</span></li>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Inner pipeline detail -->
+  <div style="margin-top:10px;background:#0a0815;border:1px solid #4c1d95;border-radius:8px;padding:12px">
+    <div style="color:#a78bfa;font-size:0.68em;font-weight:800;margin-bottom:8px">⚙️ Virtual GENESIS Pipeline — تفاصيل المكونات الداخلية (كلها مبنية ✅)</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <span style="background:#0f0820;border:1px solid #4c1d95;border-radius:4px;padding:3px 8px;font-size:0.65em;color:#c4b5fd">task_ingress/</span>
+      <span style="background:#0f0820;border:1px solid #4c1d95;border-radius:4px;padding:3px 8px;font-size:0.65em;color:#c4b5fd">concept_engine/</span>
+      <span style="background:#0f0820;border:1px solid #4c1d95;border-radius:4px;padding:3px 8px;font-size:0.65em;color:#c4b5fd">economy_control/</span>
+      <span style="background:#0f0820;border:1px solid #4c1d95;border-radius:4px;padding:3px 8px;font-size:0.65em;color:#c4b5fd">memory_os/</span>
+      <span style="background:#0f0820;border:1px solid #4c1d95;border-radius:4px;padding:3px 8px;font-size:0.65em;color:#c4b5fd">theory_runtime/</span>
+      <span style="background:#0f0820;border:1px solid #4c1d95;border-radius:4px;padding:3px 8px;font-size:0.65em;color:#c4b5fd">anomaly_runtime/</span>
+      <span style="background:#0f0820;border:1px solid #4c1d95;border-radius:4px;padding:3px 8px;font-size:0.65em;color:#c4b5fd">semantic_verifier/</span>
+      <span style="background:#0f0820;border:1px solid #4c1d95;border-radius:4px;padding:3px 8px;font-size:0.65em;color:#c4b5fd">ladder_ascent/</span>
+      <span style="background:#0f0820;border:1px solid #4c1d95;border-radius:4px;padding:3px 8px;font-size:0.65em;color:#c4b5fd">value_computation/</span>
+      <span style="background:#0f0820;border:1px solid #4c1d95;border-radius:4px;padding:3px 8px;font-size:0.65em;color:#c4b5fd">blackboard_core/</span>
+      <span style="background:#0f0820;border:1px solid #4c1d95;border-radius:4px;padding:3px 8px;font-size:0.65em;color:#c4b5fd">identity_runtime/</span>
+      <span style="background:#0f0820;border:1px solid #4c1d95;border-radius:4px;padding:3px 8px;font-size:0.65em;color:#c4b5fd">contradiction_runtime/</span>
+      <span style="background:#0f0820;border:1px solid #4c1d95;border-radius:4px;padding:3px 8px;font-size:0.65em;color:#c4b5fd">semantic_grounding/</span>
+      <span style="background:#0f0820;border:1px solid #4c1d95;border-radius:4px;padding:3px 8px;font-size:0.65em;color:#c4b5fd">reasoning_runtime/</span>
+      <span style="background:#0f0820;border:1px solid #4c1d95;border-radius:4px;padding:3px 8px;font-size:0.65em;color:#c4b5fd">verification_runtime/</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PLANE 3: EVALUATION ══════════ -->
+<div class="plane p3">
+  <div class="plane-label">PLANE 3 — EVALUATION & EVOLUTION · cross-generation analysis</div>
+  <div class="engine-grid eg-3">
+
+    <div class="eng e-evol">
+      <div class="eng-title">📊 Self-Benchmarking Suite <span class="bd b-ok">✅ H8</span></div>
+      <div class="eng-body">
+        <li><span class="dot ok"></span><span class="t">regime_transition_detector.py</span></li>
+        <li><span class="dot ok"></span><span class="t">conditions_runner.py (6 profiles)</span></li>
+        <li><span class="dot ok"></span><span class="t">failure_extractor.py</span></li>
+        <li><span class="dot ok"></span><span class="t">negative_memory_adversarial.py</span></li>
+        <li><span class="dot ok"></span><span class="t">run_self_benchmark_cycle.py</span></li>
+        <li style="margin-top:4px"><span class="bd b-src">Wang&Buehler 2606.01444</span></li>
+      </div>
+    </div>
+
+    <div class="eng e-evol">
+      <div class="eng-title">📈 Reports Suite <span class="bd b-ok">✅ 14+ reports</span></div>
+      <div class="eng-body">
+        <li><span class="dot ok"></span><span class="t">concept_selectivity.py</span></li>
+        <li><span class="dot ok"></span><span class="t">domain_transfer.py</span></li>
+        <li><span class="dot ok"></span><span class="t">curriculum_analytics.py</span></li>
+        <li><span class="dot ok"></span><span class="t">theory_analytics.py</span></li>
+        <li><span class="dot ok"></span><span class="t">contradiction_analytics.py</span></li>
+        <li><span class="dot ok"></span><span class="t">premium_roi.py + 9 more</span></li>
+        <li><span class="dot miss"></span><span class="t">Evidence Coverage Report <span class="bd b-new">جديد</span></span></li>
+      </div>
+    </div>
+
+    <div class="eng e-arch">
+      <div class="eng-title">🏗️ Architecture Evolution <span class="bd b-new">❌ Phase D</span></div>
+      <div class="eng-body">
+        <li><span class="dot miss"></span><span class="t">genesis/architecture_evolution.py</span></li>
+        <li><span class="dot miss"></span><span class="t">ComponentRegistry — versions + history</span></li>
+        <li><span class="dot miss"></span><span class="t">ArchitectureSearch — configuration search</span></li>
+        <li><span class="dot miss"></span><span class="t">EvoFlow: best model per sub-task</span></li>
+        <li><span class="dot part"></span><span class="t">AlphaEvolve skeleton <span class="bd b-part">⚠️ يكتمل</span></span></li>
+        <li style="margin-top:4px"><span class="bd b-src">AgentSquare</span> <span class="bd b-src">EvoFlow</span></li>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════ LLM CALLS MAP ══════════ -->
+<div class="sh"><div class="sh-lbl">🤖 خريطة الـ LLM Calls — أين يُستدعى النموذج</div></div>
+<div class="llm-grid">
+  <div class="llm-card">
+    <div class="llm-title">Outer Loop (Orchestrator) — meta_model</div>
+    <div class="llm-call">Call 1: Meta-Agent → يكتب target_agent.py (Gen 1)</div>
+    <div class="llm-call">Call 2: Goal Decomposition → INTENT ENGINE (once/run)</div>
+    <div class="llm-call">Call 3: LLM-as-Judge → CRITIC ENGINE (per gen)</div>
+    <div class="llm-call">Call 4: Feedback Agent → يكتب target_agent_new.py</div>
+    <div class="llm-call">Call 5: Context Summary → context_manager (per gen)</div>
+    <div class="llm-call">Call 6: Evolutionary LLM → EVOLUTION ENGINE (optional)</div>
+    <div class="llm-call new">Call 7: Meta-Optimizer → META ENGINE [Phase C]</div>
+    <div class="llm-call new">Call 8: Skill Extraction → SKILL ENGINE [Phase B]</div>
+  </div>
+  <div class="llm-card">
+    <div class="llm-title">Inner Loop (Target Agent) — task_model</div>
+    <div class="llm-call">Call A: Keyword Extraction → GROUNDING ENGINE</div>
+    <div class="llm-call">Call B: Main Task LLM → per question/item</div>
+    <div class="llm-call">Call C: Self-Critique → turn 2 (micro_task)</div>
+    <div class="llm-call">Call D: Evidence Claim tagging</div>
+    <div class="llm-call">Call E: Enhanced Pipeline reasoning</div>
+  </div>
+</div>
+
+<!-- ══════════ ARTIFACTS ══════════ -->
+<div class="sh"><div class="sh-lbl">📁 Artifacts — كل ما يُنتجه النظام</div></div>
+<table class="art-table">
+  <thead><tr><th>الملف</th><th>يُنتجه</th><th>يُستهلكه</th><th>الحالة</th></tr></thead>
+  <tbody>
+    <tr><td>goal_spec.json</td><td>INTENT ENGINE</td><td>META_AGENT_PROMPT + Feedback</td><td><span class="bd b-ok">✅</span></td></tr>
+    <tr><td>target_agent.py</td><td>Meta-Agent / Feedback-Agent</td><td>Executor (venv)</td><td><span class="bd b-ok">✅</span></td></tr>
+    <tr><td>agent_execution.json</td><td>Target Agent</td><td>Regime Detector + Feedback</td><td><span class="bd b-ok">✅</span></td></tr>
+    <tr><td>enhanced_signals.json</td><td>Target Agent (enhanced pipeline)</td><td>COGNITIVE ENGINE Bridge</td><td><span class="bd b-part">⚠️ agent rarely writes it</span></td></tr>
+    <tr><td>evidence_log.json</td><td>GROUNDING ENGINE</td><td>CRITIC ENGINE (hallucination_rate)</td><td><span class="bd b-ok">✅</span></td></tr>
+    <tr><td>open_task_eval.json</td><td>CRITIC ENGINE</td><td>Regime Detector + Feedback</td><td><span class="bd b-ok">✅</span></td></tr>
+    <tr><td>evaluation_results.json</td><td>evaluate.py (closed)</td><td>Regime Detector</td><td><span class="bd b-ok">✅</span></td></tr>
+    <tr><td>constitutional_report.json</td><td>CRITIC ENGINE (rules)</td><td>Feedback Agent</td><td><span class="bd b-ok">✅</span></td></tr>
+    <tr><td>regime_transition_report.json</td><td>EVOLUTION ENGINE</td><td>Feedback Agent (regime_section)</td><td><span class="bd b-ok">✅</span></td></tr>
+    <tr><td>ladder_state.json</td><td>COGNITIVE ENGINE Bridge</td><td>Feedback Agent (enhanced_section)</td><td><span class="bd b-ok">✅</span></td></tr>
+    <tr><td>context.md</td><td>MEMORY ENGINE</td><td>Meta-Agent + Feedback Agent</td><td><span class="bd b-ok">✅</span></td></tr>
+    <tr><td>run_telemetry.json</td><td>TELEMETRY ENGINE</td><td>Debugging + Replay</td><td><span class="bd b-new">❌ Phase A</span></td></tr>
+    <tr><td>skill_library.db</td><td>SKILL ENGINE</td><td>META_AGENT_PROMPT + Target Agent</td><td><span class="bd b-new">❌ Phase B</span></td></tr>
+    <tr><td>meta_optimization.json</td><td>META ENGINE</td><td>Feedback Agent (meta_section)</td><td><span class="bd b-new">❌ Phase C</span></td></tr>
+  </tbody>
+</table>
+
+<!-- ══════════ TIMELINE ══════════ -->
+<div class="sh"><div class="sh-lbl">📅 Roadmap — 11 Weeks</div></div>
+<div style="background:#080f1e;border:1px solid #1e3a5f;border-radius:10px;padding:14px;overflow-x:auto">
+  <div class="timeline">
+    <div class="tl-week"><div class="tl-w">Week 1</div><div class="tl-phase ph-a">Phase A1</div><div class="tl-desc">Telemetry Engine</div></div>
+    <div class="tl-week"><div class="tl-w">Week 2</div><div class="tl-phase ph-a">Phase A2</div><div class="tl-desc">Safety Monitor</div></div>
+    <div class="tl-week"><div class="tl-w">Week 3</div><div class="tl-phase ph-b">Phase B1</div><div class="tl-desc">Skill Library</div></div>
+    <div class="tl-week"><div class="tl-w">Week 4</div><div class="tl-phase ph-b">Phase B2</div><div class="tl-desc">Skill Integration</div></div>
+    <div class="tl-week"><div class="tl-w">Week 5</div><div class="tl-phase ph-c">Phase C1</div><div class="tl-desc">Meta Optimizer</div></div>
+    <div class="tl-week"><div class="tl-w">Week 6</div><div class="tl-phase ph-c">Phase C2</div><div class="tl-desc">Meta Integration</div></div>
+    <div class="tl-week"><div class="tl-w">Week 7</div><div class="tl-phase ph-d">Phase D1</div><div class="tl-desc">AlphaEvolve Full</div></div>
+    <div class="tl-week"><div class="tl-w">Week 8</div><div class="tl-phase ph-d">Phase D1</div><div class="tl-desc">GRASP Gating</div></div>
+    <div class="tl-week"><div class="tl-w">Week 9</div><div class="tl-phase ph-d">Phase D2</div><div class="tl-desc">Arch Evolution</div></div>
+    <div class="tl-week"><div class="tl-w">Week 10</div><div class="tl-phase ph-d">Phase D2</div><div class="tl-desc">EvoFlow LLM select</div></div>
+    <div class="tl-week"><div class="tl-w">Week 11</div><div class="tl-phase ph-e">Phase E</div><div class="tl-desc">Rename + Docs</div></div>
+  </div>
+</div>
+
+</body>
+</html>
