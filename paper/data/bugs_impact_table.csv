@@ -1,0 +1,6 @@
+bug_id,severity,category,impact_isolated_low,impact_isolated_high,impact_compounded,fix_module,fix_function
+B1,Critical,scaffolding,-50,-30,-30,genesis/llm_helpers.py,safe_get_question_field
+B2,Critical,scaffolding,-30,-15,-15,prompts,max_tokens=16384
+B3,Critical,prompt,-20,-10,-10,prompts,SCIENTIFIC_MCQ_SYSTEM_PROMPT
+B4,High,parser,-25,-20,-20,genesis/llm_helpers.py,extract_response_text
+B5,Medium,error_handling,-5,-2,-3,genesis/llm_helpers.py,ask_for_letter_followup

@@ -1,0 +1,8 @@
+run_id,setup,model,accuracy_pct,correct,total,invalid,recovered,elapsed_s,physics_acc,chemistry_acc,biology_acc
+smoke_v1_gpt-oss,pure baseline (parser 4 patterns),gpt-oss-120b:free,65.00,13,20,5,0,2096,90.9,33.3,33.3
+smoke_v1_nemotron,pure baseline (parser 4 patterns),nemotron-3-nano-30b-a3b:free,55.00,11,20,9,0,349,90.9,16.7,0.0
+smoke_v1_lfm,pure baseline (parser 4 patterns),lfm-2.5-1.2b-thinking:free,15.00,3,20,8,0,614,18.2,0.0,33.3
+smoke_v2_nemotron,pure baseline (parser 16 patterns + extract),nemotron-3-nano-30b-a3b:free,65.00,13,20,3,1,530,90.9,16.7,66.7
+smoke_v2_lfm,pure baseline (parser 16 patterns + extract),lfm-2.5-1.2b-thinking:free,25.00,5,20,1,1,795,27.3,0.0,66.7
+final_gpt-oss,pure baseline (all fixes),gpt-oss-120b:free,75.00,15,20,0,3,2155,81.8,66.7,66.7
+run_53_historic,GENESIS pre-fix,gpt-oss-120b:free,30.30,60,198,0,0,,30.2,29.0,36.8
