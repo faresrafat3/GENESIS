@@ -86,7 +86,7 @@ VIRTUAL_SIA_USE_ANOMALY_LEVERAGE=true python -m virtual_genesis.eval.runners.run
 git clone https://github.com/faresrafat3/GENESIS.git
 cd GENESIS
 pip install -e ".[dev]"
-pytest -q          # 424 tests should pass
+pytest -q          # ~440 tests should pass
 ```
 
 **Run the canonical evaluation** (no API key needed — fully local simulation):
@@ -111,7 +111,7 @@ See `genesis/tasks/` for the self-evolution missions (including the critical cog
 
 ## Current Status (June 2026)
 
-- **Strongly implemented**: Task ingress, Blackboard, Memory OS, Concept Engine (with proposer + selectivity), Economy-aware routing, evaluation framework, 424 tests, live ablations.
+- **Strongly implemented**: Task ingress, Blackboard, Memory OS, Concept Engine (with proposer + selectivity), Economy-aware routing, evaluation framework, ~440 tests, live ablations.
 - **Scaffolding / Template-based**: Reasoning and verification (currently keyword + template driven — explicitly acknowledged as a limitation).
 - **Critical pending work**: Full integration of the orchestrator with the Virtual-GENESIS cognitive pipeline as a reasoning substrate for real LLMs (see `genesis/tasks/genesis_cognitive_integration/` — this is Phase 1 of the strategic plan).
 - **Research output**: Detailed Arabic research memos, Master Architecture, and a full Research Paper Draft (`GENESIS_Research_Paper_Draft_AR.md`).
