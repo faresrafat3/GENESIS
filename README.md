@@ -109,7 +109,9 @@ See `genesis/tasks/` for the self-evolution missions (including the critical cog
 
 ---
 
-## Current Status (June 2026)
+## Current Status (snapshot: 2026-06-05 comprehensive baseline; minimal code churn since)
+
+> ⚠️ **Temporal honesty**: This section was authored when the comprehensive baseline report `GENESIS_RESEARCH_REPORT_Current_State_2026-06-05_AR.md` was committed (2026-06-05, commit `3cbe48b`). The status bullets describe the implementation as of that snapshot. Since then, the code has had only a few minimal commits (notably the `pyproject` dev-deps addition in `07d1ab0` and the test-count correction in `81ae910`), none of which change the architectural state described below. The 463 tests in the bullet are verified as passing in 4.51s on 2026-09-04. For a fully-current status, see the most recent `git log --oneline -20`.
 
 - **Strongly implemented**: Task ingress, Blackboard, Memory OS, Concept Engine (with proposer + selectivity), Economy-aware routing, evaluation framework, ~460 tests, live ablations.
 - **Scaffolding / Template-based**: Reasoning and verification (currently keyword + template driven — explicitly acknowledged as a limitation).
